@@ -131,9 +131,9 @@ You will use Visual Studio Code — Microsoft's free and cross-platform code edi
 	```json
 	{
 	    "version": "0.1.0",
-	    "command": "explorer",
+	    "command": "launch",
 	    "windows": {
-	        "command": "explorer.exe"
+	        "command": "explorer"
 	    },
 	    "args": ["index.html"]
 	}
@@ -144,45 +144,30 @@ You will use Visual Studio Code — Microsoft's free and cross-platform code edi
 	```json
 	{
 	    "version": "0.1.0",
-	    "command": "explorer",
+	    "command": "launch",
 	    "osx": {
-	        "command": "explorer.exe"
+	        "command": "open"
 	    },
 	    "args": ["index.html"]
 	}
 	```
 
-	TODO: Revise the listing above and add Linux instructions, too.
-
-	For example, if you are running Windows and want to use Chrome for testing, **tasks.json** might look like this (the path to chrome.exe will vary depending on several factors, so the path shown here might not be correct for your system):
+	If you are running Linux, replace the contents of **tasks.json** with these statements:
 
 	```json
 	{
 	    "version": "0.1.0",
-	    "command": "Launch",
-	    "windows": {
-	        "command": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+	    "command": "launch",
+	    "linux": {
+	        "command": "xdg-open"
 	    },
-	    "args": ["${file}"]
-	}
-	```
-
-	If you're running macOS instead and wish to use Chrome, **tasks.json** might look like this:
-
-	```json
-	{
-	    "version": "0.1.0",
-	    "command": "Launch",
-	    "osx": {
-	        "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-	    },
-	    "args": ["${file}"]
+	    "args": ["index.html"]
 	}
 	```
 
 	Once these changes are made, save your changes to **tasks.json**.
 
-	> The purpose adding these statements to **tasks.json** is to allow you to launch index.html in a browser directly from Visual Studio Code. In its current form, this JSON script always launches index.html. If you had multiple pages in your project and wanted to configure Visual Studio Code to launch the page that is currently selected, you could replace "index.html" in the script with "${file}". 
+	> The purpose adding these statements to **tasks.json** is to allow you to launch index.html in a browser directly from Visual Studio Code. In its current form, this JSON script always launches index.html. If you had multiple pages in your project and wanted to configure Visual Studio Code to launch the page that is currently selected, you could replace "index.html" in the script with "${file}". In addition, if you would rather launch a specific browser rather than the default browser, simply specify the path to the browser executable for "command" in place of "explorer," "open," or "xdg-open."
 
 1. Press **Ctrl+Shift+B** (on a Mac, **Command+Shift+B**) again and confirm that a browser opens displaying index.html, and that index.html contains the following image:
 
@@ -361,7 +346,7 @@ The Canvas API is one of HTML5's most powerful APIs. With it, you can draw onto 
 	</html>
 	```
 
-1. Take a moment to examine what you added. The only difference is a new block of code that uses jQuery to find all the \<canvas\> elements in the page and attach click handlers to them. The click handler figures out which \<canvas\> element was clicked, determines whether it is adjacent to the empty square, and, if it is, uses jQuery's *animate* function to slide the puzzle piece into a new position.
+1. Take a moment to examine what you added. The only difference is a new block of code that uses jQuery to find all the \<canvas\> elements in the page and attach a click handler to them. The click handler figures out which \<canvas\> element was clicked, determines whether it is adjacent to the empty square, and, if it is, uses jQuery's *animate* function to slide the canvas into a new position.
 
 	> If you have never used jQuery's *animate* function, this is a great example of how easily it enables you to add animations to Web pages, and is one of many reasons jQuery is one of the most popular JavaScript libraries on the planet.
 
