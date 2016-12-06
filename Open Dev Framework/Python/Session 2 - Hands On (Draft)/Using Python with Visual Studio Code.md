@@ -161,29 +161,17 @@ The user selects a origin airport, destination airport, and a range in miles. Th
 
 	_Examining dijkstra.py_
 
-1. Click **data.py** to open **data.py** in the editor. Take a moment to examine its content. TODO: Add more description.
+1. Click **data.py** to open **data.py** in the editor. Take a moment to examine its content. Before the application can run, it needs the distance table to be computed. The included script, data.py, builds the distance table from another source files that contains a list of the General Aviation airports and their latitude and longi66=-p;tude. The script reads this table and calculates the distance between airports using a distance formula for two points on a sphere.
 
 	![Examining data.py](images/examine-data.png)
 
 	_Examining data.py_
 
-
-
-
-
-
-### Build the Distance Table
-<a name="#table"></a>
-
-Before the application can run, it needs the distance table to be computed. The included script, data.py, builds the distance table from another source files that contains a list of the General Aviation airports and their latitude and longi66=-p;tude. The script reads this table and calculates the distance between airports using a distance formula for two points on a sphere.
-
-1. Open data.py from the "Explorer" pane.
-
-1. Select the "Debug" icon, then set the language to "Python"
+1. With **data.py** still selected in EXPLORER, click the **Debug** button in the ribbon on the left, and then select **Python** from the drop-down list.
 
 	![Visual Studio Code](images/screenshot3.png)
 
-1. Run the app by click the "Start Debugging" icon or press F5. This will the app to start and break on the first line in the the app. Another tool bar for interactive debugging will appear on the screen. To continue execution, click the "Continue" icon there.
+1. Run **data.py** by click the "Start Debugging" icon or press F5. This will the app to start and break on the first line in the the app. Another tool bar for interactive debugging will appear on the screen. To continue execution, click the "Continue" icon there.
 
 	![Visual Studio Code](images/screenshot4.png)
 	
