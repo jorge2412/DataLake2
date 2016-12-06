@@ -6,7 +6,7 @@
 <a name="Overview"></a>
 ## Overview ##
 
-HTML5 is the newest version of HTML, and is the basis for numerous rich and interactive Web pages as well as cross-platform mobile apps. More than just a markup language, HTML5 exposes a set of APIs that can be called from within a browser to draw onto a Web page, store data locally, get the user's current location, establish 2-way connections between browsers and Web servers, read the contents of files, play audio and video, and much more. HTML5 is constantly evolving by adding new features and APIs, and browser vendors such as Google and Microsoft are constantly updating their browsers to support the latest and greatest features of the platform.
+HTML5 is the newest version of HTML, and is the basis for numerous rich and interactive Web pages as well as cross-platform mobile apps. More than just a markup language, HTML5 exposes a set of APIs that can be called from within a browser to draw onto a Web page, store data locally, get the user's current location, establish 2-way connections between browsers and Web servers, read the contents of files, play audio and video, and much more. HTML5 is constantly evolving with new features and APIs, and browser vendors such as Google and Microsoft are constantly updating their browsers to support the latest and greatest features of the platform.
 
 One of the most compelling features of HTML5 is the [Canvas API](http://www.w3.org/TR/2dcontext/), which allows JavaScript code to draw directly into a browser window. To use the Canvas API, you begin by declaring one or more \<canvas\> elements in a page. Then you write code that retrieves a rendering context for a canvas, and call functions on the rendering context to draw pixels, lines, shapes, images, text, drop shadows, gradients, and more. The chart below was drawn entirely with the Canvas API, and uses just a few of the many functions that are available.
 
@@ -14,7 +14,7 @@ One of the most compelling features of HTML5 is the [Canvas API](http://www.w3.o
 
 _Chart drawn with the HTML5 Canvas API_
 
-In this lab, you will create a Web page that combines the HTML5 Canvas API with jQuery to display an interactive puzzle — one in which an image is programmatically divided into squares and the user is invited to scramble the image (and later unscramble it) by clicking individual squares. It is just one example of the kinds of interfaces you can build with the Canvas API. And it's a great place to start if you are new to HTML5 and are curious about why it is receiving so much mindshare. 
+In this lab, you will create a Web page that combines the HTML5 Canvas API with jQuery to display an interactive puzzle — one in which an image is programmatically divided into squares and the user is invited to scramble the image (and later unscramble it) by clicking individual squares. It is just one example of the kinds of interfaces you can build with the Canvas API. And it's a great place to start if you are new to HTML5 and are curious about why it is receiving so much attention in the development community. 
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -54,7 +54,7 @@ You will use Visual Studio Code — Microsoft's free and cross-platform code edi
 
 1. Create a directory named "HTML5Lab" in the location on your choice to serve as the project directory.
 
-1. Start Visual Studio Code and use the **File -> Open Folder** command to open the folder you created in the previous step.
+1. Start Visual Studio Code and use the **File -> Open Folder** command (on a Mac, **File -> Open**) to open the folder you created in the previous step.
 
 1. Click the **New File** button in the EXPLORER panel and create a new file named **index.html** in the project directory.
 
@@ -89,7 +89,7 @@ You will use Visual Studio Code — Microsoft's free and cross-platform code edi
 
     _Adding a folder to the project directory_
 
-1. Right-click (on a Mac, Command-click) the "assets" folder and select **New File** from the ensuing menu to add a new file to the "assets" folder. Name the file **styles.css**.
+1. Right-click (on a Mac, Control-click) the "assets" folder and select **New File** from the ensuing menu to add a new file to the "assets" folder. Name the file **styles.css**.
 
     ![Adding styles.css to the "assets" folder](Images/add-file-to-assets.png)
 
