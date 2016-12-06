@@ -6,7 +6,15 @@
 <a name="Overview"></a>
 ## Overview ##
 
-TODO: Add overview here.
+Python is a widely used programming language that is familiar to legions of developers. It features a dynamic type system and automatic memory manangement and is complemented by a comprehensive standard library as well as countless open-source libraries and frameworks, including [Django](http://www.djangoproject.com/), [Pyramid](http://www.pylonsproject.org/), [Flask](http://flask.pocoo.org/) and [Bottle](http://bottlepy.org/). Python interpreters are freely available for numerous operating systems, enabling Python developers to write apps that run cross-platform. Python enjoys wide support in academia and in the scientific and data-science communities, and is the programming language that powers popular Web sites such as [YouTube](https://www.youtube.com/), [DropBox](https://www.dropbox.com/), [Survey Monkey](https://www.surveymonkey.com/), [Reddit](https://www.reddit.com/), and [Yahoo Maps](https://maps.yahoo.com/b/).
+
+Python code can be written with any code editor, including Microsoft's free, open-source, and cross-platform code editor, [Visual Studio Code](https://code.visualstudio.com). Combined with any of several freely available Python extensions, Visual Studio Code offers a [rich environment for writing, testing, and debugging Python code](https://code.visualstudio.com/docs/languages/python). And it works equally well on Windows, macOS, and Linux.
+
+In this lab, you will use Visual Studio Code to create a Python app that tk.
+
+
+
+
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -24,8 +32,9 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
+- [Python](https://www.python.org/downloads/)
 - [Visual Studio Code](https://code.visualstudio.com/download)
-- [Python Extension for Visual Studio Code](https://www.python.org/downloads)
+- [Git](https://git-scm.com/download)
 
 ---
 
@@ -34,97 +43,85 @@ The following are required to complete this hands-on lab:
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Set Up and Test the Environment](#Exercise1)
+- [Exercise 1: Set Up the Environment](#Exercise1)
 - [Exercise 2: Download an App](#Exercise2)
 - [Exercise 3: Run the app](#Exercise3)
 
-Estimated time to complete this lab: **45** minutes.
+Estimated time to complete this lab: **30** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Set Up and Test the Environment
+## Exercise 1: Set Up the Environment
 
-Setting up Visual Studio Code to do Python Development is fairly straightfoward. It involves installing Python, Installing VS Code, then installing the Python extension for VS Code.
+Setting up Visual Studio Code to do Python development is fairly straightforward. It involves installing Python, installing Visual Studio Code, and then installing the Python Extension for Visual Studio Code. In this exercise, you will configure your environment for doing Python development with Visual Studio Code.
 
-1. Visit https://www.python.org/downloads/ to download the Python installer for Python 3 for your platform. Python's webpage will attempt to detect your operating system and make a suggestion. Download and install it according to the instructions provided by Python
+1. Visit https://www.python.org/downloads/ and download the installer for Python 3 for your operating system. Then run the installer to install Python 3. If the installer offers an option for including Python in your PATH, be sure to select this option.
+ 
+	![Installing Python](images/install-python.png)
 
-1. Visit https://code.visualstudio.com/ to get Visual Studio Code. Like Python's page, this will detect your operating system and suggest the appropriate installer for Visual Studio Code. Install VS Code according to the instructions for your environment.
+	_Installing Python_
 
-1. Launch Visual Studio Code. For MacOS, look under Applications. For Windows, the installer will create an icon on the Start menu. For Linux, the icon will create a link that shuold appear in your distros application menus
+1. Visit https://code.visualstudio.com/ and download and install Visual Studio Code.
 
-	![Visual Studio Code](images/screenshot1.png)
+1. Create a directory named "PythonLab" in the location on your choice to serve as the project directory.
 
-1. Install the VS Code Python Extension.
+1. Start Visual Studio Code and use the **File -> Open Folder** command (on a Mac, **File -> Open**) to open the folder you created in the previous step.
 
-	* Select the Extensions pane
-	* Search for "python"
-	* Click "Install"
+1. Click the **Extensions** button in the ribbon on the left side in Visual Studio Code. Type "python" (without quotation marks) into the search box, and then click the **Install** button for the Python extension by Don Jayamanne.
 
-	![Visual Studio Code](images/screenshot2.png)
+	![Installing the Python extension](images/screenshot2.png)
 
-	Once installed, click "Reload". This will appear where the Install button appeared before. After the reload, the environment should be setup to start developing with Python.
-	
+	_Installing the Python extension_
 
-1. Go to the "File" menu, then copy and paste the following code into the new file
+1. Once the extension is installed, click the **Reload** button that appears where the **Install** button appeared before.
+
+1. Use the **File -> New File** command to crate a new file. Then paste the following code into the file:
 
 	```
 	print("Hello World")
 	```
 
-	Save the new app as "test.py"
+1. Use the **File -> Save** command to save the file, and name it "test.py." If Visual Studio Code displays an error message saying "Linter pylint is not installed," click **Install pylint** to install pylint.
 
-1. Select the "Debug" icon.
+	> [pylint](https://www.pylint.org/) is a popular linting tool for Python. Visual Studio Code uses it to check for common programming errors in your code.
 
-	![Visual Studio Code](images/screenshot3.png)
+	![Installing pylint](images/install-pylint.png)
 
-1. Select "Configure or Fix launch.json", then select the Python environment.
+	_Installing pylint_
 
-	![Visual Studio Code](images/screenshot11.png)
+1. Click the **Debug** button in the ribbon on the left. Then click the gear icon and select **Python** from the drop-down list that appears. Visual Studio responds by adding a file named **launch.json** to the project containing configuration information for Python projects. 
 
-1. This will create a new file called launch.json. This file tells Visual Studio Code how to compile and run Python scripts. 
+	![Adding launch.json](images/screenshot3.png)
 
-	* **Note** -- If you're running on MacOS, you may need to modify the file. In the first section under configurations with the Name "Python", set the pythonPath to "python3". This is neccessary on some macs because an earlier version of Python is likely installed on the Mac. Setting it to python3 explicitly will tell VS Code to run all the apps under python3
+	_Adding launch.json_
 
-	 	![Visual Studio Code](images/screenshot13.png)
+1. Click **test.py** to make it the current file in the editor. Then click the **Start Debugging** button (the green arrow) to run the app.
 
-Save the file ("File" -> "Save") then close it.
+	> If you are running Windows and see a dialog warning you that "Windows Firewall has blocked some features of this app," click the **Allow access** button.
 
-1. Run the app by click the "Start Debugging" icon or press F5. This will the app to start and break on the first line in the the app. Another tool bar for interactive debugging will appear on the screen. To continue execution, click the "Continue" icon there.
+	![Running the app in the debugger](images/screenshot4.png)
 
-	![Visual Studio Code](images/screenshot4.png)
+	_Running the app in the debugger_
+
+1. The app will start and the debugger will break at the first (and only) line. Click the **Continue** button (the green arrow) to continue executing the app.
+
+	![Continuing in the debugger](images/continue-debugging.png)
+
+	_Continuing in the debugger_
 	
-1. Watch the Debug console for output.
+1. Confirm that the output "Hello World" appears in the debug console. This verifies that Python is properly installed and that Visual Studio Code is configured to run Python apps.
 
-	![Visual Studio Code](images/screenshot5.png)
+	![Output from test.py](images/screenshot5.png)
 
-1. When finished, select "File" -> "Close Folder" to completely close all editors.
+	_Output from test.py_
+
+TODO: Add closing paragraph.
 
 <a name="Exercise2"></a>
-## Exercise 2: Download an app
+## Exercise 2: Download an app and prepare the data
 
-**This step is optional, as the source code is already included in the bundle. However, using git will show how the Git integration with VS Code works.**
+Visual Studio Code has integrated support for Git and GitHub, which makes it easy to pull projects from GitHub and work on them locally. In this exercise, you will download a Python app from GitHub and run a Python script to create a data file that the app relies on.
 
-VS Code has integrated support for Git and GitHub, so pulling applications from GitHub is fairly easy to do.
-
-1. Check if git is installed. Go to "View" -> "Integrated Console" and type in "git". If it is installed, the command will show integrated documentation. Install git if it is not already installed, go to https://git-scm.com/download to download the appropiate installer for your platform.
-
-1. Select "View" -> Integrated Terminal, then type in the following command.
-
-	```
-	git clone https://github.com/theonemule/python-lab/
-	```
-
-1. This will create a folder called "python-lab" in the directory that the terminal is pointed to. (ie. c:\users\usersname\python-lab)
-
-1. Select "File" -> "Open Folder" from the File Menu (or just "Open" on a Mac), then find the new folder git created.
-
-1. The "Explorer" pane will have the files associated with the app.
-
-1. The Git Pane will show changes as they are made to the app for version control.
-
-### Working with Python
-<a name="python"></a>
-
-The app has two parts -- one part uses python to serve up web services. The web services run on a lightweight web framework called [Flask](http://flask.pocoo.org/). Flask is an easy to use web framework with an integrated HTTP server. Flask uses decorators on the code to route URL to methods in the appplication. Iti is the only external dependency the application has that needs to be installed. The other part of the application is web page that uses standard web technologies like HTML, CSS, and JavaScript, which is contained in the "static" folder. Flask will also serve up the HTML as well. The HTML frontend combined with a Python backend is a common application architecture called [Single Page Applications](https://en.wikipedia.org/wiki/Single-page_application).
+The app consists of two parts: a client half and a server half. The web services run on a lightweight web framework called [Flask](http://flask.pocoo.org/). Flask is an easy to use web framework with an integrated HTTP server. Flask uses decorators on the code to route URL to methods in the appplication. It is the only external dependency the application has that needs to be installed. The other part of the application is web page that uses standard web technologies like HTML, CSS, and JavaScript, which is contained in the "static" folder. Flask will also serve up the HTML as well. The HTML frontend combined with a Python backend is a common application architecture called [Single Page Applications](https://en.wikipedia.org/wiki/Single-page_application).
 
 The app itself downloaded from GitHub is part practical and part theoretical in that it implements [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra's_algorithm) in a practical way. Dijkstra's algorithm finds the short distance between two nodes on a weighted graph. The app uses a distance table for all the General Aviation airports in the "Lower 48" states. A distance table contains a set of rows and columns wherein all the points of interest have both a row and column. The intersection of the points of interest contains the distance between the points of interest. The example below shows distances between European cities. 
 
@@ -132,10 +129,51 @@ The app itself downloaded from GitHub is part practical and part theoretical in 
 
 The user selects a origin airport, destination airport, and a range in miles. The app then constructs in memory from the distance table a weighted graph where each airport is a node and each straight-line flight path is an edge. It will only create edges between nodes where the nodes are less than the supplied range. After the graph is created, it applies the algorithm to calculate the shortest path between the two airports.
 
+
+
+
+
+1. If Git isn't installed on your computer, go to https://git-scm.com/download and install it now.
+
+	> One way to determine whether Git is installed is to open a terminal window or Command Prompt window and execute a **git** command.
+
+1. In Visual Studio Code, use the **View -> Integrated Terminal** command to open an integrated terminal. Then execute a **cd** command in the TERMINAL window to navigate to the directory where you would like the project you download from GitHub to be stored.
+
+1. Execute the following command in the TERMINAL window to clone a GitHub repository:
+
+	```
+	git clone https://github.com/theonemule/python-lab/
+	```
+
+	This will create a directory named "python-lab" in the current directory.
+
+1. Use the **File -> Open Folder** command (on a Mac, **File -> Open**) to open the folder you created in the previous step.
+
+1. Expand the "static" folder and click **index.html** to open **index.html** in the editor. Take a moment to examine its content. This is the Web front-end for the application. TODO: Add more description.
+
+	![Examining index.html](images/examine-index.png)
+
+	_Examining index.html_
+
+1. Click **dijkstra.py** to open **dijkstra.py** in the editor. Take a moment to examine its content. TODO: Add more description.
+
+	![Examining dijkstra.py](images/examine-dijkstra.png)
+
+	_Examining dijkstra.py_
+
+1. Click **data.py** to open **data.py** in the editor. Take a moment to examine its content. TODO: Add more description.
+
+	![Examining data.py](images/examine-data.png)
+
+	_Examining data.py_
+
+
+
+
+
+
 ### Build the Distance Table
 <a name="#table"></a>
-
-**This step is optional, as the created distance table is already included in the lab bundle.**
 
 Before the application can run, it needs the distance table to be computed. The included script, data.py, builds the distance table from another source files that contains a list of the General Aviation airports and their latitude and longi66=-p;tude. The script reads this table and calculates the distance between airports using a distance formula for two points on a sphere.
 
