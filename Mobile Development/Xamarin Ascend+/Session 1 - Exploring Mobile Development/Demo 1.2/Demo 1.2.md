@@ -56,7 +56,7 @@ Registration is free so no API service costs will be incurred.
 
 1.  Open up the extracted solution under the *Start* folder for demo 1.2 in Visual Studio 2015
 
-2.  Explain that we are starting with an existing Windows 10 UWP application using 2 projects. One is the main UI using XAML & C\# and the other is a C\# Portable Class Library with view models, models and services. Many UWP XAML applications are built with these kinds of classes. We need to make this one work before we start making changes. Expand the Model, Services & ViewModel folders and provide an overview of what these do.
+2.  Explain that we are starting with an existing Windows 10 UWP application using 2 projects. One is the main UI using XAML & C\# and the other is a C\# Portable Class Library with view models, models and services. Many UWP XAML applications are built with these kinds of classes. Expand the Model, Services & ViewModel folders and provide an overview of what these do.
 
 3.  With “ImageSearch.UWP” as the startup project, press F5 to run the UWP client. Enter Xbox and click on the Search button. We should get back image results verifying that setup is correct.
 

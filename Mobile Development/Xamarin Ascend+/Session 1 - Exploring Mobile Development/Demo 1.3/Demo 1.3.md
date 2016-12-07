@@ -29,7 +29,7 @@ Make sure Hyper-V is running.
 
 ### Cognitive Services
 
-You may have already done this for Demo 1.2.
+You may have already done the Cognitive Services setup for Demo 1.2, in which case skip to Step 1 below.
 
 You need to register with Cognitive Services APIs at: <https://www.microsoft.com/cognitive-services>.
 
@@ -59,51 +59,47 @@ Registration is free so no API service costs will be incurred.
 
 1.  Open up the extracted solution under the *Start* folder for demo 1.2 in Visual Studio 2015.
 
-2.  Explain that again we are starting with the same existing Windows 10 UWP application from Demo 1.2 using the same 2 projects. One is the main UI using XAML & C\# and the other is a C\# Portable Class Library with view models, models and services. Many UWP XAML application are built with these kinds of classes. We need to make this one work before we start making changes. Expand the Model, Services & ViewModel folders and provide a quick overview recap of what these do.
+2.  Explain that again we are starting with the same existing Windows 10 UWP application from Demo 1.2 using the same 2 projects. One is the main UI using XAML & C\# and the other is a C\# Portable Class Library with view models, models and services. Many UWP XAML application are built with these kinds of classes. Expand the Model, Services & ViewModel folders and provide a quick overview recap of what these do.
 
-3.  Press F5 to run the UWP client. Enter Xbox and click on the Search button. We should get back image results verifying that setup is correct.
+3.  Again we will expand the application for use by Android users. So we need to add a new project to the demo solution. This one will be used to create a UI that can be used by both platforms. Locate the Cross-Platform project templates under Visual C\# subgroup (1) and select Blank Xaml App (Xamarin.Forms Portable) project template (2). Name the project ImageSearch.Forms (3) and click OK (4).
 
-    <img src="./media/image5.png" width="319" height="595" />
-
-4.  Again we will expand the application for use by Android users. So we need to add a new project to the demo solution. This one will be used to create a UI that can be used by both platforms. Locate the Cross-Platform project templates under Visual C\# subgroup (1) and select Blank Xaml App (Xamarin.Forms Portable) project template (2). Name the project ImageSearch.Forms (3) and click OK (4).
-
-> <img src="./media/image6.png" width="624" height="433" />
+> <img src="./media/image5.png" width="624" height="433" />
 
 1.  Accept the defaults for the New Universal Windows Project.
 
-> <img src="./media/image7.png" width="521" height="200" />
+> <img src="./media/image6.png" width="521" height="200" />
 
 1.  Remove the Windows Phone Silverlight 8.1 and Windows Phone 8.1 projects from the solutions. Explain that these are added and are not needed for this application.
 
-> <img src="./media/image8.png" width="371" height="299" />
+> <img src="./media/image7.png" width="371" height="299" />
 
 1.  Next, we need to add a Nuget package to the new ImageSearch.Forms project. So right-click on the solution to select the Nuget package manager (1).
 
-> <img src="./media/image9.png" width="371" height="322" />
+> <img src="./media/image8.png" width="371" height="322" />
 
 1.  Using the Nuget package manager enter Refractored.MvvmHelp (2) to locate the package and select it (3).
 
-> <img src="./media/image10.png" width="517" height="231" />
+> <img src="./media/image9.png" width="517" height="231" />
 
 1.  Then add to the Xamarin.Forms project (4). Explain what this does. MvvmHelpers is a collection of Mvvm Helpers such as ObservableRangeCollection, BaseViewModel, Grouping, and others.
 
-> <img src="./media/image11.png" width="303" height="280" />
+> <img src="./media/image10.png" width="303" height="280" />
 
 1.  Next, we need to update the Xamarin.Forms nuget packages. This provides bug fixes for the Xamarin.Forms UWP project. Go to Manage NuGet Packaged for Solution on the Solution node (1)
 
-> <img src="./media/image12.png" width="319" height="491" />
+> <img src="./media/image11.png" width="319" height="491" />
 
 1.  Go to Updates (2), click on Xamarin.Forms (3), select the projects shown and click Install (4).
 
-> <img src="./media/image13.png" width="624" height="250" />
+> <img src="./media/image12.png" width="624" height="250" />
 
 1.  Next we need to add a reference to the ImageSearch.Core (Portable) project by right-clicking and going to Add Reference (1).
 
-> <img src="./media/image14.png" width="272" height="284" />
+> <img src="./media/image13.png" width="272" height="284" />
 
 1.  Select the Image.Search.Forms (Portable) project (2) and click OK (3). Explain what this does. This package contains the core logic for calling out to the Bing search service. It retrieves the JSON data and unpackages it into the correct format for the UI to consume.
 
-> <img src="./media/image15.png" width="477" height="329" />
+> <img src="./media/image14.png" width="477" height="329" />
 
 1.  Locate MainPage.xaml in the ImageSearch.Forms project and explain what XAML is and how it is different from .axml.
 
@@ -219,21 +215,21 @@ Registration is free so no API service costs will be incurred.
 
 2.  Set the ImageSerach.Forms.Droid as the starting project. Then press F5 to run the app. Enter Xbox into the search field and press the Search button.
 
-> <img src="./media/image16.png" width="341" height="343" />
+> <img src="./media/image15.png" width="341" height="343" />
 
 1.  Next, we will be showing the Xamarin.Forms UWP version. Select the ImageSearch.Forms.UWP project (1) and set it as the starting project (2).
 
-    <img src="./media/image17.png" width="429" height="373" />
+    <img src="./media/image16.png" width="429" height="373" />
 
 2.  Next, we need to go to the Configuration Manager on the Solution node (1) and check build and deploy options for the ImageSearch.Forms.UWP project and click close (2).
 
-> <img src="./media/image18.png" width="282" height="145" />
+> <img src="./media/image17.png" width="282" height="145" />
 >
-> <img src="./media/image19.png" width="361" height="232" />
+> <img src="./media/image18.png" width="361" height="232" />
 
 1.  Press F5 to run the project. Enter Xbox (1) and click on the search button (2)
 
-> <img src="./media/image20.png" width="381" height="471" />
+> <img src="./media/image19.png" width="381" height="471" />
 
 1.  Give a summary of what we’ve done.
 
@@ -241,8 +237,8 @@ Registration is free so no API service costs will be incurred.
 
 1.  Login into your Cognitive-service account and make sure to cancel the Bing Search service (1) and confirm (2).
 
-> <img src="./media/image21.png" width="624" height="297" />
+> <img src="./media/image20.png" width="624" height="297" />
 >
-> <img src="./media/image22.png" width="206" height="63" />
+> <img src="./media/image21.png" width="206" height="63" />
 
 ###

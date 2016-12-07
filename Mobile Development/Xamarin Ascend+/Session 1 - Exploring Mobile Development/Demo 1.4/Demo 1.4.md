@@ -46,7 +46,9 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 ### Setup the Azure Mobile App and Storage services\
 
-1.  Create a resource group to organize and manage all the Azure services that will be used by the demo.
+1.  *If you already setup Azure and the Demo 1.1 assets into Azure storage then you can skip to Step 12 to copy the storage access information.*
+
+2.  Create a resource group to organize and manage all the Azure services that will be used by the demo.
 
 > <img src="./media/image2.png" width="624" height="327" />
 
@@ -79,31 +81,33 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 1.  Make sure to give the storage account a unique name. For this setup process I’ve chosen **gpstagimagestorage** as the name (1). Also, make sure to select **Locally-redundant storage** (LRS) (2) for the replication setting, and click Create (3).
 
-    <img src="./media/image9.png" width="217" height="629" />
+    <img src="./media/image9.png" width="212" height="614" />
 
 2.  After the Azure setup process is complete for the storage account, click on Refresh in the XamarinDemos group to update the list of services (1).
 
-> <img src="./media/image10.png" width="450" height="316" />
+> <img src="./media/image10.png" width="390" height="273" />
 
 1.  Select the storage account
 
 2.  Next, In the settings section select Access keys (1). Copy both the Storage account name (2) and the key 1 value (3). We will need both of these to complete the data setup for the demo.
 
-> <img src="./media/image11.png" width="624" height="294" />
+> <img src="./media/image11.png" width="543" height="256" />
 
-1.  Go to the Solutions folder with this content, and locate the Demo1.1.zip file, extract it to a new folder under your Documents folder and locate the solution (.SLN) file.
+1.  Go to the Solutions folder with this content, and locate the Demo1.4.zip file, extract it to a new folder under your Documents folder and locate the solution (.SLN) file.
 
 2.  Within the solution locate the project folder of SetupDemoData.
 
-    <img src="./media/image12.png" width="281" height="352" />
+    <img src="./media/image12.png" width="247" height="309" />
 
 3.  Within the SetupAzureData project, locate the file labelled **App.config.** Update the storage name and storage keys with the values that copied from the previous step.
 
 > <img src="./media/image13.png" width="691" height="165" />
 
-1.  Make sure to set the SetupAzureData as the starting project (1).
+1.  *If you already setup Demo 1.1 and populated the Azure storage with content then you can skip to step 29.*
 
-> <img src="./media/image14.png" width="479" height="640" />
+2.  Make sure to set the SetupAzureData as the starting project (1).
+
+> <img src="./media/image14.png" width="435" height="580" />
 
 1.  Now run the project, this will create the data and upload the photos to Azure
 
@@ -159,7 +163,7 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 ## Demo Steps\
 
-1.  Go to the Solutions folder with this content, locate the Demo1.4.zip file, extract it to a new folder under your Documents folder and locate the solution (.SLN) file.
+1.  Locate the solution folder you extracted for Demo 1.4 under your Documents folder and open the SLN.
 
 2.  Locate the project UITests in the solution, open Tests.cs (1) and show the audience the UI test fixtures already defined in the project for the Android head.
 
