@@ -8,11 +8,8 @@ from flask import send_from_directory
 from heapq import *
 
 
-# This is a Python implemntaion of Dijkstra's algorithm 
-# that is using a heap instead of recursion. 
-# Many implementations use recursion, but the scope of this app with 
-# millions of possible edges made using recursion impractical.
-
+#This is a Python implementation of Dijkstra's algorithm that is using a heap instead of recursion. 
+#Many implementations use recursion, but the scope of this app with millions of possible edges made using recursion impractical.
 def dijkstra(edges, f, t):
     g = defaultdict(list)
     for l,r,c in edges:
@@ -34,17 +31,17 @@ def dijkstra(edges, f, t):
 
 
 
-# Sets the app up for running static content.
+#Sets the app up for running static content.
 app = Flask(__name__, static_folder='static')
 
 
-# This is the route for static content used by Flask
+#This is the route for static content used by Flask
 @app.route('/<path:filename>')
 def send_file(filename):
     return send_from_directory(app.static_folder, filename)
 
-# This route takes an airport code and returns information for that code as JSON
-# The <code> paramter is passed in the URL so Altanta (ATL) would be /airport/ATL
+#This route takes an airport code and returns information for that code as JSON
+#The <code> paramter is passed in the URL so Altanta (ATL) would be /airport/ATL
 @app.route("/airport/<code>")
 def airport(code):
 
@@ -57,8 +54,8 @@ def airport(code):
 
     return flask.jsonify(None)
 
-# This method searches the airport list for a match for the search string.
-# The <search> paramter is passed in the URL so Altanta (ATL) would be /search/ATL
+#This method searches the airport list for a match for the search string.
+#The <search> paramter is passed in the URL so Altanta (ATL) would be /search/ATL
 @app.route("/search/<search>")
 def search(search):
 
@@ -73,8 +70,8 @@ def search(search):
 
     return flask.jsonify(results)
 
-# This route takes two airport codes a -- The origin and destination -- and a range and returns the route information.
-# For Atlanta to New Orleans with a range of 200 miles, the url would be /route/ATL/MSY/200.
+#This route takes two airport codes a -- The origin and destination -- and a range and returns the route information.
+#For Atlanta to New Orleans with a range of 200 miles, the url would be /route/ATL/MSY/200.
 @app.route("/route/<origin>/<destination>/<int:range>")
 def route(origin, destination, range):
 
@@ -87,13 +84,9 @@ def route(origin, destination, range):
         for row in reader:
             rowIdx += 1
             if rowIdx % 100 == 0:
-                # All stderr output is written to the debug console.
                 print("Creating graph for range " + str(range) + "... " + str(round((rowIdx / airportCount) * 100, 2)) + "%" , file=sys.stderr)
             for code in row:
-
-                 # Compares the distance between two airports. If less than the range,0
-                 # it adds this as a possible segment in a route in the graph.
-                if code != 'id' and float(row[code]) < range:
+                if code != 'id' and float(row[code]) < range: #compares the distance between two airports. If less than the range, it adds this as a possible segment in a route in the graph.
                     edges.append((row['id'], code, float(row[code])))
 
     print("Calculating Route from " + origin + " to " + destination + " for range " + str(range) + " miles...", file=sys.stderr)
@@ -105,6 +98,6 @@ def route(origin, destination, range):
     return flask.jsonify(rt)
 
 
-# This boot straps the application.
+#This boot straps the application.
 if __name__ == "__main__":
     app.run(threaded=True)
