@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Using Python with Visual Studio Code</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Using Python with Visual Studio Code</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>Python is a widely used programming language that is familiar to legions of developers. It features a dynamic type system and automatic memory manangement and is complemented by a comprehensive standard library as well as countless open-source libraries and frameworks, including <a href="http://www.djangoproject.com/">Django</a>, <a href="http://www.pylonsproject.org/">Pyramid</a>, <a href="http://flask.pocoo.org/">Flask</a> and <a href="http://bottlepy.org/">Bottle</a>. Python interpreters are freely available for numerous operating systems, enabling Python developers to write apps that run on a variety of platforms. Python enjoys wide support in academia and in the scientific and data-science communities, and is the programming language that powers popular Web sites such as <a href="https://www.youtube.com/">YouTube</a>, <a href="https://www.dropbox.com/">DropBox</a>, <a href="https://www.surveymonkey.com/">Survey Monkey</a>, <a href="https://www.reddit.com/">Reddit</a>, and <a href="https://maps.yahoo.com/b/">Yahoo Maps</a>.</p>
+<p>Python code can be written with any code editor, including Microsoft's free, open-source, and cross-platform code editor, <a href="https://code.visualstudio.com">Visual Studio Code</a>. Combined with any of several freely available Python extensions, Visual Studio Code offers a <a href="https://code.visualstudio.com/docs/languages/python">rich environment for writing, testing, and debugging Python code</a>. And it works equally well on Windows, macOS, and Linux.</p>
+<p>In this lab, you will use Visual Studio Code to create a Python app that computes the shortest routes between airports. The app, pictured below, runs in a browser and uses a Python back end to perform computations.</p>
+<p><a href="images/test-output.png" target="_blank"><img src="images/test-output.png" alt="" style="max-width:100%;"></a></p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Configure Visual Studio Code to write and debug Python apps</li>
+<li>Use Visual Studio Code to pull code from GitHub</li>
+<li>Use Python and Flask to serve up Web pages and REST APIs</li>
+<li>Use client-side JavaScript code to call REST APIs implemented in Python</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li><a href="https://www.python.org/downloads/">Python</a></li>
+<li><a href="https://code.visualstudio.com/download">Visual Studio Code</a></li>
+<li><a href="https://git-scm.com/download">Git</a></li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Set up the environment</a></li>
+<li><a href="#Exercise2">Exercise 2: Download an app and prepare the data</a></li>
+<li><a href="#Exercise3">Exercise 3: Run the app</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>30</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Set up the environment</h2>
+<p>Setting up Visual Studio Code to do Python development is fairly straightforward. It involves installing Python, installing Visual Studio Code, and then installing one or more Python extensions for Visual Studio Code. In this exercise, you will configure your environment for doing Python development with Visual Studio Code.</p>
+<ol>
+<li>
+<p>Visit <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a> and download the installer for Python 3 for your operating system. Then run the installer to install Python 3. If the installer offers an option for including Python in your PATH, be sure to select this option.</p>
+<p><a href="images/install-python.png" target="_blank"><img src="images/install-python.png" alt="Installing Python" style="max-width:100%;"></a></p>
+<p><em>Installing Python</em></p>
+</li>
+<li>
+<p>Visit <a href="https://code.visualstudio.com/download">https://code.visualstudio.com/download</a> and download and install Visual Studio Code.</p>
+</li>
+<li>
+<p>Create a directory named "PythonLab" in the location on your choice to serve as the project directory.</p>
+</li>
+<li>
+<p>Start Visual Studio Code and use the <strong>File -&gt; Open Folder</strong> command (on a Mac, <strong>File -&gt; Open</strong>) to open the folder you created in the previous step.</p>
+</li>
+<li>
+<p>Click the <strong>Extensions</strong> button in the ribbon on the left side of Visual Studio Code. Type "python" (without quotation marks) into the search box, and then click the <strong>Install</strong> button for the Python extension by Don Jayamanne.</p>
+<p><a href="images/screenshot2.png" target="_blank"><img src="images/screenshot2.png" alt="Installing the Python extension" style="max-width:100%;"></a></p>
+<p><em>Installing the Python extension</em></p>
+</li>
+<li>
+<p>Once the extension is installed, click the <strong>Reload</strong> button that appears where the <strong>Install</strong> button appeared before.</p>
+</li>
+<li>
+<p>Use the <strong>File -&gt; New File</strong> command to create a new file. Then add the following line of Python code to the file:</p>
+<pre><code>print("Hello World")
+</code></pre>
+</li>
+<li>
+<p>Use the <strong>File -&gt; Save</strong> command to save the file, and name it "test.py." If Visual Studio Code displays an error message saying "Linter pylint is not installed," click <strong>Install pylint</strong> to install pylint.</p>
+<blockquote>
+<p><a href="https://www.pylint.org/">pylint</a> is a popular linting tool for Python. Visual Studio Code uses it to check for common programming errors in your code.</p>
+</blockquote>
+<p><a href="images/install-pylint.png" target="_blank"><img src="images/install-pylint.png" alt="Installing pylint" style="max-width:100%;"></a></p>
+<p><em>Installing pylint</em></p>
+</li>
+<li>
+<p>Click the <strong>Debug</strong> button in the ribbon on the left. Then click the gear icon and select <strong>Python</strong> from the drop-down list that appears. Visual Studio Code responds by adding a file named <strong>launch.json</strong> to the project containing configuration information for Python projects.</p>
+<p><a href="images/screenshot3.png" target="_blank"><img src="images/screenshot3.png" alt="Adding launch.json" style="max-width:100%;"></a></p>
+<p><em>Adding launch.json</em></p>
+</li>
+<li>
+<p>Click <strong>test.py</strong> to make it the current file in the editor. Then click the <strong>Start Debugging</strong> button (the green arrow) to run the app.</p>
+<blockquote>
+<p>If you are running Windows and see a dialog warning you that "Windows Firewall has blocked some features of this app," click the <strong>Allow access</strong> button.</p>
+</blockquote>
+<p><a href="images/screenshot4.png" target="_blank"><img src="images/screenshot4.png" alt="Running the app in the debugger" style="max-width:100%;"></a></p>
+<p><em>Running the app in the debugger</em></p>
+</li>
+<li>
+<p>The app will start and the debugger will break at the first (and only) line. Click the <strong>Continue</strong> button (the green arrow) to continue executing the app.</p>
+<p><a href="images/continue-debugging-1.png" target="_blank"><img src="images/continue-debugging-1.png" alt="Continuing in the debugger" style="max-width:100%;"></a></p>
+<p><em>Continuing in the debugger</em></p>
+</li>
+<li>
+<p>Confirm that the output "Hello World" appears in the debug console.</p>
+<p><a href="images/screenshot5.png" target="_blank"><img src="images/screenshot5.png" alt="Output from test.py" style="max-width:100%;"></a></p>
+<p><em>Output from test.py</em></p>
+</li>
+</ol>
+<p>Now that Python is installed and Visual Studio Code is configured to run Python apps, you are ready to build and test more sophisticated apps. In the next exercise, you will download an app from GitHub, inspect it in Visual Studio Code, and run a Python script included with the app to generate a data file that the app relies on.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Download an app and prepare the data</h2>
+<p>Visual Studio Code has integrated support for Git and GitHub, which makes it easy to pull projects from GitHub and work on them locally. In this exercise, you will download an app from GitHub. The app consists of two parts: a client half written in HTML and JavaScript, and a server half written in Python. The server-side code uses a lightweight Web framework called <a href="http://flask.pocoo.org/">Flask</a> to serve up Web pages and expose REST APIs. Flask contains an integrated HTTP server and uses decorators in the code to route HTTP requests to methods in the application.</p>
+<p>The Python code that runs on the server implements <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm">Dijkstra's algorithm</a>, which computes the shortest distance between two nodes on a weighted graph. Given airport codes denoting an origin and a destination and a range specifying the maximum length of each flight, the app uses a weighted graph constructed in memory from a distance table similar to the one below to determine the shortest route between airports. The distance table stores the distances between more than 4,500 airports in the United States. The table isn't provided with the app (it is quite large; more than 140 MB!), but is generated with a Python script before the app is run for the first time. That script is included in the GitHub repo along with the code for the app itself.</p>
+<p><a href="images/disttabl.gif" target="_blank"><img src="images/disttabl.gif" alt="Table denoting distances between airports" style="max-width:100%;"></a></p>
+<p><em>Table denoting distances between airports</em></p>
+<ol>
+<li>
+<p>If Git isn't installed on your computer, go to <a href="https://git-scm.com/download">https://git-scm.com/download</a> and install it now.</p>
+<blockquote>
+<p>One way to determine whether Git is installed is to open a terminal window or Command Prompt window and execute a <strong>git</strong> command.</p>
+</blockquote>
+</li>
+<li>
+<p>In Visual Studio Code, use the <strong>View -&gt; Integrated Terminal</strong> command to open a TERMINAL window. Then execute a <strong>cd</strong> command in the TERMINAL window to navigate to the directory where you would like the project you download from GitHub to be stored.</p>
+</li>
+<li>
+<p>Execute the following command in the TERMINAL window to clone a GitHub repository:</p>
+<pre><code>git clone https://github.com/theonemule/python-lab/
+</code></pre>
+<p>This will create a directory named "python-lab" containing source-code files pulled from repo in the current directory.</p>
+</li>
+<li>
+<p>Use the <strong>File -&gt; Open Folder</strong> command (on a Mac, <strong>File -&gt; Open</strong>) to open the "python-lab" folder created in the previous step.</p>
+</li>
+<li>
+<p>Expand the "static" folder in EXPLORER and click <strong>index.html</strong> to open <strong>index.html</strong> in the editor. Take a moment to examine its contents. This is the Web front-end for the application. When it loads into a browser, it creates a Google map in the &lt;div&gt; whose id is "map." The API for creating and manipulating the map comes from <a href="https://maps.googleapis.com/maps/api/js">https://maps.googleapis.com/maps/api/js</a>, which is loaded with a &lt;script&gt; element near the bottom of the file.</p>
+<p><a href="images/examine-index.png" target="_blank"><img src="images/examine-index.png" alt="Examining index.html" style="max-width:100%;"></a></p>
+<p><em>Examining index.html</em></p>
+</li>
+<li>
+<p>Click <strong>dijkstra.py</strong> to open <strong>dijkstra.py</strong> in the editor. Take a moment to examine the code inside. This is the server-side code that uses Dijkstra's algorithm to compute the shortest path between two points given a set of intermediate points representing possible waypoints. It exposes this functionality through a REST API backed by Flask.</p>
+<p><a href="images/examine-dijkstra.png" target="_blank"><img src="images/examine-dijkstra.png" alt="Examining dijkstra.py" style="max-width:100%;"></a></p>
+<p><em>Examining dijkstra.py</em></p>
+</li>
+<li>
+<p>Click <strong>data.py</strong> to open <strong>data.py</strong> in the editor. This is the Python script that creates the distance table that the app uses to create a weighted graph. The raw data comes from the data file <strong>airports-big.csv</strong>, which contains information on more than 4,500 U.S. airports, including their latitudes and longitudes. <strong>data.py</strong> reads this data and generates a separate (and much larger) file named <strong>airports-distance.csv</strong> containing the distance table.</p>
+<p><a href="images/examine-data.png" target="_blank"><img src="images/examine-data.png" alt="Examining data.py" style="max-width:100%;"></a></p>
+<p><em>Examining data.py</em></p>
+</li>
+<li>
+<p>Click the <strong>Debug</strong> button in the ribbon on the left. Then click the gear icon and select <strong>Python</strong> from the drop-down list.</p>
+<p><a href="images/screenshot3.png" target="_blank"><img src="images/screenshot3.png" alt="Configuring the environment for Python" style="max-width:100%;"></a></p>
+<p><em>Configuring the environment for Python</em></p>
+</li>
+<li>
+<p>Return to <strong>data.py</strong> in the editor. Run it by clicking the <strong>Start Debugging</strong> button (the green arrow).</p>
+<p><a href="images/screenshot4.png" target="_blank"><img src="images/screenshot4.png" alt="Running the app in the debugger" style="max-width:100%;"></a></p>
+<p><em>Running the app in the debugger</em></p>
+</li>
+<li>
+<p>When the debugger breaks on the first line of code, click the <strong>Continue</strong> button (the green arrow).</p>
+<p><a href="images/continue-debugging-2.png" target="_blank"><img src="images/continue-debugging-2.png" alt="Continuing in the debugger" style="max-width:100%;"></a></p>
+<p><em>Continuing in the debugger</em></p>
+</li>
+<li>
+<p>Watch the debug console for output. The script will take several minutes to run, given that it is CPU-intensive and it's calculating more 20 million distances!</p>
+<p><a href="images/screenshot7.png" target="_blank"><img src="images/screenshot7.png" alt="Output from data.py" style="max-width:100%;"></a></p>
+<p><em>Output from data.py</em></p>
+</li>
+</ol>
+<p>With the code loaded into Visual Studio Code and the distance table prepared, the next task is to run the app and put Dijkstra's algorithm to work finding the shortest distance between airports.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Run the app</h2>
+<p>Before you can run the app, you need to install Flask. You can do that from inside Visual Studio Code using the integrated terminal. In this exercise, you will install Flask, and then run the app in a browser and use it to compute optimal routes between airports.</p>
+<ol>
+<li>
+<p>Use Visual Studio Code's <strong>View -&gt; Integrated Terminal</strong> command to open an INTEGRATED TERMINAL window.</p>
+</li>
+<li>
+<p>Execute the following command in the INTEGRATED TERMINAL to install Flask.</p>
+<pre><code>pip3 install flask
+</code></pre>
+</li>
+<li>
+<p>Select <strong>dijkstra.py</strong> to make it the currently selected file. Then click the <strong>Debug</strong> button in the ribbon on the left, and click the <strong>Start Debugging</strong> button.</p>
+<p><a href="images/debug-dijkstra.png" target="_blank"><img src="images/debug-dijkstra.png" alt="Running the app in the debugger" style="max-width:100%;"></a></p>
+<p><em>Running the app in the debugger</em></p>
+</li>
+<li>
+<p>When the debugger breaks on the first line, click the <strong>Continue</strong> button.</p>
+<p><a href="images/continue-debugging-3.png" target="_blank"><img src="images/continue-debugging-3.png" alt="Continuing in the debugger" style="max-width:100%;"></a></p>
+<p><em>Continuing in the debugger</em></p>
+</li>
+<li>
+<p>Open a browser and navigate to <a href="http://127.0.0.1:5000/index.html">http://127.0.0.1:5000/index.html</a>.</p>
+</li>
+<li>
+<p>Type "SEA" (without quotation marks) into the <strong>Origin</strong> field, "ATL" into the <strong>Destination</strong> field, and "400" into the <strong>Range</strong> field. Then click the <strong>Submit</strong> button to compute the best route from Seattle (SEA) to Atlanta (ATL) in a plane that has a 400-mile range.</p>
+<p><a href="images/test-input.png" target="_blank"><img src="images/test-input.png" alt="Computing a route" style="max-width:100%;"></a></p>
+<p><em>Computing a route</em></p>
+</li>
+<li>
+<p>After a couple of minutes, the best route will appear on the map.</p>
+<p><a href="images/test-output.png" target="_blank"><img src="images/test-output.png" alt="Best route from SEA to ATL" style="max-width:100%;"></a></p>
+<p><em>Best route from SEA to ATL</em></p>
+</li>
+<li>
+<p>Click the <strong>Reset</strong> button and try computing additional routes using different origins, destinations, and ranges. You can choose from more than 4,500 different airport codes. You can bring up the debug console in Visual Studio Code while a computation runs to see how it's progressing.</p>
+<p><a href="images/computation-progress.png" target="_blank"><img src="images/computation-progress.png" alt="Monitoring the progress of a computation" style="max-width:100%;"></a></p>
+<p><em>Monitoring the progress of a computation</em></p>
+</li>
+<li>
+<p>When you are finished experimenting, click the <strong>Stop</strong> button in the debugging toolbar to stop the application. Anytime you wish to fire it up again, simply start <strong>dijkstra.py</strong> in the debugger and open your browser to <a href="http://127.0.0.1:5000/index.html">http://127.0.0.1:5000/index.html</a>.</p>
+<p><a href="images/stop-debugging.png" target="_blank"><img src="images/stop-debugging.png" alt="Stopping the debugger" style="max-width:100%;"></a></p>
+<p><em>Stopping the debugger</em></p>
+</li>
+</ol>
+<h2>Summary</h2>
+<p>Visual Studio Code provides a great platform for writing, running, and debugging Python apps. It runs on Windows, macOS, and Linux, and it can be downloaded for free for any of these operating systems. In this lab, you downloaded and ran a non-trivial Python app that uses Flask to project an HTML front end and expose a Python API on the back end. Use this app as a model for apps of your own, and experiment with some of the different Python extensions available for Visual Studio Code.</p>
+<hr>
+<p>Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
