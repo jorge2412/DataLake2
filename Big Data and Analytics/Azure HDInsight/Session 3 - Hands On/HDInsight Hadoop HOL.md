@@ -132,7 +132,7 @@ In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence
     hive
 	```
 
-1. Wait for a Hive prompt to appear. Then enter the following commands to create a new table named "log4jlogs" using sample data stored in a blob that was created along with your cluster. (Tip: You can paste commands into a PuTTY window by right-clicking in the window.)
+1. Wait for a Hive prompt to appear. Then enter the following commands to create a new table named "log4jlogs" using sample data stored in a blob that was created along with your cluster. (Tip: You can paste a command into a PuTTY terminal window by right-clicking in the window.)
 
     ```
 	DROP TABLE log4jLogs;
@@ -177,20 +177,26 @@ In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence
     Time taken: 0.58 seconds, Fetched: 3 row(s)
     ```
 
-1. Type "quit" (without quotation marks) at the Hive command to close the Hive session. Leave your SSH session open because you will use it again in the next exercise.
+1. Use the following command to close the Hive session:
+ 
+	```
+	quit;
+	```
+
+	**Leave your SSH session open**, because you will use it again in the next exercise.
 
 Hive is useful, but executing Hive commands is not all you can do with a Hadoop cluster. In the next exercise, you will learn how to perform MapReduce operations using Python.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Use MapReduce to analyze a text file with Python
 
-One of the most important algorithms introduced in the last 15 years is Google's [MapReduce](http://research.google.com/archive/mapreduce.html), which facilitates the processing of very large data sets. MapReduce is a two-stage algorithm that relies on a pair of functions: the Map function, which transforms a set of input data to produce a result, and the Reduce function, which reduces the results of a map to a scalar value. What makes MapReduce so relevant for big data is that operations can be executed in parallel and independent of the data source. The parallelism facilitates handling massive amounts of data, and the data-source independence means you are not locked into a particular data store such as MySQL or Microsoft SQL Server.
+One of the most important algorithms introduced in recent years is Google's [MapReduce](http://research.google.com/archive/mapreduce.html), which facilitates the processing of very large data sets. MapReduce is a two-stage algorithm that relies on a pair of functions: the *map* function, which transforms a set of input data to produce a result, and the *reduce* function, which reduces the results of a map to a scalar value. What makes MapReduce so relevant for big data is that operations can be executed in parallel and independent of the data source. The parallelism facilitates handling massive amounts of data, and the data-source independence means you are not locked into a particular data store such as MySQL or Microsoft SQL Server.
 
-HDInsight, with the underlying Hadoop implementation, allows you to write MapReduce functions in Java, Python, C#, and even [Apache Pig](http://pig.apache.org/). In this exercise, you will use Python since it is widely used in the data-processing community. The Python code, which is based on a sample from[ Michael Noll](http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/), reads a text file and counts the frequency of the words in it.
+HDInsight, with its underlying Hadoop implementation, allows you to write MapReduce functions in Java, Python, C#, and even [Apache Pig](http://pig.apache.org/). In this exercise, you will use Python since it is widely used in the data-processing community. The Python code, which is based on a sample from[ Michael Noll](http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/), reads a text file and counts the frequency of the words in it.
 
 1. Before you start, take a moment to read over the Python code for the mapper you will be using:
 
-    <pre>
+    ```python
     #!/usr/bin/env python
 
     # Use the sys module
@@ -214,13 +220,13 @@ HDInsight, with the underlying Hadoop implementation, allows you to write MapRed
 
     if __name__ == "__main__":
         main()
-    </pre>
+    ```
 
     The mapper reads a file from standard input (STDIN) and outputs each word in the file, followed by a tab character and the value 1, on a separate line.
 
 1. Now take a moment to examine the reducer:
 
-    <pre>
+    ```python
     #!/usr/bin/env python
 
     # import modules
@@ -255,43 +261,40 @@ HDInsight, with the underlying Hadoop implementation, allows you to write MapRed
 
     if __name__ == "__main__":
         main()
-    </pre>
+    ```
 
-    The reducer reads in "word &lt;tab&gt; 1" from each line, looks up each word in the word groups, and adds the number of instances found to the total number of instances, writing the data to standard output (STDOUT).
+    The reducer reads each word output by the mapper, looks it up in the list of word groups it compiles, and adds the number of instances found to the total number of instances, writing the data to standard output (STDOUT).
 
-1. The two Python scripts containing the mapper and the reducer are provided for you in the lab's "resources" directory, which is in the same directory as the HTML file you're currently reading. The next step is to copy the two files, which are named mapper.py and reducer.py, from the "resources" directory on the local machine to the cluster. **If you're using Windows, skip to Step 6**. Otherwise, proceed to the next step.
+1. The two Python scripts containing the mapper and the reducer are provided for you in the lab's "resources" directory, which is in the same directory as the HTML file you're currently reading. The next step is to copy the two files, which are named **mapper.py** and **reducer.py**, from the "resources" directory on the local machine to the cluster. **If you're using Windows, skip to Step 5**. Otherwise, proceed to the next step.
 
-1. (OS X and Linux users only) Open a terminal window and navigate to the "resources" directory. 
-
-1. (OS X and Linux users only) Execute the following command to copy mapper.py and reduce.py to the HDInsight cluster. Replace _username_ with the cluster's SSH user name and _clustername_ with the cluster name. When prompted for a password, enter the cluster's SSH password.
+1. **Linux and macOS users only**: Open a terminal window and navigate to this lab's "resources" directory. Then execute the following command to copy **mapper.py** and **reduce.py** to the HDInsight cluster, replacing *clustername* with the cluster name you specified in Exercise 1, Step 3. When prompted for a password, enter the cluster's SSH password ("Had00pdemo!").
 
     <pre>
-    scp &#42.py <i>username</i>@<i>clustername</i>-ssh.azurehdinsight.net:
-    </pre>
+    scp *.py sshuser@<i>clustername</i>-ssh.azurehdinsight.net:</pre>
 
-	**Now skip to Step 7**. Step 6 is for Windows users only.
+	**Now skip to Step 6**. Step 5 is for Windows users only.
  
-1. (Windows users only) Open a Command Prompt window and navigate to the "resources" directory. Then execute the following command to copy mapper.py and reducer.py to the cluster, replacing _username_ with the cluster's SSH user name and _clustername_ with the cluster name. When prompted for a password, enter the cluster's SSH password. Note that this command assumes you installed PuTTY in the default location. If you installed it somewhere else, modify the path name accordingly.
+1. **Windows users only**: Open a Command Prompt window and navigate to this lab's "resources" directory. Then execute the following command to copy **mapper.py** and **reduce.py** to the HDInsight cluster, replacing *clustername* with the cluster name you specified in Exercise 1, Step 3. When prompted for a password, enter the cluster's SSH password ("Had00pdemo!").
 
     <pre>
-    "C:\Program Files (x86)\PuTTY\pscp" &#42.py <i>username</i>@<i>clustername</i>-ssh.azurehdinsight.net:
-    </pre>
+    pscp *.py sshuser@<i>clustername</i>-ssh.azurehdinsight.net:</pre>
 
-1. Return to the SSH session that you established in the previous exercise. (If you closed the session, or if it timed out, follow the instructions in Exercise 3 to establish a new SSH connection.)
+	> pscp.exe is part of PuTTY. This command assumes that pscp.exe is in the PATH. If it's not, preface the command with the path to pscp.exe.
 
-1. To be certain that the Python files contain Linux-style line endings ("/r" rather than "/r/n"), execute the following commands in the terminal or PuTTY window to install and run the dos2unix conversion program:
+1. Return to the SSH session that you established in the previous exercise. (If you closed the session, or if it timed out, follow the instructions in Exercise 2 to establish a new SSH connection.)
 
-    <pre>
+1. To be certain that the Python files contain Linux-style line endings ("/r" rather than "/r/n"), execute the following commands in the terminal window to install and run the dos2unix conversion program:
+
+    ```
     sudo apt-get install dos2unix
     dos2unix -k -o *.py
-    </pre>
+    ```
 
-1. Now execute the following command to run the 
-2. Hadoop job:
+1. Now execute the following command to run the Hadoop job:
 
-    <pre>
+    ```
     hadoop jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar -files mapper.py,reducer.py -mapper mapper.py -reducer reducer.py -input wasb:///example/data/gutenberg/davinci.txt -output wasb:///example/wordcountout
-    </pre>
+    ```
 
     There is a lot going on in that command. Here's a quick synopsis of each part:
 
@@ -393,8 +396,7 @@ HDInsight, with the underlying Hadoop implementation, allows you to write MapRed
     <pre>
     Found 2 items
     -rw-r--r--   1 &lt;ssh user&gt; supergroup          0 2015-09-04 21:22 /example/wordcountout/&#95;SUCCESS
-    -rw-r--r--   1 &lt;ssh user&gt; supergroup     337623 2015-09-04 21:22 /example/wordcountout/part-00000
-    </pre>
+    -rw-r--r--   1 &lt;ssh user&gt; supergroup     337623 2015-09-04 21:22 /example/wordcountout/part-00000</pre>
 
     The &#95;SUCCESS file, which is zero bytes in length, indicates the job was a success. The part-00000 file contains the list of words and their counts. To view that file, use the following command.
 
@@ -420,13 +422,13 @@ HDInsight, with the underlying Hadoop implementation, allows you to write MapRed
     youthful	3
     </pre>
 
-    As you can see, mapper.py does not handle words that contain punctuation characters. It is left as an exercise for you to you to consider how you would change the code to strip off extra punctuation marks when harvesting words.
+    As you can see, **mapper.py** does not handle words that contain punctuation characters. It is left as an exercise for you to you to consider how you would change the code to strip off extra punctuation marks when harvesting words.
 
     If you want to run the job again, you will either have to change the output directory specified in the hadoop command, or delete the output directory with the following command:
 
-    <pre>
+    ```
     hadoop fs -rm -r /example/wordcountout
-    </pre>
+    ```
 
 This exercise showed how to execute streaming MapReduce jobs with HDInsight using a very common programming language, Python. The next and most important step is to delete the HDInsight cluster so you are not billed for it when it is not being used.
 
@@ -435,9 +437,9 @@ This exercise showed how to execute streaming MapReduce jobs with HDInsight usin
 
 As long as the HDInsight clusters you create exist, you are charged for them. Even when the clusters aren't actively processing data, charges are being incurred. Therefore, it behooves you to shut them down when they're no longer needed. Currently, it is not possible to suspend an HDInsight cluster, so your only option is to delete it.
 
-Thankfully, it is easy to remove an HDInsight cluster. Deleting a resource group deletes everything in that resource group, including HDInsight clusters and accompanying resources. In this exercise, you will delete the HDInsight cluster that you created in Exercise 2.
+Thankfully, it is easy to remove an HDInsight cluster. Deleting a resource group deletes everything in that resource group, including HDInsight clusters and accompanying resources. In this exercise, you will delete the HDInsight cluster that you created in Exercise 1.
 
-1. If the resource group containing your HDInsight Spark cluster is not open in the Azure Portal, click **Resource groups** in the ribbon on the left side of the page, and then click the resource group's name. This will open a blade for the resource group.
+1. Return to the Azure Portal and click **Resource groups** on the left side of the page. Then click the "HadoopLabResourceGroup" resource group to open it.
 
 1. In the blade for the resource group, click the **Delete** button.
 
