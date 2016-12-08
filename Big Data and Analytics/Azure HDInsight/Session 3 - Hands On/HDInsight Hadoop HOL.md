@@ -36,230 +36,153 @@ The following are required to complete this hands-on lab:
 
 This hands-on lab includes the following exercises:
 
-1. [Exercise 1: Create a resource group for the cluster](#Exercise1)
-1. [Exercise 2: Deploy an HDInsight Hadoop cluster on Linux](#Exercise2)
-1. [Exercise 3: Analyze an Apache log file with Hive](#Exercise3)
-1. [Exercise 4: Use MapReduce to analyze a text file with Python](#Exercise4)
-1. [Exercise 5: Delete the HDInsight cluster](#Exercise5)
+- [Exercise 1: Deploy an HDInsight Hadoop cluster on Linux](#Exercise1)
+- [Exercise 2: Analyze an Apache log file with Hive](#Exercise2)
+- [Exercise 3: Use MapReduce to analyze a text file with Python](#Exercise3)
+- [Exercise 4: Delete the HDInsight cluster](#Exercise4)
 
 Estimated time to complete this lab: **60** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Create a resource group for the cluster
-
-In this exercise, you will create a resource group to contain an HDInsight cluster and the Azure resources used by the cluster. Resource groups are a feature of Microsoft Azure that allow you to combine the resources that comprise an application into a unit so entire applications can be deployed, managed, and even deleted with a few simple steps.
-
-1. To get started, open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to log in, do so using your Microsoft account.
-
-1. In the portal, click **+ NEW**, folllowed by **Management** and then **Resource group**.
-
-    ![Adding a new resource group](Images/new-resource-group.png)
-
-    _Adding a new resource group_
-
-1. In the "Resource Group" blade, type "HDInsightLabResourceGroup" (without quotation marks) into the **Resource group name** box. Resource-group names do not have to be globally unique as storage-account names do, but they must be unique to a subscription.
-
-	If **Azure Pass** isn't already selected as the subscription, click **Subscription** and select **Azure Pass**. Then click **Resource group location** and choose the location nearest you. Check **Pin to dashboard** so the resource group appears on your dashboard in the Azure Portal. Once you're finished, click the **Create** button at the bottom of the blade.
-
-    ![Creating a resource group](Images/hdinsight-resource-group.png)
-
-    _Creating a resource group_
-
-After a few moments, the new resource group will appear in a blade in the Azure Portal. That group is currently empty. The next step is to create a cluster to go in it.
-
-<a name="Exercise2"></a>
-## Exercise 2: Deploy an HDInsight Hadoop cluster on Linux
+## Exercise 1: Deploy an HDInsight Hadoop cluster on Linux
 
 In this exercise, you will deploy an HDInsight cluster on Linux.
 
-1. Click **+ NEW** in the upper-left corner of the portal. Then click **Data + Analytics** followed by **HDInsight**.
+1. Open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to log in, do so using your Microsoft account.
 
-    ![First step in creating an HDInsight cluster](Images/ex1-data-analytics-hdinsight.png)
+1. Click **+ New** in the upper-left corner of the portal. Then click **Intelligence + analytics** followed by **HDInsight**.
 
-    _First step in creating an HDInsight cluster_
+    ![Creating an HDInsight cluster](Images/new-hdinsight.png)
 
-1. In the "New HDInsight Cluster" blade, you are prompted for information about the cluster you're creating. The first field, **Cluster Name**, specifies the name for the cluster, which must be unique within Azure. Enter a name and verify that a green check mark appears next to it. **Remember the cluster name because you will need it later**.
+    _Creating an HDInsight cluster_
+
+1. In the **Cluster Name** box, enter a unique DNS name for the cluster and make sure a green check mark appears next to it indicating that the name is valid and unique.
 
 	> In case someone else in the lab selects the same name, try to make it as unique as possible by including birth dates, initials, and anything else you care to add. The name you entered may be unique right now, but it might NOT be unique a few minutes into the deployment.
 
-    ![Specifying the cluster name](Images/cluster-dns-name.png)
+    ![Specifying the cluster name](Images/cluster-name.png)
 
     _Specifying the cluster name_
 
-1. If **Azure Pass** isn't already selected as the subscription, click **Subscription** and select **Azure Pass** as the subscription the cluster will be billed to.
+1. Click **Cluster configuration**. Then, in the ensuing blade, specify **Hadoop** as the **Cluster Type** and **Linux** as the **Operating System**, and accept the default version of Hadoop offered to you. Then select **Standard** as the **Cluster Tier**, and finish up by clicking the **Select** button at the bottom of the blade.
 
-1. Click **Select Cluster Type**. Then, in the ensuing blade, specify **Hadoop** as the cluster type and **Linux** as the operating system, and select the latest version of Hadoop offered to you. Then select **Standard** as the cluster tier, and finish up by clicking the **Select** button at the bottom of the blade.
-
-    ![Specifying the cluster type](Images/select-cluster-type.png)
+    ![Specifying the cluster type](Images/cluster-type.png)
 
     _Specifying the cluster type_
 
-1. The next step is to provide a pair of login credentials: one for an admin user on the cluster, and another for remoting into the cluster with SSH.
-
-	Click **Credentials** in the "New HDInsight Cluster" blade to display the "Cluster Credentials" blade. Then enter a cluster-login password.The password must be at least 10 characters in length and contain at least one digit, one non-alphanumeric character, and one uppercase or lowercase letter.
-
-	Next, enter "sshuser" (without quotation marks) into the **SSH Username** box and type an SSH password into the password boxes below. **Remember this password because you will need it later to connect to the cluster**. The same requirements that apply to the cluster-login password apply to the SSH password. You can use the same password for both if you'd like. Before proceeding, make sure **PASSWORD** is selected as the SSH authentication type.
-
-	> For simplicity, you will use password access when using SSH to connect to the cluster. In the real world, you would probably want to use SSH keys instead for added security. Documentation describing how and why for Linux, Unix, and OS X users can be found [here](https://azure.microsoft.com/en-us/documentation/articles/hdinsight-hadoop-linux-use-ssh-unix/), while documentation for Windows users is located [here](https://azure.microsoft.com/en-us/documentation/articles/hdinsight-hadoop-linux-use-ssh-windows/).
-
-	Once you have green check marks in all the boxes, click **Select** at the bottom of the blade.
+1. Click **Credentials** to open a "Cluster Credentials" blade. Leave **Cluster Login Username** set to "admin" and set the **Cluster Login Password** to "Had00pdemo!" without quotation marks. (The fourth and fifth characters are zeroes, not capital Os.) Enter "sshuser" (without quotation marks) for the **SSH Username**, make sure **SSH Authentication Type** is set to **Password**, and enter "Had00pdemo!" (again without quotation marks) again for the **SSH Password**. Then click the **Select** button at the bottom of the blade.
 
     ![Specifying cluster credentials](Images/cluster-credentials.png)
 
     _Specifying cluster credentials_
 
-
-1. Click **Data Source** in the "New HDInsight Cluster" blade to display the "Data Source" blade. Here you specify the storage account that will hold the cluster's files, including some sample data files. Rather than use an existing storage account, you will create a new one to keep the cluster and its files separate from everything else.
-
-	Enter a name for the account in the **Create a new storage account** box. Remember that the name must be all lowercase and unique to Azure. To decrease the chances of a deployment failure, make the storage-account name as unique as possible by including birth dates, initials, or other data that's unique to you.
-
-	Enter a container name (the container will be created along with the storage account) into the **Choose Default Container** box. Select the same location for the storage account that you selected for the resource group in Exercise 1. When you're finished, click the **Select** button at the bottom of the blade.
+1. Click **Data Source** to open a "Data Source" blade. Leave **Selection Method** set to **From all subscriptions** and enter a unique storage-account name in the box below **Create a new storage account**. (Once more, try to make the name as unique as possible by including birth dates or other values that aren't likely to be used by someone else. You can use lowercase letters, numbers, and hyphens in the storage-account name. Make sure a green check mark appears indicating that the name is valid and unique) For **Choose Default Container**, enter "hadoop" (without quotation marks). Select the **Location** nearest you, and then click the **Select** button at the bottom of the blade.
 
     ![Specifying the data source](Images/data-source.png)
 
     _Specifying the data source_
 
-1. Click **Node Pricing Tiers** to bring up the "Node Pricing Tiers" blade. Here you can configure the number of nodes and the types of virtual machines you want to run. For this exercise, reduce the number of worker nodes to two. Once you have done that, click the **Select** button at the bottom of the blade.
+1. Click **Pricing** to open a "Pricing" blade. Make sure **Number of Worker nodes** is set to **4** and accept the default values everywhere else. Then click the **Select** button at the bottom of the blade.
 
-    ![Node pricing tiers](Images/pricing-tiers.png)
+    ![Specifying the pricing](Images/pricing.png)
 
-    _Node pricing tiers_
+    _Specifying the pricing_
 
-1. Click **Resource Group** in the "New HDInsight Cluster" blade and select the resource group that you created in Exercise 1.
+1. Select **Create new** under **Resource Group** and enter "HadoopLabResourceGroup" (without quotation marks) as the resource-group name. Then click the **Create** button at the bottom of the blade to begin deploying the cluster.
 
-1. Now that all the sections are filled out, check the **Pin to dashboard** box and click the **Create** button at the bottom of the "New HDInsight Cluster" blade to start creating the cluster. Deployment can take 15 minutes or more, depending on the load in the data center you selected and other factors.
+    ![Specifying a resource group and creating the cluster](Images/resource-group.png)
 
-    ![Creating the cluster](Images/create-cluster.png)
+    _Specifying a resource group and creating the cluster_
 
-    _Creating the cluster_
+1. Deploying an HDInsight cluster can take 20 minutes or more. You can monitor the status of the deployment by opening the resource group's blade. Click **Resource group** in the ribbon on the left side of the portal, and then click the resource group name ("HadoopLabResourceGroup") to open the blade. "Deploying" will change to "Succeeded" when the deployment has completed successfully.
 
-1. In the portal dashboard, click the tile representing the resource group you created in Exercise 1 to open a blade for the resource group. Look for the section labeled **Last deployment**. When "Deploying" changes to "Succeeded," your cluster has successfully deployed.
+	> Click the browser's **Refresh** button every few minutes to update the deployment status. Clicking the **Refresh** button in the resource-group blade refreshes the list of resources in the resource group, but does not reliably update the deployment status.
 
-	> Click the browser's Refresh button every few minutes to make sure the deployment state is updated. It doesn't always change to "Succeeded" without a refresh.
+    ![Checking the deployment](Images/deployment-status.png)
 
-	![Monitoring the deployment state](Images/deploying.png)
+     _Monitoring the deployment_
 
-	_Monitoring the deployment state_
+In this exercise, you learned how to provision an HDInsight Hadoop cluster on Azure, and about some of the options you can choose from when doing so. Wait for the deployment to finish, and then proceed to the next exercise.
 
-Wait until the deployment has succeeded, and then proceed to the next exercise. If the deployment fails, you'll have to try again. The most likely causes of failure are cluster names and storage-account names that are not unique, so try varying those if the deployment fails the first time.
+<a name="Exercise2"></a>
+## Exercise 2: Analyze an Apache log file with Hive
 
-<a name="Exercise3"></a>
-## Exercise 3: Analyze an Apache log file with Hive
+In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence/display/Hive?src=sidebar) and the HiveQL query language to query a sample Apache log4j log file that was created along with the cluster. Apache Hive is a data-warehouse infrastructure built on top of Hadoop that facilitates summarizing, querying, and analyzing data. It supports a SQL-like interface for querying various data stores that integrate with Hadoop, and it allows you to project structure onto data that lacks structure. In preparation for using Hive, you need to remote into the cluster. **If you're a Windows user, skip to Step 2**. Otherwise, proceed to Step 1.
 
-In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence/display/Hive?src=sidebar) and the HiveQL query language to query a sample Apache log4j log file installed with the cluster. Hive allows you to project structure onto data that lacks structure. In preparation for using Hive, you need to remote into the cluster. **If you're a Windows user, skip to Step 2**. Otherwise, proceed to Step 1.
-
-1. (Linux and OS X users only) Open a terminal window so you can use the ssh command to establish a connection. You will need the SSH user name and password and the cluster name you provided when you created the cluster. Execute the following command in the terminal window, replacing _username_ with the cluster's SSH user name and _clustername_ with the name of your cluster:
+1. **Linux and macOS users only**: Open a terminal window so you can use the **ssh** command to establish a connection. Execute the following command in the terminal window, replacing *clustername* with the cluster name you entered in Exercise 1, Step 3:
 
     <pre>
-    ssh <i>username</i>@<i>clustername</i>-ssh.azurehdinsight.net
-    </pre>
+    ssh sshuser@<i>clustername</i>-ssh.azurehdinsight.net</pre>
 
-	Enter the SSH password when prompted. **Now skip to Step 4**. Steps 2 and 3 are for Windows users only.
+	Enter the SSH password ("Had00pdemo!") when prompted. **Now skip to Step 3**. Step 2 is for Windows users only.
 
-1. (Windows users only) Start PuTTY. In the **Host Name (or IP address)** field, enter _username_@_clustername_-ssh.azurehdinsight.net, substituting your SSH user name and cluster name for _username_ and _clustername_, respectively. Then click the **Open** button to open a connection.
+1. **Windows users only**: Start PuTTY. In the **Host Name (or IP address)** field, type "sshuser@<i>clustername</i>-ssh.azurehdinsight.net" without quotation marks, replacing *clustername* with the cluster name you entered in Exercise 1, Step 3. Then click the **Open** button to open an SSH connection.
 
 	> Because this is the first time you have connected to the master node, you will be prompted with a warning dialog asking if you trust this host. Since the host is one you created, click **Yes**.
 
-    ![Establishing a connection with PuTTY](Images/ex1-putty-host.png)
+    ![Establishing a connection with PuTTY](Images/putty-1.png)
 
     _Establishing a connection with PuTTY_
 
-1. (Windows users only) A PuTTY terminal window will appear and you will be prompted for a password. Enter the SSH password you specified when you created the cluster.
+	A PuTTY terminal window will appear and prompt you for a password. Enter the SSH password ("Had00pdemo!") you specified when you created the cluster and press **Enter**.
 
-1. In your terminal or PuTTY window, start the Hive command-line interface by running the following command:
+1. In the terminal window, start the Hive command-line interface by executing the following command:
 
-    <pre>
+    ```
     hive
-    </pre>
+	```
 
-1. At the Hive prompt, enter the following commands to create a new table named "log4jlogs" using sample data stored in a blob that was created along with your cluster. (Tip: You can paste commands into a PuTTY window by right-clicking in the window.)
+1. Wait for a Hive prompt to appear. Then enter the following commands to create a new table named "log4jlogs" using sample data stored in a blob that was created along with your cluster. (Tip: You can paste commands into a PuTTY window by right-clicking in the window.)
 
-    <pre>
+    ```
 	DROP TABLE log4jLogs;
 	CREATE EXTERNAL TABLE log4jLogs(t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ' STORED AS TEXTFILE LOCATION 'wasb:///example/data/';
-	SELECT t4 AS sev, COUNT(&#42) AS cnt FROM log4jLogs WHERE t4 = '[ERROR]' GROUP BY t4;
-    </pre>
+	SELECT t4 AS sev, COUNT(*) AS cnt FROM log4jLogs WHERE t4 = '[ERROR]' GROUP BY t4;
+    ```
 
     The **DROP TABLE** command removes any existing table named "log4jLogs." **CREATE EXTERNAL TABLE** creates a new "external" table. External tables store only the table definitions in Hive; the data is left in the original location. **STORED AS TEXTFILE LOCATION** tells Hive that the data is stored in a text file and where the file is located. "wasb" is the protocol prefix; it stands for "Windows Azure Storage Blob." (HDInsight transparently maps HDFS to Azure blob storage.) Finally, **SELECT** counts all the rows in which column t4 contains the value "[ERROR]".
 
-    You will see output similar to the following after the final command is entered:
+    After the final command is entered, you will see statements similar to the following at the end of the output:
 
-    <pre>
-    Query ID = sshuser_20150901021919_f1135622-b9eb-4e4d-9863-b18310242ce2
-    Total jobs = 1
-    Launching Job 1 out of 1=
-
-    Status: Running (Executing on YARN cluster with App id application_1441070163242_0003)
-
-    --------------------------------------------------------------------------------
-            VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
-    --------------------------------------------------------------------------------
-    Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
-    Reducer 2 ......   SUCCEEDED      1          1        0        0       0       0
-    --------------------------------------------------------------------------------
-    VERTICES: 02/02  [==========================>>] 100%  ELAPSED TIME: 11.24 s
-    --------------------------------------------------------------------------------
+    ```
     OK
     [ERROR]	3
     Time taken: 15.388 seconds, Fetched: 1 row(s)
-    </pre>
+    ```
 
-    Note that the output contains [ERROR] 3, as there are three rows that contain this value.
+    Note that the output contains "[ERROR] 3," as there are three rows that contain this value.
 
 1. Execute the following commands to create a new "internal" table named "errorLogs:"
 
-    <pre>
+    ```
     CREATE TABLE IF NOT EXISTS errorLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) STORED AS ORC;
     INSERT OVERWRITE TABLE errorLogs SELECT t1, t2, t3, t4, t5, t6, t7 FROM log4jLogs WHERE t4 = '[ERROR]';
-    </pre>
+    ```
 
     **CREATE TABLE IF NOT EXISTS** creates a table if it does not already exist. Because the EXTERNAL keyword is not specified, this is an internal table that is stored in the Hive data warehouse and is managed completely by Hive. Unlike dropping an external table, dropping an internal table deletes the underlying data as well. **STORED AS ORC** says to store the data in Optimized Row Columnar (ORC) format. This is a highly optimized and efficient format for storing Hive data. **INSERT OVERWRITE...SELECT** selects rows from the "log4jLogs" table that contain [ERROR], and then inserts them into the "errorLogs" table.
 
-    You will see output similar to the following after the final command is entered:
-
-    <pre>
-    Query ID = sshuser_20150901022828_7ee6a422-f6d6-4b8a-893d-7fbfa129704e
-    Total jobs = 1
-    Launching Job 1 out of 1
-    Tez session was closed. Reopening...
-    Session re-established.
-
-    Status: Running (Executing on YARN cluster with App id application_1441070163242_0004)
-
-    --------------------------------------------------------------------------------
-            VERTICES      STATUS  TOTAL  COMPLETED  RUNNING  PENDING  FAILED  KILLED
-    --------------------------------------------------------------------------------
-    Map 1 ..........   SUCCEEDED      1          1        0        0       0       0
-    --------------------------------------------------------------------------------
-    VERTICES: 01/01  [==========================>>] 100%  ELAPSED TIME: 8.35 s
-    --------------------------------------------------------------------------------
-    Loading data to table default.errorlogs
-    OK
-    Time taken: 19.272 seconds
-    </pre>
-
 1. The final step is to verify that only rows containing [ERROR] in column t4 were stored in the "errorLogs" table. To do that, use the following command to return all rows from "errorLogs:"
 
-    <pre>
-    SELECT * from errorLogs;
-    </pre>
+    ```
+    SELECT * FROM errorLogs;
+    ```
 
     The output will look like this:
 
-    <pre>
+    ```
     OK
     2012-02-03	18:35:34	SampleClass0	[ERROR]	incorrect	id
     2012-02-03	18:55:54	SampleClass1	[ERROR]	incorrect	id
     2012-02-03	19:25:27	SampleClass4	[ERROR]	incorrect	id
     Time taken: 0.58 seconds, Fetched: 3 row(s)
-    </pre>
+    ```
 
 1. Type "quit" (without quotation marks) at the Hive command to close the Hive session. Leave your SSH session open because you will use it again in the next exercise.
 
-Hive is useful, but executing Hive commands is not all you can do with an HDInsight cluster. In the next exercise, you will learn how to perform MapReduce operations using Python.
+Hive is useful, but executing Hive commands is not all you can do with a Hadoop cluster. In the next exercise, you will learn how to perform MapReduce operations using Python.
 
-<a name="Exercise4"></a>
-## Exercise 4: Use MapReduce to analyze a text file with Python
+<a name="Exercise3"></a>
+## Exercise 3: Use MapReduce to analyze a text file with Python
 
 One of the most important algorithms introduced in the last 15 years is Google's [MapReduce](http://research.google.com/archive/mapreduce.html), which facilitates the processing of very large data sets. MapReduce is a two-stage algorithm that relies on a pair of functions: the Map function, which transforms a set of input data to produce a result, and the Reduce function, which reduces the results of a map to a scalar value. What makes MapReduce so relevant for big data is that operations can be executed in parallel and independent of the data source. The parallelism facilitates handling massive amounts of data, and the data-source independence means you are not locked into a particular data store such as MySQL or Microsoft SQL Server.
 
@@ -507,8 +430,8 @@ HDInsight, with the underlying Hadoop implementation, allows you to write MapRed
 
 This exercise showed how to execute streaming MapReduce jobs with HDInsight using a very common programming language, Python. The next and most important step is to delete the HDInsight cluster so you are not billed for it when it is not being used.
 
-<a name="Exercise5"></a>
-## Exercise 5:  Delete the HDInsight cluster
+<a name="Exercise4"></a>
+## Exercise 4:  Delete the HDInsight cluster
 
 As long as the HDInsight clusters you create exist, you are charged for them. Even when the clusters aren't actively processing data, charges are being incurred. Therefore, it behooves you to shut them down when they're no longer needed. Currently, it is not possible to suspend an HDInsight cluster, so your only option is to delete it.
 
