@@ -28,7 +28,7 @@ In this hands-on lab, you will learn how to:
 The following are required to complete this hands-on lab:
 
 - An active Microsoft Azure subscription, or [sign up for a free trial](http://aka.ms/WATK-FreeTrial)
-- Windows users need to install	[PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html), an open-source SSH client for Windows. Install the latest full package that includes PuTTY and PSCP. The easiest way to do this is to download and run the MSI installer. When you run the installer, note the directory where the tools are installed. The default location is "C:\Program Files (x86)\PuTTY".
+- Windows users need to install	[PuTTY](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html), an open-source SSH client for Windows. Install the latest full package using the MSI installer.
 
 ---
 <a name="Exercises"></a>
@@ -37,16 +37,17 @@ The following are required to complete this hands-on lab:
 This hands-on lab includes the following exercises:
 
 - [Exercise 1: Deploy an HDInsight Hadoop cluster on Linux](#Exercise1)
-- [Exercise 2: Analyze an Apache log file with Hive](#Exercise2)
-- [Exercise 3: Use MapReduce to analyze a text file with Python](#Exercise3)
-- [Exercise 4: Delete the HDInsight cluster](#Exercise4)
+- [Exercise 2: Connect to the cluster via SSH](#Exercise2)
+- [Exercise 3: Analyze an Apache log file with Hive](#Exercise3)
+- [Exercise 4: Use MapReduce to analyze a text file with Python](#Exercise4)
+- [Exercise 5: Delete the HDInsight cluster](#Exercise5)
 
-Estimated time to complete this lab: **60** minutes.
+Estimated time to complete this lab: **45** minutes.
 
 <a name="Exercise1"></a>
 ## Exercise 1: Deploy an HDInsight Hadoop cluster on Linux
 
-In this exercise, you will deploy an HDInsight cluster on Linux.
+In this exercise, you will use the Azure Portal to deploy an HDInsight Hadoop cluster with Linux installed on the cluster's nodes.
 
 1. Open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to log in, do so using your Microsoft account.
 
@@ -69,6 +70,12 @@ In this exercise, you will deploy an HDInsight cluster on Linux.
     ![Specifying the cluster type](Images/cluster-type.png)
 
     _Specifying the cluster type_
+
+1. Click **Applications** and select **Streamsets Data Collector HI**. Then click the **Select** button at the bottom of the blade.
+
+    ![Specifying the installed applications](Images/cluster-applications.png)
+
+    _Specifying the installed applications_
 
 1. Click **Credentials** to open a "Cluster Credentials" blade. Leave **Cluster Login Username** set to "admin" and set the **Cluster Login Password** to "Had00pdemo!" without quotation marks. (The fourth and fifth characters are zeroes, not capital Os.) Enter "sshuser" (without quotation marks) for the **SSH Username**, make sure **SSH Authentication Type** is set to **Password**, and enter "Had00pdemo!" (again without quotation marks) again for the **SSH Password**. Then click the **Select** button at the bottom of the blade.
 
@@ -105,16 +112,18 @@ In this exercise, you will deploy an HDInsight cluster on Linux.
 In this exercise, you learned how to provision an HDInsight Hadoop cluster on Azure, and about some of the options you can choose from when doing so. Wait for the deployment to finish, and then proceed to the next exercise.
 
 <a name="Exercise2"></a>
-## Exercise 2: Analyze an Apache log file with Hive
+## Exercise 2: Connect to the cluster via SSH
 
-In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence/display/Hive?src=sidebar) and the HiveQL query language to query a sample Apache log4j log file that was created along with the cluster. Apache Hive is a data-warehouse infrastructure built on top of Hadoop that facilitates summarizing, querying, and analyzing data. It supports a SQL-like interface for querying various data stores that integrate with Hadoop, and it allows you to project structure onto data that lacks structure. In preparation for using Hive, you need to remote into the cluster. **If you're a Windows user, skip to Step 2**. Otherwise, proceed to Step 1.
+Before you can run jobs on the Hadoop cluster, you need to open an SSH connection to it so you can execute commands on the cluster. In this exercise, you will remote into the cluster via SSH using the **ssh** command if you are running macOS or Linux, or PuTTY if you are running Windows. If you are a Windows user and haven't installed PuTTY, take the time to [install it now](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html).
+
+**If you're a Windows user, skip to Step 2**. Otherwise, proceed to Step 1.
 
 1. **Linux and macOS users only**: Open a terminal window so you can use the **ssh** command to establish a connection. Execute the following command in the terminal window, replacing *clustername* with the cluster name you entered in Exercise 1, Step 3:
 
     <pre>
     ssh sshuser@<i>clustername</i>-ssh.azurehdinsight.net</pre>
 
-	Enter the SSH password ("Had00pdemo!") when prompted. **Now skip to Step 3**. Step 2 is for Windows users only.
+	Enter the SSH password ("Had00pdemo!") when prompted. **Now proceed to Exercise 3**. Step 2 is for Windows users only.
 
 1. **Windows users only**: Start PuTTY. In the **Host Name (or IP address)** field, type "sshuser@<i>clustername</i>-ssh.azurehdinsight.net" without quotation marks, replacing *clustername* with the cluster name you entered in Exercise 1, Step 3. Then click the **Open** button to open an SSH connection.
 
@@ -126,7 +135,12 @@ In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence
 
 	A PuTTY terminal window will appear and prompt you for a password. Enter the SSH password ("Had00pdemo!") you specified when you created the cluster and press **Enter**.
 
-1. In the terminal window, start the Hive command-line interface by executing the following command:
+<a name="Exercise3"></a>
+## Exercise 3: Analyze an Apache log file with Hive
+
+In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence/display/Hive?src=sidebar) and the HiveQL query language to query a sample Apache log4j log file that was created along with the cluster. Apache Hive is a data-warehouse infrastructure built on top of Hadoop that facilitates summarizing, querying, and analyzing data. It supports a SQL-like interface for querying data stores that integrate with Hadoop, and it allows you to project structure onto data that lacks structure.
+
+1. In the terminal window you opened in the previous exercise, start the Hive command-line interface by executing the following command:
 
     ```
     hive
@@ -140,7 +154,7 @@ In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence
 	SELECT t4 AS sev, COUNT(*) AS cnt FROM log4jLogs WHERE t4 = '[ERROR]' GROUP BY t4;
     ```
 
-    The **DROP TABLE** command removes any existing table named "log4jLogs." **CREATE EXTERNAL TABLE** creates a new "external" table. External tables store only the table definitions in Hive; the data is left in the original location. **STORED AS TEXTFILE LOCATION** tells Hive that the data is stored in a text file and where the file is located. "wasb" is the protocol prefix; it stands for "Windows Azure Storage Blob." (HDInsight transparently maps HDFS to Azure blob storage.) Finally, **SELECT** counts all the rows in which column t4 contains the value "[ERROR]".
+    The **DROP TABLE** command removes any existing table named "log4jLogs." **CREATE EXTERNAL TABLE** creates a new external table. External tables store only the table definitions in Hive; the data is left in the original location. **STORED AS TEXTFILE LOCATION** tells Hive that the data is stored in a text file and where the file is located. "wasb" is the protocol prefix; it stands for "Windows Azure Storage Blob." (HDInsight transparently maps HDFS to Azure blob storage.) Finally, the **SELECT** statement counts all the rows in which column t4 contains the value "[ERROR]."
 
     After the final command is entered, you will see statements similar to the following at the end of the output:
 
@@ -152,16 +166,16 @@ In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence
 
     Note that the output contains "[ERROR] 3," as there are three rows that contain this value.
 
-1. Execute the following commands to create a new "internal" table named "errorLogs:"
+1. Execute the following commands to create a new internal table named "errorLogs:"
 
     ```
     CREATE TABLE IF NOT EXISTS errorLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) STORED AS ORC;
     INSERT OVERWRITE TABLE errorLogs SELECT t1, t2, t3, t4, t5, t6, t7 FROM log4jLogs WHERE t4 = '[ERROR]';
     ```
 
-    **CREATE TABLE IF NOT EXISTS** creates a table if it does not already exist. Because the EXTERNAL keyword is not specified, this is an internal table that is stored in the Hive data warehouse and is managed completely by Hive. Unlike dropping an external table, dropping an internal table deletes the underlying data as well. **STORED AS ORC** says to store the data in Optimized Row Columnar (ORC) format. This is a highly optimized and efficient format for storing Hive data. **INSERT OVERWRITE...SELECT** selects rows from the "log4jLogs" table that contain [ERROR], and then inserts them into the "errorLogs" table.
+    **CREATE TABLE IF NOT EXISTS** creates a table if it does not already exist. Because the EXTERNAL keyword is not specified, this is an internal table that is stored in the Hive data warehouse and is managed completely by Hive. Unlike dropping an external table, dropping an internal table deletes the underlying data as well. **STORED AS ORC** says to store the data in Optimized Row Columnar (ORC) format. This is a highly optimized and efficient format for storing Hive data. **INSERT OVERWRITE...SELECT** selects rows from the "log4jLogs" table that contain the string "[ERROR]," and then inserts them into the "errorLogs" table.
 
-1. The final step is to verify that only rows containing [ERROR] in column t4 were stored in the "errorLogs" table. To do that, use the following command to return all rows from "errorLogs:"
+1. The final step is to verify that only rows containing "[ERROR]" in column t4 were stored in the "errorLogs" table. To do that, use the following command to return all rows from "errorLogs:"
 
     ```
     SELECT * FROM errorLogs;
@@ -187,8 +201,8 @@ In this exercise, you will use [Apache Hive](https://cwiki.apache.org/confluence
 
 Hive is useful, but executing Hive commands is not all you can do with a Hadoop cluster. In the next exercise, you will learn how to perform MapReduce operations using Python.
 
-<a name="Exercise3"></a>
-## Exercise 3: Use MapReduce to analyze a text file with Python
+<a name="Exercise4"></a>
+## Exercise 4: Use MapReduce to analyze a text file with Python
 
 One of the most important algorithms introduced in recent years is Google's [MapReduce](http://research.google.com/archive/mapreduce.html), which facilitates the processing of very large data sets. MapReduce is a two-stage algorithm that relies on a pair of functions: the *map* function, which transforms a set of input data to produce a result, and the *reduce* function, which reduces the results of a map to a scalar value. What makes MapReduce so relevant for big data is that operations can be executed in parallel and independent of the data source. The parallelism facilitates handling massive amounts of data, and the data-source independence means you are not locked into a particular data store such as MySQL or Microsoft SQL Server.
 
@@ -265,7 +279,7 @@ HDInsight, with its underlying Hadoop implementation, allows you to write MapRed
 
     The reducer reads each word output by the mapper, looks it up in the list of word groups it compiles, and adds the number of instances found to the total number of instances, writing the data to standard output (STDOUT).
 
-1. The two Python scripts containing the mapper and the reducer are provided for you in the lab's "resources" directory, which is in the same directory as the HTML file you're currently reading. The next step is to copy the two files, which are named **mapper.py** and **reducer.py**, from the "resources" directory on the local machine to the cluster. **If you're using Windows, skip to Step 5**. Otherwise, proceed to the next step.
+1. The two Python scripts containing the mapper and the reducer are provided for you in the lab's "resources" directory, which is in the same directory as the document you're currently reading. The next step is to copy the two files, which are named **mapper.py** and **reducer.py**, from the "resources" directory on the local machine to the cluster. **If you're using Windows, skip to Step 5**. Otherwise, proceed to the next step.
 
 1. **Linux and macOS users only**: Open a terminal window and navigate to this lab's "resources" directory. Then execute the following command to copy **mapper.py** and **reduce.py** to the HDInsight cluster, replacing *clustername* with the cluster name you specified in Exercise 1, Step 3. When prompted for a password, enter the cluster's SSH password ("Had00pdemo!").
 
@@ -281,9 +295,9 @@ HDInsight, with its underlying Hadoop implementation, allows you to write MapRed
 
 	> pscp.exe is part of PuTTY. This command assumes that pscp.exe is in the PATH. If it's not, preface the command with the path to pscp.exe.
 
-1. Return to the SSH session that you established in the previous exercise. (If you closed the session, or if it timed out, follow the instructions in Exercise 2 to establish a new SSH connection.)
+1. Return to the SSH session that you established in Exercise 2. (If you closed the session, or if it timed out, follow the instructions in Exercise 2 to establish a new SSH connection.)
 
-1. To be certain that the Python files contain Linux-style line endings ("/r" rather than "/r/n"), execute the following commands in the terminal window to install and run the dos2unix conversion program:
+1. To be certain that the Python files you uploaded contain Linux-style line endings ("/r" rather than "/r/n"), execute the following commands in the terminal window to install and run the dos2unix conversion program:
 
     ```
     sudo apt-get install dos2unix
@@ -306,107 +320,46 @@ HDInsight, with its underlying Hadoop implementation, allows you to write MapRed
     - **-input wasb:///example/data/gutenberg/davinci.txt**: Specifies the input file. In this case, it is the file named davinci.txt, which was copied into blob storage when the cluster was created.
     - **-output wasb:///example/wordcountout**: Specifies the output file
 
-    If the command executes successfully, the output will resemble the following:
+    A lot of output will stream by. Near the end of the output will be something resembling the following:
 
-    <pre>
-    packageJobJar: [] [/usr/hdp/2.2.7.1-10/hadoop-mapreduce/hadoop-streaming-2.6.0.2.2.7.1-10.jar] /tmp/streamjob5681672609917350730.jar tmpDir=null
-    15/09/04 21:21:42 INFO impl.TimelineClientImpl: Timeline service address: http://headnode0.rn0vf3xrnsiuzm4gijgsmkdzgf.dx.internal.cloudapp.net:8188/ws/v1/timeline/
-    15/09/04 21:21:43 INFO client.AHSProxy: Connecting to Application History server at headnode0.rn0vf3xrnsiuzm4gijgsmkdzgf.dx.internal.cloudapp.net/10.0.0.14:10200
-    15/09/04 21:21:43 INFO impl.TimelineClientImpl: Timeline service address: http://headnode0.rn0vf3xrnsiuzm4gijgsmkdzgf.dx.internal.cloudapp.net:8188/ws/v1/timeline/
-    15/09/04 21:21:43 INFO client.AHSProxy: Connecting to Application History server at headnode0.rn0vf3xrnsiuzm4gijgsmkdzgf.dx.internal.cloudapp.net/10.0.0.14:10200
-    15/09/04 21:21:44 INFO client.ConfiguredRMFailoverProxyProvider: Failing over to rm2
-    15/09/04 21:21:45 INFO mapred.FileInputFormat: Total input paths to process : 1
-    15/09/04 21:21:46 INFO mapreduce.JobSubmitter: number of splits:2
-    15/09/04 21:21:46 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1441381294264_0004
-    15/09/04 21:21:47 INFO impl.YarnClientImpl: Submitted application application_1441381294264_0004
-    15/09/04 21:21:47 INFO mapreduce.Job: The url to track the job: http://headnode1.rn0vf3xrnsiuzm4gijgsmkdzgf.dx.internal.cloudapp.net:8088/proxy/application_1441381294264_0004/
-    15/09/04 21:21:47 INFO mapreduce.Job: Running job: job_1441381294264_0004
-    ^[15/09/04 21:21:56 INFO mapreduce.Job: Job job_1441381294264_0004 running in uber mode : false
-    15/09/04 21:21:56 INFO mapreduce.Job:  map 0% reduce 0%
-    15/09/04 21:22:05 INFO mapreduce.Job:  map 100% reduce 0%
-    15/09/04 21:22:13 INFO mapreduce.Job:  map 100% reduce 100%
-    15/09/04 21:22:15 INFO mapreduce.Job: Job job_1441381294264_0004 completed successfully
-    15/09/04 21:22:16 INFO mapreduce.Job: Counters: 49
-    	File System Counters
-    		FILE: Number of bytes read=2387804
-    		FILE: Number of bytes written=5157441
-    		FILE: Number of read operations=0
-    		FILE: Number of large read operations=0
-    		FILE: Number of write operations=0
-    		WASB: Number of bytes read=1484685
-    		WASB: Number of bytes written=337623
-    		WASB: Number of read operations=0
-    		WASB: Number of large read operations=0
-    		WASB: Number of write operations=0
-    	Job Counters
-    		Launched map tasks=2
-    		Launched reduce tasks=1
-    		Rack-local map tasks=2
-    		Total time spent by all maps in occupied slots (ms)=13117
-    		Total time spent by all reduces in occupied slots (ms)=5842
-    		Total time spent by all map tasks (ms)=13117
-    		Total time spent by all reduce tasks (ms)=5842
-    		Total vcore-seconds taken by all map tasks=13117
-    		Total vcore-seconds taken by all reduce tasks=5842
-    		Total megabyte-seconds taken by all map tasks=120886272
-    		Total megabyte-seconds taken by all reduce tasks=53839872
-    	Map-Reduce Framework
-    		Map input records=32118
-    		Map output records=251357
-    		Map output bytes=1885084
-    		Map output materialized bytes=2387810
-    		Input split bytes=280
-    		Combine input records=0
-    		Combine output records=0
-    		Reduce input groups=32956
-    		Reduce shuffle bytes=2387810
-    		Reduce input records=251357
-    		Reduce output records=32956
-    		Spilled Records=502714
-    		Shuffled Maps =2
-    		Failed Shuffles=0
-    		Merged Map outputs=2
-    		GC time elapsed (ms)=20
-    		CPU time spent (ms)=9890
-    		Physical memory (bytes) snapshot=5183492096
-    		Virtual memory (bytes) snapshot=29558329344
-    		Total committed heap usage (bytes)=25414336512
-    	Shuffle Errors
-    		BAD_ID=0
-    		CONNECTION=0
-    		IO_ERROR=0
-    		WRONG_LENGTH=0
-    		WRONG_MAP=0
-    		WRONG_REDUCE=0
-    	File Input Format Counters
-    		Bytes Read=1484265
-    	File Output Format Counters
-    		Bytes Written=337623
-    15/09/04 21:22:16 INFO streaming.StreamJob: Output directory: wasb:///example/wordcountout
-    </pre>
+    ```
+	Shuffle Errors
+	        BAD_ID=0
+	        CONNECTION=0
+	        IO_ERROR=0
+	        WRONG_LENGTH=0
+	        WRONG_MAP=0
+	        WRONG_REDUCE=0
+	File Input Format Counters
+	        Bytes Read=1615338
+	File Output Format Counters
+	        Bytes Written=337623
+	16/12/09 13:44:48 INFO streaming.StreamJob: Output directory: wasb:///example/wordcountout
+    ```
 
 1. To see the files that Hadoop created, execute the following command:
 
-    <pre>
+    ```
     hadoop fs -ls /example/wordcountout
-    </pre>
+    ```
 
     The output will show that two files were created:
 
-    <pre>
-    Found 2 items
-    -rw-r--r--   1 &lt;ssh user&gt; supergroup          0 2015-09-04 21:22 /example/wordcountout/&#95;SUCCESS
-    -rw-r--r--   1 &lt;ssh user&gt; supergroup     337623 2015-09-04 21:22 /example/wordcountout/part-00000</pre>
+    ```
+	Found 2 items
+	-rw-r--r--   1 sshuser supergroup          0 2016-12-09 14:04 /example/wordcountout/_SUCCESS
+	-rw-r--r--   1 sshuser supergroup     337623 2016-12-09 14:04 /example/wordcountout/part-00000
+	````
 
-    The &#95;SUCCESS file, which is zero bytes in length, indicates the job was a success. The part-00000 file contains the list of words and their counts. To view that file, use the following command.
+    The &#95;SUCCESS file, which is zero bytes in length, indicates that the job was a success. The part-00000 file contains the list of words and their counts. To view the contents of that file, use the following command.
 
-    <pre>
+    ```
     hadoop fs -cat /example/wordcountout/part-00000
-    </pre>
+    ```
 
     You will see a lot of output showing words and their counts. Here's a small sample:
 
-    <pre>
+    ```
     yourself	26
     yourself,	3
     yourself.	3
@@ -420,20 +373,20 @@ HDInsight, with its underlying Hadoop implementation, allows you to write MapRed
     youth.]	1
     youth;	1
     youthful	3
-    </pre>
+    ```
 
-    As you can see, **mapper.py** does not handle words that contain punctuation characters. It is left as an exercise for you to you to consider how you would change the code to strip off extra punctuation marks when harvesting words.
+    As you can see, **mapper.py** does not separate words that contain punctuation characters. It is left as an exercise for you to consider how you would change the code to strip off extra punctuation marks when harvesting words.
 
-    If you want to run the job again, you will either have to change the output directory specified in the hadoop command, or delete the output directory with the following command:
+    If you want to run the job again, you will either have to change the output directory specified in the **hadoop** command, or delete the output directory with the following command:
 
     ```
     hadoop fs -rm -r /example/wordcountout
     ```
 
-This exercise showed how to execute streaming MapReduce jobs with HDInsight using a very common programming language, Python. The next and most important step is to delete the HDInsight cluster so you are not billed for it when it is not being used.
+This exercise showed how to execute streaming MapReduce jobs with HDInsight using a widely used programming language, Python. The next and most important step is to delete the HDInsight cluster so you are not billed for it when it is not being used.
 
-<a name="Exercise4"></a>
-## Exercise 4:  Delete the HDInsight cluster
+<a name="Exercise5"></a>
+## Exercise 5:  Delete the HDInsight cluster
 
 As long as the HDInsight clusters you create exist, you are charged for them. Even when the clusters aren't actively processing data, charges are being incurred. Therefore, it behooves you to shut them down when they're no longer needed. Currently, it is not possible to suspend an HDInsight cluster, so your only option is to delete it.
 
@@ -462,6 +415,7 @@ Here is a quick summary of what you learned in this lab:
 
 - HDInsight is Microsoft Azure's implementation of Hadoop, Spark, and supporting big-data tools
 - The Azure Portal makes it easy to create and configure HDInsight Hadoop clusters running Windows or Linux
+- Hive can be used on HDInsight Hadoop clusters to query and analyze data
 - An HDInsight Hadoop cluster can perform MapReduce operations coded in Python or other languages
 - HDInsight clusters should be deleted when they're not being used to avoid unnecessary charges
 
