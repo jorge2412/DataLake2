@@ -71,7 +71,7 @@ In this exercise, you will use the Azure Portal to deploy an HDInsight Hadoop cl
 
     _Specifying the cluster type_
 
-1. Click **Applications** and select **Streamsets Data Collector HI**. Then click the **Select** button at the bottom of the blade.
+1. Click **Applications** and select **StreamSets Data Collector HI**. Then click the **Select** button at the bottom of the blade.
 
     ![Specifying the installed applications](Images/cluster-applications.png)
 
