@@ -1,6 +1,6 @@
 IN PROGRESS
 
-# Ascend+ Community Content - Xamarin #
+# Community Content - DevOps #
 
 Each sub-folder provides content for one session.  You may also see additional folders with materials that are shared between sessions.  The sessions will refer to those folders.
 
@@ -12,7 +12,8 @@ Each sessions comes with:
 - a PowerPoint deck including notes
 - demo instructions including for setup prior to the session and in-session delivery
 - where applicable, hands-on-lab (HOL) instructions for attendees, which can be done under presenter supervision during a session, shown as another presentation by the presenter or taken away by attendees
-- [a recording of each demo & an example presentation of the whole session](https://1drv.ms/f/s!At9l5k2NXNnEq9gHpz8ws3BbvKtWUg)
+- [a recording of each demo & an example presentation of the whole session](https://1drv.ms/f/s!At9l5k2NXNnEqvICdrnQ3OdIX3RQjA)
+TEMPORARY LINK
 
 
 
