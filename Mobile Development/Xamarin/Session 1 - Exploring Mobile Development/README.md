@@ -1,6 +1,8 @@
 # Session 1 - Exploring Mobile Development #
 ---
 
+**DO NOT USE DEMO 1.1 - THERE IS A KNOWN ISSUE WITH A FIX COMING.**  
+
 The slide deck contains the main presentation and refers to various demos.
 
 You'll find the demo scripts in their respective folders so you can rehearse the demos.  Be sure to checkout the setup requirements in each of the demos at least one day before your presentation.  You may have 30-60 minutes of setup to do.
