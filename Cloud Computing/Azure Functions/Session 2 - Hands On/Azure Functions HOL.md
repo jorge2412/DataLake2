@@ -292,7 +292,7 @@ The Azure Function you created in [Exercise 2](#Exercise2) loads a subscription 
 
     _Copying the subscription key to the clipboard_
 
-1. Rteurn to your Function App in the Azure Portal and click **Function app settings** in the lower-left corner of the function designer.
+1. Return to your Function App in the Azure Portal and click **Function app settings** in the lower-left corner of the function designer.
 
     ![Viewing Function App settings](Images/function-app-select-app-settings.png)
 
