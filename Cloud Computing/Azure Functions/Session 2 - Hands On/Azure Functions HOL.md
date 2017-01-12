@@ -41,7 +41,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 4: Test the Azure Function](#Exercise4)
 - [Exercise 5: View blob metadata (optional)](#Exercise5)
 
- Estimated time to complete this lab: **60** minutes.
+Estimated time to complete this lab: **60** minutes.
 
 <a name="Exercise1"></a>
 ## Exercise 1: Create an Azure Function App ##
