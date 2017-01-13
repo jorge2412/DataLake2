@@ -6,168 +6,167 @@
 <a name="Overview"></a>
 ## Overview ##
 
-[Apache Cordova](https://cordova.apache.org/) is an open-source framework for developing cross-platform mobile apps using industry-standard technologies such as HTML5, CSS3, and JavaScript. It is especially useful in organizations that already have expertise in developing Web apps. In Cordova, your app is basically built as a Web application, with the Cordova framework managing the presentation of a WebView control that displays the app assets and coordinates communication between the app and the underlying operating system. Essentially, your app runs as an "app within an app."
+[Apache Cordova](https://cordova.apache.org/) is an open-source framework for developing cross-platform mobile apps using industry-standard technologies such as HTML5, CSS3, and JavaScript. It is especially useful in organizations that already have expertise in developing Web apps. In Cordova, your app is basically built as a Web application, with the Cordova framework managing the presentation of a platform-specific WebView control that displays the app assets and coordinates communication between the app and the underlying operating system. Essentially, your app runs as an "app within an app."
 
-The [Visual Studio tools for Apache Cordova](https://www.visualstudio.com/vs/cordova/) extend Visual Studio to support the development of Cordova apps that target Windows, iOS, and Android. These tools provide project templates for creating Cordova apps in JavaScript and TypeScript. The Visual Studio IDE is regarded as one of the more powerful developer productivity tools available, and includes features such as syntax highlighting, Intellisense, GUI-facilitated project and plugin configuration, integrated source control, integrated debugging, and built-in deployment tooling.
+The [Visual Studio tools for Apache Cordova](https://www.visualstudio.com/vs/cordova/) extend Visual Studio to support the development of Cordova apps that target Windows, iOS, and Android. These tools provide project templates for creating Cordova apps in JavaScript and TypeScript. The Visual Studio IDE is a powerful productivity tool, and it includes features such as syntax highlighting, Intellisense, GUI-facilitated project and plugin configuration, integrated source control, integrated debugging, and built-in deployment tooling.
 
-As the name implies, Azure App Service Mobile Apps are part of and build on top of the Azure App Service platform-as-a-service offering and include both client and server-side components.   On the server-side, Mobile Apps make it easy to stand up either .NET or Node.js based REST endpoints for data CRUD (create, read, update, and delete) operations as well as HTTP endpoints that allow you to perform custom actions not directly tied to data CRUD operations.  In addition, Mobile Apps includes features like Easy Tables and Easy APIs which make it simple to create connections to and manage the underlying database tables which your Mobile App instance will be communicating.  The service also provides for easy configuration of Authentication and Authorization via both social and enterprise identity providers.  On the client, Mobile Apps provides several ready-built SDKs that facilitate communication between your app and a Mobile App service, as well as tooling to support offline data sync.  You can learn more about the Azure Mobile Apps service [here](https://azure.microsoft.com/en-us/services/app-service/mobile/).
+[Azure Mobile Apps](https://azure.microsoft.com/en-us/services/app-service/mobile/) are part of the [Azure App Service](https://azure.microsoft.com/en-us/services/app-service/) platform-as-a-service offering and include numerous features that aid in the development of cross-platform mobile apps, including support for single sign-on, push notifications across a range of devices, offline syncing, and [Easy Tables](https://blog.xamarin.com/getting-started-azure-mobile-apps-easy-tables/) for back-end storage. If every great front end needs a great back end as well, Azure Mobile Apps are designed to make implementing rich server-side infrastructure as simple as possible.
 
-In this lab, you will learn how you can use Visual Studio 2017 and the Tools for Apache Cordova to create Cordova-based mobile apps.  You will explore how you can write code that is specific to each platform being targeted, and also how Visual Studio can help you discover and select Cordova Plugins to access additional functionality exposed by the device.  Finally, you will configure an Azure App Service Mobile Apps instance and see how you can use the corresponding Cordova Plugin to access this service and extend the reach of your app to the Cloud.
+In this lab, you will learn how to use Visual Studio 2017 and Apache Cordova to create cross-platform mobile apps. You will also deploy an Azure App Service Mobile Apps instance and learn how to use Cordova to access this service and extend your apps to the cloud.
 
 <a name="Objectives"></a>
 ### Objectives ###
 
 In this hands-on lab, you will learn how to:
-- Create a new Cordova project in Visual Studio 2017.
-- Use the Cordova Simulate application simulator to test your Cordova application.
-- Add resources that are used only when your app is running on a specific platforms.
-- Use a Cordova Plugin to access device functionality. 
-- Configure an Azure App Service Mobile App instance and connect to it with your Cordova app.
+
+- Create a new Cordova project in Visual Studio 2017
+- Use Cordova Simulate to test Cordova apps
+- Incorporate platform-specific resources in Cordova apps
+- Use a Cordova Plugin to access device functionality
+- Connect Cordova apps to Azure Mobile Apps
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
 
 The following are required to complete this hands-on lab:
 
-- Visual Studio 2017 RC (Community Edition or higher) with the "Mobile development with JavaScript" workload installed.  The Visual Studio 2017 installer can be downloaded [here](https://www.visualstudio.com/vs/visual-studio-2017-rc).  Note that this lab is only supported on the Windows OS.
-- The Google Chrome browser, which can be downloaded [here](https://www.google.com/chrome/browser)
-- An active Microsoft Azure subscription. If you do not already have an Azure subscription, you can [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
+- [Google Chrome](https://www.google.com/chrome/browser)
+- [Visual Studio 2017 RC](https://www.visualstudio.com/vs/visual-studio-2017-rc) Community Edition or higher with the "Mobile Development with JavaScript" workload installed
+- An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial)
 
 <a name="Exercises"></a>
 ## Exercises ##
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Creating a new Cordova Project in Visual Studio](#Exercise1)
-- [Exercise 2: Writing platform-specific code](#Exercise2)
-- [Exercise 3: Using Cordova Plugins](#Exercise3)
-- [Exercise 4: Building and Connecting to an Azure App Service Mobile App](#Exercise4)
+- [Exercise 1: Create a Cordova Project in Visual Studio](#Exercise1)
+- [Exercise 2: Add platform-specific code](#Exercise2)
+- [Exercise 3: Use Cordova plugins](#Exercise3)
+- [Exercise 4: Connect to an Azure App Service Mobile App](#Exercise4)
 
 Estimated time to complete this lab: **90** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Creating a new Cordova Project in Visual Studio ##
+## Exercise 1: Create a Cordova Project in Visual Studio ##
 
-The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 to build, manage, and test Cordova applications that run on Android, iOS, and Windows.  In this exercise, you will create a new Cordova application project in Visual Studio and debug it using the Cordova Simulate application simulator, which will run your app inside of a simulated environment within the Google Chrome browser.  You can learn more about Cordova Simulate [here](https://taco.visualstudio.com/en-us/docs/vs-taco-2017-cordova-simulate/)
+The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 to build, manage, and test Cordova apps that run on Android, iOS, and Windows. In this exercise, you will create a new Cordova project in Visual Studio and debug it using the Cordova Simulate application simulator, which runs your app in a simulated environment in Google Chrome. You can learn more about Cordova Simulate at https://taco.visualstudio.com/en-us/docs/vs-taco-2017-cordova-simulate/.
 
-> Note: While your Cordova project will run as an iOS app on the Cordova Simulate application simulator, if you want to be able to deploy the application to an iOS emulators, to actual devices, or to the Apple App Store, you will need access to an a Macintosh computer running XCode.
+> While your Cordova project will run in Cordova Simulate, if you want to deploy the app to Apple's iOS emulator, to Apple devices, or to the Apple App Store, you will have to have access to a Mac running XCode.
 
 1. If you have not done so yet, you will need to install the Visual Studio 2017 IDE and the Visual Studio Tools for Apache Cordova.  Instructions for installing these tools can be found [here](https://taco.visualstudio.com/en-us/docs/vs-taco-2017-install/).
-1. Launch Visual Studio 2017 and create a new project by selecting the **File** menu, followed by **New** and then **Project**.
+
+1. Launch Visual Studio 2017 and create a new project by selecting **File** -> **New** -> **Project**.
 
     ![Creating a new project](Images/basic-file-newproject.png)
+
      _Creating a new project_
 
-1. In the **New Project** dialog, select **Mobile Apps** from within the **JavaScript** node.  Note that **JavaScript** may be listed directly under the **Templates** node, or it may be under **Other Languages**, depending on how you have configured your Visual Studio installation.
-	- Make sure **Blank App (Apache Cordova)** is selected.
-	- Enter *BasicCordovaApp* for the project **Name**.
-	- Leave the **Location** set to the default value.
-	- Leave the **Solution** name set to the default value.
-	- Click the **OK** button to create the project.
+1. In the "New Project" dialog, select **Mobile Apps** under **JavaScript**. (Note that **JavaScript** may be listed directly under the **Templates** node, or it may be under **Other Languages**, depending on how Visual Studio is configured.) Select **Blank App (Apache Cordova)** as the project type and enter "BasicCordovaApp" as the project name. Then click **OK**.
 
-    ![New project settings](Images/basic-newproject-settings.png)
-     _New project settings_
+	> The .NET Framework selection in this dialog is irrelevant, since Cordova apps do not use the .NET runtime.
 
-	> Note that the .NET Framework selection in this dialog is irrelevant, since Cordova apps do not use the .NET runtime.
+    ![Entering project settings](Images/basic-newproject-settings.png)
 
-1. Take a minute to look over the contents of the Solution Explorer in your new project.  Key elements to note include:
-	- The **Dependencies** folder, which contains any *Bower* and *NPM* packages you have loaded into your project.
-	- The **merges** folder, which contains any files that should be present only in particular platform deployments.
-	- The **res** folder, which contains the files like icons and splash screens that are needed by your app within the platform they are installed on.
-	- The **www** folder, which contains the HTML, CSS, JavaScript, and other resources needed by your running app.
-	- Several "loose" files, of which the **config.xml** file is perhaps the most important, as it includes the settings that Cordova will use to build and run your app.
+     _Entering project settings_
 
-    ![New project content](Images/basic-newproject-solution.png)
-     _New project content_
+1. Take a moment to examine the solution that was created. Key elements include:
 
-1.  To build your project, click to open the **Build** menu and then click on **Build Solution**. 
+	- The **Dependencies** folder, which contains any Bower and NPM packages loaded into the project
+	- The **merges** folder, which contains files that pertain to specific platforms
+	- The **res** folder, which contains resources such as icons and splash-screen images
+	- The **www** folder, which contains HTML, CSS, and JavaScript assets
+	- Several files at the root level, including **config.xml**, which includes settings that Cordova uses to build and run your app
 
-	The first time you build your project, Visual Studio will retrieve the Cordova runtime version that is specified in the project's config.xml file.  While it does so, your first build will take a little extra time and will require an active Internet connection.
+    ![The Cordova solution](Images/basic-newproject-solution.png)
 
-1. The next step will be to run your Cordova project with the Visual Studio debugger attached.  To do this, you will run it using the Cordova Simulate application simulator.  This will run your app in a simulated device within the Google Chrome web browser.  The Cordova Simulate application simulator supports both Android and iOS applications, but does not currently support running Windows Applications.  To run and debug your app, click the **Simulate in Browser - Nexus 7 (Tablet)** button in the standard toolbar in Visual Studio (once this value is set, you can also use the **F5** key on your keyboard to start debugging.)
+     _The Cordova solution_
 
-    ![Run the app with the Cordova Simulate application simulator](Images/basic-debug-simulateinbrowser.png)
-     _Run the app with the Cordova Simulate application simulator_
+1. Select **Build Solution** from Visual Studio's **Build** menu to build the project. 
 
-	In a couple of seconds, a Google Chrome browser window will open with your running app displayed in the content area.
+	> The first time you build your project, Visual Studio will retrieve the Cordova runtime version that is specified in the project's config.xml file. Because of this, your first build will take a little extra time and requires an active Internet connection.
+
+1. The next step is to run your Cordova app in Cordova Simulate with the Visual Studio debugger attached. Cordova Simulate supports Android and iOS applications, but it does not currently support Windows apps. To simulate your app on Android, click **Simulate in Browser - Nexus 7 (Tablet)**.
+
+    ![Launching the app in Cordova Simulate](Images/basic-debug-simulateinbrowser.png)
+
+     _Launching the app in Cordova Simulate_
+
+	In a couple of seconds, Google Chrome will open with the running app displayed in the content area.
  
-    ![An app running in Cordova Simulate](Images/basic-debug-cordovasimulate.png)
-     _An app running in Cordova Simulate_
+    ![App running in Cordova Simulate](Images/basic-debug-cordovasimulate.png)
+
+     _App running in Cordova Simulate_
+
+1. Return to Visual Studio and click the **DOM Explorer** tab that opened when you launched the app. DOM Explorer shows an interactive view of the HTML DOM (Document Object Model) for a running app. It also allows you to make changes to the HTML and related style elements while your app is running and preview these changes in the user interface.
+
+    ![The DOM Explorer in Visual Studio](Images/basic-debug-domexplorer.png)
+
+     _The DOM Explorer in Visual Studio_
+
+1. To demonstrate interactive changes in DOM Explorer, select the ```<p class="event received">``` element highlighted on the left below. Then, in the "Styles" panel on the right, change the ```background-color``` attribute of the ```.event.received``` style selector to "blue." Now go back to the Chrome and examine the app. What changed, and why?
+
+	![Modifying the DOM in DOM Explorer](Images/basic-debug-update-style.png)
+
+	_Modifying the DOM in DOM Explorer_
 	
-	In addition to launching your app inside of the simulator, it will also open two new tabs in Visual Studio:
-	- The **DOM Explorer** tab shows an interactive view of the HTML DOM (Document Object Model) for your running application.  You can use this view to locate the markup for items in your user interface, as well as highlighting items in your user interface by selecting them in the DOM.  You can also make changes to the HTML and related style elements in your DOM and preview the effects of these changes in your application's user interface. 
-
-	    ![The DOM Explorer tab in Visual Studio](Images/basic-debug-domexplorer.png)
+1. Return to Visual Studio and select **Stop Debugging** from the **Debug** menu.
 	
-	     _The DOM Explorer tab in Visual Studio_
+1. Next you will modify JavaScript code in the app and learn how to use breakpoints to debug your code. Begin by going to Solution Explorer and double-clicking the **index.js** file in the **www** folder to open it for editing. Then replace the existing ```onPause``` and ```onResume``` functions with the functions below:	
 
-	- The **Plugin Controls - Simulate** tab shows a collection of panels that can be used to simulate external inputs to the device (as if the app was receiving input from an actual physical device), such as GPS position, and device orientation. 
+	```JavaScript
+    function onPause() {
+      // TODO: This application has been suspended. Save application state here.
+      console.log("Pausing");
+    };
+    
+    function onResume() {
+      // TODO: This application has been reactivated. Restore application state here.
+      console.log("Resuming");
+    };
+	```
 
-	    ![The Plugin Controls tab in Visual Studio](Images/basic-debug-plugincontrols.png)	
-	     _The Plugin Controls tab in Visual Studio_
+1. Add a breakpoint to the ```console.log``` statement in ```onPause``` by moving the cursor to the beginning of the line and selecting **Toggle Breakpoint** from the **Debug** menu or pressing **F9**.
 
-1. In this step you will use the DOM Explorer to see what a color change in the user interface might look like.
-	- In the **DOM Explorer** tab in Visual Studio, locate the **Styles** display for the div element with the class values set to *"event received"* 
-		- To get to this div element, expand the *"body"*, *"div class='app'"*, and *"div id='devicereaday'"* nodes in the DOM tree.  
-	- Locate the *"background-color"* entry in the *".event.received"* style selector in the **Styles** tab.  
-	- Click on the *"#4B946A;"* color value to open the text editor for the value, and replace its contents with a new color value (for example, *"blue"*.)  
-	- Notice that the *"Device is Ready"* button in the user interface changes to reflect your new color value.
+1. Select **Start Debugging** from the **Debug** menu to launch the application again.
 
-	![Updating the DOM in Visual Studio](Images/basic-debug-updatestyle.png)
-	_Updating the DOM in Visual Studio_
+1. Click the **Plugin Controls - Simulate** tab in Visual Studio and locate the "Events" panel. Select **pause** from the list of events, and then click **Fire Event** to simulate a ```pause``` event.
 
-	When you are done, stop debugging by selecting **"Stop Debugging"** from the **"Debug"** menu. 
+	![Simulating a pause event](Images/basic-debug-pauseevent.png)
 
-	Updating your app's DOM on-the-fly like this can help with both fine-tuning your layout as well as troublshooting user interface issues.
+	_Simulating a pause event_
 	
-1. Now you will update the app's JavaScript and explore how to set and catch breakpoints in Visual Studio.
-	- Open the file *"index.js"* from within the *"www/scripts"* folders in the **Solution Explorer**.
-	- Replace the existing *onPause* and *onResume* functions with the code below:	
-		```
-	    function onPause() {
-	      // TODO: This application has been suspended. Save application state here.
-	      console.log("Pausing");
-	    };
-	    
-	    function onResume() {
-	      // TODO: This application has been reactivated. Restore application state here.
-	      console.log("Resuming");
-	    };
-		```
-	- Add a breakpoint to the line that reads *console.log("Pausing")* by moving your cursor to the beginning of the line and selecting **Toggle Breakpoint** from the **Debug** menu (you can also use the **F9** key on your keyboard.)  
-	- Start to debug the application again by selecting **Start Debugging** from the **Debug** menu.
-	- Open the **Plugin Controls - Simulate** tab in Visual Studio and locate the **Events** panel.
-	- Select "*pause*" from the dropdown by the label **Events to fire**.
-	- Click on the **Fire Event** button
+1. Observe that Visual Studio pauses execution at the breakpoint you set in the index.js file. Resume execution by selecting **Continue** from the **Debug** menu, clicking the **Continue** button in the toolbar, or pressing **F5**,and notice that "Pausing" appears in the JavaScript console.
 
-		![Firing the simulated Pause event](Images/basic-debug-pauseevent.png)
-		_Firing the simulated Pause event_
+	![Execution paused at a breakpoint in Visual Studio](Images/basic-debug-breakpoint.png)
 	
-		When you click on the button, notice that Visual Studio will pause execution at the breakpoint you set in the index.js file.  If you resume execution (By selecting **Continue** from the **Debug** menu, use the **Continue** button from the Stanadrd toolbar, or using the **F5** key on your keyboard), you will see the message *"Pausing"* added to the **JavaScript Console** in the Visual Studio IDE.
+	_Execution paused at a breakpoint in Visual Studio_
 
-		![Execution paused at a breakpoint in Visual Studio](Images/basic-debug-breakpoint.png)
-		_Execution paused at a breakpoint in Visual Studio_
+1. Simulate a ```resume``` event by returning to the **Plugin Controls - Simulate** and selecting **resume** from the list of events and clicking the **Fire Event** button. Notice that "Resuming" appears in the JavaScript console.
+ 
+1. Select **Stop Debugging** from the **Debug** menu.
 
-	- Resume the application by returning to the **Plugin Controls - Simulate** tab and selecting "*resume*" from the dropdown by the label **Events to fire** and clicking the **Fire Event** button.  Notice that the message *"Resuming"* is added to the **JavaScript Console** in the Visual Studio IDE.
-	- When you are done, stop debugging by selecting **"Stop Debugging"** from the **"Debug"** menu.
+You now know how to create a Cordova project, how to launch it in Cordova Simulate, how to use DOM Explorer to view and even modify DOM elements, and how to perform basic debugging tasks. The next step is to write some code to make the app do something useful.
 
 <a name="Exercise2"></a>
-## Exercise 2: Writing platform-specific code ##
+## Exercise 2: Add platform-specific code ##
 
 Apache Cordova projects include the *"merges"* folder in order to support including elements as part of your app that are only deployed to a specific platform.  This is useful when you need to support different features or comply with expected layout design standards that may differ from one platform or device to another.  In this exercise you will update the project you started in the previous exercise to show different content depending on the platform the app is running on.
 
 > The JavaScript in this exercise will use the jQuery library to manipulate DOM content.  When writing a Cordova project, you will most likely be using a JavaScript framework like AngularJS or the Ionic framework to facilitate the Single Page Application (SPA) model of web development.  This lab, however, will opt to simply use jQuery for DOM manipulation in order to simplify the discussion.
 
 1. The first step is to add a JSON file to the project to configure the location of content installed with the Bower package manager.
+
 	- In Visual Studio, right click your project file in the **Solution Explorer** and select **Add/New Item...**.
 	- Select **Text File**, and in the **Name** box enter *".bowerrc"*
 	- Click the **Add** button.
 	- Add the following content to the newly created file
+
 	```
 	{
 	  "directory": "www/lib"
 	}
 	```
+
 	- Click the **Save** icon to save your file.
 	
 	> Note: When you use Bower to retrieve a particular JavaScript library, it often will bring in a variety of files and other content.  You can either download the content to an intermediate location and individually copy just the files you want into the www portion of your project - generally a manual process - or you can use the Bower configuration file to indicate you want the entire content pulled into your www file.  In this instance, you are including the entire Bower package contents in your app's www/lib folder. 
@@ -178,6 +177,7 @@ Apache Cordova projects include the *"merges"* folder in order to support includ
 	- Locate the *jQuery* entry and click on the **Install** button.
 
 	![Including the jQuery Bower package](Images/platform-bower-jquery.png)
+
 	_Including the jQuery Bower package_
 
 1. Next you will update the main page HTML file.
@@ -232,7 +232,7 @@ Apache Cordova projects include the *"merges"* folder in order to support includ
 		- Stop the debugger.
 
 <a name="Exercise3"></a>
-## Exercise 3: Using Cordova Plugins ##
+## Exercise 3: Use Cordova plugins ##
 
 In Apache Cordova development, plugins provide access to native device capabilities that are outside the scope of what a basic web app can interact with.  This includes access to device information, access to sensors like accelerometers, GPS, and Bluetooth, and access to device information services such as Contacts and File System access.  Plugins are cross-platform libraries that provide a JavaScript wrapper over the top of the native code that provides the desired functionality.
 
@@ -276,7 +276,7 @@ In this exercise you will continue to work on the same project as the prior exer
 	Stop the debugger when you have finished.
 
 <a name="Exercise4"></a>
-## Exercise 4: Building and Connecting to an Azure App Service Mobile App ##
+## Exercise 4: Connect to an Azure App Service Mobile App ##
 
 Azure App Service Mobile Apps provide a convenient and powerful platform for adding backend functionality to your Cordova apps.  With Mobile Apps, you can create apps that store data in the cloud with or without offline data synchronization, add authentication and authorization, and configure push notifications, among other features.    
 
