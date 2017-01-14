@@ -409,7 +409,7 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		</div>
 		```  
 	- Locate the *index.js* file in the the project's **www/scripts** folder.  Replace the *onDeviceReady* function with the following code (removing some of the code you wrote in the previous exercises):
-		```
+		```JavaScript
 		function onDeviceReady() {
 		    // Handle the Cordova pause and resume events
 		    document.addEventListener( 'pause', onPause.bind( this ), false );
@@ -483,11 +483,14 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		    }
 		};
 		```
-		Although there appears to be a lot of content there, there really is not all that much.  The *updateScores* function makes a call into the Azure App Service Mobile App instance to retrieve the values of the *scores* table, then uses those values to update the table in the user interface.  The *addNewScore* function retrieves values for a new score entry from the user interface and then makes a call into the Azure App Service Mobile App to add the new value.  If the call succeeds, the function then calls *updateScores* to update ensure the table is udpated with the new entry. 
+
+		Although there appears to be a lot of content there, there really is not all that much.  The *updateScores* function makes a call into the Azure App Service Mobile App instance to retrieve the values of the *scores* table, then uses those values to update the table in the user interface.  The *addNewScore* function retrieves values for a new score entry from the user interface and then makes a call into the Azure App Service Mobile App to add the new value.  If the call succeeds, the function then calls *updateScores* to update ensure the table is udpated with the new entry.
+ 
 	- In the Solution Explorer, open the script file in the project's *www/services/mobileApps/settings* folder.  The first line in this file should be a variable declaration of the form `var variable_name;`  Copy or otherwise make a note of this variable name.
 	- Return to the *index.js* file.  In the script you just pasted into that file, locate the line that reads `var cordovaLabClient = UPDATE_THIS_VALUE;`  Replace the text *"UPDATE_THIS_VALUE"* with the variable name you just recorded. 
 	- In the Solution Explorer, open the *index.css* file from the *www/css* folder.  Replace the style definition for the *app* class with the following:
-		```
+
+		```css
 		.app {
 		    background: url(../images/cordova.png) no-repeat center top; 
 		    position: absolute;             
@@ -504,23 +507,30 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		}
 		```
 
-1. Your app should now be ready to run.  
+1. Your app should now be ready to run. 
+2
 	- As you did in the previous exercises, select either the **Android** or **iOS** platform options and make sure that one of the **Simulate in Browser** options are displayed in the standard toolbar in Visual Studio and click the button to run the app in the Cordova Simulate application simulator.
 	- Enter the following values in the app interface as a new score entry, then press the **Add Score** button. 
 		- Home Team: *Us*
 		- Home Score: *10*
 		- Away Team: *Them*
 		- Away Score: *5*
+
 		![Enter data in the mobile app](Images/azure-run-gooddata.png)
+
 		_Enter data in the mobile app_
+
 	- Enter 2 or 3 more scores.
 	- Now try to exercise the server-side validation logic by entering the following score, then pressing the **Add Score** button.
 		- Home Team: *Us*
 		- Home Score: *10*
 		- Away Team: *Us*
 		- Away Score: *5*
+
 		Note the error that is displayed - this shows the server has detected a data validation error since the Home Team and Away Team values are the same.
+
 			![Enter bad data in the mobile app](Images/azure-run-baddata.png)
+
 			_Enter bad data in the mobile app_
 
 1. The final step is to clean up your Azure resources.  The Azure App Services Mobile App instance you created will result in two sets of charges against your Azure subscription - one set for the App Service instance and one for the Azure SQL Database instance.  In order to keep from accruing charges for these resources, you should delete them both.  Fortunately, since they were placed in the same Azure Resource Group, you do all of the necessary cleanup in one place.
@@ -530,13 +540,16 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 	- In the *BasicCordovaApp* Resource Group management blade, click on the Delete button. 
 		![Delete the BasicCordovaApp resource group](Images/azure-cleanup-deleteresourcegroup.png)
 		_Delete the BasicCordovaApp resource group_
-	- In the "Are you sure you want to delete "BasicCordovaApp"?" blade that is displayed, enter the resource group name *"BasicCordovaApp"* in the section where you are prompted to confirm the deletion.  Click the Delete button to delete the resources.  The deletion process might take a few minutes to complete. 
+	- In the "Are you sure you want to delete "BasicCordovaApp"?" blade that is displayed, enter the resource group name *"BasicCordovaApp"* in the section where you are prompted to confirm the deletion.  Click the Delete button to delete the resources.  The deletion process might take a few minutes to complete.
+
 		![Confirm deletion of the BasicCordovaApp resource group](Images/azure-cleanup-confirmdeletion.png)
+
 		_Confirm deletion of the BasicCordovaApp resource group_
 
 ## Summary ##
 
 In this hands-on lab, you learned how to:
+
 - Create a new Cordova project in Visual Studio 2017.
 - Use the Cordova Simulate application simulator to test your Cordova application.
 - Add resources that are used only when your app is running on a specific platforms.
@@ -546,3 +559,5 @@ In this hands-on lab, you learned how to:
 As you have seen, Visual Studio and the Visual Studio Tools for Apache Cordova can greatly help you develop mobile apps on top of the Apache Cordova framework.  With these tools, you can quickly stand up, develop, manage, test, and debug your Cordova apps on a variety of platforms, using either the Cordova Simulate application simulator or other tools to run the app under development.  Furthermore, with Visual Studio's integration with the Microsoft Azure services, you can quickly stand up a cloud-hosted backend for your mobile app and greatly extend both the functionality and the reach of your mobile application.  
 
 ---
+
+Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at https://opensource.org/licenses/MIT.
