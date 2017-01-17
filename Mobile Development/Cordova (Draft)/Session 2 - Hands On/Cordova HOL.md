@@ -41,7 +41,7 @@ This hands-on lab includes the following exercises:
 
 - [Exercise 1: Create a Cordova Project in Visual Studio](#Exercise1)
 - [Exercise 2: Add platform-specific code](#Exercise2)
-- [Exercise 3: Use Cordova plugins](#Exercise3)
+- [Exercise 3: Add a Cordova plugin](#Exercise3)
 - [Exercise 4: Connect to an Azure App Service Mobile App](#Exercise4)
 
 Estimated time to complete this lab: **90** minutes.
@@ -141,7 +141,7 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 
 1. Simulate a ```resume``` event by returning to **Plugin Controls - Simulate** and selecting **resume** from the list of events and clicking the **Fire Event** button. Notice that "Resuming" appears in the JavaScript console.
  
-1. Select **Stop Debugging** from the **Debug** menu.
+1. Select **Stop Debugging** from the **Debug** menu to stop debugging.
 
 You now know how to create a Cordova project, how to launch it in Cordova Simulate, how to use DOM Explorer to view and even modify DOM elements, and how to perform basic debugging tasks. The next step is to write some code to make the app do something useful.
 
@@ -162,7 +162,7 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 	}
 	```
 
-	> Note: When you use Bower to import a JavaScript library, it often will bring in a variety of files and other content.  You can either download the content to an intermediate location and individually copy just the files you want into the www portion of your project - generally a manual process - or you can use the Bower configuration file to indicate you want the entire content pulled into your www file.  In this instance, you are including the entire Bower package contents in your app's www/lib folder. 
+	> Note: When you use Bower to import a JavaScript library, it often will bring in a variety of files and other content.  You can either download the content to an intermediate location and individually copy just the files you want into the www portion of your project — generally a manual process — or you can use the Bower configuration file to indicate you want the entire content pulled into your www file.  In this instance, you are including the entire Bower package contents in your app's www/lib folder. 
 	
 1. The next step is to use the Bower package manager to include jQuery in your project. Begin by selecting **Manage Bower Packages...** from the **Project** menu.
 
@@ -190,88 +190,106 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 1. In Solution Explorer, find the **platformOverrides.js** file in the **www/scripts** folder and double-click it to open it for editing. Note that this file is empty except for some code comments.
 
-	- Android	
-		- Open the *platformOverrides.js* file in the **merges/android/scripts** folder in your project.
-		- Within the self-executing function body, add the following line of JavaScript code, which locates the element with the ID "ex2Platform" and replaces its contents with the word "Android":
-			```
-			$("#ex2Platform").html("Android");
-			```
-		- Save the updated file.
-	- iOS
-		- Right click the **merges/iOS** folder in your project and select **Add/New Folder...** from the context menu. Name the new folder *"scripts"*.
-		- Right-click the newly created *"scripts"* folder and select **Add/New Item...**
-		- In the **Add New Item - BasicCordovaApp** dialog, select **JavaScript File** and name the file *"platformOverrides.js"*  Click the **Add** button to complete the dialog.
-		- Add the following code, which locates the element with the ID "ex2Platform" and replaces its contents with the word "iOS", to the newly created *platformOverrides.js* file.
-			```
-			(function () {
-			    $("#ex2Platform").html("iOS");
-			} ());
-			```
-		- Save the updated file. 
+1. In Solution Explorer, double-click the **platformOverrides.js** file in the **merges/android/scripts** folder to open it for editing.
 
-1. The final step is to run the app under several different platforms to see the per-platform code running.
-	- Android	
-		- Make sure that the **Android** platform is selected and one of the **Simulate in Browser** options is displayed in the standard toolbar in Visual Studio and click the button to run the app in Cordova Simulate as an Android app.
-		![Running the app in the Android platform](Images/platform-android-debug.png)
-		_Running the app in the Android platform_
-		-  Notice that the app displays Android as the platform name.
-		![Displaying the Android platform](Images/platform-android-simulate.png)
-		_Displaying the Android platform_
-		- Stop the debugger.
-	- iOS	
-		- Make sure that the **iOS** platform is selected and one of the **Simulate in Browser** options is displayed in the standard toolbar in Visual Studio and click the button to run the app in Cordova Simulate as an Android app.
-		![Running the app in the iOS platform](Images/platform-iOS-debug.png)
-		_Running the app in the iOS platform_
-		-  Notice that the app displays iOS as the platform name.
-		![Displaying the Android platform](Images/platform-ios-simulate.png)
-		_Displaying the iOS platform_
-		- Stop the debugger.
+1. Add the following line of code to the self-executing function body to locate the element whose ID is "ex2Platform" and replace its contents with the word "Android:"
 
-TODO: Add closing.
+	```JavaScript
+	$("#ex2Platform").html("Android");
+	```
+
+1. Save your changes to **platformOverrides.js**.
+
+1. Right-click the **merges/iOS** folder in Solution Explorer and select **Add/New Folder...** from the context menu. Name the new folder "scripts."
+
+1. Right-click the "scripts" folder that you just created and select **Add/New Item...** from the context menu.
+
+1. In the ensuing dialog, select **JavaScript File** and name the file **platformOverrides.js**. Then click the **Add** button to add the file to the folder.
+
+1. Add the following code, which locates the element whose ID is "ex2Platform" and replaces its contents with the word "iOS", to the **platformOverrides.js** file you just created:
+
+	```JavaScript
+	(function () {
+	    $("#ex2Platform").html("iOS");
+	} ());
+	```
+
+1. Save your changes to **platformOverrides.js**.
+
+1. The next step is to run the app on iOS and Android and see the effects of the per-platform code. To begin, make sure that **Android** is selected in the platform drop-down and one of the **Simulate in Browser** options is selected. Then click **Simulate in Browser** to run the app in Cordova Simulate.
+
+	![Simulating the app on Android](Images/platform-android-debug.png)
+
+	_Simulating the app on Android_
+
+	Notice that the app displays "Android" as the platform name.
+
+	![BasicCordovaApp running on Android](Images/platform-android-simulate.png)
+
+	_BasicCordovaApp running on Android_
+
+1. Stop the debugger. Then select **iOS** as the platform and make sure one of the **Simulate in Browser** options is selected. Then click **Simulate in Browser** to run the app in Cordova Simulate.
+
+	![Simulating the app on iOS](Images/platform-iOS-debug.png)
+
+	_Simulating the app on iOS_
+
+	Notice that the app displays "iOS" as the platform name.
+
+	![BasicCordovaApp running on iOS](Images/platform-ios-simulate.png)
+
+	_BasicCordovaApp running on iOS_
+
+1. Stop the debugger.
+
+Now that you know how to include platform-specific code in your app, a great next step is learning about Cordova plugins.
 
 <a name="Exercise3"></a>
-## Exercise 3: Use Cordova plugins ##
+## Exercise 3: Add a Cordova plugin ##
 
-In Apache Cordova development, plugins provide access to native device capabilities that are outside the scope of what a basic web app can interact with.  This includes access to device information, access to sensors like accelerometers, GPS, and Bluetooth, and access to device information services such as Contacts and File System access.  Plugins are cross-platform libraries that provide a JavaScript wrapper over the top of the native code that provides the desired functionality.
+In Apache Cordova development, plugins provide access to native device capabilities that are outside the scope of what a traditional Web app can do. This includes access to device information, access to sensors like accelerometers, GPS, and Bluetooth, and access to device information services such as contacts and the file system. Plugins are cross-platform libraries that provide a JavaScript wrapper over the native code that provides the desired functionality.
 
-Plugins are configured in each app's *config.xml* file.  The Visual Studio Tools for Apache Cordova includes a list of predefined "core" plugins that can be selected from the designer UI.  You can also configure access to custom plugins that you download or write yourself.
+Plugins are configured in the **config.xml** file. The Visual Studio Tools for Apache Cordova includes a list of predefined "core" plugins that can be selected from the designer UI. You can also add custom plugins that you download or write yourself.
 
-In this exercise you will continue to work on the same project as the prior exercises, using the Device plugin as an alternative way to display a similar device platform name as you did in the previous exercise.
+In this exercise, you will use the Device plugin to customize the UI with information about the operating system and device ID.
 
-1. Start by locating the *config.xml* file in the Visual Studio Solution Explorer.  Double click the file to open it using the Visual Studio designer.
+1. Start by locating the **config.xml** file in the Solution Explorer. Double-click the file to open it in the Visual Studio designer.
 
-1. Select the **Plugins** panel and make sure the **Core** set of plugins are selected.  Scroll through the the list of available core plugins and select the *Device* plugin. Click the **Add** button to install the plugin.
+1. Select **Plugins** and make sure **Core** is selected. Scroll through the the list of available core plugins and select the **Device** plugin. Then click the **Add** button to install the plugin.
 
 	![Installing the Device plugin](Images/plugins-install-device.png)
+
 	_Installing the Device plugin_
 
-	The text in the plugin display will change to indicate whether or not it has been installed successfully, and if so, the Add button text will change to *"Remove"*.
+1. Reopen the **index.html** file that you edited in the previous exercise.  Below the ```<h2 id="ex2Platform">Override Platform</h2>``` element that you added previously, add the following statements. Then save the file.
 
-1. Re-open the *index.html* file that you edited in the previous exercise.  Below the `<h2 id="ex2Platform">Override Platform</h2>` element that you added previously, add the following new elements:
-	```
+	```HTML
 	<h2 id="ex3Platform">Plugin Platform</h2>
 	<h2 id="ex3Id">Plugin Device ID</h2>
 	```
 
-1.  Re-open the *index.js* file that you edited in the first exercise.  Inside of the *onDeviceReady* function, add the following code:
-	```
+1.  Reopen the **index.js** file that you edited in [Exercise 1](#Exercise1). Add the following statements to the *onDeviceReady* function. Then save the file.
+
+	```JavaScript
 	var devicePlatform = device.platform;
 	var deviceId = device.uuid;
 	$("#ex3Platform").html(devicePlatform);
 	$("#ex3Id").html("ID: " + deviceId);
 	```
 
-	This code retrieves the Platform and UUID values from the *device* plugin, then updates the appropriate user interface elements with the values.  The *onDeviceReady* function is called in response to the *deviceready* event, which is fired when the Cordova framework has been fully loaded and is ready to be accessed by your code.
+	This code retrieves the Platform and UUID values from the Device plugin, and then updates the appropriate user-interface elements with the values. The *onDeviceReady* function is called in response to the *deviceready* event, which is fired when the Cordova framework has been fully loaded and is ready to be used by your code.
 
-1.  Select either the **Android** or **iOS** platform options and make sure that one of the **Simulate in Browser** options are displayed in the standard toolbar in Visual Studio and click the button to run the app in Cordova Simulate.
-	Notice that the new platform value is being displayed in addition to the previous one you implemented.  The device ID is also being displayed in the following line.  
+1.  Select either **Android** or **iOS** in the platform drop-down and make sure that one of the **Simulate in Browser** options is selected. Then click **Simulate in Browser** to run the app in Cordova Simulate.
 
-	![Displaying the Device plugin values](Images/plugins-android-simulate.png)
-	_Displaying the Device plugin values_
+	Confirm that a new platform value ("iOS" or "Android") is displayed in addition to the one you added in [Exercise 2](#Exercise2), and that a device ID is displayed as well.  
 
-	If you stop the app, select a different platform, and then restart it, you should see the new platform name displayed and a new device ID value corresponding to the selected platform. 
+	![Output from the Device plugin](Images/plugins-android-simulate.png)
 
-	Stop the debugger when you have finished.
+	_Output from the Device plugin_
+
+1. Stop the debugger.
+
+If you select a different platform and run the app again, the platform name and device ID should update accordingly. 
 
 <a name="Exercise4"></a>
 ## Exercise 4: Connect to an Azure App Service Mobile App ##
@@ -368,7 +386,8 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		_Manage the scores table_
 		This will open a new browser tab that displays an online editor for the code in your Azure App Service Mobile App instance.  
 	- Paste the following code into the App Service Editor window:
-		```
+
+		```JavaScript
 		table.insert(function(context) {
 			if (context.item.homeTeamName !== context.item.awayTeamName){
 				return context.execute();
@@ -377,6 +396,7 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 			throw new Error('Home Team and Away Team must be different.');
 		});
 		```
+
 		This code simply checks to ensure the Home Team and Away Team names are different before committing the data into the database.  You do not need to do anything special to save the code changes.   Changes in the App Service Editor are saved as you go.
 
 1.  Now you will update the application to work with the Azure App Services Mobile App instance you just created and configured.
@@ -384,7 +404,8 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		- In Visual Studio, locate and open the project's *config.xml* file.
 		- Select the **Plugins** panel, scroll down to select the **Notification** plugin, and click on the **Add** button. 
 	- Locate the *index.html* file in the project's **www** folder.  Replace the existing content inside of the `<div class="app">` element with the following HTML:
-		```
+
+		```HTML
 		<h1>Apache Cordova</h1>
 		<div id="newScore">
 		    <div><label>Home Team: <input id="homeTeamName" type="text"></label></div>
@@ -407,8 +428,10 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		        <tbody></tbody>
 		    </table>
 		</div>
-		```  
+		```
+
 	- Locate the *index.js* file in the the project's **www/scripts** folder.  Replace the *onDeviceReady* function with the following code (removing some of the code you wrote in the previous exercises):
+
 		```JavaScript
 		function onDeviceReady() {
 		    // Handle the Cordova pause and resume events
@@ -507,21 +530,22 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 		}
 		```
 
-1. Your app should now be ready to run. 
-2
+1. Your app should now be ready to run.
 	- As you did in the previous exercises, select either the **Android** or **iOS** platform options and make sure that one of the **Simulate in Browser** options are displayed in the standard toolbar in Visual Studio and click the button to run the app in the Cordova Simulate application simulator.
-	- Enter the following values in the app interface as a new score entry, then press the **Add Score** button. 
+	- Enter the following values in the app interface as a new score entry, then press the **Add Score** button.
+
 		- Home Team: *Us*
 		- Home Score: *10*
 		- Away Team: *Them*
 		- Away Score: *5*
 
-		![Enter data in the mobile app](Images/azure-run-gooddata.png)
-
-		_Enter data in the mobile app_
+			![Entering data in the mobile app](Images/azure-run-gooddata.png)
+	
+			_Entering data in the mobile app_
 
 	- Enter 2 or 3 more scores.
 	- Now try to exercise the server-side validation logic by entering the following score, then pressing the **Add Score** button.
+
 		- Home Team: *Us*
 		- Home Score: *10*
 		- Away Team: *Us*
@@ -529,22 +553,27 @@ In this exercise, you will first use Visual Studio to create a new Azure App Ser
 
 		Note the error that is displayed - this shows the server has detected a data validation error since the Home Team and Away Team values are the same.
 
-			![Enter bad data in the mobile app](Images/azure-run-baddata.png)
+		![Entering bad data in the mobile app](Images/azure-run-baddata.png)
 
-			_Enter bad data in the mobile app_
+		_Entering bad data in the mobile app_
 
 1. The final step is to clean up your Azure resources.  The Azure App Services Mobile App instance you created will result in two sets of charges against your Azure subscription - one set for the App Service instance and one for the Azure SQL Database instance.  In order to keep from accruing charges for these resources, you should delete them both.  Fortunately, since they were placed in the same Azure Resource Group, you do all of the necessary cleanup in one place.
 
 	- If it is not still open, open the Azure Portal in a web browser using the URL [https://portal.azure.com](https://portal.azure.com) and sign in with your Azure credentials
 	-  As you did before in the Azure Portal, open the **Resource Groups** blade by clicking on on the **Resource Groups** item in the shortcut list on the left hand side. In the **Resource groups** blade that opens, click the *"BasicCordovaApp"* resource group to open its management blade.
-	- In the *BasicCordovaApp* Resource Group management blade, click on the Delete button. 
-		![Delete the BasicCordovaApp resource group](Images/azure-cleanup-deleteresourcegroup.png)
-		_Delete the BasicCordovaApp resource group_
+	- In the *BasicCordovaApp* Resource Group management blade, click on the Delete button.
+
+		![Deleting the resource group](Images/azure-cleanup-deleteresourcegroup.png)
+
+		_Deleting the resource group_
+
 	- In the "Are you sure you want to delete "BasicCordovaApp"?" blade that is displayed, enter the resource group name *"BasicCordovaApp"* in the section where you are prompted to confirm the deletion.  Click the Delete button to delete the resources.  The deletion process might take a few minutes to complete.
 
-		![Confirm deletion of the BasicCordovaApp resource group](Images/azure-cleanup-confirmdeletion.png)
+		![Confirming deletion of the resource group](Images/azure-cleanup-confirmdeletion.png)
 
-		_Confirm deletion of the BasicCordovaApp resource group_
+		_Confirming deletion of the resource group_
+
+TODO: Add closing paragraph.
 
 ## Summary ##
 
