@@ -298,282 +298,335 @@ Azure App Service Mobile Apps provide a convenient and powerful platform for add
 
 In this exercise, you will first use Visual Studio to create a new Azure App Service Mobile App instance.  Then you will use the Mobile Apps Easy Tables feature to quickly configure a database table and expose access to this table through a REST endpoint. You will also add some server-side data validation logic for this table.  Finally, you will configure your Cordova app to call this service in order to both consume and update data that is stored in the cloud.
 
-1. The first step is to use the Visual Studio "Add Connected Service" to provision a new Azure App Service Mobile App instance.  While you could perform this step in the Azure Portal, Visual Studio simplifies the process by providing a wizard-like set of tools that you can use to both create the service and its resources, as well as to make several changes to your Cordova project in order to enable your code to communicate with the newly created service.
+> While you could perform this step in the Azure Portal, Visual Studio simplifies the process by providing a wizard-like set of tools that you can use to both create the service and its resources, as well as to make several changes to your Cordova project in order to enable your code to communicate with the newly created service.
 
-	- In the Visual Studio Solution Explorer locate and double-click on the **Connected Services** node.
-		![Selecting Connected Services](Images/azure-connectedservices-select.png)
-		_Selecting Connected Services_
+1. The first step is to use the Visual Studio "Add Connected Service" to provision a new Azure App Service Mobile App instance.  In the Visual Studio Solution Explorer locate and double-click on the **Connected Services** node.
 
-	- Click on the link titled **Mobile Backend with Azure App Service Mobile App**.
-		![Connecting to a Mobile Backend Service](Images/azure-connectedservices-mobilebackend.png)
-		_Connecting to a Mobile Backend Service_
+	![Selecting Connected Services](Images/azure-connectedservices-select.png)
 
-	- In the **Azure Mobile Apps** dialog:
-		- If you already have connected Visual Studio to your Azure Subscription, select the account to use in the upper right hand corner.  Otherwise, you will need to add your Azure account to Visual Studio.
-			- To add a new account, click on the **Add an account** button in the upper right corner of the dialog.
-			![Adding an Azure account](Images/azure-mobileappselect-addaccount.png)
-			_Adding an Azure account_
-			- In the **Sign in to your account** dialog, enter the credentials to sign in to your Azure subscription.
-		- Once you have an Azure Account selected in the **Azure Mobile Apps** dialog, click on the **Create Service** button to create a new Azure App Service Mobile App instance.
-			![Create a new Azure Mobile Apps service](Images/azure-mobileapps-createaservice.png)
-			_Create a new Azure Mobile Apps service_
-	
-		- In the **Hosting** section of the **Create App Service** dialog:
-			- Keep the default value for **Mobile App Name** (this name needs to be unique, and Visual Studio will generate a unique default name for you.)
-			- Use the **Subscription** dropdown to select the subscription in which you want your new service created.
-			- Click on the **New...** button next to the **Resource Group** dropdown. Enter the name *"BasicCordovaApp"* as the **New Resource Group Name** and press the **OK** button.
-			- Click the **New...** button next to the **App Service Plan** dropdown.   In the **Configure Service Plan** dialog, leave the default name in the **App Service Plan** text box, change the **Location** value to be a region closest to where you are, and select *Free* as the **Size** for the new App Service Plan.  Click the **OK** button to accept the App Service Plan settings.
-			![Configure Hosting options for the new Azure Mobile Apps service](Images/azure-mobileapps-createappservicehosting.png)
-			_Configure Hosting options for the new Azure Mobile Apps service_
-	
-		- In the **Services** section of the **Create App Service** dialog:
-			- Under the text "*Select any additional Azure resources your app will need*", click the **+** button next to the SQL Database entry.
-			![Add a new SQL Database service](Images/azure-mobileapps-createappserviceservicesadddatabase.png)
-			_Add a new SQL Database service_
-	
-			- In the **Configure SQL Database** dialog:
-				- Click the **New...** button next to the **SQL Server** dropdown.
-				- In the **Configure SQL Server** dialog:
-					- Leave the default value for the **Server Name**.
-					- Enter *"cordova"* for the **Administrator Username** field.
-					- Enter "c0rd0va!" for both the **Administrator Password** and **Administrator Password (confirm)** fields.
-					- Click the **OK** button to commit the SQL Server configuration values.
-				- Leave the default **Database Name** value.
-				- Change the **Connection String Name** value to *"MS_TableConnectionString"*
-				- Click the **OK** button to commit the SQL Database configuration values.
-	
-				![Configuring the SQL Database and Server](Images/azure-mobileapps-createdatabase.png)
-				_Configuring the SQL Database and Server_
-	
-		- Click the **Create** button in the **Create App Service** dialog to start provisioning the Azure App Service Mobile App instance.
-	
-			![Completing the App Service creation](Images/azure-mobileapps-createappservicecomplete.png)
-			_Completing the App Service creation_
-	
-			The deployment process progress will be reported at the bottom of the **Create App Service** dialog and may take a couple of minutes to complete.
-		- Once the service has been created, it will appear in the **Azure Mobile Apps** dialog.  Make sure it is selected and click on the **Add** button. This will start the process of connecting your Cordova app to your newly created Azure App Service Mobile App instance, including:
-			- Installing the Azure Mobile Apps plugin to your Cordoca project
-			- Adding a new JavaScript file in your app's *www/services/mobileApps/setttings* folder.
-			- Adding a new *script* tag in your project's Start Page (*index.html*) to reference this newly added JavaScript file.
-	
-			![Adding the newly created Azure Mobile App to your Cordova project](Images/azure-connectedservices-addcreatedmobileapp.png)
-			_Adding the newly created Azure Mobile App to your Cordova project_
+	_Selecting Connected Services_
 
-1. The next step is to use the Azure Portal to configure the content of the Azure App Service Mobile App that you just created.  This includes setting up the Easy Tables functionality, creating the database table that your app will use to store data, and adding validation logic that will run server-side to ensure the data your app supplies is valid.
-
-	- Open the Azure Portal in a web browser using the URL [https://portal.azure.com](https://portal.azure.com) and sign in with your Azure credentials
-	-  In the Azure Portal, open the **Resource Groups** blade by clicking on on the **Resource Groups** item in the shortcut list on the left hand side. In the **Resource groups** blade that opens, click the *"BasicCordovaApp"* resource group to open its management blade.
-	![Opening the BasicCordovaApp resource group](Images/azure-portal-openresourcegroup.png)
-	_Opening the BasicCordovaApp resource group_
-	-  In the **BasicCordovaApp** resource group blade, locate the entry with the type name *"App Service"* and click on it to open the blade for managing your Azure App Service Mobile App instance.
-	![Opening the Mobile App management blade](Images/azure-portal-openmobileapp.png)
-	_Opening the Mobile App management blade_
-	- In the management blade for your Azure App Service Mobile App instance, scroll down the list of options on the left side to reveal the **Mobile** section and click on the **Easy Tables** entry.  This will display the Easy Tables configuration panel for your Azure App Service Mobile App.
-	![Opening the Easy Tables configuration blade](Images/azure-portal-openeasytables.png)
-	_Opening the Easy Tables configuration blade_
-	- In the Easy Tables configuration panel for your Azure App Service Mobile App, click on the alert at the top that reads *"Need to configure Easy Tables/Easy APIs - Click here to continue -->"*
-	![Accessing Easy Tables configuration](Images/azure-portal-configureeasytables.png)
-	_Accessing Easy Tables configuration_
-	- In the **Easy Tables** configuration blade check the initialization acknowledgment text and then click the **Initialize App** button.
-	![Configure the Easy Tables database](Images/azure-portal-easytablesconfig.png)
-	_Configure the Easy Tables database_		 
-	- When the backend initialization completes, the **+Add** button in the Easy Tables configuration panel will be enabled.  Click on the **+Add** button to open the **Add a table blade**.
-	- Type *"scores"* in the table **Name** field and press the **OK** button (leave the permission defaults.)
-		![Add the scores table](Images/azure-portal-addtable.png)
-		_Add the scores table_
-	- When the table is created, you will have a *scores* entry in the **Easy Tables** panel.  Click on the table name to open the table management blade, then click on **Edit script**.
-		![Manage the scores table](Images/azure-portal-managetable.png)
-		_Manage the scores table_
-		This will open a new browser tab that displays an online editor for the code in your Azure App Service Mobile App instance.  
-	- Paste the following code into the App Service Editor window:
-
-		```JavaScript
-		table.insert(function(context) {
-			if (context.item.homeTeamName !== context.item.awayTeamName){
-				return context.execute();
-			}
-			context.logger.error('Home Team and Away Team must be different.');
-			throw new Error('Home Team and Away Team must be different.');
-		});
-		```
-
-		This code simply checks to ensure the Home Team and Away Team names are different before committing the data into the database.  You do not need to do anything special to save the code changes.   Changes in the App Service Editor are saved as you go.
-
-1.  Now you will update the application to work with the Azure App Services Mobile App instance you just created and configured.
-	- Before getting started, the app is going to display a message dialog if there is an error communicating with the Azure App Services Mobile App instance.  To display these error messages, you will need to add install the *Notifications* plugin in your app.
-		- In Visual Studio, locate and open the project's *config.xml* file.
-		- Select the **Plugins** panel, scroll down to select the **Notification** plugin, and click on the **Add** button. 
-	- Locate the *index.html* file in the project's **www** folder.  Replace the existing content inside of the `<div class="app">` element with the following HTML:
-
-		```HTML
-		<h1>Apache Cordova</h1>
-		<div id="newScore">
-		    <div><label>Home Team: <input id="homeTeamName" type="text"></label></div>
-		    <div><label>Home Score: <input id="homeTeamScore" type="text"></label></div>
-		    <div><label>Away Team: <input id="awayTeamName" type="text"></label></div>
-		    <div><label>Away Score: <input id="awayTeamScore" type="text"></label></div>
-		    <button id="newScoreButton">Add Score</button>
-		</div>
-		<div id="scores">
-		    <button id="getScoresButton">Refresh Scores</button>
-		    <table>
-		        <thead>
-		            <tr>
-		                <td>Home</td>
-		                <td>Home Score</td>
-		                <td>Away</td>
-		                <td>Away Score</td>
-		            </tr>
-		        </thead>
-		        <tbody></tbody>
-		    </table>
-		</div>
-		```
-
-	- Locate the *index.js* file in the the project's **www/scripts** folder.  Replace the *onDeviceReady* function with the following code (removing some of the code you wrote in the previous exercises):
-
-		```JavaScript
-		function onDeviceReady() {
-		    // Handle the Cordova pause and resume events
-		    document.addEventListener( 'pause', onPause.bind( this ), false );
-		    document.addEventListener( 'resume', onResume.bind( this ), false );
-		    
-			var cordovaLabClient = UPDATE_THIS_VALUE;
-		    $("#getScoresButton").click(function () {
-		        updateScores();
-		    });
-		
-		    $("#newScoreButton").click(function () {
-		        addNewScore();
-		    });
-		
-		    function updateScores() {
-		        // Get the scores from the service
-		        var scoresTable = cordovaLabClient.getTable("scores");
-		        scoresTable
-		            .read()
-		            .then(success, failure);
-		
-		        function success(results) {
-		            // Access and clear the table content
-		            $("#scores table > tbody").empty();
-		
-		            $.each(results, function (i, item) {
-		                $('#scores table > tbody:last-child')
-		                    .append(
-		                        "<tr>" +
-		                        "<td>" + item.homeTeamName + "</td>" +
-		                        "<td>" + item.homeTeamScore + "</td>" +
-		                        "<td>" + item.awayTeamName + "</td>" +
-		                        "<td>" + item.awayTeamScore + "</td>" +
-		                        "</tr>");
-		            });
-		        }
-		
-		        function failure(error) {
-		            throw new Error("Error loading data: ", error);
-		        }
-		    }
-		
-		    function addNewScore() {
-		        // Get the values from the UI
-		        // Post the value to the service
-		        var scoreEntry = {
-		            "homeTeamName": $("#homeTeamName").val(),
-		            "homeTeamScore": $("#homeTeamScore").val(),
-		            "awayTeamName": $("#awayTeamName").val(),
-		            "awayTeamScore": $("#awayTeamScore").val(),
-		        };
-		
-		        var scoresTable = cordovaLabClient.getTable("scores");
-		        scoresTable
-		            .insert(scoreEntry)
-		            .done(insertSuccess, insertFailure);
-		
-		        function insertSuccess(result) {
-		            if (result.error) {
-		                navigator.notification.alert("Error inserting data: " + result.error);
-		                return;
-		            }
-		
-		            // Refresh the scores on success to pick up the new entry
-		            updateScores();
-		        };
-		
-		        function insertFailure(error) {
-		            navigator.notification.alert("Error inserting data: " + result.error);
-		        };
-		    }
-		};
-		```
-
-		Although there appears to be a lot of content there, there really is not all that much.  The *updateScores* function makes a call into the Azure App Service Mobile App instance to retrieve the values of the *scores* table, then uses those values to update the table in the user interface.  The *addNewScore* function retrieves values for a new score entry from the user interface and then makes a call into the Azure App Service Mobile App to add the new value.  If the call succeeds, the function then calls *updateScores* to update ensure the table is udpated with the new entry.
+1. Click on the link titled **Mobile Backend with Azure App Service Mobile App**.
  
-	- In the Solution Explorer, open the script file in the project's *www/services/mobileApps/settings* folder.  The first line in this file should be a variable declaration of the form `var variable_name;`  Copy or otherwise make a note of this variable name.
-	- Return to the *index.js* file.  In the script you just pasted into that file, locate the line that reads `var cordovaLabClient = UPDATE_THIS_VALUE;`  Replace the text *"UPDATE_THIS_VALUE"* with the variable name you just recorded. 
-	- In the Solution Explorer, open the *index.css* file from the *www/css* folder.  Replace the style definition for the *app* class with the following:
+	![Connecting to a Mobile Backend Service](Images/azure-connectedservices-mobilebackend.png)
 
-		```css
-		.app {
-		    background: url(../images/cordova.png) no-repeat center top; 
-		    position: absolute;             
-		    left: 50%;
-		    height: 50px;                  
-		    width: 225px;                   
-		    text-align: center;
-		    padding: 180px 0px 0px 0px;     
-		    margin: 10px 0px 0px -112px;
-		}
+	_Connecting to a Mobile Backend Service_
 
-		button {
-		    margin: 2px;
-		}
-		```
-
-1. Your app should now be ready to run.
-	- As you did in the previous exercises, select either the **Android** or **iOS** platform options and make sure that one of the **Simulate in Browser** options are displayed in the standard toolbar in Visual Studio and click the button to run the app in the Cordova Simulate application simulator.
-	- Enter the following values in the app interface as a new score entry, then press the **Add Score** button.
-
-		- Home Team: *Us*
-		- Home Score: *10*
-		- Away Team: *Them*
-		- Away Score: *5*
-
-			![Entering data in the mobile app](Images/azure-run-gooddata.png)
+1. In the **Azure Mobile Apps** dialog, if you already have connected Visual Studio to your Azure Subscription, select the account to use in the upper right hand corner and skip ahead to step 6 below.  Otherwise, you will need to add your Azure account to Visual Studio.
+		
+1. To add a new account, click on the **Add an account** button in the upper right corner of the dialog.
 	
-			_Entering data in the mobile app_
+	![Adding an Azure account](Images/azure-mobileappselect-addaccount.png)
 
-	- Enter 2 or 3 more scores.
-	- Now try to exercise the server-side validation logic by entering the following score, then pressing the **Add Score** button.
+	_Adding an Azure account_
 
-		- Home Team: *Us*
-		- Home Score: *10*
-		- Away Team: *Us*
-		- Away Score: *5*
+1. In the **Sign in to your account** dialog, enter the credentials to sign in to your Azure subscription.
+	
+1. Once you have an Azure Account selected in the **Azure Mobile Apps** dialog, click on the **Create Service** button to create a new Azure App Service Mobile App instance.
 
-		Note the error that is displayed - this shows the server has detected a data validation error since the Home Team and Away Team values are the same.
+	![Create a new Azure Mobile Apps service](Images/azure-mobileapps-createaservice.png)
 
-		![Entering bad data in the mobile app](Images/azure-run-baddata.png)
+	_Create a new Azure Mobile Apps service_
 
-		_Entering bad data in the mobile app_
+1. In the **Hosting** section of the **Create App Service** dialog, keep the default value for **Mobile App Name** (this name needs to be unique, and Visual Studio will generate a unique default name for you.)
+		
+1. Use the **Subscription** dropdown to select the subscription in which you want your new service created.
+
+1. Click on the **New...** button next to the **Resource Group** dropdown. Enter the name *"BasicCordovaApp"* as the **New Resource Group Name** and press the **OK** button.
+
+1. Click the **New...** button next to the **App Service Plan** dropdown.   
+
+1. In the **Configure Service Plan** dialog, leave the default name in the **App Service Plan** text box, change the **Location** value to be a region closest to where you are, and select *Free* as the **Size** for the new App Service Plan.
+
+1. Click the **OK** button to accept the App Service Plan settings.
+
+	![Configure Hosting options for the new Azure Mobile Apps service](Images/azure-mobileapps-createappservicehosting.png)
+
+	_Configure Hosting options for the new Azure Mobile Apps service_
+
+1. In the **Services** section of the **Create App Service** dialog, under the text "*Select any additional Azure resources your app will need*", click the **+** button next to the SQL Database entry.
+		
+	![Add a new SQL Database service](Images/azure-mobileapps-createappserviceservicesadddatabase.png)
+	
+	_Add a new SQL Database service_
+
+1. In the **Configure SQL Database** dialog, click the **New...** button next to the **SQL Server** dropdown.
+
+1. In the **Configure SQL Server** dialog:
+	- Leave the default value for the **Server Name**.
+	- Enter *"cordova"* for the **Administrator Username** field.
+	- Enter "c0rd0va!" for both the **Administrator Password** and **Administrator Password (confirm)** fields.
+	- Click the **OK** button to commit the SQL Server configuration values.
+
+1. Back in the **Configure SQL Database** dialog, leave the default **Database Name** value, change the **Connection String Name** value to *"MS_TableConnectionString"*, and then click the **OK** button to commit the SQL Database configuration values.
+
+	![Configuring the SQL Database and Server](Images/azure-mobileapps-createdatabase.png)
+
+	_Configuring the SQL Database and Server_
+
+1. Click the **Create** button in the **Create App Service** dialog to start provisioning the Azure App Service Mobile App instance.
+
+	![Completing the App Service creation](Images/azure-mobileapps-createappservicecomplete.png)
+	
+	_Completing the App Service creation_
+
+	The deployment process progress will be reported at the bottom of the **Create App Service** dialog and may take a couple of minutes to complete.
+
+1. Once the service has been created, it will appear in the **Azure Mobile Apps** dialog.  Make sure it is selected and click on the **Add** button. This will start the process of connecting your Cordova app to your newly created Azure App Service Mobile App instance, including:
+	- Installing the Azure Mobile Apps plugin to your Cordoca project
+	- Adding a new JavaScript file in your app's *www/services/mobileApps/setttings* folder.
+	- Adding a new *script* tag in your project's Start Page (*index.html*) to reference this newly added JavaScript file.
+
+	![Adding the newly created Azure Mobile App to your Cordova project](Images/azure-connectedservices-addcreatedmobileapp.png)
+
+	_Adding the newly created Azure Mobile App to your Cordova project_
+
+	The next step is to use the Azure Portal to configure the content of the Azure App Service Mobile App that you just created.  This includes setting up the Easy Tables functionality, creating the database table that your app will use to store data, and adding validation logic that will run server-side to ensure the data your app supplies is valid.
+
+1. Open the Azure Portal in a web browser using the URL [https://portal.azure.com](https://portal.azure.com) and sign in with your Azure credentials
+
+1. In the Azure Portal, open the **Resource Groups** blade by clicking on on the **Resource Groups** item in the shortcut list on the left hand side. In the **Resource groups** blade that opens, click the *"BasicCordovaApp"* resource group to open its management blade.
+
+	![Opening the BasicCordovaApp resource group](Images/azure-portal-openresourcegroup.png)
+
+	_Opening the BasicCordovaApp resource group_
+
+1. In the **BasicCordovaApp** resource group blade, locate the entry with the type name *"App Service"* and click on it to open the blade for managing your Azure App Service Mobile App instance.
+
+	![Opening the Mobile App management blade](Images/azure-portal-openmobileapp.png)
+
+	_Opening the Mobile App management blade_
+
+1. In the management blade for your Azure App Service Mobile App instance, scroll down the list of options on the left side to reveal the **Mobile** section and click on the **Easy Tables** entry.  This will display the Easy Tables configuration panel for your Azure App Service Mobile App.
+
+	![Opening the Easy Tables configuration blade](Images/azure-portal-openeasytables.png)
+
+	_Opening the Easy Tables configuration blade_
+
+1. In the Easy Tables configuration panel for your Azure App Service Mobile App, click on the alert at the top that reads *"Need to configure Easy Tables/Easy APIs - Click here to continue -->"*
+
+	![Accessing Easy Tables configuration](Images/azure-portal-configureeasytables.png)
+
+	_Accessing Easy Tables configuration_
+
+1. In the **Easy Tables** configuration blade check the initialization acknowledgment text and then click the **Initialize App** button.
+
+	![Configure the Easy Tables database](Images/azure-portal-easytablesconfig.png)
+
+	_Configure the Easy Tables database_	
+	 
+1. When the backend initialization completes, the **+Add** button in the Easy Tables configuration panel will be enabled.  Click on the **+Add** button to open the **Add a table blade**.
+
+1. Type *"scores"* in the table **Name** field and press the **OK** button (leave the permission defaults.)
+
+	![Add the scores table](Images/azure-portal-addtable.png)
+
+	_Add the scores table_
+
+1. When the table is created, you will have a *scores* entry in the **Easy Tables** panel.  Click on the table name to open the table management blade, then click on **Edit script**.
+
+	![Manage the scores table](Images/azure-portal-managetable.png)
+
+	_Manage the scores table_
+
+	This will open a new browser tab that displays an online editor for the code in your Azure App Service Mobile App instance.  
+
+1. Paste the following code into the App Service Editor window:
+
+	```JavaScript
+	table.insert(function(context) {
+		if (context.item.homeTeamName !== context.item.awayTeamName){
+			return context.execute();
+		}
+		context.logger.error('Home Team and Away Team must be different.');
+		throw new Error('Home Team and Away Team must be different.');
+	});
+	```
+
+	This code simply checks to ensure the Home Team and Away Team names are different before committing the data into the database.  You do not need to do anything special to save the code changes.   Changes in the App Service Editor are saved as you go.
+
+1.  Now you will update the application to work with the Azure App Services Mobile App instance you just created and configured.  Before getting started, the app is going to display a message dialog if there is an error communicating with the Azure App Services Mobile App instance.  To display these error messages, you will need to add install the *Notifications* plugin in your app.
+
+	In Visual Studio, locate and open the project's *config.xml* file.
+
+1. Select the **Plugins** panel, scroll down to select the **Notification** plugin, and click on the **Add** button. 
+
+1. Locate the *index.html* file in the project's **www** folder.  Replace the existing content inside of the `<div class="app">` element with the following HTML:
+
+	```HTML
+	<h1>Apache Cordova</h1>
+	<div id="newScore">
+	    <div><label>Home Team: <input id="homeTeamName" type="text"></label></div>
+	    <div><label>Home Score: <input id="homeTeamScore" type="text"></label></div>
+	    <div><label>Away Team: <input id="awayTeamName" type="text"></label></div>
+	    <div><label>Away Score: <input id="awayTeamScore" type="text"></label></div>
+	    <button id="newScoreButton">Add Score</button>
+	</div>
+	<div id="scores">
+	    <button id="getScoresButton">Refresh Scores</button>
+	    <table>
+	        <thead>
+	            <tr>
+	                <td>Home</td>
+	                <td>Home Score</td>
+	                <td>Away</td>
+	                <td>Away Score</td>
+	            </tr>
+	        </thead>
+	        <tbody></tbody>
+	    </table>
+	</div>
+	```
+
+1. Locate the *index.js* file in the the project's **www/scripts** folder.  Replace the *onDeviceReady* function with the following code (removing some of the code you wrote in the previous exercises):
+
+	```JavaScript
+	function onDeviceReady() {
+	    // Handle the Cordova pause and resume events
+	    document.addEventListener( 'pause', onPause.bind( this ), false );
+	    document.addEventListener( 'resume', onResume.bind( this ), false );
+	    
+		var cordovaLabClient = UPDATE_THIS_VALUE;
+	    $("#getScoresButton").click(function () {
+	        updateScores();
+	    });
+	
+	    $("#newScoreButton").click(function () {
+	        addNewScore();
+	    });
+	
+	    function updateScores() {
+	        // Get the scores from the service
+	        var scoresTable = cordovaLabClient.getTable("scores");
+	        scoresTable
+	            .read()
+	            .then(success, failure);
+	
+	        function success(results) {
+	            // Access and clear the table content
+	            $("#scores table > tbody").empty();
+	
+	            $.each(results, function (i, item) {
+	                $('#scores table > tbody:last-child')
+	                    .append(
+	                        "<tr>" +
+	                        "<td>" + item.homeTeamName + "</td>" +
+	                        "<td>" + item.homeTeamScore + "</td>" +
+	                        "<td>" + item.awayTeamName + "</td>" +
+	                        "<td>" + item.awayTeamScore + "</td>" +
+	                        "</tr>");
+	            });
+	        }
+	
+	        function failure(error) {
+	            throw new Error("Error loading data: ", error);
+	        }
+	    }
+	
+	    function addNewScore() {
+	        // Get the values from the UI
+	        // Post the value to the service
+	        var scoreEntry = {
+	            "homeTeamName": $("#homeTeamName").val(),
+	            "homeTeamScore": $("#homeTeamScore").val(),
+	            "awayTeamName": $("#awayTeamName").val(),
+	            "awayTeamScore": $("#awayTeamScore").val(),
+	        };
+	
+	        var scoresTable = cordovaLabClient.getTable("scores");
+	        scoresTable
+	            .insert(scoreEntry)
+	            .done(insertSuccess, insertFailure);
+	
+	        function insertSuccess(result) {
+	            if (result.error) {
+	                navigator.notification.alert("Error inserting data: " + result.error);
+	                return;
+	            }
+	
+	            // Refresh the scores on success to pick up the new entry
+	            updateScores();
+	        };
+	
+	        function insertFailure(error) {
+	            navigator.notification.alert("Error inserting data: " + result.error);
+	        };
+	    }
+	};
+	```
+
+	Although there appears to be a lot of content there, there really is not all that much.  The *updateScores* function makes a call into the Azure App Service Mobile App instance to retrieve the values of the *scores* table, then uses those values to update the table in the user interface.  The *addNewScore* function retrieves values for a new score entry from the user interface and then makes a call into the Azure App Service Mobile App to add the new value.  If the call succeeds, the function then calls *updateScores* to update ensure the table is udpated with the new entry.
+ 
+1. In the Solution Explorer, open the script file in the project's *www/services/mobileApps/settings* folder.  The first line in this file should be a variable declaration of the form `var variable_name;`  Copy or otherwise make a note of this variable name.
+ 
+1. Return to the *index.js* file.  In the script you just pasted into that file, locate the line that reads `var cordovaLabClient = UPDATE_THIS_VALUE;`  Replace the text *"UPDATE_THIS_VALUE"* with the variable name you just recorded. 
+
+1. In the Solution Explorer, open the *index.css* file from the *www/css* folder.  Replace the style definition for the *app* class with the following:
+
+	```css
+	.app {
+	    background: url(../images/cordova.png) no-repeat center top; 
+	    position: absolute;             
+	    left: 50%;
+	    height: 50px;                  
+	    width: 225px;                   
+	    text-align: center;
+	    padding: 180px 0px 0px 0px;     
+	    margin: 10px 0px 0px -112px;
+	}
+
+	button {
+	    margin: 2px;
+	}
+	```
+
+	Your app should now be ready to run.
+
+1. As you did in the previous exercises, select either the **Android** or **iOS** platform options and make sure that one of the **Simulate in Browser** options are displayed in the standard toolbar in Visual Studio and click the button to run the app in the Cordova Simulate application simulator.
+
+1. Enter the following values in the app interface as a new score entry, then press the **Add Score** button.
+
+	- Home Team: *Us*
+	- Home Score: *10*
+	- Away Team: *Them*
+	- Away Score: *5*
+
+	![Entering data in the mobile app](Images/azure-run-gooddata.png)
+
+	_Entering data in the mobile app_
+
+1. Enter 2 or 3 more scores.
+
+1. Now try to exercise the server-side validation logic by entering the following score, then pressing the **Add Score** button.
+
+	- Home Team: *Us*
+	- Home Score: *10*
+	- Away Team: *Us*
+	- Away Score: *5*
+
+	Note the error that is displayed - this shows the server has detected a data validation error since the Home Team and Away Team values are the same.
+
+	![Entering bad data in the mobile app](Images/azure-run-baddata.png)
+
+	_Entering bad data in the mobile app_
 
 1. The final step is to clean up your Azure resources.  The Azure App Services Mobile App instance you created will result in two sets of charges against your Azure subscription - one set for the App Service instance and one for the Azure SQL Database instance.  In order to keep from accruing charges for these resources, you should delete them both.  Fortunately, since they were placed in the same Azure Resource Group, you do all of the necessary cleanup in one place.
 
-	- If it is not still open, open the Azure Portal in a web browser using the URL [https://portal.azure.com](https://portal.azure.com) and sign in with your Azure credentials
-	-  As you did before in the Azure Portal, open the **Resource Groups** blade by clicking on on the **Resource Groups** item in the shortcut list on the left hand side. In the **Resource groups** blade that opens, click the *"BasicCordovaApp"* resource group to open its management blade.
-	- In the *BasicCordovaApp* Resource Group management blade, click on the Delete button.
+	If it is not still open, open the Azure Portal in a web browser using the URL [https://portal.azure.com](https://portal.azure.com) and sign in with your Azure credentials
 
-		![Deleting the resource group](Images/azure-cleanup-deleteresourcegroup.png)
+1. As you did before in the Azure Portal, open the **Resource Groups** blade by clicking on on the **Resource Groups** item in the shortcut list on the left hand side. In the **Resource groups** blade that opens, click the *"BasicCordovaApp"* resource group to open its management blade.
 
-		_Deleting the resource group_
+1. In the *BasicCordovaApp* Resource Group management blade, click on the Delete button.
 
-	- In the "Are you sure you want to delete "BasicCordovaApp"?" blade that is displayed, enter the resource group name *"BasicCordovaApp"* in the section where you are prompted to confirm the deletion.  Click the Delete button to delete the resources.  The deletion process might take a few minutes to complete.
+	![Deleting the resource group](Images/azure-cleanup-deleteresourcegroup.png)
 
-		![Confirming deletion of the resource group](Images/azure-cleanup-confirmdeletion.png)
+	_Deleting the resource group_
 
-		_Confirming deletion of the resource group_
+1. In the "Are you sure you want to delete "BasicCordovaApp"?" blade that is displayed, enter the resource group name *"BasicCordovaApp"* in the section where you are prompted to confirm the deletion.  Click the Delete button to delete the resources.  The deletion process might take a few minutes to complete.
 
-TODO: Add closing paragraph.
+	![Confirming deletion of the resource group](Images/azure-cleanup-confirmdeletion.png)
+
+	_Confirming deletion of the resource group_
 
 ## Summary ##
 
