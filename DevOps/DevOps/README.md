@@ -15,6 +15,7 @@ Each sessions comes with:
 - [a recording of each demo & an example presentation of the whole session](https://1drv.ms/f/s!At9l5k2NXNnEqvICdrnQ3OdIX3RQjA)
 TEMPORARY LINK
 
+**Find case studies at [https://microsoft.github.io/techcasestudies/#technology=DevOps](https://microsoft.github.io/techcasestudies/#technology=DevOps "https://microsoft.github.io/techcasestudies/#technology=DevOps")**
 
 
 
