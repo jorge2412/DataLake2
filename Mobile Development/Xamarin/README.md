@@ -14,7 +14,7 @@ Each sessions comes with:
 - where applicable, hands-on-lab (HOL) instructions for attendees, which can be done under presenter supervision during a session, shown as another presentation by the presenter or taken away by attendees
 - [a recording of each demo & an example presentation of the whole session](https://1drv.ms/f/s!At9l5k2NXNnEq9gHpz8ws3BbvKtWUg)
 
-**Find case studies at [https://microsoft.github.io/techcasestudies/#technology=Mobile%20Application%20Development%20with%20Xamarin](https://microsoft.github.io/techcasestudies/#technology=Mobile%20Application%20Development%20with%20Xamarin "https://microsoft.github.io/techcasestudies/#technology=Mobile%20Application%20Development%20with%20Xamarin")**
+**For real life case studies on Mobile Development with Microsoft Technologies, please go to [https://microsoft.github.io/techcasestudies/#technology=Mobile%20Application%20Development%20with%20Xamarin](https://microsoft.github.io/techcasestudies/#technology=Mobile%20Application%20Development%20with%20Xamarin "https://microsoft.github.io/techcasestudies/#technology=Mobile%20Application%20Development%20with%20Xamarin")**
 
 
 

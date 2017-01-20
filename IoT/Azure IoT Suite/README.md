@@ -15,7 +15,7 @@ Each sessions comes with:
 - [a recording of each demo & an example presentation of the whole session](https://1drv.ms/f/s!At9l5k2NXNnEq70BijNyD6EJ1O6pdQ)
 TEMPORARY LINK
 
-**Find case studies at [https://microsoft.github.io/techcasestudies/#technology=IoT](https://microsoft.github.io/techcasestudies/#technology=IoT "https://microsoft.github.io/techcasestudies/#technology=IoT")**
+**For real life case studies on IOT with Microsoft Technologies, please go to [https://microsoft.github.io/techcasestudies/#technology=IoT](https://microsoft.github.io/techcasestudies/#technology=IoT "https://microsoft.github.io/techcasestudies/#technology=IoT")**
 
 
 

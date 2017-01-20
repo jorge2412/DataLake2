@@ -1,4 +1,4 @@
-# Ascend+ Community Content README #
+# Azure Community Content README #
 
 Each sub-folder provides content for one session.  
 
@@ -13,7 +13,7 @@ Each sessions comes with:
 - links to a recording of each demo
 - a link to a recording of an example presentation of the whole session
 
-**Find case studies at [https://microsoft.github.io/techcasestudies/#technology=Azure%20App%20Service](https://microsoft.github.io/techcasestudies/#technology=Azure%20App%20Service "https://microsoft.github.io/techcasestudies/#technology=Azure%20App%20Service")**
+**For real life case studies on Azure App Service with Microsoft Technologies, please go to [https://microsoft.github.io/techcasestudies/#technology=Azure%20App%20Service](https://microsoft.github.io/techcasestudies/#technology=Azure%20App%20Service "https://microsoft.github.io/techcasestudies/#technology=Azure%20App%20Service")**
 
 
 
