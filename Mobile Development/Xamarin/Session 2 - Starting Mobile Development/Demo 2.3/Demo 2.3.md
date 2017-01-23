@@ -9,7 +9,7 @@ In this demo we explain the use of a backend service in the cloud by using Azure
 ## \
 Requirements\
 
-Azure mobile services and storage accounts from Session 1.1 demo.
+Azure mobile services and storage accounts.
 
 Hyper-V enabled PC. Required for the Visual Studio UWP and Visual Studio Android emulators.
 
@@ -23,11 +23,15 @@ Visual Studio Android emulator: <https://www.visualstudio.com/vs/msft-android-em
 
 If you encounter issues with connecting Visual Studio debugger with the Visual Studio I would recommend following the steps from this blog article: <http://dotnetbyexample.blogspot.ca/2016/02/fix-for-could-not-connect-to-debugger.html>
 
-(Optional) Mac for compiling and run the iOS projects. Mac is also required to use the XCode designers within Visual Studio for PC or Mac.
-
 ## Setup
 
-Azure mobile services and storage accounts from Session 1.1 demo.
+Setting up the demo takes a few minutes so make sure to create it before the presentation. Note that the you’ll reuse the same services in session 2 demos.
+
+Setup instructions for both Visual Studio 2015 and Xamarin can be found at Microsoft Developer Network website: <https://msdn.microsoft.com/en-us/library/mt613162.aspx>
+
+To Verify your Xamarin environment, Microsoft Developer Network has a guide walk through of the steps: <https://msdn.microsoft.com/en-us/library/mt488769.aspx>
+
+### Azure Account
 
 An active Azure subscription is required to host both the data and images for the demo mobile app.
 
@@ -36,16 +40,6 @@ An active Azure subscription is required to host both the data and images for th
     <img src="./media/image1.png" width="624" height="327" />
 
 2.  Once registration is complete. You will need to log into the Azure portal to continue the demo setup process.
-
-## Setup
-
-Make sure to create your Azure account before the event.
-
-Setting up the demo takes a few minutes so make sure to create it before the presentation. Note that the you’ll reuse the same services in sessions 2 demos.
-
-Setup instructions for both Visual Studio 2015 and Xamarin can be found at Microsoft Developer Network website: <https://msdn.microsoft.com/en-us/library/mt613162.aspx>
-
-To Verify your Xamarin environment, Microsoft Developer Network has a guide walk through of the steps: <https://msdn.microsoft.com/en-us/library/mt488769.aspx>
 
 ### Setup the Azure Mobile App and Storage services\
 
@@ -100,15 +94,39 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 > <img src="./media/image12.png" width="560" height="264" />
 
-### Demo Steps
+### Code setup
 
 1.  Go to the Solutions folder with this content, locate the Demo2.3.zip file, extract it to a new folder under your Documents folder.
 
-2.  Open up the solution file under the Start menu.
+## Demo Steps
 
-3.  We will be using the Azure mobile services in the solution. Azure mobile services provides data storage in the cloud data functionality on the client using SQLite cloud-based access endpoints to sync the data between the cloud and clients, as well as the ability to define customized end-point functionality to integrate with other services.
+Note: If you are not comfortable building the code for the audience, you can load up the finished solution under the Complete folder and walk them through:
 
-4.  The NuGet package for Azure mobile services has already been added to the GPSImageTag.Core and GPSImageTag UI heads. Bring up NuGet Manager for the solution. Enter the Microsoft.Azure.Mobile.Client.SQLiteStore into the search box (1). Show the version of the NuGet package (2). Next, show the that the package has been added to each of the Xamarin.Forms heads and GPSImageTag.Core (3). While the library is compatible with the portable class library we need to add platform-specific SQLite binaries to each head.
+-   The WindowsAzure.Storage nuget package added to the UI head projects to talk to Azure storage
+
+-   The Microsoft.Azure.Mobile.Client.SQLiteStore package for the GPSImageTag.Core and UI head projects to sync records with Azure App Service mobile features.
+
+-   The contents of AzureStorageService.cs and Configuration.cs under the GPSImageTag.Shared.Api project which becomes part of all the heads with code to upload content to Azure storage.
+
+-   The AzureService.cs under the Services folder of the GPSImageTag.Core project with code to sync photo records between the client and cloud.
+
+-   The interface code in IAzureService.cs and IAzureStorageService under Interfaces folder of the GPSImageTag.Core project to abstract the services for use in other application layers.
+
+-   The registration of local services classes in MainActivity.cs (for Android), AppDelegate.cs (for iOS) and App.xaml.cs (for UWP).
+
+-   The code in CameraPageviewModel.cs under the ViewModels folder of the GPSImageTag.ViewModels project which calls the appropriate services to upload a photo.
+
+-   The Xamarin.Forms XAML in CameraPage.xaml under the Pages folder of the GPSImageTag portable project which binds to the ViewModel to facilitate taking a picture and uploading it.
+
+-   The application running on the UWP client on Windows to take and upload a picture.
+
+-   The resulting record in the Azure portal
+
+1.  Open up the solution file under the Start folder that you extracted during setup.
+
+2.  We will be using the Azure mobile services in the solution. Azure mobile services provides data storage in the cloud and data functionality on the client using SQLite cloud-based access endpoints, to sync the data between the cloud and clients, as well as the ability to define customized end-point functionality to integrate with other services.
+
+3.  The NuGet package for Azure mobile services has already been added to the GPSImageTag.Core and GPSImageTag UI heads. Bring up NuGet Manager for the solution. Enter the Microsoft.Azure.Mobile.Client.SQLiteStore into the search box (1). Show the version of the NuGet package (2). Next, show the that the package has been added to each of the Xamarin.Forms heads and GPSImageTag.Core (3). While the library is compatible with the portable class library we need to add platform-specific SQLite binaries to each head.
 
 > <img src="./media/image13.png" width="729" height="314" />
 
@@ -116,7 +134,7 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 2.  Due to the portable class project profile used in this solution the NuGet package is only added to the Xamarin.Forms heads. Bring up NuGet Manager for the solution. Enter the WindowsAzure into the search box (1). Show the version of the NuGet package (2). Next, show the that the package has been added to each of the Xamarin.Forms heads.
 
-> <img src="./media/image14.png" width="856" height="485" />
+> <img src="./media/image14.png" width="743" height="421" />
 
 1.  Next, we need to add the code for AzureStorage services into the GPSImageTag.Shared.API. Normally we would have to provide the platform specific code to work with the AzureStorage service. However, we will can use a common code upload feature that will be kept in the Shared project.
 
@@ -132,7 +150,7 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 > <img src="./media/image17.png" width="1127" height="185" />
 
-1.  Next, we need to update the GSPImageTag.Core project. In this step we need to update the interfaces. Select the Interfaces folder in the GPSImageTag.Core (1). Bring up the pop menu and select the Add option (2). Next, select the Existing Item option (3).
+1.  Next, we need to update the GPSImageTag.Core project. In this step we need to update the interfaces. Select the Interfaces folder in the GPSImageTag.Core (1). Bring up the pop menu and select the Add option (2). Next, select the Existing Item option (3).
 
 > <img src="./media/image18.png" width="676" height="304" />
 
@@ -140,9 +158,9 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 > <img src="./media/image19.png" width="531" height="101" />
 
-1.  We’ve now added interface to abstract the implementation at the platform-specific level that can be called by our viewmodels and services and the platform-independent portable class library lelvel.
+1.  We’ve now added interface to abstract the implementation at the platform-specific level that can be called by our viewmodels and services and the platform-independent portable class library level.
 
-2.  In this step we will be adding the mobile service class file in the GSPImageTag.Core. Select the Services folder in the GPsImageTag.Core project. Now, in the pop up menu select the Add option (2). Next, select the Existing Item option (3).
+2.  In this step we will be adding the mobile service class file in the GSPImageTag.Core. Select the Services folder in the GPSImageTag.Core project. Now, in the pop up menu select the Add option (2). Next, select the Existing Item option (3).
 
 > <img src="./media/image20.png" width="530" height="327" />
 
@@ -212,6 +230,6 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 1.  Log into the Azure portal and navigate to the mobile service easy table created for this demo and show the photo has been uploaded (1).
 
-> <img src="./media/image30.png" width="969" height="448" />
+> <img src="./media/image30.png" width="480" height="221" />
 
 1.  Recap what has been done in the demo.
