@@ -120,7 +120,7 @@ To Verify your Xamarin environment, Microsoft Developer Network has a guide walk
 
 > <img src="./media/image17.png" width="440" height="169" />
 
-1.  Locate the photos.csv file (1) created by SetupAzureData console app. This will be located in the root of the C: drive. Then, click on the Start Upload button (2).
+1.  Locate the photo.csv file (1) created by SetupAzureData console app. This will be located in your Document folder.  Then, click on the Start Upload button (2).
 
 > <img src="./media/image18.png" width="302" height="402" />
 
