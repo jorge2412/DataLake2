@@ -53,8 +53,6 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 
 > While your Cordova project will run in Cordova Simulate, if you want to deploy the app to Apple's iOS emulator, to Apple devices, or to the Apple App Store, you will have to have access to a Mac running XCode.
 
-1. If you have not done so yet, you will need to install the Visual Studio 2017 IDE and the Visual Studio Tools for Apache Cordova.  Instructions for installing these tools can be found [here](https://taco.visualstudio.com/en-us/docs/vs-taco-2017-install/).
-
 1. Launch Visual Studio 2017 and create a new project by selecting **File** -> **New** -> **Project**.
 
     ![Creating a new project](Images/basic-file-newproject.png)
@@ -89,7 +87,9 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 
      _Launching the app in Cordova Simulate_
 
-	In a couple of seconds, Google Chrome will open with the running app displayed in the content area.
+1. Wait a few seconds for Google Chrome to open and show the running app.
+
+	> If you are warned that "Windows Firewall has blocked some features of this app," click **Allow access** to allow the simulator running in Chrome to get through the firewall.
  
     ![App running in Cordova Simulate](Images/basic-debug-cordovasimulate.png)
 
