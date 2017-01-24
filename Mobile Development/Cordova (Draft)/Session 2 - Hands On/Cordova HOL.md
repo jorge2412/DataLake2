@@ -67,10 +67,10 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 
 1. Take a moment to examine the solution that was created. Key elements include:
 
-	- The **Dependencies** folder, which contains any Bower and NPM packages loaded into the project
+	- The **Dependencies** folder, which contains any Bower or NPM packages loaded into the project
 	- The **merges** folder, which contains files that pertain to specific platforms
 	- The **res** folder, which contains resources such as icons and splash-screen images
-	- The **www** folder, which contains HTML, CSS, and JavaScript assets
+	- The **www** folder, which contains HTML, CSS, and JavaScript assets, including the **index.html** file that that serves as the app's home page
 	- Several files at the root level, including **config.xml**, which includes settings that Cordova uses to build and run your app
 
     ![The Cordova solution](Images/basic-newproject-solution.png)
@@ -95,7 +95,7 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 
      _App running in Cordova Simulate_
 
-1. Return to Visual Studio and click the **DOM Explorer** tab that opened when you launched the app. DOM Explorer shows an interactive view of the HTML DOM (Document Object Model) for a running app. It also allows you to make changes to the HTML and related style elements while your app is running and preview these changes in the user interface.
+1. Return to Visual Studio and to the DOM Explorer that opened when you launched the app. DOM Explorer shows an interactive view of the app's HTML DOM (Document Object Model). It also allows you to make changes to the HTML and related style elements while your app is running and preview these changes in the user interface.
 
     ![The DOM Explorer in Visual Studio](Images/basic-debug-domexplorer.png)
 
@@ -109,7 +109,7 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 	
 1. Return to Visual Studio and select **Stop Debugging** from the **Debug** menu.
 	
-1. Next you will modify some of the JavaScript code in the app and learn how to use breakpoints to debug it. Begin by going to Solution Explorer and double-clicking the **index.js** file in the **www** folder to open it for editing. Then replace the existing ```onPause``` and ```onResume``` functions with the functions below:	
+1. Next you will modify some of the JavaScript code in the app and learn how to use breakpoints to debug it. Begin by going to Solution Explorer and double-clicking the **index.js** file in the **www/scripts** folder to open it for editing. Then replace the existing ```onPause``` and ```onResume``` functions with the functions below:	
 
 	```JavaScript
     function onPause() {
@@ -123,9 +123,13 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
     };
 	```
 
-1. Add a breakpoint to the ```console.log``` statement in ```onPause``` by moving the cursor to the beginning of the line and selecting **Toggle Breakpoint** from the **Debug** menu or pressing **F9**.
+1. Add a breakpoint to the ```console.log``` statement in ```onPause``` by putting the cursor on the line and pressing **F9**, or by cicking in the vertical bar to the left of the line number.
 
-1. Select **Start Debugging** from the **Debug** menu to launch the application again.
+	![Setting a breakpoint](Images/set-breakpoint.png)
+
+	_Setting a breakpoint_
+
+1. Select **Start Debugging** from the **Debug** menu (or press **F5**) to launch the application again.
 
 1. Click the **Plugin Controls - Simulate** tab in Visual Studio and locate the "Events" panel. Select **pause** from the list of events, and then click **Fire Event** to simulate a ```pause``` event.
 
@@ -133,7 +137,7 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 
 	_Simulating a pause event_
 	
-1. Observe that Visual Studio pauses execution at the breakpoint you set in **index.js**. Resume execution by selecting **Continue** from the **Debug** menu, clicking the **Continue** button in the toolbar, or pressing **F5**, and notice that "Pausing" appears in the JavaScript console.
+1. Observe that Visual Studio pauses execution at the breakpoint you set in **index.js**. Resume execution by selecting **Continue** from the **Debug** menu , clicking the **Continue** button in the toolbar, or pressing **F5**, and notice that "Pausing" appears in the JavaScript console.
 
 	![Hitting a breakpoint in Visual Studio](Images/basic-debug-breakpoint.png)
 	
@@ -142,6 +146,8 @@ The Visual Studio Tools for Apache Cordova allow you to use Visual Studio 2017 t
 1. Simulate a ```resume``` event by returning to **Plugin Controls - Simulate** and selecting **resume** from the list of events and clicking the **Fire Event** button. Notice that "Resuming" appears in the JavaScript console.
  
 1. Select **Stop Debugging** from the **Debug** menu to stop debugging.
+
+1. Click the breakpoint to remove it.
 
 You now know how to create a Cordova project, how to launch it in Cordova Simulate, how to use DOM Explorer to view and even modify DOM elements, and how to perform basic debugging tasks. The next step is to write some code to make the app do something useful.
 
@@ -152,7 +158,11 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 > The JavaScript in this exercise will use the jQuery library to manipulate DOM content.  When writing a Cordova project, you will most likely be using a JavaScript framework like AngularJS or the Ionic framework to facilitate the Single Page Application (SPA) model of web development.  This lab, however, will opt to simply use jQuery for DOM manipulation in order to simplify the discussion.
 
-1. Right-click the project in Solution Explorer and select **Add/New Item...** to add a new file to the project. Select **Text File** as the file type and name the file **.bowerrc**.
+1. Right-click the project in Solution Explorer and select **Add -> New Item...** to add a new file to the project. Select **Text File** as the file type and name the file **.bowerrc**. Then click the **Add** button.
+
+	![Adding .bowerrc to the project](Images/add-bowerrc.png)
+	
+	_Adding .bowerrc to the project_
 
 1. Add the following JSON to the new file, and then save your changes:
 
@@ -162,11 +172,13 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 	}
 	```
 
-	> Note: When you use Bower to import a JavaScript library, it often will bring in a variety of files and other content.  You can either download the content to an intermediate location and individually copy just the files you want into the www portion of your project — generally a manual process — or you can use the Bower configuration file to indicate you want the entire content pulled into your www file.  In this instance, you are including the entire Bower package contents in your app's www/lib folder. 
+	> When you use Bower to import a JavaScript library, it often will bring in a variety of files.  You can either download the content to an intermediate location and individually copy just the files you want to your project — generally a manual process — or you can use the Bower configuration file to indicate you want Visual Studio to download the content. In this example, you are specifying that the entire Bower package contents should be downloaded to the app's **www/lib** folder. 
+
+1. Use the **Build -> Build Solution** command to build the project.
 	
 1. The next step is to use the Bower package manager to include jQuery in your project. Begin by selecting **Manage Bower Packages...** from the **Project** menu.
 
-1. In the ensuing window, make sure **Browse** is selected, and then select **jQuery** and click the **Install** button on the right.
+1. Click **Browse**, and then select **jQuery** and click the **Install** button on the right.
 
 	![Including the jQuery Bower package](Images/platform-bower-jquery.png)
 
@@ -180,7 +192,7 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 	<h2 id="ex2Platform">Override Platform</h2>
 	```
 
-1. Add the following line to the beginning of the ```<script>``` block at the end of the file:
+1. Add the following line before the first ```<script>``` element at the end of the file:
 
 	```html
 	<script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
@@ -188,11 +200,9 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 1. Save your changes to **index.html**.
 
-1. In Solution Explorer, find the **platformOverrides.js** file in the **www/scripts** folder and double-click it to open it for editing. Note that this file is empty except for some code comments.
-
 1. In Solution Explorer, double-click the **platformOverrides.js** file in the **merges/android/scripts** folder to open it for editing.
 
-1. Add the following line of code to the self-executing function body to locate the element whose ID is "ex2Platform" and replace its contents with the word "Android:"
+1. Add the following line of code to the end of the self-executing function body to locate the element whose ID is "ex2Platform" and replace its contents with the word "Android:"
 
 	```JavaScript
 	$("#ex2Platform").html("Android");
@@ -200,11 +210,11 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 1. Save your changes to **platformOverrides.js**.
 
-1. Right-click the **merges/iOS** folder in Solution Explorer and select **Add/New Folder...** from the context menu. Name the new folder "scripts."
+1. Right-click the **merges/iOS** folder in Solution Explorer and select **Add -> New Folder...** from the context menu. Name the new folder "scripts."
 
-1. Right-click the "scripts" folder that you just created and select **Add/New Item...** from the context menu.
+1. Right-click the **scripts** folder that you just created and select **Add -> New Item...** from the context menu.
 
-1. In the ensuing dialog, select **JavaScript File** and name the file **platformOverrides.js**. Then click the **Add** button to add the file to the folder.
+1. In the ensuing dialog, select **JavaScript File** as the file type and name the file **platformOverrides.js**. Then click the **Add** button to add the file to the folder.
 
 1. Add the following code, which locates the element whose ID is "ex2Platform" and replaces its contents with the word "iOS", to the **platformOverrides.js** file you just created:
 
@@ -216,13 +226,13 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 1. Save your changes to **platformOverrides.js**.
 
-1. The next step is to run the app on iOS and Android and see the effects of the per-platform code. To begin, make sure that **Android** is selected in the platform drop-down and one of the **Simulate in Browser** options is selected. Then click **Simulate in Browser** to run the app in Cordova Simulate.
+1. The next step is to run the app on iOS and Android and see the effects of the per-platform code. Make sure that **Android** is selected in the drop-down list of platforms and one of the **Simulate in Browser** options is selected. Then click **Simulate in Browser** to run the app in Cordova Simulate.
 
 	![Simulating the app on Android](Images/platform-android-debug.png)
 
 	_Simulating the app on Android_
 
-	Notice that the app displays "Android" as the platform name.
+1. Confirm that the app displays "Android" as the platform name.
 
 	![BasicCordovaApp running on Android](Images/platform-android-simulate.png)
 
@@ -234,7 +244,7 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 	_Simulating the app on iOS_
 
-	Notice that the app displays "iOS" as the platform name.
+1. Confirm that the app displays "iOS" as the platform name.
 
 	![BasicCordovaApp running on iOS](Images/platform-ios-simulate.png)
 
@@ -242,7 +252,7 @@ Apache Cordova projects include the **merges** folder in order to support platfo
 
 1. Stop the debugger.
 
-Now that you know how to include platform-specific code in your app, a great next step is learning about Cordova plugins.
+Now that you know how to include platform-specific code in your app by placing it in platform-specific **platformOverrides.js** files, a great next step is learning about Cordova plugins.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Add a Cordova plugin ##
