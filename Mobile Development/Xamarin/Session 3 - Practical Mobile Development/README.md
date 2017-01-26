@@ -1,5 +1,3 @@
-IN PROGRESS
-
 # Session 3 - Practical Mobile Development #
 ---
 
