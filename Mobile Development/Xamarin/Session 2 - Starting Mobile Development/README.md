@@ -1,5 +1,3 @@
-IN PROGRESS
-
 # Session 2 - Starting Mobile Development #
 ---
 
