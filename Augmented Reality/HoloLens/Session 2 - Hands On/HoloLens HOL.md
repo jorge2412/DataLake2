@@ -10,7 +10,7 @@ Windows Holographic represents a completely new way to experience immersive soft
 
 This combination of computer-generated graphics with the real world opens up amazing possibilities that were previously unimaginable outside of hardcore science fiction literature. Obvious applications include immersive video games and situational awareness assistance, but also commercial/industrial inspections, healthcare, and many other uses that are yet to be identified and explored.
 
-Currently, Microsoft offers a single device - the HoloLens - for development and consumption of these augmented reality holographic applications. This first-generation device is targeted towards software developers and AR enthusiasts, and thus is fairly bulky, with a somewhat short battery life. In the future, smaller and more affordable devices are expected to be available from Microsoft as well as OEMs.
+Currently, Microsoft offers a single device - the HoloLens - for development and consumption of these augmented reality holographic applications. This first-generation device is targeted towards software developers and AR enthusiasts. In the future, smaller and more economical devices are expected to be available from Microsoft as well as OEMs.
 
 ![Windows HoloLens Development Edition](Images/hololens.png)
 
