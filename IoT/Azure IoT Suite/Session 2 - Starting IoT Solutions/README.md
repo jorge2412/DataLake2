@@ -1,4 +1,5 @@
-IN PROGRESS
+IN PROGRESS - Pending slide updates and overall video
+
 
 # Session 2 - Starting IoT Solutions #
 ---

@@ -1,4 +1,4 @@
-IN PROGRESS
+IN PROGRESS - Pending slide updates and overall video
 
 # Session 3 - Practical DevOps #
 ---
