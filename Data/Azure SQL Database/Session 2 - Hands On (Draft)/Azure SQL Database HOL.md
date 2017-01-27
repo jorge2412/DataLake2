@@ -1,4 +1,4 @@
-﻿<a name="HOLTitle"></a>
+<a name="HOLTitle"></a>
 # Azure SQL Database #
 
 ---
@@ -79,9 +79,9 @@ The first step in working with Azure SQL Database is to create a database to hol
 
 1. Select the location nearest you, and leave the **Create V12 server** set to **Yes** as well as the **Allow azure services to access server** selection **checked**, and click **Create**. 
  
-    ![Configuring a new Azure SQL server](Images/portal-create-new-server.png)
+    ![Configuring a new Azure SQL Database server](Images/portal-create-new-server.png)
 
-    _Configuring a new Azure SQL server
+    _Configuring a new Azure SQL Database server
 	
 	>V12 server indicates the version (version 12 in this instance) of the underlying SQL Server engine and schema support.
 
@@ -99,7 +99,7 @@ The Azure Portal will redirect you to the Azure Portal Dashboard while it provis
 
 1. Select the **Overview** tab.
 
-1. Review the **Last deployment** label and watch for the status to change from “Deploying” to “Succeeded”, at which time your Azure SQL server and database have been successfully provisioned.
+1. Review the **Last deployment** label and watch for the status to change from “Deploying” to “Succeeded”, at which time your Azure SQL Database server and database have been successfully provisioned.
  
     ![Resource Group deployment status](Images/portal-resource-deployment-status.png)
 
@@ -227,12 +227,12 @@ At this point your Azure SQL Database has been configured and populated with the
 
     _Viewing employee records_		
 
-Your Azure SQL Database is now populated with customers, products, and orders. You will be adding additional functionality to your database in a later exercise to provide row-level security. The next step is to create an Azure API service to access and expose your Azure SQL data to other apps and services.
+Your Azure SQL Database is now populated with customers, products, and orders. You will be adding additional functionality to your database in a later exercise to provide row-level security. The next step is to create an Azure API service to access and expose your Azure SQL Database data to other apps and services.
 
 <a name="Exercise3"></a>
-## Exercise 3: Create an Azure SQL API service ##
+## Exercise 3: Create an Azure SQL Database API service ##
 
-In most modern app development scenarios data is stored remotely, either in an on-premises database server, or in the cloud, as with Azure SQL Databases. In order to access and expose this data in a reusable way, a data-access layer should be created, providing a simple mechanism to perform actions, such as creating, updating, and deleting records. In this exercise you will create an Azure API App to serve as a data layer between your SQL Azure database and the Windows Store app you will create in a later exercise.
+In most modern app development scenarios data is stored remotely, either in an on-premises database server, or in the cloud, as with Azure SQL Databases. In order to access and expose this data in a reusable way, a data-access layer should be created, providing a simple mechanism to perform actions, such as creating, updating, and deleting records. In this exercise you will create an Azure API App to serve as a data layer between your Azure SQL Database and the Windows Store app you will create in a later exercise.
 
 To create an Azure API App to access data:
 
@@ -270,7 +270,7 @@ To create an Azure API App to access data:
 
 Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's API controllers, and a folder named "Models" that will hold the project's model classes. You'll be working with assets in these folders and others as you implement the application.
 
-With the basic project structure in place, the next step is to add the data logic and class files to your API App to access your SQL Azure database. We’ll start by connecting an Entity Framework model to your database.
+With the basic project structure in place, the next step is to add the data logic and class files to your API App to access your Azure SQL Database. We’ll start by connecting an Entity Framework model to your database.
 
 To connect an Entity Framework model to your Azure SQL Database:
 
@@ -302,7 +302,7 @@ To connect an Entity Framework model to your Azure SQL Database:
 
     _Selecting New Connection_		 
 
-1. In the **Server** name box, enter the name of the Azure SQL server configured in Exercise 1, followed by “.database.windows.net” such as **traininglab01**.database.windows.net.
+1. In the **Server** name box, enter the name of the Azure SQL Database server configured in Exercise 1, followed by “.database.windows.net” such as **traininglab01**.database.windows.net.
  
 	>This will be the same server name value displayed in the SQL Server Object Explorer in the previous exercise.
 	
@@ -700,7 +700,7 @@ Now you’re ready to start writing code to access the data models you created, 
 
 All the code, classes, and models have now been written, and you can validate access to customer, product and order information to see the how data will be returned from your API App.
 
-To validate access to your Azure SQL data:
+To validate access to your Azure SQL Database data:
 
 1. Use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application in your browser. Here's how the application looks when an API method has not been specified:
  
@@ -731,12 +731,12 @@ Up to now, you have been running the API app locally. Web Deploy makes it incred
     _The published API app_	
  
 
-In this exercise you’ve create a data access layer connected to your Azure SQL Database, and written code to retrieve customer, product, and order records encapsulated within REST-based API methods. You’ve also published the API methods to an App Service in Azure for use by other apps and services. The next step in to create a Windows Store app to access your Azure SQL API services.
+In this exercise you’ve create a data access layer connected to your Azure SQL Database, and written code to retrieve customer, product, and order records encapsulated within REST-based API methods. You’ve also published the API methods to an App Service in Azure for use by other apps and services. The next step in to create a Windows Store app to access your Azure SQL Database API services.
 
 <a name="Exercise4"></a>
 ## Exercise 4: Build an API-aware Windows Store app ##
 
-The whole reason for creating and deploying your Azure SQL API App is so you can build smart apps that can interact with the data in your Azure SQL Database. There are a variety of ways to build such apps. You could call the service from a Web app using JavaScript and AJAX, for example, or you could use Visual Studio to write a Xamarin app that runs on iOS, Android, and Windows and places calls to the service using .NET's HttpClient class.
+The whole reason for creating and deploying your Azure SQL Database API App is so you can build smart apps that can interact with the data in your Azure SQL Database. There are a variety of ways to build such apps. You could call the service from a Web app using JavaScript and AJAX, for example, or you could use Visual Studio to write a Xamarin app that runs on iOS, Android, and Windows and places calls to the service using .NET's HttpClient class.
 
 In this exercise, you will write a client app that targets the Universal Windows Platform, or UWP. The beauty of such apps is that they run on a variety of Windows devices, including PCs, tablets, phones, and even on Xbox One. The app you will write enables you to access orders for a specific salesperson as well as viewing order and customer details.
 
@@ -784,7 +784,7 @@ To create a Windows Store app:
 
     _The blank OrderView app_  
 
-The shell for your application has been created successfully, now it’s time to write code to access the Azure SQL API methods created in the previous exercise, and add user interface elements to visualize the data. 
+The shell for your application has been created successfully, now it’s time to write code to access the Azure SQL Database API methods created in the previous exercise, and add user interface elements to visualize the data. 
 
 1. In the Solution Explorer, right-click the **OrderView** project and select **Add > New Folder** and name the new folder **Common**.
  
@@ -1345,9 +1345,9 @@ The shell for your application has been created successfully, now it’s time to
 
 When you populated your Azure SQL Database in Exercise 2, three (3) users were created: Janet, Andrew, and Nancy. Janet is a Sales Manager and should have permission to view all orders, however Andrew and Nancy are Salespersons, and should only be able to view orders they created. The current state of your OrderView app shows all orders regardless of which user is using the app. To simulate viewing orders, the app contains a selection dropdown control to view orders “AS” a specific user. Review how the list of orders being returned does not change when you select a different salesperson. 
 
-To limit as Salesperson’s ability to view only their orders, we can take advantage of Azure SQL **row-level security**.
+To limit as Salesperson’s ability to view only their orders, we can take advantage of Azure SQL Database **row-level security**.
 
-There is also information in each customer record that should be “private” and not available for viewing through your app. In this scenario customer phone numbers should be “hidden” from users, however we don’t want to add the complexity into our code to “check and filter” the labels based on a user’s role. Instead we can implement Azure SQL **dynamic data masking** to mask these values in our application.
+There is also information in each customer record that should be “private” and not available for viewing through your app. In this scenario customer phone numbers should be “hidden” from users, however we don’t want to add the complexity into our code to “check and filter” the labels based on a user’s role. Instead we can implement Azure SQL Database **dynamic data masking** to mask these values in our application.
 
 In the next exercise you will add row-level security and dynamic data masking to your Azure SQL Database to make sure Salesperson are only able to view the records and fields allowed in the requirements.
 
@@ -1474,7 +1474,7 @@ In this hands-on lab you learned how to:
 - Access Azure SQL records from your apps
 - Filter and mask records based on user permissions
 
-This is just a beginning, as there’s a whole lot more you can do to leverage the power of Azure SQL. Start experimenting with other Azure SQL features, especially dynamic data masking and geo-replication, as well as creating stored procedures, user-defined functions, and identifying other ways you can enhance your data strategies through the integration of Azure SQL into your application ecosystems.
+This is just a beginning, as there’s a whole lot more you can do to leverage the power of Azure SQL Database. Start experimenting with other Azure SQL Database features, especially dynamic data masking and geo-replication, as well as creating stored procedures, user-defined functions, and identifying other ways you can enhance your data strategies through the integration of Azure SQL Database into your application ecosystems.
 
 ----
 
