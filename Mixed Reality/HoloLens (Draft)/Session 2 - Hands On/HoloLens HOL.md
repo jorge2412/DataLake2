@@ -6,13 +6,13 @@
 <a name="Overview"></a>
 ## Overview ##
 
-[Windows Holographic](https://developer.microsoft.com/en-us/windows/holographic) is a platform that enables software developers to build a new generation of applications that elevate immersion to new heights. Traditional virtual-reality (VR) platforms immerse users in a world that *replaces* the world around them. Windows Holographic is a *mixed reality* (MR) platform that injects three-dimensional computer-generated content into the real world and allows users to interact with that content. Imagine learning how a jet engine works by walking around a virtual jet engine floating in the room in front of you, watching the parts rotate and gases flow through the turbine blades, and waving a hand to peel away layers to reveal what's inside. That is mixed reality. And that is just one example of the kinds of experiences that Windows Holographic makes possible.
+[Windows Holographic](https://developer.microsoft.com/en-us/windows/holographic) is a platform that enables software developers to build a new generation of applications that elevate immersion to new heights. Traditional virtual-reality (VR) platforms immerse users in a world that *replaces* the world around them. Windows Holographic is a *mixed reality* (MR) platform that injects three-dimensional computer-generated content into the world around you and lets you interact with that content. Imagine learning how a jet engine works by walking around a virtual jet engine floating in the room in front of you, watching the parts rotate and gases flow through the turbine blades, and waving a hand to peel away layers to reveal what's inside. That is mixed reality. And it is just one example of the kinds of experiences that Windows Holographic makes possible.
 
-Microsoft's [HoloLens](https://www.microsoft.com/microsoft-hololens/en-us), pictured below, is a Windows Holographic device that represents the leading edge of mixed-reality hardware. This first-generation device is targeted towards software developers and MR enthusiasts. It is the world's first self-contained holographic computer, and it enables users to engage with digital content and interact with holograms in the world around them. Worn like a set of glasses, it allows the real world to come through while enhancing that world with holographic objects generated in software.
+Microsoft's [HoloLens](https://www.microsoft.com/microsoft-hololens/en-us), pictured below, is a Windows Holographic device that represents the leading edge of mixed-reality hardware. This first-generation device is targeted towards software developers and MR enthusiasts. It is the world's first self-contained holographic computer, and it enables users to engage with digital content and interact with holograms. Worn like a set of glasses, it lets the real world come through while enhancing that world with holographic objects.
 
 ![Windows HoloLens Development Edition](Images/hololens.png)
 
-There are multiple ways to build applications for Windows Holographic, including accessing the low-level APIs directly (all Windows Holographic applications are ultimately Universal Windows Platform apps that access some special APIs). Rather than write to the APIs directly, most developers choose to use [Unity](https://unity3d.com/) instead. Unity abstracts the underlying APIs and provides a rich environment for building and testing holographic apps. Supplemented by a vibrant ecosystem that includes an [asset store](https://www.assetstore.unity3d.com) and an active community of developers, Unity is also available in several editions, including a [Personal Edition](https://store.unity.com/products/unity-personal) that you can use for free.
+There are multiple ways to build applications for Windows Holographic, including accessing the low-level APIs directly. Rather than write to the APIs directly, most developers choose to use [Unity](https://unity3d.com/) instead. Unity abstracts the underlying APIs and provides a rich environment for building and testing holographic apps. Supplemented by a vibrant ecosystem that includes an [asset store](https://www.assetstore.unity3d.com) and an active community of developers, Unity is also available in several editions, including a [Personal Edition](https://store.unity.com/products/unity-personal) that you can use for free.
 
 In this lab, you will use Unity to build a holographic application, experience mixed-reality first-hand, and see what it takes to build apps for Microsoft HoloLens. You can run the app in Microsoft's [HoloLens emulator](https://developer.microsoft.com/en-us/windows/holographic/using_the_hololens_emulator), or run it on a real device if you have access to a HoloLens. Obviously, the latter provides a higher-fidelity and more immersive experience. 
 
@@ -29,37 +29,29 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
-- A Windows PC, meeting the minimum requirements:
-  - Windows 7 SP1 or higher (Windows 10 is recommended)
-  - DirectX9 (Shader Model 3.0) or later
-  - At least 10 GB of disk storage available, 20+ is strongly recommended
-  - 8 GB of RAM is strongly recommended
-- A [HoloLens Development Edition visor](https://www.microsoft.com/microsoft-hololens/en-us/development-edition) (recommended over using just the emulator)
-- This Hands-on Lab assumes that you are already familiar with how to wear your HoloLens device, and how to interact with it using Gaze and the basic interaction gestures
-- Additional requirements apply for the HoloLens Emulator:
-  - A 64-bit version of Windows 10 (Home edition not supported)
-  - 64-bit CPU, with at least 4 cores
-  - Additional 2 GB of disk storage available
-  - 8 GB of RAM or more
-  - BIOS Features (must be enabled): Hardware Virtualization, SLAT, DEP
-  - DirectX11 or later
-  - WDDM 1.2 driver or later
-  - Hyper-V enabled in Windows
-- [Visual Studio 2015](https://www.visualstudio.com/vs/) is used for integrated code editing, in place of Unity's embedded Mono IDE, and for deployment/debugging on a HoloLens device
-- Prior experience with C# programming is very useful
+- A PC with 64-bit Windows 10 (Home Edition is not supported) and a 64-bit CPU with at least 4 cores
+- At least 20 GB of available disk storage
+- At least 8 GB of RAM
+- BIOS features (must be enabled): Hardware Virtualization, SLAT, DEP
+- DirectX11 or later
+- WDDM 1.2 driver or later
+- Hyper-V enabled in Windows
+- [Visual Studio 2015](https://www.visualstudio.com/vs/) with the Windows 10 SDK installed
+
+In addition, a [HoloLens Development Edition visor](https://www.microsoft.com/microsoft-hololens/development-edition) is recommended by not required.
 
 <a name="Recommendations"></a>
 ### Recommendations ###
 
-While developing applications for the Windows Holographic Platform is relatively straightforward, there are some pitfalls you should avoid. These recommendations can help make your development experience much more enjoyable:
+While developing applications for the Windows Holographic platform is relatively straightforward, there are some pitfalls you should avoid. The following recommendations can help make the development experience more enjoyable:
 
-- Use a modern PC or laptop for holographic application development. Unity takes a designer-centric approach, and is a fairly heavyweight environment (just as your favorite video editing software will likely be much more performance-intensive than your favorite code editor).
+- Use a modern PC or laptop for holographic application development. Unity takes a designer-centric approach, and is a fairly demanding environment (just as your favorite video editing software will likely be much more performance-intensive than your favorite code editor).
 - Run the latest version of Windows 10 and the Windows SDK, but avoid pre-release versions of Windows.
 - Do not try to develop for HoloLens from within a virtual machine (Hyper-V or otherwise).
-- Be sure to have a decent video graphics adapter in your system, with the latest stable display drivers installed. Video driver glitches are one of the most frequent causes of problems encountered when building holographic apps in Unity.
-- If you choose to edit code in Visual Studio, be sure to keep it updated with the latest RTM patches, and avoid third-party extensions.
+- Be sure to have a decent video graphics adapter in your system, with the latest stable display drivers installed. Video driver glitches are one of the most common causes of problems encountered when building holographic apps in Unity.
+- If you choose to edit code in Visual Studio, be sure to keep it updated with the latest patches, and use as few third-party extensions as possible.
 - When possible, test your applications on real HoloLens hardware. The emulator is useful, but performs very differently from a real device and gestures are not very natural on the emulator.
-- Even if you do not plan to use the HoloLens Emulator, it is recommended that you install it. The Emulator installer includes DirectX project templates for Visual Studio that you may want to explore (not covered in this lab).
+- Even if you do not plan to use the HoloLens emulator, it is recommended that you install it. The installer for the emulator includes DirectX project templates for Visual Studio that you may want to explore.
 
 ---
 
@@ -68,253 +60,210 @@ While developing applications for the Windows Holographic Platform is relatively
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Setting up the development environment](#Exercise1)
-- [Exercise 2: Configuring your HoloLens](#Exercise2)
-- [Exercise 3: Your first Holographic Application with Unity](#Exercise3)
-- [Exercise 4: Using HoloToolkit to expedite holographic development](#Exercise4)
-- [Exercise 5: Compiling and Debugging from Visual Studio](#Exercise5)
-- [Exercise 6: Creating an interactive hologram](#Exercise6)
+- [Exercise 1: Set up your development environment](#Exercise1)
+- [Exercise 2: Configure your HoloLens](#Exercise2)
+- [Exercise 3: Build your first holographic application with Unity](#Exercise3)
+- [Exercise 4: Use HoloToolkit to expedite holographic development](#Exercise4)
+- [Exercise 5: Compile and Debug in Visual Studio](#Exercise5)
+- [Exercise 6: Create an interactive hologram](#Exercise6)
  
 Estimated time to complete this lab: **45** minutes, plus download time.
 
-
-
 <a name="Exercise1"></a>
-## Exercise 1: Setting up the development environment ##
+## Exercise 1: Set up your development environment ##
 
-In this exercise, we walk through the steps needed to prepare your development environment for building applications for the Windows Holographic Platform with Unity.
+In this exercise, you will prepare your development environment so you can build applications for the Windows Holographic platform with Unity.
 
-1. Download and install the latest release of Visual Studio from [visualstudio.com](https://www.visualstudio.com/vs/). Any version will do, even the free Community Edition. Be sure to include the Windows 10 SDK, which contains the holographic APIs.
+1. If you haven't already, download and install the latest release of Visual Studio from https://www.visualstudio.com/vs/. Any version will do, even the free Community Edition. Be sure to install the Universal Windows App Development Tools, since HoloLens apps are Universal Windows Platform (UWP) apps.
 
-    ![VS Installer](Images/vs_install.png)
+    ![Installing UWP tools when installing Visual Studio](Images/vs_install.png)
 
-    _Be sure to include the Windows 10 SDK_
+    _Installing UWP tools when installing Visual Studio_
 
-    > **NOTE:** You will need to include both the Windows 10 SDK Tools, and also version 10.0.10586 of the SDK
+1. Launch Visual Studio and select **Options...** from the **Tools** menu. Under the General settings for NuGet Package Manager, ensure that **Allow NuGet to download missing packages** and **Automatically check for missing packages during build in Visual Studio** are both checked. Your Unity builds will fail later if these features are not enabled.
 
-1. You will need to have a Microsoft Developer Account to sign-in to Visual Studio. If you don't already have one, be sure to register on the Visual Studio site and create one.
+    ![Enabling NuGet options](Images/nuget.jpg)
 
-1. Launch Visual Studio, and select **Options...** from the **Tools** menu. Locate the **NuGet Package Manager** section of this dialog, and ensure that **Allow NuGet to download missing packages** and **Automatically check for missing packages during build in Visual Studio** are both checked. Your Unity builds will fail later if these have not been selected.
+    _Enabling NuGet options_
 
-    ![NuGet Options](Images/nuget.jpg)
+1. Download and install the latest version of the HoloLens emulator package. You can find a link to the current release in the [Installation checklist](https://developer.microsoft.com/en-us/windows/holographic/install_the_tools#installation_checklist) on Microsoft's HoloLens developer portal.
 
-    _Be sure to enable automatic NuGet package downloads_
+    > The emulator isn't strictly necessary if you have a HoloLens available, but the installation package also comes with additional app templates. Also, the emulator allows you to simulate a specific room interior (captured from an actual device beforehand), which can be quite useful in certain scenarios.
 
-1. Download and install the latest version of the HoloLens Emulator package. You can find a link to the current release in the [Installation checklist](https://developer.microsoft.com/en-us/windows/holographic/install_the_tools#installation_checklist) from Microsoft's developer portal for HoloLens.
+    ![Installing the HoloLens emulator](Images/emulator_install.jpg)
 
-    The Emulator isn't necessary for development if you have a physical device available, but the installation package also comes with additional app templates. Also, the emulator allows you to simulate a specific room interior (captured from an actual device beforehand), which can be quite useful in certain scenarios.
+    _Installing the HoloLens emulator_
 
-    ![HoloLens Emulator Installation](Images/emulator_install.jpg)
+1. Download and install the latest release of Unity from https://unity3d.com/unity. The free Personal Edition will work just fine while you are learning.
 
-    _HoloLens Emulator Installation_
+    > If you've worked with Unity and HoloLens previously, you may recall needing to download a special build. HoloLens support is now fully integrated into Unity, so you no longer need to do that. The "normal" release version is sufficient now.
 
-1. Download and install the latest release of Unity from [unity32.com/unity](https://unity3d.com/unity). The Personal/Free edition will work just fine while learning.
+1. You must have a Unity account to sign in to Unity. Go to https://id.unity.com/en/conversations/41750435-f67a-4881-a6e5-5dec3c05f731019f and create an account if you do not already have one.
 
-    > **NOTE:** If you've attempted to work with Unity and HoloLens previously, you may recall needing to download a special build. HoloLens support is now fully integrated into Unity, so you no longer need to do that. The "normal" release version is sufficient now.
-
-1. You will also need to have a Unity Account to sign-in to Unity. Be sure to register a new account on the Unity3D website if you do not already have one.
-
-With a development environment in place, we can also install an emulated device to use when a physical HoloLens is not available. This is done in the second exercise below.
-
-
+Your development environment is now configured. If you have a HoloLens device, proceed to [Exercise 2](#Exercise2). Otherwise, skip to [Exercise 3](#Exercise3).
 
 <a name="Exercise2"></a>
-## Exercise 2: Configuring your HoloLens ##
+## Exercise 2: Configure your HoloLens ##
 
-In this exercise, you will configure your HoloLens and be introduced to some useful features of the HoloLens that may come in handy during development.
+In this exercise, you will configure your HoloLens and pair it with your PC. It is assumed that you are familiar with basic HoloLens gestures such as "blooming" to open the Windows Start menu and "air tapping" to select items on the screen in front of you. If you aren't familiar with these gestures, read up on them at https://support.microsoft.com/en-us/help/12644/hololens-use-gestures.
 
-1. Equip your HoloLens visor and power it on.
+1. Don your HoloLens visor and power it on.
 
-1. Log in to Windows when prompted.
+1. On the HoloLens, log in to Windows. Launch the Settings app, and select **Update & Security**.
 
-1. Launch the **Settings** app, and go to the **Update & Security** section.
+    ![Opening Update & Security settings](Images/settings.jpg)
 
-    ![Settings App](Images/settings.jpg)
+    _Opening Update & Security settings_
 
-    _Tap the **Update & Security** icon in the Settings App_
+1. Select **For Developers**, and make sure **Developer Mode** is toggled on. Then scroll to the bottom of the page and make sure **Enable remote management of this device from a browser** is turned on, too. This will enable you to deploy apps to your HoloLens as well as activate a built-in Web portal on the device.
 
-1. Select the **For Developers** page.
+    ![Enabling developer mode and remote management](Images/devmode.jpg)
 
-    ![Developer Settings](Images/devmode.jpg)
+    _Enabling developer mode and remote management_
 
-    _Select **For Developers**_
+1. Now that the Web portal is enabled, you will need to create a login for your device. Connect the HoloLens to your Windows PC using a USB cable. Then browse to http://127.0.0.1:10080 on your PC.
 
-1. Ensure that **Developer Mode** is toggled on, and **Remote Management via the Device Portal** (scroll to the bottom of the page to see this setting).
+1. When presented with a setup page that asks you to request a pin, click the **Request pin** button.
 
-    ![Remote Management](Images/enable_portal.jpg)
+    > If you've previously paired your HoloLens to your PC, you will instead be prompted for a user name and password. Once logged in, you can add credentials by clicking the Security icon in the upper right corner of the page.
 
-    _Enable Remote Management_
+    ![Requesting a PIN](Images/credential_reset.jpg)
 
-    This will enable both the ability to deploy apps to your HoloLens as well as activating a built-in web portal on the device that will come in handy. Now that the web portal has been enabled, you will need to create a login.
-
-1. Connect the HoloLens to your Windows PC using a USB cable.
-
-1. Browse to [http://127.0.0.1:10080](http://127.0.0.1:10080)
-
-1. You should be presented with a Setup page that asks you to Request a pin.
-
-    > **TIP:** If you've previously paired your HoloLens, then you will instead be prompted for an existing login and password. Once logged in, you can add credentials by clicking the Security icon in the upper right corner of the page.
-
-    Click the **Request pin** button.
-
-    ![Requesting PIN](Images/credential_reset.jpg)
-
-    _Resetting Credentials_
+    _Requesting a PIN_
 
 1. On the HoloLens display, you should now see a seven-digit PIN code.
 
-    ![Generated PIN](Images/pin.jpg)
+    ![The requested PIN](Images/pin.jpg)
 
-    _Newly generated PIN code_
+    _The requested PIN_
 
-1. Enter this PIN code into the portal page, along with a user name and password and then click the **Pair** button.
+1. Enter this PIN code on your PC, along with a user name and password. Then click the **Pair** button.
 
-    ![Pairing](Images/pairing.jpg)
+    > The username and password you enter will be used to access the device portal when debugging apps, so it is important not to forget them. The only way to recover them is by performing a full reset of the HoloLens.
 
-    _Pairing the HoloLens_
+    ![Pairing the HoloLens with your PC](Images/pairing.jpg)
 
-    > **NOTE:** This username/password will be used to access the device portal and when debugging apps, so it is important to not forget it. The only way to recover it is by performing a full reset of the HoloLens.
+    _Pairing the HoloLens with your PC_
 
-Spend a few minutes exploring the device portal. You will find a number of very useful features here, including diagnostic system information. One page that can be especially useful is the "Mixed Reality Capture" page, which allows you capture images and videos of what the HoloLens wearer is currently seeing. You can even see a live stream of their video/audio (delayed by a second or so).
+1. Spend a few minutes exploring the device portal. You will find a number of useful features here, including diagnostic system information. One page that is especially useful is the "Mixed Reality Capture" page, which allows you to capture images and videos depicting what the person wearing the HoloLens is  seeing. You can even see a live stream of their video and audio (delayed by a second or so).
 
-> **TIP:** You can access the device portal via http://127.0.0.1:10080 while connected via USB, but you can also connect via Wi-Fi. After joining a Wi-Fi network on the HoloLens, find your device's IP Address in the Network Settings (or ask Cortana _"Hey Cortana, what is my IP address?"_). As long as your Windows PC is on the same Wi-Fi network, you can access the portal through that IP address.
+	> You can access the device portal via http://127.0.0.1:10080 while connected via USB, but you can also connect via Wi-Fi. After joining a Wi-Fi network on the HoloLens, find your device's IP Address in the Network Settings (or ask Cortana _"Hey Cortana, what is my IP address?"_). As long as your Windows PC is on the same Wi-Fi network, you can access the portal through that IP address.
 
-With the HoloLens hardware ready, we are now ready to start building an application.
-
-
+With the HoloLens hardware configured, you are now ready to start building an application.
 
 <a name="Exercise3"></a>
-## Exercise 3: Your first Holographic Application with Unity ##
+## Exercise 3: Build your first holographic application with Unity ##
 
-In this exercise, we will create a new Unity project and configure it (manually) to target the Windows Holographic Platform.
+In this exercise, you will create a new Unity project and configure it (manually) to target the Windows Holographic platform. In the next exercise, you will learn how to automate much of this. However, going through the process manually the first time helps you understand — and develop an appreciation for — what's happening and why.
 
-> **NOTE:** _In the next exercise we will see how to automate much of this; however, by going through the process manually the first time, you will learn about what is being done in the automated process and develop a slight appreciation for it._
+1. Launch Unity and sign in using your Unity Account.
 
-1. Launch Unity, if it's not already running, and sign in using your Unity Account.
+1. Click **+ New** to create a new Unity project. For now, the project name does not matter since this is a throw-away project. Enter any project name that you like. Make sure **3D** is selected, and then click the **Create project** button.
 
-1. Click **+ New** to create a new Unity project. For now, the project name does not matter as this is a throw-away project.
+    ![Creating a new Unity project](Images/new_project.jpg)
 
-    ![New Unity Project](Images/new_project.jpg)
+    _Creating a new Unity project_
 
-    _Create a new Unity project_
+1. Every holographic application needs a viewpoint to represent the person who is wearing the HoloLens visor. This is handled with a *Camera* object. Your empty project should have a camera, but if it doesn't, then you will need  to create one.
 
-1. Click the **Create Project** button to create the new empty project.
+	In the Scene Hierarchy panel, expand the top-level node (it should be named "Untitled"). **If there is already an object there named "MainCamera," then proceed to the next step.** Otherwise, select **Camera** from the **GameObject** menu to create a new camera.
 
-   Every holographic application needs a viewpoint to represent the person who is wearing the HoloLens visor. This is handled with a **Camera** object. Our empty project should have a camera, but if not then you will need to create one.
+    ![Creating a new camera](Images/new_camera.jpg)
 
-1. In the Scene Hierarchy panel, expand the top level node (it should be named "Untitled"). **If there is already an object named _"Main Camera"_, then skip the next step.**
+    _Creating a new camera_
 
-1. Select **Camera** from the **GameObject** menu to create a new camera to be used as our HoloLens viewpoint.
+1. The camera must be configured correctly for the holographic application to function properly. Go to the "Inspector" tab docked to the right side of the Unity user interface. In the **Tag** drop-down, select **MainCamera**.
 
-    ![New Camera](Images/new_camera.jpg)
+    ![Selecting MainCamera](Images/maincamera.jpg)
 
-    _Create a new camera_
+    _Selecting MainCamera_
 
-   This new camera must also be configured correctly for our holographic application to function properly.
+1. In the **Clear Flags** drop-down, select **Solid Color**.
 
-1. Select the **Inspector** tab that should be docked to the right side of the Unity user interface. In the **Tag** drop-down, select **MainCamera**.
+    ![Configuring the Clear Flags](Images/clear_flags.jpg)
 
-    ![Configure as MainCamera](Images/maincamera.jpg)
+    _Configuring the Clear Flags_
 
-    _Configure as MainCamera_
+1. Change **Background** to solid black using the "Color" popup.
 
-1. In the **Clear Flags** drop-down, change the selection from **Skybox** to **Solid Color**.
+    ![Setting the camera background](Images/black_bg.jpg)
 
-    ![Configure Clear Flags](Images/clear_flags.jpg)
+    _Setting the camera background_
 
-    _Configure Clear Flags as Solid Color_
+1. Click the Gear icon in the upper-right corner of the panel, and select **Reset** from the context menu to reset the camera position 0, 0, 0.
 
-1. Change the **Background** to solid black using the color palette popup.
+    > It is a good habit to **always** reset the position of any new elements added to your scene so that each has a known starting position.
 
-    ![Camera Background](Images/black_bg.jpg)
+    ![Resetting the camera position](Images/reset.jpg)
 
-    _Set Background to solid black_
+    _Resetting the camera position_
 
-1. Reset the position of the camera to **0, 0, 0**. This can be done quickly by clicking the Gear icon in the upper corner of the panel, and then selecting **Reset** from the context menu that pops up.
+1. Lastly, set **Near Clipping Plane** to **0.85** meters rather than the default of 0.3. This value determines how close you can get to an object before it gets clipped out of view. (Otherwise, you would see the "insides" of objects if you walked through them).
 
-    > **TIP:** This is a good habit to always reset the position of any new elements placed into your scene, so that you can always depend on it's starting position.
+    ![Setting the distance to the near clipping plane](Images/near_clip.jpg)
 
-    ![Reset Position](Images/reset.jpg)
+    _Setting the distance to the near clipping plane_
 
-    _Reset Position_
+1. With the main camera properly configured, you now need to configure the project's build settings. Select **Build Settings...** from the **File** menu.
 
-1. Lastly, change the **Near Clipping Plane** to a more appropriate **0.85** meters from the default of 0.3. This value determines how close you can get to an object before it gets clipped out of view (otherwise you would see the "insides" of objects if you walk through them).
+    > If you are accustomed to developer-oriented environments such as Visual Studio, this next group of settings might seem very odd. Don't be discouraged — this is just a result of Unity's cross-platform nature and the fact that it originally evolved as a designer-focused tool.
 
-    ![Camera Near Clipping Plane](Images/near_clip.jpg)
+    ![Accessing build settings](Images/build_settings.jpg)
 
-    _Set Near Clipping Plane to 0.85 meters_
+    _Accessing build settings_
 
-    With the camera properly configured, we now need to configure the project's build settings.
+1. In the list of platforms, select **Windows Store** and then click the **Switch Platform** button.
 
-    > **NOTE:** If you are accustomed to developer-oriented environments such as Visual Studio, then this next group of project-level settings might seem very odd. Don't be discouraged - this is just an result of Unity's cross-platform nature and the fact that it evolved as a designer-focused tool first.
+    ![Switching build platforms](Images/switch_platforms.jpg)
 
-1. Select **Build Settings...** from the **File** menu.
+    _Switching build platforms_
 
-    ![Build Settings](Images/build_settings.jpg)
+1. With **Windows Store** still selected in the list, make the following changes to the settings in the panel next to it:
 
-    _Build Settings_
+   - Set **SDK** to **Universal 10**
+   - Set **UWP Build Type** to **D3D**
+   - Check the **Unity C# Projects** box (this enables Visual Studio editing)
 
-1. In the list of Platforms, select **Windows Store** and then click the **Switch Platform** button. The Unity logo should now be drawn on the Windows Store entry instead of the default PC/Mac/Linux entry.
+    ![Changing platform settings](Images/windows_store_settings.jpg)
 
-    ![Build Platform](Images/switch_platforms.jpg)
+    _Changing platform settings_
 
-    _Switching Build Platform_
+1. Click the **Player Settings...** button under the list of platforms. This will open a new region within the "Inspector" panel. Click **Publishing Settings** in the "Inspector" panel to display the project's publishing settings.
 
-1. With **Windows Store** still selected in the list, make several changes to settings on the panel next to it:
-   - Change **SDK** to **Universal 10**
-   - Change **UWP Build Type** to **D3D**
-   - Select the option for **Unity C# Projects** (this enables Visual Studio editing)
+    ![Viewing publishing settings](Images/publisher.jpg)
 
-    ![Windows Store Settings](Images/windows_store_settings.jpg)
+    _Viewing publishing settings_
 
-    _Windows Store Settings_
+1. Scroll to the end of the "Publishing Settings" pane, where you will find a "Capabilities" list. This is where you declare any capabilities that your application requires, which might require additional permissions. **SpatialPerception** and **Microphone** are common requirements, so check those. Also check **InternetClient** so you can run the app in the HoloLens emulator.
 
-1. Click the **Player Settings...** button under the list of platforms. This will open a new region within the **Inspector** docked panel.
+    ![Specifying the app's capabilities](Images/capabilities.jpg)
 
-1. Find the **Publishing Settings** pane in the **Inspector** panel and expand it.
+    _Specifying the app's capabilities_
 
-    ![Publishing Settings](Images/publisher.jpg)
+1. Find the "Other Settings" pane in the "Inspector" panel and expand it. Then check the **Virtual Reality Supported** box. Upon selecting this option, a list of Virtual Reality SDKs should appear below. Verify that **Windows Holographic** appears in that list (it will likely be the only entry in the list).
 
-    _Publishing Settings_
+    ![Specifying other settings](Images/other.jpg)
 
-1. Scroll to the very end of the **Publishing Settings** pane, where you will find the list of **Capabilities**. This is where you would declare any capabilities that your application might need to access, which might require additional permissions. **SpatialPerception** and **Microphone** are common requirements, so select those. If you intend to run your app on the HoloLens Emulator, then you will also need to select **InternetClient**.
+    _Specifying other settings_
 
-    ![Capabilities](Images/capabilities.jpg)
+1. From the **Edit** menu, select **Project Settings** and then **Quality**. This will open a new region named "QualitySettings" within the "Inspector" panel.
 
-    _Capabilities Settings_
+    ![Accessing quality settings](Images/quality.jpg)
 
-1. Find the **Other Settings** pane in the **Inspector** panel and expand it.
+    _QAccessing quality settings_
 
-1. Select the checkbox for **Virtual Reality Supported**. Upon selecting this option, a list of **Virtual Reality SDKs** should appear below it. Verify that **Windows Holographic** appears in that list (it will likely be the only entry in the list).
+1. In this region, there is a matrix of options that you might be tempted to select. **Do not select anything.** Instead, notice that the header row in the matrix contains small platform icons. The green box is a miniature version of the Windows Store logo; it is usually the center column of the matrix. At the bottom of each column is a small triangle. Click the triangle under the Windows Store column, and then select **Fastest** from the ensuing menu.
 
-    ![Other Settings](Images/other.jpg)
+    ![Setting the quality Level](Images/quality_level.jpg)
 
-    _Other Settings_
+    _Setting the quality Level_
 
-1. From the **Edit** menu, select **Project Settings** and then **Quality**. This will open a new region named **QualitySettings** within the **Inspector** panel.
+1. You should now be able to add content to your application in Unity, along with any scripts required for interaction. Save the open scene (don't forget to add the newly saved scene to the "Build Settings" dialog), and then build the resulting project (again, from the "Build Settings" dialog).
 
-    ![Quality Settings](Images/quality.jpg)
-
-    _Quality Settings_
-
-1. In this region, there is a matrix of options that seems like you should individually select. **_Do not do this._** Instead, notice that the header row in the matrix has small versions of the various platform icons. The green box is a mini version of the Windows Store logo - it is usually the center column of the matrix. At the bottom of each column is a small triangle - _find the small triangle under the Windows Store column, and click it_. This will display a contextual popup menu. Select the option for **Fastest** from this menu.
-
-    > **PLEA:** Please don't ever design an application with this kind of non-intuitive user interface!
-
-    ![Quality Level](Images/quality_level.jpg)
-
-    _Quality Level_
-
-You should now be able to add content for your application in Unity, along with any interaction script code, save the open scene (don't forget to add the newly saved scene to the **Build Settings** dialog), and then build the resulting project (again, from the **Build Settings** dialog).
-
-***Congratulations!*** You've built a compilable Unity project that supports the Windows Holographic Platform. Of course, there's no content in this project yet, and there is a better way to get started on a new, blank project.
-
-Next, let's backtrack and see how to automate and expedite those steps by using HoloToolkit.
-
-
+Congratulations! You've created and built a Unity project that supports the Windows Holographic platform. Of course, there's no content in this project yet, and there is a better way to get started on a new project without having to manually apply all these settings. Let's learn how to automate these steps by using HoloToolkit.
 
 <a name="Exercise4"></a>
-## Exercise 4: Using HoloToolkit to expedite holographic development ##
+## Exercise 4: Use HoloToolkit to expedite holographic development ##
 
 In this exercise, we will start over with a new project, using HoloToolkit to streamline the project setup.
 
@@ -382,10 +331,8 @@ In this exercise, we will start over with a new project, using HoloToolkit to st
 
 We first covered how to create a new Unity project from scratch to learn how exactly a holographic application differs from other Unity applications (mostly through certain project-level settings). After gaining an appreciation for that, we then covered a quicker method that takes care of much of that tediousness. This second method also provided some additional benefit through prefabricated components that we can use to speed up development of our own applications.
 
-
-
 <a name="Exercise5"></a>
-## Exercise 5: Compiling and Debugging from Visual Studio ##
+## Exercise 5: Compile and Debug in Visual Studio ##
 
 In the previous two exercises, we walked through two different ways of creating a new holographic project in Unity. In this exercise, we will cover the steps needed to compile and run these applications.
 
@@ -435,10 +382,8 @@ In the previous two exercises, we walked through two different ways of creating 
 
 With a starter holographic project in place, we can finally move to the final exercise in this lab, where we build a simple (but complete) interaction between the user and a hologram.
 
-
-
 <a name="Exercise6"></a>
-## Exercise 6: Creating an interactive hologram ##
+## Exercise 6: Create an interactive hologram ##
 
 In this final exercise, we will create a complete holographic interaction.
 
@@ -490,11 +435,11 @@ In this final exercise, we will create a complete holographic interaction.
 
 1. Re-export the project SLN from Unity, and open it with Visual Studio.
 
-1. The template for new scripts provides the scaffolding for the **MonoBehavior**-based class. By default, Unity includes a `Start()` and `Update()` method. The `Start()` method is where you would place any code that needs to run once per object instance, shortly after the game object has been created and registered. The `Update()` method is called very often - once per frame. However, to respond to interaction clicks (technically, these are "_taps_") we don't need to use either of them. Instead, we need to implement the `IInputClickHandler` interface along with it's single method `OnInputClicked()`.
+1. The template for new scripts provides the scaffolding for the **MonoBehavior**-based class. By default, Unity includes a `Start()` and `Update()` method. The `Start()` method is where you would place any code that needs to run once per object instance, shortly after the game object has been created and registered. The `Update()` method is called very often - once per frame. However, to respond to interaction clicks (technically, these are "_taps_") we don't need to use either of them. Instead, we need to implement the `IInputClickHandler` interface along with its single method `OnInputClicked()`.
 
     Add the implementation code for this interface. For now, let's make sure that our object is receiving the click events. We will worry about the particle effects later...
 
-    ```
+    ```C#
     using System;
     using UnityEngine;
     using HoloToolkit.Unity.InputModule;
@@ -580,7 +525,7 @@ In this final exercise, we will create a complete holographic interaction.
 
 1. The last step remaining is to obtain a reference to the new particle system, and `Stop()` or `Play()` accordingly whenever a click event is received. Furthermore, let's turn off the fountain during the script's `Start()` method.
 
-    ```
+    ```C#
     using System;
     using UnityEngine;
     using HoloToolkit.Unity.InputModule;
