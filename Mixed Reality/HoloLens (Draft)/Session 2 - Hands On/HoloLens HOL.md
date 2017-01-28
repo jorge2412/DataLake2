@@ -250,7 +250,7 @@ In this exercise, you will create a new Unity project and configure it (manually
 
     ![Accessing quality settings](Images/quality.jpg)
 
-    _QAccessing quality settings_
+    _Accessing quality settings_
 
 1. In this region, there is a matrix of options that you might be tempted to select. **Do not select anything.** Instead, notice that the header row in the matrix contains small platform icons. The green box is a miniature version of the Windows Store logo; it is usually the center column of the matrix. At the bottom of each column is a small triangle. Click the triangle under the Windows Store column, and then select **Fastest** from the ensuing menu.
 
