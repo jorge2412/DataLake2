@@ -96,7 +96,7 @@ In this exercise, you will prepare your development environment so you can build
 
 1. Download and install the latest release of Unity from https://unity3d.com/unity. The free Personal Edition will work just fine while you are learning.
 
-    > If you've worked with Unity and HoloLens previously, you may recall needing to download a special build. HoloLens support is now fully integrated into Unity, so you no longer need to do that. The "normal" release version is sufficient now.
+    > If you have worked with Unity and HoloLens previously, you may recall needing to download a special build. HoloLens support is now fully integrated into Unity, so you no longer need to do that. The "normal" release version is sufficient now.
 
 1. You must have a Unity account to sign in to Unity. Go to https://id.unity.com/en/conversations/41750435-f67a-4881-a6e5-5dec3c05f731019f and create an account if you do not already have one.
 
@@ -121,7 +121,7 @@ In this exercise, you will configure your HoloLens and pair it with your PC. It 
 
     _Enabling developer mode and remote management_
 
-1. Now that the Web portal is enabled, you will need to create a login for your device. Connect the HoloLens to your Windows PC using a USB cable. Then browse to http://127.0.0.1:10080 on your PC.
+1. Next, you need to create a login for your device. Connect the HoloLens to your Windows PC using a USB cable. Then browse to http://127.0.0.1:10080 on your PC.
 
 1. When presented with a setup page that asks you to request a pin, click the **Request pin** button.
 
@@ -154,9 +154,9 @@ With the HoloLens hardware configured, you are now ready to start building an ap
 <a name="Exercise3"></a>
 ## Exercise 3: Build your first holographic application with Unity ##
 
-In this exercise, you will create a new Unity project and configure it (manually) to target the Windows Holographic platform. In the next exercise, you will learn how to automate much of this. However, going through the process manually the first time helps you understand — and develop an appreciation for — what's happening and why.
+In this exercise, you will create a new Unity project and configure it to target the Windows Holographic platform. In the next exercise, you will learn how to automate much of this process. However, doing it manually the first time helps you understand what's happening and why.
 
-1. Launch Unity and sign in using your Unity Account.
+1. Launch Unity and sign in with your Unity Account.
 
 1. Click **+ New** to create a new Unity project. For now, the project name does not matter since this is a throw-away project. Enter any project name that you like. Make sure **3D** is selected, and then click the **Create project** button.
 
@@ -172,7 +172,7 @@ In this exercise, you will create a new Unity project and configure it (manually
 
     _Creating a new camera_
 
-1. The camera must be configured correctly for the holographic application to function properly. Go to the "Inspector" tab docked to the right side of the Unity user interface. In the **Tag** drop-down, select **MainCamera**.
+1. The camera must be configured correctly for the holographic application to function properly. Go to the Inspector tab docked to the right side of the Unity IDE. In the **Tag** drop-down, select **MainCamera**.
 
     ![Selecting MainCamera](Images/maincamera.jpg)
 
@@ -184,13 +184,13 @@ In this exercise, you will create a new Unity project and configure it (manually
 
     _Configuring the Clear Flags_
 
-1. Change **Background** to solid black using the "Color" popup.
+1. Change **Background** to solid black using the Color popup.
 
     ![Setting the camera background](Images/black_bg.jpg)
 
     _Setting the camera background_
 
-1. Click the Gear icon in the upper-right corner of the panel, and select **Reset** from the context menu to reset the camera position 0, 0, 0.
+1. Click the gear icon in the upper-right corner of the panel, and select **Reset** from the context menu to reset the camera position 0, 0, 0.
 
     > It is a good habit to **always** reset the position of any new elements added to your scene so that each has a known starting position.
 
@@ -228,25 +228,25 @@ In this exercise, you will create a new Unity project and configure it (manually
 
     _Changing platform settings_
 
-1. Click the **Player Settings...** button under the list of platforms. This will open a new region within the "Inspector" panel. Click **Publishing Settings** in the "Inspector" panel to display the project's publishing settings.
+1. Click the **Player Settings...** button under the list of platforms. This will open a new region within the Inspector panel. Click **Publishing Settings** in the Inspector panel to display the project's publishing settings.
 
     ![Viewing publishing settings](Images/publisher.jpg)
 
     _Viewing publishing settings_
 
-1. Scroll to the end of the "Publishing Settings" pane, where you will find a "Capabilities" list. This is where you declare any capabilities that your application requires, which might require additional permissions. **SpatialPerception** and **Microphone** are common requirements, so check those. Also check **InternetClient** so you can run the app in the HoloLens emulator.
+1. Scroll to the end of the Publishing Settings pane, where you will find a Capabilities list. This is where you declare any capabilities that your application requires. **SpatialPerception** and **Microphone** are common requirements, so check those. Also check **InternetClient** so you can run the app in the HoloLens emulator.
 
     ![Specifying the app's capabilities](Images/capabilities.jpg)
 
     _Specifying the app's capabilities_
 
-1. Find the "Other Settings" pane in the "Inspector" panel and expand it. Then check the **Virtual Reality Supported** box. Upon selecting this option, a list of Virtual Reality SDKs should appear below. Verify that **Windows Holographic** appears in that list (it will likely be the only entry in the list).
+1. Find the Other Settings pane in the Inspector panel and expand it. Then check the **Virtual Reality Supported** box. Upon selecting this option, a list of Virtual Reality SDKs should appear below. Verify that **Windows Holographic** appears in that list (it will likely be the only entry in the list).
 
     ![Specifying other settings](Images/other.jpg)
 
     _Specifying other settings_
 
-1. From the **Edit** menu, select **Project Settings** and then **Quality**. This will open a new region named "QualitySettings" within the "Inspector" panel.
+1. From the **Edit** menu, select **Project Settings** and then **Quality**. This will open a new region named "QualitySettings" within the Inspector panel.
 
     ![Accessing quality settings](Images/quality.jpg)
 
@@ -267,11 +267,11 @@ Congratulations! You've created and built a Unity project that supports the Wind
 
 In this exercise, you will create a new project and use HoloToolkit to streamline the project setup.
 
-1. Download or clone the HoloToolkit repository from GitHub to your local Windows PC. The repository can be found at https://github.com/Microsoft/HoloToolkit-Unity. This package is updated frequently, and you will likely want to use the latest and greatest.
+1. Download or clone the HoloToolkit repository from GitHub to your local Windows PC. The repository can be found at https://github.com/Microsoft/HoloToolkit-Unity. This package is updated frequently, and you want to use the latest and greatest.
 
 1. Open the downloaded HoloToolkit project folder in Unity.
 
-1. In the "Project" pane, select the "Assets" folder in the root. Right-click the folder and select **Export Package...**. Be sure to export the entire "Assets" folder, including dependencies.
+1. In the Project pane, select the "Assets" folder at the root of the project. Right-click the folder and select **Export Package...**. Be sure to export the entire "Assets" folder, including dependencies.
 
     ![Exporting assets as a package](Images/export.jpg)
 
@@ -297,7 +297,7 @@ In this exercise, you will create a new project and use HoloToolkit to streamlin
 
     _Deleting the default main camera_
 
-1. In the "Project" panel, expand the "Assets" folder to expose the subfolder named "HoloToolkit." Expand again to find the "Input" and "Prefabs" folders. Then drag **HoloLensCamera.prefab** and drop it over the main scene node in the "Hierarchy" treeview. This camera is preconfigured to function properly in a HoloLens application. Remember to **reset the camera after placing it**. (See Exercise 3, Step 7 to remind yourself how to do it.)
+1. In the Project panel, expand the "Assets" folder to expose the subfolder named "HoloToolkit." Expand again to find the "Input" and "Prefabs" folders. Then drag **HoloLensCamera.prefab** and drop it over the main scene node in the Hierarchy treeview. This camera is preconfigured to function properly in a HoloLens application. Remember to **reset the camera after placing it**. (See Exercise 3, Step 7 to remind yourself how to do it.)
 
     ![Adding Prefab main camera](Images/camera_prefab.jpg)
 
@@ -329,53 +329,55 @@ You now know how to configure a holographic project manually, and how to expedit
 <a name="Exercise5"></a>
 ## Exercise 5: Compile and Debug in Visual Studio ##
 
-In the previous two exercises, you learned through two different to configure a new holographic project in Unity. In this exercise, you will learn how to compile and run the apps that you create.
+In the previous two exercises, you learned two different ways to configure a new holographic project in Unity. In this exercise, you will learn how to use Visual Studio to compile the apps that you create and run them on your HoloLens.
 
-1. In Unity, open either project that was created during the previous two exercises.
+1. In Unity, open either of the projects you created in the previous exercises.
 
-    > **NOTE:** If you are using HoloToolkit for the open project, then you can use HoloTookit's Build Window in place of steps 2 through 4 here.
+    > If you opened the HoloToolkit project, then you can use HoloTookit's **Build Window** command in place of Steps 2 through 4.
 
 1. Select **Build Settings...** from the **File** menu.
 
-    ![Build Settings](Images/build_settings.jpg)
+    ![Opening build settings](Images/build_settings.jpg)
 
-    _Build Settings_
+    _Opening build settings_
 
-1. Click the **Build** button. You will be prompted for an output folder location for Unity to place the resulting Visual Studio solution code. You should create a folder under your project for this (***"[Project Dir]\WindowsStoreApp\\"*** is usually a good location choice).
+1. Click the **Build** button. You will be prompted to select the output folder in which Unity will place a Visual Studio solution. You should create a folder under your project for this.
 
-    > **NOTE:** After Unity packages resources and exports the code files, you will find two Visual Studio solution files - one in the main project folder and one in the chosen output folder. Ignore the ****.sln*** file that can be found in the main project folder.
+    > Unity generates two Visual Studio solution files: one in the main project folder and one in the output folder. Ignore the **.sln** file in the main project folder.
 
-1. Launch Visual Studio and open the ****.sln*** file that was written to your chosen output folder from the previous step. This solution file will contain three projects - you can generally ignore the one named  ***Assembly-CSharp-firstpass***. The project named ***Assembly-CSharp*** contains your script behaviors that are attached to elements throughout your Unity project, and the third one is the main application project for the App itself.
+1. Start Visual Studio and open the **.sln** file created in the output folder in the previous step.
 
-1. Verify that your main application project (will have the same name as your Unity project) is set as the **Startup Project** in Visual Studio.
+	> This solution contain three projects. You can generally ignore the one named "Assembly-CSharp-firstpass." The project named "Assembly-CSharp" contains the script behaviors that are attached to elements in the Unity project, and the third one is the project for the app itself.
 
-1. Verify that your Visual Studio Build Configuration is set for **Debug** target, for the **x86** platform, and **Device** as the target device.
+1. Verify that your main application project — the one with the same name as your Unity project — is set as the startup project in Visual Studio. If it isn't, right-click the project and select **Set as Startup Project** from the context menu.
 
-    ![Visual Studio Build Configuration](Images/build_config.jpg)
+1. Verify that Visual Studio is set to produce a **Debug** build for the **x86** platform with **Device** as the target.
 
-    _Visual Studio Build Configuration_
+    ![Setting the Visual Studio build configuration](Images/build_config.jpg)
 
-    > **NOTE:** Select **Device** if your HoloLens is directly connected via USB. If you wish to deploy/debug over WiFi, then you will need to select **Remote Machine** and input the IP address of your HoloLens to use remote debugging.
+    _Setting the Visual Studio build configuration_
 
-1. Press **F5** or select **Start Debugging** from the **Debug** menu to compile, deploy and launch the empty application.
+    > Selecting **Device** assumes that your HoloLens is connected via USB. If you wish to deploy and debug over WiFi, select **Remote Machine** instead and input the IP address of your HoloLens.
 
-    If this is the first time deploying from your PC to this HoloLens, you will be prompted for a **PIN code**. You can obtain this PIN code from the HoloLens device, from the Developer Settings page where Developer Mode was enabled in Exercise 2 above. Click the **Pair** button here to generate a PIN code that can be entered into Visual Studio's prompt.
+1. Press **F5** or select **Start Debugging** from the **Debug** menu to compile, deploy, and launch the application.
 
-    ![Visual Studio Pairing](Images/pairing_vs.jpg)
+    If this is the first time deploying to this HoloLens, Visual Studio will prompt you for a PIN code. You can obtain this PIN from the HoloLens device, from the settings page where you enabled Developer Mode in [Exercise 2](#Exercise2). Click the **Pair** button to generate a PIN code for Visual Studio.
 
-    _Visual Studio Pairing_
+    ![Pairing with Visual Studio](Images/pairing_vs.jpg)
 
-    If everything goes well, Visual Studio will compile and deploy the application and then launch it. Because this application has no content yet, the only indication you will get from the HoloLens will be the Unity splash logo that always appears when using the free edition of the platform.
+    _Pairing with Visual Studio_
 
-    > **TIP:** If you encounter build errors, first ensure that you have automatic NuGet package restore enabled in Visual Studio. You can also try **Clean All** first from the Visual Studio **Build** menu, and then **Build** the ***Assembly-CSharp-firstpass*** project by itself, followed by the ***Assembly-CSharp*** project, and then finally the main application project (sometimes, the build dependencies fail to resolve properly and manually rebuilding this way will fix it).
+1. If everything goes well, Visual Studio will compile and deploy the application and then launch it. Because this application has no content yet, the only indication you will get from the HoloLens will be the Unity splash logo that appears because you are using the free edition of Unity.
 
-    > **TIP:** If your build is successful, but you don't see anything in the HoloLens or the Emulator, then double-check the project and scene configuration steps outlined in [Exercise 3](#Exercise3) above. This is often due to a missing setting (such as not enabling the Holographic SDK support).
+    ![The app running on a HoloLens](Images/unity_logo.jpg)
 
-    ![Unity Splash Logo](Images/unity_logo.jpg)
+    _The app running on a HoloLens_
 
-    _Unity Splash Logo_
+	If you encounter build errors, first ensure that automatic NuGet package restore is enabled in Visual Studio (see Exercise 1, Step 2). You can also try selecting **Clean All** from Visual Studio's **Build** menu, and then building the "Assembly-CSharp-firstpass" project by itself, followed by the "Assembly-CShar" project, and then the main application project. Sometimes, the build dependencies fail to resolve properly and manually rebuilding this way will resolve the problem.
 
-With a starter holographic project in place, we can finally move to the final exercise in this lab, where we build a simple (but complete) interaction between the user and a hologram.
+    If your build is successful but you don't see anything in the HoloLens or in the emulator, double-check the configuration steps in [Exercise 3](#Exercise3). Just one missing setting, such as failing to enable Holographic SDK support, can prevent the app from working.
+
+With a starter holographic project in place, you are now prepared to move on to the final exercise in this lab in which you will add an interactive hologram to the scene.
 
 <a name="Exercise6"></a>
 ## Exercise 6: Create an interactive hologram ##
