@@ -265,76 +265,71 @@ Congratulations! You've created and built a Unity project that supports the Wind
 <a name="Exercise4"></a>
 ## Exercise 4: Use HoloToolkit to expedite holographic development ##
 
-In this exercise, we will start over with a new project, using HoloToolkit to streamline the project setup.
+In this exercise, you will create a new project and use HoloToolkit to streamline the project setup.
 
-1. Download or clone the HoloToolkit repository from GitHub to your local Windows PC. The repository can be found at [https://github.com/Microsoft/HoloToolkit-Unity](https://github.com/Microsoft/HoloToolkit-Unity). This package is updated frequently, and you will likely want to be using the latest and greatest.
+1. Download or clone the HoloToolkit repository from GitHub to your local Windows PC. The repository can be found at https://github.com/Microsoft/HoloToolkit-Unity. This package is updated frequently, and you will likely want to use the latest and greatest.
 
-1. Open the downloaded project folder for HoloToolkit in Unity.
+1. Open the downloaded HoloToolkit project folder in Unity.
 
-1. In the **Project** window pane, select the **Assets** root folder. Right-click the folder and select **Export Package...**.
+1. In the "Project" pane, select the "Assets" folder in the root. Right-click the folder and select **Export Package...**. Be sure to export the entire "Assets" folder, including dependencies.
 
-    > **WARNING:** Be sure to export the entire Assets folder, including dependencies
+    ![Exporting assets as a package](Images/export.jpg)
 
-    ![Exporting Package](Images/export.jpg)
+    _Exporting assets as a package_
 
-    _Exporting Assets as a Package_
+1. Enter a name and location for the exported package file. The package can be reused in other projects, so it is a good idea to save it outside of your project folders. It is also advisable to include the current date in the package's file name so you are always aware of how old the package content is.
 
-1. Select a name and location for the exported package file. This package can be re-used among multiple projects, so it is a good idea to save it outside of your project folders. It is also a good idea to include the current date in the package filename so you are always aware of how old the package content might be.
-
-1. Create a new Unity project.
-
-1. From the **Assets** menu, select **Import Package** and then **Custom Package...**.
+1. Click **+ New** and create a new Unity project. From the **Assets** menu, select **Import Package** and then **Custom Package...**.
 
     ![Importing Package](Images/import.jpg)
 
     _Importing HoloToolkit_
 
-1. Select the package file that was exported above, and click the **Open...** button.
+1. Select the package file that you exported in Step 3, and click the **Open...** button.
 
-1. Unity gives the option of selecting which assets to import - in this case, you could unselect the **HoloToolkit-Examples** subtree to reduce the size of this application's codebase. Once you've decided on which assets to include, click the **Import** button.
+1. Unity gives you the option of selecting which assets to import. In this case, you can unselect the "HoloToolkit-Examples" subtree to reduce the size of the code base. Once you've specified which assets to include, click the **Import** button.
 
-    > **NOTE:** This step imports a number of very useful assets (some of which we will use in Exercise 6). It also extends the Unity Editor by adding a new menu that provides quick access to some frequently performed actions. We will make use of these shortly.
+    > This imports a number of useful assets, some of which you will use in Exercise 6. It also adds a new top-level menu item to the Unity editor that provides quick access to some frequently performed actions. You will make use of these shortly.
 
-1. Find the default Main Camera in the new project's starting scene. Right-click and **Delete** it.
+1. Find the default Main Camera in the project's starting scene. Right-click it and select **Delete** to delete it.
 
-    ![Delete Default Main Camera](Images/delete_camera.jpg)
+    ![Deleting the default main camera](Images/delete_camera.jpg)
 
-    _Delete the Default Main Camera_
+    _Deleting the default main camera_
 
-1. In the **Project** panel, expand the **Assets** folder to expose the **HoloToolkit** subfolder. Expand again to find the **Input** and **Prefabs** folders.
+1. In the "Project" panel, expand the "Assets" folder to expose the subfolder named "HoloToolkit." Expand again to find the "Input" and "Prefabs" folders. Then drag **HoloLensCamera.prefab** and drop it over the main scene node in the "Hierarchy" treeview. This camera is preconfigured to function properly in a HoloLens application. Remember to **reset the camera after placing it**. (See Exercise 3, Step 7 to remind yourself how to do it.)
 
-    Drag the **HoloLensCamera.prefab** item up to the main scene node in the scene's **Hierarchy** treeview and drop it directly on that scene node. This camera is preconfigured to function properly in a HoloLens application. Remember to reset the **Rotation** of the camera after placing it.
+    ![Adding Prefab main camera](Images/camera_prefab.jpg)
 
-    ![Add Prefab Main Camera](Images/camera_prefab.jpg)
+    _Adding a prefab main camera_
 
-    _Add a prefab Main Camera_
+1. From the **HoloToolkit** menu, select **Configure**, and then select **Apply HoloLens Scene Settings**.
 
-1. From the **HoloToolkit** menu, select the **Configure** submenu, and then select **Apply HoloLens Scene Settings**.
+    ![Configuring HoloToolkit](Images/macros.jpg)
 
-    Repeat this sequence, selecting **Apply HoloLens Project Settings** this time (you may be prompted to reload the project).
+    _Configuring HoloToolkit_
 
-    Repeat one more time, selecting **Apply HoloLens Capability Settings** this time, selecting the capabilities this application will need.
+1. Repeat this sequence, but this time select **Apply HoloLens Project Settings** (you may be prompted to reload the project).
 
-    > **TIP:** You may also need to manually enable the **Unity C# Projects** build setting - these macros don't seem to always set this option properly.
+1. Repeat one more time, but this time select **Apply HoloLens Capability Settings**.
 
-    ![Configuration Macros](Images/macros.jpg)
+    > You may also need to manually enable the **Unity C# Projects** build setting. These menu commands don't seem to always set this option properly.
 
-    _Project Configuration Macros_
-
-1. From the **HoloToolkit** menu, select **Build Window**. From here, you can directly build/export to a Visual Studio solution and also launch Visual Studio with that exported solution. This is usually a more convenient method of working than if you were not using HoloToolkit.
+1. From the **HoloToolkit** menu, select **Build Window**. From here, you can directly build/export to a Visual Studio solution and also launch Visual Studio with the exported solution.
 
     - To export the current Unity project to Visual Studio, click the **Build Visual Studio SLN** button
     - To launch Visual Studio with this exported solution, click the **Open SLN** button
-    - It is also possible to compile a final APPX package and deploy it directly from this dialog window, but this is not as common as compiling and deploying from Visual Studio
 
-    > **TIP:** You only need to click the **Build Visual Studio SLN** button here when non-script assets have been changed. Script changes are automatically kept in sync between Visual Studio and Unity.
+	It is also possible to compile a final APPX package and deploy it directly from this dialog, but this is not as common as compiling and deploying from Visual Studio.
 
-We first covered how to create a new Unity project from scratch to learn how exactly a holographic application differs from other Unity applications (mostly through certain project-level settings). After gaining an appreciation for that, we then covered a quicker method that takes care of much of that tediousness. This second method also provided some additional benefit through prefabricated components that we can use to speed up development of our own applications.
+    > You only need to click the **Build Visual Studio SLN** button when non-script assets have changed. Script changes are automatically kept in sync between Visual Studio and Unity.
+
+You now know how to configure a holographic project manually, and how to expedite the process with HoloToolkit. The latter provides some additional benefit in the form of prefabricated components that speed the development process. With the project set up, it is now time to build it so you can see it come to life.
 
 <a name="Exercise5"></a>
 ## Exercise 5: Compile and Debug in Visual Studio ##
 
-In the previous two exercises, we walked through two different ways of creating a new holographic project in Unity. In this exercise, we will cover the steps needed to compile and run these applications.
+In the previous two exercises, you learned through two different to configure a new holographic project in Unity. In this exercise, you will learn how to compile and run the apps that you create.
 
 1. In Unity, open either project that was created during the previous two exercises.
 
