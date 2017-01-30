@@ -1,12 +1,14 @@
 <a name="HOLTitle"></a>
-# Azure DocumentDB #
+# Using Azure DocumentDB #
 
 ---
 
 <a name="Overview"></a>
 ## Overview ##
 
-An app, tool, or process, whether it targets businesses, consumers, or both, is only as meaningful as the data that drives it. With consumer and organizational requirements changing constantly, as well as the need to store, index, and optimize data and structures as they change, the need for a more open, flexible, and schema "agnostic" data solution has been become essential. Azure DocumentDB addresses these challenges and makes it easy to adjust and adapt data models on the fly, as business logic and application scenarios change.
+Whether it targets businesses, consumers, or both, an app is only as meaningful as the data that drives it. With consumer and organizational requirements changing constantly, as well as the need to store, index, and optimize data and structures as they change, the need for a more open, flexible, and schema "agnostic" data solution has been become essential. Azure DocumentDB addresses these challenges and makes it easy to adjust and adapt data models on the fly, as business logic and application scenarios change.
+
+[DocumentDB](https://azure.microsoft.com/en-us/services/documentdb/) is a fully managed NoSQL database service built for fast performance, high availability, elastic scaling, and ease of development. As a schema-free NoSQL database, DocumentDB provides rich and familiar SQL query capabilities over JSON data, ensuring that 99% of your reads are served under 10 milliseconds and 99% of your writes are served under 15 milliseconds. These unique benefits make DocumentDB a great fit for Web, mobile, gaming, IoT, and many other applications that need seamless scale and global replication.
 
 In this lab, you’ll create and configure an Azure DocumentDB account, database, and collection to accept the import of customer and product order information for the fictitious company Adventure Works, as well as automatically populating an Azure Search service index with customer and product information to facilitate an "autosuggest" customer order search.
 
@@ -26,8 +28,8 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
-- An active Microsoft Azure subscription or [sign up for a free trial]( https://azure.microsoft.com/en-us/free/).
-- [Visual Studio 2015 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher.
+- An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](https://azure.microsoft.com/en-us/free/).
+- [Visual Studio 2015 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher
  
 ---
 
@@ -36,10 +38,10 @@ The following are required to complete this hands-on lab:
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Create and configure a DocumentDB application](#Exercise1)
-- [Exercise 2: Create and configure a database and collections](#Exercise2)
+- [Exercise 1: Create a DocumentDB instance](#Exercise1)
+- [Exercise 2: Create a database and collections](#Exercise2)
 - [Exercise 3: Populate collections with documents](#Exercise3)
-- [Exercise 4: Create and configure an Azure Search service and index](#Exercise4)
+- [Exercise 4: Connect Azure Search](#Exercise4)
 - [Exercise 5: Build an Azure Web App](#Exercise5)
 - [Exercise 6: Add document search to an Azure Web App](#Exercise6)
 
@@ -47,335 +49,196 @@ This hands-on lab includes the following exercises:
 Estimated time to complete this lab: **60** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Create and configure a DocumentDB application ##
+## Exercise 1: Create a DocumentDB instance ##
 
-The first step in working with Azure DocumentDB content is to create an Azure DocumentDB application as the location for a one or more databases, collections, and documents. This step will create and configure your Azure DocumentDB application.
+The first step in working with Azure DocumentDB is to create a DocumentDB instance to hold databases, collections, and documents. In this exercise, you will create and configure a DocumentDB instance.
 
-1.	Open the [Azure Portal](https://portal.azure.com "Azure Portal"), if asked to login, do so with your Microsoft Account.
+1.	Open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to sign in, do so with your Microsoft Account.
 
 1.	Click **+ New**, followed by **Database** and **DocumentDB (NoSQL)**.	
 
-    ![Creating a DocumentDB application](Images/portal-create-new-documentdb.png)
+    ![Creating a DocumentDB instance](Images/portal-create-new-documentdb.png)
 
-    _Creating a DocumentDB application_
+    _Creating a DocumentDB instance_
 
-1.	The Azure portal will display a form for creating a new Azure DocumentDB application. Enter an account ID such as "traininglab01" (without the quotation marks) or any unique label without spaces or special characters.
+1. In the "NoSQL (DocumentDB)" blade, give the account a unique name such as "documentdbhol" and make sure a green check mark appears next to it. (You can only use numbers and lowercase letters since the name becomes part of a DNS name.) Make sure **DocumentDB** is selected for **NoSQL API**. Select **Create new** under **Resource group** and name the resource group "DocumentDBResourceGroup." Select the **Location** nearest you, and then click the **Create** button.
 
-	> DocumentDB account IDs can be 3 to 24 characters in length and can only contain numbers and lowercase letters. In addition, the name you enter must be unique within Azure. If someone else has chosen the same name, you'll be notified that the name isn't available with a red exclamation mark in the **Name** field.
-	 
-1.	Make sure DocumentDB has been selected as the type of **NoSQL API**. If DocumentDB is not selected, click **DocumentDB**.
+    ![Specifying DocumentDB parameters](Images/portal-configure-new-documentdb.png)
 
-1.	Under "Resource Group" select **Create New**, enter a Resource Group name such as "TrainingLabResource."
+    _Specifying DocumentDB parameters_
 
-1.	Select the location nearest you, and click **Create**.
+1. Click **Resource groups** in the ribbon on the left side of the portal, and then click the resource group created for the DocumentDB instance.
+ 
+    ![Opening the resource group](Images/open-resource-group.png)
 
-    ![Specifying DocumentDB application parameters](Images/portal-configure-new-documentdb.png)
+    _Opening the resource group_
 
-    _Specifying DocumentDB application parameters_
+1. Wait until "Deploying" changes to "Succeeded," indicating that the DocumentDB instance has been deployed.
 
-The Azure Portal will redirect you to the Azure Portal Dashboard while it provisions your DocumentDB application. It typically takes around three to five minutes to fully provision a new DocumentDB application. To monitor provisioning of your DocumentDB application from the Azure Portal:
+	> Refresh the page in the browser every now and then to update the deployment status. Clicking the **Refresh** button in the resource-group blade refreshes the list of resources in the resource group, but does not reliably update the deployment status.
 
-1.	Click the **"hamburger"** icon in the Azure Portal to open the side drawer.
+    ![Viewing the deployment status](Images/deployment-status.png)
 
-1.	Click **Resource Groups** followed by **TrainingLabResource**.
+    _Viewing the deployment status_
 
-1.	Select the "Overview" tab.
-
-1.	Review the "Last deployment" label and watch for the status to change from "Deploying" to "Succeeded", at which time your DocumentDB application has been successfully provisioned.
-
-    ![Resource Group deployment status](Images/portal-documentdb-created.png)
-
-    _Resource Group deployment status_
-
-	> NOTE: You may need to refresh the page in your browser from time to time to see the most recent deployment status changes.
-
-Your Azure DocumentDB application is now provisioned and ready to start creating databases and collections in n [Exercise 2: Create and configure a database and collections](#Exercise2").
+Your DocumentDB instance is now provisioned and ready for you to start working with it.
 
 <a name="Exercise2"></a>
-## Exercise 2: Create and configure a database and collections ##
+## Exercise 2: Create a database and collections ##
 
-Now that you’ve created an Azure DocumentDB application, you’re ready to create a database and collections in preparation for storing documents. In this exercise you’ll create a database and collections to store customer and product order information that can be indexed for searching in Exercise 4. To creating an Azure DocumentDB database and collections:
+Now that you’ve deployed a DocumentDB instance, the next step is to create a database and add collections to it in preparation for storing documents. In this exercise, you will create a database and add three collections to it for storing information about customers, products, and orders.
 
-1. Open the [Azure Portal](https://portal.azure.com "Azure Portal") dashboard (if it’s not already open from Exercise 1) and click the **"hamburger"** icon to open the side drawer menu.
+1. Click the DocumentDB instance that you deployed in [Exercise 1](#Exercise1).
 
-1. Click **Resource Groups** followed by **TrainingLabResource**.
+    ![Opening the DocumentDB instance](Images/open-documentdb.png)
 
-1. Select the "Overview" tab.
+    _Opening the DocumentDB instance_
 
-    ![Selecting the Resource Group](Images/portal-select-resource-group.png)
+1. Click **+ Add Collection**.
 
-    _Selecting the Resource Group_
+    ![Adding a collection](Images/add-collection.png)
 
-1. Click **traininglab01** (or the alternative name you entered in Step 3 of Exercise 1) to open your newly provisioned DocumentDB application.
+    _Adding a collection_
 
-    ![Selecting the DocumentDB application](Images/portal-select-documentdb-application.png)
+1. Enter "Customers" (without quotation marks) as the **Collection Id** and select **10 GB** as the **STORAGE CAPACITY**. Select **Create New** under **DATABASE** and specify "CustomerOrders" as the database name. Then click the **OK** button.
 
-    _Selecting the DocumentDB application_
+    ![Creating a Customers collection](Images/create-collection-and-database.png)
 
-1. Click **Add Database** and when the Add Database form displays, enter "CustomerOrders" (again, without quotes) as the **ID** of your database.
+    _Creating a Customers collection_
 
-    ![Selecting Add Database](Images/portal-select-add-database.png)
+1. Click **+ Add Collection** again. Fill in the form as shown below to create a second collection named "Orders." Be sure to add it to the existing database ("CustomerOrders") rather than create a new database. Then click **OK**.
 
-    _Selecting Add Database_
+    ![Adding an Orders collection](Images/add-orders-collection.png)
 
-1. Click **OK** to create your database. A new entry for CustomerOrders will display in the Databases section of the DocumentDB application blade.
+    _Adding an Orders collection_
 
-    ![A newly created database](Images/portal-new-database-created.png)
+1. Click **+ Add Collection** again. Create a third collection named "Products" with the same settings as the "Customers" and "Orders" collections. Once more, be sure to add it to the existing database ("CustomerOrders") rather than create a new database.
 
-    _A newly created database_
-
-1. Click **CustomerOrders** in the "Databases" section of the application blade. The new "CustomerOrders" database blade will now be displayed.
-
-    ![The DocumentDB database blade](Images/portal-show-database-blade.png)
-
-    _The DocumentDB database blade_
-
-1. Click **Add Collection** and when the "Add Collection" form displays, enter "Customers" as the **collection ID**. Leave all other form values as the pre-selected defaults and click **OK**. Your Customers collection has now been created.
-
-    ![Adding the Customers collection](Images/portal-add-customers-collection.png)
-
-    _Adding the Customers collection_
-
-1. Click **Add Collection** again and when the **Add Collection** form displays, enter "Products" as the **collection ID**. Again, leave all other form values as the pre-selected defaults and click **OK**. Your Products collection has now been created.
-
-    ![Adding the Products collection](Images/portal-add-products-collection.png)
-
-    _Adding the Products collection_
-
-1. Click **Add Collection** again and when the "Add Collection" form displays, enter "Orders" as the **collection ID**. Again, leave all other form values as the pre-selected defaults and click **OK**. Your Orders collection has now been created.
-
-    ![Adding the Orders collection](Images/portal-add-orders-collection.png)
-
-    _Adding the Orders collection_
-
-Your DocumentDB database and collections have now been created. Up until now, you have been creating and configuring elements of your DocumentDB environment in preparation for the storage of actual data, and you’re ready to start adding customer and product order documents. You can now proceed to Exercise 3: Populate collections with documents.
+The next step is to upload documents containing data regarding customers, products, and orders.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Populate collections with documents ##
 
-Populating Azure DocumentDB collections with documents can be accomplished through various mechanisms, such as programmatic import via the [Azure SDK](https://www.nuget.org/packages/Microsoft.Azure.DocumentDB/ "Azure SDK"), the [Microsoft DocumentDB Data Migration Tool](https://www.microsoft.com/en-us/download/details.aspx?id=46436 "Microsoft DocumentDB Data Migration Tool"), as well as direct import via the Azure Portal itself. In this exercise you’ll be using the direct import feature of the Azure Portal to populate your collections with customer, product, and order data stored as JSON documents.
+There are several ways to populate DocumentDB collections with documents, including programmatic import via the [Azure SDK](https://www.nuget.org/packages/Microsoft.Azure.DocumentDB/) and the [Microsoft DocumentDB Data Migration Tool](https://www.microsoft.com/en-us/download/details.aspx?id=46436). In this exercise, you will populate your collections with data by uploading JSON documents through the Azure Portal.
 
-To populate your DocumentDB collections with documents:
+1. Click **Document Explorer** in the menu on the left. Make sure **Customers** is selected in the drop-down list of collections, and click **Upload**.
 
-1.	Locate the "Collections" panel in the CustomerOrders database you created in Step 6 of Exercise 2 and click **Customers**.
+    ![Opening Document Explorer](Images/open-document-explorer.png)
 
-    ![Select the Customers collection](Images/portal-selecting-customers-collection.png)
+    _Opening Document Explorer_
 
-    _Select the Customers collection_
+1. Click the folder icon. Select all of the files in this lab's "Resources/Customers" folder, and then click the **Upload** button.
 
-1.	The Azure Portal will display the "Customers" collection blade. Click **Document Explorer**.
-1.	In the "Document Explorer" blade click **Upload**.
-	
-    ![Selecting upload Customer documents](Images/portal-select-upload-customers.png)
+    ![Uploading customer data](Images/upload-customer-data.png)
 
-    _Selecting upload Customer documents_
+    _Uploading customer data_
 
-1.	In the "Upload Document" panel click the **folder icon** and browse your local files to the **Resources** folder included in the content for the lab, and open the **Customers** folder.
-	
-    ![Browsing for Customer documents](Images/portal-browse-customers.png)
+	Each of the files you uploaded is a JSON document containing information about one customer. Here is one of those files:
 
-    _Browsing for Customer documents_
+	```JSON
+	{
+	  "CustomerID": "ALFKI",
+	  "CompanyName": "Alfreds Futterkiste",
+	  "ContactName": "Maria Anders",
+	  "ContactTitle": "Sales Representative",
+	  "Address": "Obere Str. 57",
+	  "City": "Berlin",
+	  "Region": null,
+	  "PostalCode": "12209",
+	  "Latitude": 52.54971,
+	  "Longitude": 13.49041,
+	  "Country": "Germany",
+	  "Phone": "030-0074321",
+	  "Fax": "030-0076545"
+	}
+	```
 
-1.	Select all files in the **Customers** folder by pressing **CTRL+A** on your keyboard. Click **Open** to add the selected files to the file input.
-	
-    ![Selecting Customer documents](Images/portal-select-all-customer-documents.png)
+	There are 91 files in all, so the Customers collection is now populated with data regarding 91 customers.
 
-    _Selecting Customer documents_
+1. Close the "Upload Document" blade and return to the "Document Explorer" blade. Select **Orders** from the drop-down list of collections and click **Upload**. Then upload all of the files in this lab's "Resources/Orders" folder to the Orders collection.
 
-1.	When the file input populates, click **Upload** to add the selected customer documents to the Customers collection. A result of "Succeeded" will display in the File Upload Status panel.
-	
-    ![Customer documents uploaded](Images/portal-upload-customers.png)
+    ![Uploading order data](Images/upload-order-data.png)
 
-    _Customer documents uploaded_
+    _Uploading order data_
 
-1.	Navigate back to the **CustomerOrders** database by selecting **CustomerOrders** in the Azure Portal **breadcrumb navigation**.
-1.	In the "Collections" panel of the "CustomerOrders" database click **Products**.
+1. Repeat this process to upload all of the files in this lab's "Resources/Products" folder to the Products collection.
 
-    ![Select the Products collection](Images/portal-selecting-products-collection.png)
+    ![Uploading product data](Images/upload-product-data.png)
 
-    _Select the Products collection_
+    _Uploading product data_
 
-1.	The Azure Portal will display the Products collection blade. Click **Document Explorer**.
-1.	In the "Document Explorer" blade click **Upload**.
-	
-    ![Selecting upload Product documents](Images/portal-select-upload-products.png)
+1. The next step is to validate the document uploads by querying one or more of the collections. Click **Query Explorer** in the menu on the left. Select **Orders** in the drop-down list of collections, and click **Run Query**.
 
-    _Selecting upload Product documents_
+    ![Querying the Orders collection](Images/open-query-explorer.png)
 
-1.	In the "Upload Document" panel click the **folder icon** and browse your local files to the "Resources" folder included in the content for the lab, and open the **Products** folder.
-1.	
-    ![Browsing for Product documents](Images/portal-browse-products.png)
+    _Querying the Orders collection_
 
-    _Browsing for Product documents_
+1. Confirm that you see the query results below.
 
-1.	Select all files in the **Products** folder by pressing **CTRL+A** on your keyboard. Click **Open** to add the selected files to the file input.
-	
-    ![Selecting Product documents](Images/portal-select-all-product-documents.png)
+    ![Query results](Images/query-results.png)
 
-    _Selecting Product documents_
+    _Query results_
 
-1.	When the file input populates, click **Upload** to add the selected product documents to the Products collection. A result of "Succeeded" will display in the "File Upload Status" panel.
-	
-    ![Product documents uploaded](Images/portal-upload-products.png)
+1. If you would like to confirm that the product and customer uploads succeeded too, run the same query against the Products and Customers collections.
 
-    _Product documents uploaded_
-
-1.	Navigate back to the "CustomerOrders" database by selecting **CustomerOrders** in the Azure Portal **breadcrumb navigation**.
-1.	In the "Collections" panel of the "**CustomerOrders** database click **Orders**.
-
-    ![Select the Orders collection](Images/portal-selecting-orders-collection.png)
-
-    _Select the Orders collection_
-
-1.	The Azure Portal will display the "Orders" collection blade. Click **Document Explorer**.
-1.	In the "Document Explorer" blade click **Upload**.
-	
-    ![Selecting upload Order documents](Images/portal-select-upload-orders.png)
-
-    _Selecting upload Order documents_
-
-1.	In the "Upload Document" panel click the **folder icon** and browse your local files to the "Resources" folder included in the content for the lab, and open the **Orders** folder.
-	
-    ![Browsing for Order documents](Images/portal-browse-orders.png)
-
-    _Browsing for Order documents_
-
-1.	Select all files in the "Orders" folder by pressing **CTRL+A** on your keyboard. Click **Open** to add the selected files to the file input.
-	
-    ![Selecting Order documents](Images/portal-select-all-order-documents.png)
-
-    _Selecting Order documents_
-
-1.	When the file input populates, click **Upload** to add the selected order documents to the Orders collection. A result of "Succeeded" will display in the "File Upload Status" panel.
-	
-    ![Order documents uploaded](Images/portal-upload-orders.png)
-
-    _Order documents uploaded_
-
-At this point in the exercise, it's helpful to validate document import by querying a collection for documents. To query the Orders collection for documents:
-
-1.	Navigate back to the "Orders" collection by selecting **Orders** in the Azure Portal **breadcrumb navigation**.
-
-1.	Click **Query Explorer** in the "Orders" collection blade.
-	
-    ![Selecting the Query Explorer](Images/portal-select_query-explorer.png)
-
-    _Selecting the Query Explorer_
-
-1.	Click **Run Query** in the "Query Explorer" panel to execute a sample query against the imported order documents.
-
-1.	The Azure Portal will display a Results panel containing JSON-formatted output representing orders from the Orders collection. Scroll the panel using the vertical scrollbar to review order document content and associated customer and product information.
-	
-    ![Running a query in the Query Explorer](Images/portal-execute-query.png)
-
-    _Running a query in the Query Explorer_
-
-In this exercise you’ve experienced how simple adding documents to an Azure DocumentDB collection can be, as well as mechanisms to review and validate imported documents. In order to facilitate indexed searching against customer and product documents to create search "lookups" it’s time to integrate our DocumentDB application with Azure Search in [Exercise 4: Create and configure an Azure Search service and index](#Exercise4").
+The database that you created now has three collections that are populated with data. Now let's index the data so searches can be performed quickly.
 
 <a name="Exercise4"></a>
-## Exercise 4: Create and configure an Azure Search service and index ##
+## Exercise 4: Connect Azure Search ##
 
-Since Azure DocumentDB collections are based on the concept of "open" schemas, and often contain redundant data due to their denormalized structure, it’s helpful to manage specific search-related activities by integrating search enhancement services such as Azure Search.
+One of the benefits of using DocumentDB is that it integrates easily with [Azure Search](https://azure.microsoft.com/services/search/). Azure Search is a managed Search-as-a-Service solution that delegates server and infrastructure management to Microsoft and lets you index data sources for lightning-fast searches. Search can be accessed through a simple [REST API](https://docs.microsoft.com/rest/api/searchservice/) or with the [Azure Search SDK](https://docs.microsoft.com/azure/search/search-howto-dotnet-sdk), enabling you to employ it in Web apps, mobile apps, and other types of applications. In this exercise, you will deploy an Azure Search instance and connect it to the DocumentDB instance that you deployed in [Exercise 1](#Exercise1).
 
-To create and configure an Azure Search service to index documents in your Azure DocumentDB application:
-
-1.	Open the Azure Portal (if it’s not already open from Exercise 3) and click the **"hamburger"** icon to open the side drawer menu.
-
-1.	Click **+ New**, followed by **Web + mobile** and then **Azure Search**.
+1.	In the Azure Portal, click **+ New**, followed by **Web + Mobile** and then **Azure Search**.
 	
-    ![Creating a new Azure Search service](Images/portal-create-new-search-service.png)
+    ![Creating a new Azure Search instance](Images/portal-create-new-search-service.png)
 
-    _Creating a new Azure Search service_
+    _Creating a new Azure Search instance_
 
-1.	The Azure portal will display a form for creating a new Azure Search service. Enter a **search service name** such as "trainingsearch01" (without the quotation marks) or any unique label without spaces or special characters. 
+1. In the "New Search Service" blade, give the account a unique name in the **URL** box and make sure a green check mark appears next to it. (You can only use numbers and lowercase letters since the name becomes part of a DNS name.) Select **Use existing** under **Resource group** and select the resource group you created for the DocumentDB instance in [Exercise 1](#Exercise1).Select the **Location** nearest you, and then click the **Create** button.
 
-	>NOTE: Azure Search service names can be 3 to 24 characters in length and can only contain numbers and lowercase letters. In addition, the name you enter must be unique within Azure. If someone else has chosen the same name, you'll be notified that the name isn't available with a red exclamation mark in the **Name** field.
-	
-1.	Under "Resource Group" select **Use Existing**, and select the **TrainingLabResource** group created in Step 6 of Exercise 1.
+    ![Specifying DocumentDB parameters](Images/portal-configure-new-search-service.png)
 
-1.	Select the location nearest you, and click **Create**.
-	
-    ![Configuring a new Azure Search service](Images/portal-configure-new-search-service.png)
+    _Specifying DocumentDB parameters_
 
-    _Configuring a new Azure Search service_
-
-
-The Azure Portal will redirect you to the Azure Portal Dashboard while it provisions your Azure Search service. It typically takes around 30 seconds fully provision a new Azure Search service. To monitor provisioning of your service from the Azure Portal:	
-
-1.	Click the **"hamburger"** icon in the Azure Portal to open the side drawer
-
-1.	Click **Resource Groups** followed by **TrainingLabResource**.
-
-1.	Select the **Overview** tab.
-
-1.	Review the "Last deployment" label and watch for the status to change from "Deploying" to "Succeeded", at which time your Azure Search service has been successfully provisioned.
-	
-    ![Resource Group deployment status](Images/portal-search-service-created.png)
-
-    _Resource Group deployment status_
-
-
-	>NOTE: You may need to refresh the page in your browser from time to time to see the most recent deployment status changes.
-	
-1.	Click **trainingsearch01** (or the alternative name you entered earlier in this exercise) to open your newly provisioned Azure Search service.
-	
-    ![Selecting the new Search service](Images/portal-select-search-service.png)
-
-    _Selecting the new Search service_
-
-1.	In the "trainingsearch01" search service blade, click **Import data**. The Import data panel will be displayed with options to configure a Data Source, Index and Indexer.
-	
-    ![Selecting Import data](Images/portal-select-import-data.png)
-
-    _Selecting Import data_
-
-1.	Click **Data Source**, followed by **DocumentDB** to open the "New data source" panel.
-
-1.	Enter "customers" (all lowercase, not quotation marks) in the **Name** entry.
-	
-    ![Connect a Search service to a datasource](Images/portal-connect-search-datasource.png)
-
-    _Connect a Search service to a datasource_
-
-1.	Click **DocumentDB account** and then select **traininglab01** (or the alternative name you entered in Step 3 of Exercise 1.)
-	
-    ![Connecting the Search service to a DocumentDB datasource](Images/portal-select-documentdb-connection.png)
-
-    _Connecting the Search service to a DocumentDB datasource_
-
-1.	Select **CustomerOrders** from the "Database" list and then select **Customers** from the "Collection" list.
-
-1.	Click **OK** to save changes to the data source and be returned to the Import data panel.
-	
-    ![Configuring the Search service datasource collection](Images/portal-configure-datasource-collection.png)
-
-    _Configuring the Search service datasource collection_
-
-1.	Select **Index** from the "Import data" panel.
-
-1.	Replace the default label "temp" with "customerindex" in the **Index name** entry.
-
-1.	Locate the "CompanyName" row in the available index grid and check **all five (5) options** in the available columns to the right. These columns will be labeled *RETRIEVABLE*, *FILTERABLE*, *SORTABLE*, *FACETABLE* and *SEARCHABLE*.
-	
-    ![Configuring the Search service index](Images/portal-configure-search-index.png)
-
-    _Configuring the Search service index_
-
-	>Since the terms "index" and "indexer" are similar, make sure are aware of these use of these terms when configuring your Search Service. In general, an "index" maps to field values, and an "indexer" handling index schedules and updates.
-
-1.	Click **OK** to save changes to the Search index. You will be redirected to the Search indexer panel to configure indexer options.
-
-1.	In the "Create an indexer" panel, enter "customerindexer" in **Name** entry and click **OK**, and then click **OK** the "Import data" panel.
-	
-    ![Configuring the Search service indexer](Images/portal-configure-search-indexer.png)
-
-    _Configuring the Search service indexer_
+1. Click **Resource groups** in the ribbon on the left side of the portal, and then click the resource group containing the DocumentDB instance and the Search instance.
  
-    ![Saving the Azure Search service index](Images/portal-saving-search-index.png)
+    ![Opening the resource group](Images/open-resource-group.png)
 
-    _Saving the Azure Search service index_
+    _Opening the resource group_
+
+1. Wait until "Deploying" changes to "Succeeded," indicating that the Search instance has been deployed. Then click the Search service.
+
+	> Refresh the page in the browser every now and then to update the deployment status. Clicking the **Refresh** button in the resource-group blade refreshes the list of resources in the resource group, but does not reliably update the deployment status.
+
+    ![Opening the Search instance](Images/open-search.png)
+
+    _Opening the Search instance_
+
+1. Click **Import data**.
+	
+    ![Importing data](Images/portal-select-import-data.png)
+
+    _Importing data_
+
+1. Click **Data Source**, followed by **DocumentDB**. In the "New data source" blade, type "customers" (without quotation marks) into the **Name** field. Click **Select an account** and select the DocumentDB instance you created in [Exercise 1](#Exercise1). Select the **CustomerOrders** database and the **Customers** collection. Then click **OK**.
+
+    ![Connecting to a data source](Images/portal-connect-search-datasource.png)
+
+    _Connecting to a data source_
+
+1. Click **Index** in the "Import data" blade. In the "Index" blade, type "customerindex" (without quotation marks) into the **Index name** field, and then check all five boxes in the "CompanyName" row. Then click **OK**.
+
+    ![Configuring a search index](Images/portal-configure-search-index.png)
+
+    _Configuring a search index_
+
+1. Click **Indexer** in the "Import data" blade. In the "Indexer" blade, type "customerindexer" into the **Name** field and click **OK**. Finish up by clicking the **OK** button at the bottom of the "Import data" blade.
+	
+    ![Configuring a search indexer](Images/portal-configure-search-indexer.png)
+
+    _Configuring a search indexer_
  
-At this point your Azure Search service has been created and configured to connect to your Azure DocumentDB content, as well as indexed to return lookup information from documents in the Customers collection. You’ve also completed all the necessary steps for accessing highly-performant, indexed Azure DocumentDB content from an external application. Now it’s time to create an application to access customer, product, and order information in [Exercise 5: Build an Azure Web App](#Exercise5").
+With the DocumentDB database deployed and an Azure Search instance indexing it, it is time to put both to work by building a Web app that uses them to display customer, product, and order information.
 
 <a name="Exercise5"></a>
 ## Exercise 5: Build an Azure Web App ##
