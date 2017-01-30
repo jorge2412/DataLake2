@@ -10,7 +10,7 @@ Whether it targets businesses, consumers, or both, an app is only as meaningful 
 
 [DocumentDB](https://azure.microsoft.com/en-us/services/documentdb/) is a fully managed NoSQL database service built for fast performance, high availability, elastic scaling, and ease of development. As a schema-free NoSQL database, DocumentDB provides rich and familiar SQL query capabilities over JSON data, ensuring that 99% of your reads are served under 10 milliseconds and 99% of your writes are served under 15 milliseconds. These unique benefits make DocumentDB a great fit for Web, mobile, gaming, IoT, and many other applications that need seamless scale and global replication.
 
-In this lab, you’ll create and configure an Azure DocumentDB account, database, and collection to accept the import of customer and product order information for the fictitious company Adventure Works, as well as automatically populating an Azure Search service index with customer and product information to facilitate an "autosuggest" customer order search.
+In this lab, you will deploy an Azure DocumentDB database to store customer and product order information for the fictitious company *Adventure Works*, and you will connect it to Azure Search to index the data and facilitate auto-suggest. You will also write a Web app that uses the database and deploy it as an Azure Web app.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -243,137 +243,96 @@ With the DocumentDB database deployed and an Azure Search instance indexing it, 
 <a name="Exercise5"></a>
 ## Exercise 5: Build an Azure Web App ##
 
-Up to this point, most of your efforts have gone into creating and configuring services related to an Azure DocumentDB database and collection, as well as an Azure Search service, but the real value comes in being able to visualize the data returned from these services in a user experience.
+[Azure Web Apps](https://azure.microsoft.com/en-us/documentation/articles/app-service-web-overview/) allow you to quickly and easily deploy Web sites built with tools and languages you're familiar with. In this exercise, you will build an ASP.NET MVC Web app with Visual Studio and deploy it to the cloud as an Azure Web App. The app will connect to the DocumentDB database deployed and populated with data in previous exercises and provide a browser-based front-end for viewing and searching the data.
 
-In this exercise you’ll be building an Azure Web App with Visual Studio 2015 and writing code to access the Azure DocumentDB application, database, collections, and documents created in earlier exercises.
-
-To create an Azure Web App in Visual Studio 2015:
-
-1.	Start Visual Studio 2015 and use the **File -> New -> Project** command to create a new Visual C# **ASP.NET Web Application** project named "AdventureDoc" (short for "Adventure Works Documents").
+1.	Start Visual Studio 2015 and use the **File -> New -> Project** command to create a new Visual C# ASP.NET Web Application project named "AdventureDoc" (short for "Adventure Works Documents").
  
     ![Creating a new Web Application project](Images/vs-create-new-web-app.png)
 
     _Creating a new Web Application project_
 
-1.	In the "New ASP.NET Project" dialog, select the **MVC** template. Then click the **Change Authentication** button and select **No Authentication**. (This simplifies the app by omitting authentication infrastructure.) Next, make sure the **Host in the cloud** box is checked and that **App Service** is selected in the drop-down list below the check box. Finally, click **OK**.
+1.	In the "New ASP.NET Web Application" dialog, select the **MVC** template. Then click the **Change Authentication** button and select **No Authentication**. (This simplifies the app by omitting authentication infrastructure.) Next, make sure the **Host in the cloud** box is checked and that **App Service** is selected in the drop-down list below the check box. Finally, click **OK**.
  
-    ![Creating a new ASP.NET MVC project](Images/vs-configure-web-app.png)
+    ![Configuring the project](Images/vs-configure-web-app.png)
 
-    _Creating a new ASP.NET MVC project_
+    _Configuring the project_
 
-1.	In the **Create App Service** dialog that ensues, enter a name into the **Web App Name** box, or accept the default. (The default name will include a bunch of numbers. Since this name will form part of the DNS name through which the app is accessed once it's deployed to Azure, it must be unique within Azure. For this reason, you probably won't be able to use the name "AdventureDocs" pictured in the screen shot.)
+1.	In the "Create App Service" dialog, make sure **DocumentDBResourceGroup** is selected under **Resource Group**. (This will add the Azure Web App to the same resource group as the DocumentDB database and the Azure Search instance, which is handy because deleting the resource group will delete all three.) Then click the **New** button next to **App Service Plan** and select the location nearest you for hosting the Web App, and **Free** as the **Size.** Click **OK** to dismiss the "Configure App Service Plan" dialog. Then click **Create** at the bottom of the "Create App Service" dialog.
 	
-	Type "TrainingLabResouce" (without quotation marks) into the **Resource Group** box to make the App Service that's being created part of the same resource group as the Azure DocumentDB application you created in Exercise 1.
-
  	![Creating an App Service](Images/vs-create-app-service.png)
 
     _Creating an App Service_
 
+1. Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's MVC controllers, and a folder named "Views" that holds the project's views. You will be working with assets in these folders and others as you implement the application.
 
-	Now click the **New** button to the right of **App Service Plan** to open the "Configure App Service Plan" dialog. In that dialog, set **Location** to the same location you specified for the storage account in Exercise 1, and make sure **Free** is selected in the **Size** drop-down. Click **OK** to close the dialog.
- 
-    ![Creating an App Service plan](Images/vs-create-app-service-plan.png)
-
-    _Creating an App Service plan_
-
-
-1.	Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's MVC controllers, and a folder named "View" that holds the project's views. You'll be working with assets in these folders and others as you implement the application.
-
-1.	 Now use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application in your browser. Here's how the application looks in its present state:
+1. Use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application in your browser. Here's how the application looks in its present state:
 	 
     ![The initial application](Images/vs-initial-application.png)
 
     _The initial application_
 
-1.	Close the browser and return to Visual Studio. In the Solution Explorer window, right-click the **AdventureDocs** project and select **Manage NuGet Packages...**.
+1. Close the browser and return to Visual Studio. In the Solution Explorer window, right-click the **AdventureDocs** project and select **Manage NuGet Packages...**.
 	 
     ![Managing NuGet packages for the project](Images/vs-select-manage-packages.png)
 
     _Managing NuGet packages for the project_
 
-1.	Click **Browse**. Then type "DocumentDB" (without quotation marks) into the search box. Click **Microsoft.Azure.DocumentDB** to select the Azure DocumentDB client library from NuGet. Finally, click **Install** to install the latest stable version of the package. This package contains APIs for accessing Azure DocumentDB from .NET applications. Click **OK** if you're prompted to review changes, and **I Accept** if prompted to accept licenses for downloaded packages.
+1. Click **Browse**. Then type "documentdb" (without quotation marks) into the search box. Click **Microsoft.Azure.DocumentDB** to select the Azure DocumentDB client library from NuGet. Finally, click **Install** to install the latest stable version of the package. This package contains APIs for accessing Azure DocumentDB from .NET applications. Click **OK** if you're prompted to review changes, and **I Accept** if prompted to accept licenses for downloaded packages.
 	 
     ![Installing Microsoft.Azure.DocumentDB](Images/vs-add-documentdb-package.png)
 
     _Installing Microsoft.Azure.DocumentDB_
 
-1.	Repeat this process to add the NuGet package named **Microsoft.WindowsAzure.ConfigurationManager** to the project. This package contains APIs that you will use in your code to parse connection strings and access keys. Once more, OK any changes and accept any licenses presented to you.
+1. Repeat this process to add the NuGet package named **Microsoft.WindowsAzure.ConfigurationManager** to the project. This package contains APIs that you will use in your code to parse connection strings and access keys. Once more, OK any changes and accept any licenses presented to you.
 	
     ![Installing Microsoft.WindowsAzure.ConfigurationManager](Images/vs-add-configuration-package.png)
 
     _Installing Microsoft.WindowsAzure.ConfigurationManager_
 
-1.	Repeat this process to add the NuGet package named **Microsoft.Azure.Search** to the project. This package contains APIs for accessing Azure Search from .NET applications. Once more, OK any changes and accept any licenses presented to you.	
+1. Repeat this process to add the NuGet package named **Microsoft.Azure.Search** to the project. This package contains APIs for accessing Azure Search from .NET applications. Once more, OK any changes and accept any licenses presented to you.	
 	
     ![Installing Microsoft.Azure.Search](Images/vs-add-search-package.png)
 
     _Installing Microsoft.Azure.Search_
 
-1.	Repeat this process to add the NuGet package named **jQuery.UI.Combined** to the project. This package contains APIs and file elements required by MVC 5.0 for jQuery user interface elements. Once more, OK any changes and accept any licenses presented to you.
+1. Repeat this process to add the NuGet package named **jQuery.UI.Combined** to the project. This package contains APIs and file elements required by MVC 5.0 for jQuery user interface elements. Once more, OK any changes and accept any licenses presented to you.
 	
     ![Installing jQuery.UI.Combined](Images/vs-add-jquery-package.png)
 
     _Installing jQuery.UI.Combined_
 
-1.	In the Solution Explorer window, double-click **Web.config** to open it for editing.
+1. In the Solution Explorer window, double-click **Web.config** to open it for editing.
 	
-    ![The web application Web.config file](Images/vs-open-web-config.png)
+    ![Opening Web.config](Images/vs-open-web-config.png)
 
-    _The web application Web.config file_
+    _Opening Web.config_
 
-1.	Return to the Azure Portal for a moment and open the blade for the Azure DocumentDB application you created in Exercise 1. Then .
+1. Return to the Azure Portal and open the blade for the DocumentDB instance that you created in [Exercise 1](#Exercise1). Click **Keys**. Then click **Read-only keys**, and click the **Copy** button to the right of **URI** to copy the DocumentDB URI to the clipboard.
 	
-    ![Selecting the DocumentDB application](Images/portal-select-documentdb-application-keys.png)
+    ![Copying the DocumentDB URI](Images/copy-documentdb-uri.png)
 
-    _Selecting the DocumentDB application_
+    _Copying the DocumentDB URI_
 
-1.	Click **Keys** in the **SETTINGS** group, then select the **Read-only Keys** tab from the **Keys** panel.
+1.	Return to Visual Studio. In **Web.config**, add the following statement to the \<appSettings\> section, replacing *documentdb_endpoint* with the URI on the clipboard.
 	
-    ![Viewing the DocumentDB access keys](Images/portal-documentdb-keys.png)
-
-    _Viewing the DocumentDB access keys_
-
-1.	Click the **Copy** button to the right of **URI** to copy the application endpoint the clipboard.
-	
-    ![Copying the DocumentDB application endpoint](Images/portal-copy-documentdb-uri.png)
-
-    _Copying the DocumentDB application endpoint_
-
-1.	Return to Visual Studio. In *Web.config*, add the following statement to the \<appSettings\> section, replacing ***documentdb_endpoint*** with the name of the application endpoint copied to the clipboard.
-	
-	```C#
+	```XML
 	<add key="DocumentDBEndpointUrl" value="documentdb_endpoint" />
 	```
-    	
-    ![Inserting the DocumentDBEndpoint value](Images/vs-highlight-documentdb-endpoint.png)
-
-    _Inserting the DocumentDBEndpoint value_
-
-1. Return to the Azure Portal and click the **Copy** button to the right of **PRIMARY READ-ONLY KEY** to copy the application access key the clipboard.
+1. Return to the Azure Portal and click the **Copy** button to the right of **PRIMARY READ-ONLY KEY** to copy the access key the clipboard.
 	
-    ![Copying the DocumentDB access key](Images/portal-copy-documentdb-key.png)
+    ![Copying the DocumentDB access key](Images/copy-documentdb-key.png)
 
     _Copying the DocumentDB access key_
 
-1.	Return to Visual Studio. In *Web.config*, add the following statement to the \<appSettings\> section, replacing ***documentdb_key*** with the name of the application access key copied to the clipboard.
+1. Return to Visual Studio. In **Web.config**, add the following statement to the \<appSettings\> section, replacing *documentdb_key* with the access key on the clipboard.
 
-	```C#
+	```XML
 	<add key="DocumentDBKey" value="documentdb_key" />
 	```	
-	
-    ![Inserting the DocumentDBKey value](Images/vs-highlight-documentdb-key.png)
 
-    _Inserting the DocumentDBKey value_
+1. In the Solution Explorer window, find the file named **_Layout.cshtml** in the "Views/Shared" folder. Double-click it to open it. Then replace its contents with the following statements: 
 
-1.	In the Solution Explorer window, find the file named _Layout.cshtml in the **Views/Shared** folder. Double-click the **file** to open it.
-
-    ![Opening _Layout.cshtml](Images/vs-open-layout-file.png)
-
-    _Opening _Layout.cshtml_
-
-1.	Replace the contents of Layout.cshtml with the following code and markup: 
-
-	```c#
+	```HTML
 	<!DOCTYPE html>
 	<html>
 	<head>
@@ -409,7 +368,6 @@ To create an Azure Web App in Visual Studio 2015:
 	        </div>
 	    </div>
 	    <div class="container body-content">
-	
 	        @RenderBody()
 	        <hr />
 	        <footer>
@@ -424,156 +382,111 @@ To create an Azure Web App in Visual Studio 2015:
 	
 	```
 
-1.	In Solution Explorer, right-click the project's **Models** folder and select **Add -> Class**:
+1. In Solution Explorer, right-click the "Models" folder and select **Add -> Class**. Then type "OrderInformation.cs" (without quotation marks) into the **Name** box and click **OK** to add the class to project.
 
-    ![Adding a class to the Models folder](Images/vs-add-class-to-models.png)
+    ![Adding a class to the "Models" folder](Images/vs-add-class-to-models.png)
 
-    _Adding a class to the Models folder_
+    _Adding a class to the "Models" folder_
 
-1.	Type "OrderInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
-
-    ![Creating the OrderInformation class](Images/vs-add-orderinformation-class.png)
-
-    _Creating the OrderInformation class_
-
-1.	Replace the empty *OrderInformation* class with the following class definitions, and note that you are making the classes public rather than private, as well as marking the OrderInformation class as "Serializable":
+1. Replace the empty *OrderInformation* class with the following class definitions, and note that you are making the classes public rather than private, as well as marking the *OrderInformation* class as "Serializable":
 
 	```C#
-	 	[Serializable]
-	    public class OrderInformation
-	    {
-	        public string CustomerID { get; set; }
-	        public string CompanyName { get; set; }
-	        public Customer Customer { get; set; }
-	    }
-	
-	    public class Customer
-	    {
-	        public string CustomerID { get; set; }
-	        public string CompanyName { get; set; }
-	        public string ContactName { get; set; }
-	        public string ContactTitle { get; set; }
-	        public string Address { get; set; }
-	        public string City { get; set; }
-	        public object Region { get; set; }
-	        public string PostalCode { get; set; }
-	        public int Latitude { get; set; }
-	        public int Longitude { get; set; }
-	        public string Country { get; set; }
-	        public string Phone { get; set; }
-	        public string Fax { get; set; }
-	        public Orders Orders { get; set; }
-	    }
-	
-	    public class Orders
-	    {
-	        public int OrderID { get; set; }
-	        public string CustomerID { get; set; }
-	        public int EmployeeID { get; set; }
-	        public DateTime OrderDate { get; set; }
-	        public DateTime RequiredDate { get; set; }
-	        public DateTime ShippedDate { get; set; }
-	        public int ShipVia { get; set; }
-	        public float Freight { get; set; }
-	        public string ShipName { get; set; }
-	        public string ShipAddress { get; set; }
-	        public string ShipCity { get; set; }
-	        public object ShipRegion { get; set; }
-	        public string ShipPostalCode { get; set; }
-	        public string ShipCountry { get; set; }
-	        public Details Details { get; set; }
-	    }
-	
-	    public class Details
-	    {
-	        public int OrderID { get; set; }
-	        public int ProductID { get; set; }
-	        public int Quantity { get; set; }
-	        public float Discount { get; set; }
-	        public Product Product { get; set; }
-	    }
-	
-	    public class Product
-	    {
-	        public int ProductID { get; set; }
-	        public string ProductName { get; set; }
-	        public int SupplierID { get; set; }
-	        public int CategoryID { get; set; }
-	        public string QuantityPerUnit { get; set; }
-	        public int UnitPrice { get; set; }
-	        public int UnitsInStock { get; set; }
-	        public int UnitsOnOrder { get; set; }
-	        public int ReorderLevel { get; set; }
-	        public bool Discontinued { get; set; }
-	    }
+ 	[Serializable]
+    public class OrderInformation
+    {
+        public string CustomerID { get; set; }
+        public string CompanyName { get; set; }
+        public Customer Customer { get; set; }
+    }
+
+    public class Customer
+    {
+        public string CustomerID { get; set; }
+        public string CompanyName { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTitle { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public object Region { get; set; }
+        public string PostalCode { get; set; }
+        public int Latitude { get; set; }
+        public int Longitude { get; set; }
+        public string Country { get; set; }
+        public string Phone { get; set; }
+        public string Fax { get; set; }
+        public Orders Orders { get; set; }
+    }
+
+    public class Orders
+    {
+        public int OrderID { get; set; }
+        public string CustomerID { get; set; }
+        public int EmployeeID { get; set; }
+        public DateTime OrderDate { get; set; }
+        public DateTime RequiredDate { get; set; }
+        public DateTime ShippedDate { get; set; }
+        public int ShipVia { get; set; }
+        public float Freight { get; set; }
+        public string ShipName { get; set; }
+        public string ShipAddress { get; set; }
+        public string ShipCity { get; set; }
+        public object ShipRegion { get; set; }
+        public string ShipPostalCode { get; set; }
+        public string ShipCountry { get; set; }
+        public Details Details { get; set; }
+    }
+
+    public class Details
+    {
+        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        public int Quantity { get; set; }
+        public float Discount { get; set; }
+        public Product Product { get; set; }
+    }
+
+    public class Product
+    {
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public int SupplierID { get; set; }
+        public int CategoryID { get; set; }
+        public string QuantityPerUnit { get; set; }
+        public int UnitPrice { get; set; }
+        public int UnitsInStock { get; set; }
+        public int UnitsOnOrder { get; set; }
+        public int ReorderLevel { get; set; }
+        public bool Discontinued { get; set; }
+    }
 	```
 
-1.	Right-click the project's **Models** folder again and select **Add -> Class**:
-
-1.	Type "SearchResultInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
-	
-    ![Creating the SearchResultInformation class](Images/vs-add-searchresultinformation-class.png)
-
-    _Creating the SearchResultInformation class_
-
-1.	Replace the empty SearchResultInformation class with the following class definition, and note that you are making the class public rather than private:
+1. Right-click the "Models" folder again and use the **Add -> Class** command to add a file named **SearchResultInformation.cs**. Replace the empty *SearchResultInformation* class with the following class definition, and note that you are making the class public rather than private:
 
 	```C#
-	 public class SearchResultInformation
-	    {
-	        public string Title { get; set; }
-	        public string Description { get; set; }
-	        public string DocumentContent { get; set; }
-	    }
+	public class SearchResultInformation
+	{
+	    public string Title { get; set; }
+	    public string Description { get; set; }
+	    public string DocumentContent { get; set; }
+	}
 	```
 
-1.	Right-click the project's **Models** folder again and select **Add -> Class**:
-
-1.	Type "OrderViewModel.cs" (without quotation marks) into the **Name** box, and then click **OK**.	
-	
-    ![Creating the OrderViewModel class](Images/vs-add-orderviewmodel-class.png)
-
-    _Creating the OrderViewModel class_
-
-1.	Replace the empty *OrderViewModel* class with the following class definition, and note that you are making the class public rather than private:
+1. Repeat this process to add an *OrderViewModel* class to the "Models" folder, and replace the empty class with the following class definition:
 	
 	```C#
-	 public class OrderViewModel
-	    {
-	        public string SearchQuery { get; set; }
-	        public List<SearchResultInformation> SearchResults { get; set; }
-	        public List<string> Collections { get; set; }
-	        public string SelectedCollectionName { get; set; }
-	        public string SearchResultTitle { get; set; }
-	        public string SearchResultDescription { get; set; }
-	    }
+	public class OrderViewModel
+	{
+	    public string SearchQuery { get; set; }
+	    public List<SearchResultInformation> SearchResults { get; set; }
+	    public List<string> Collections { get; set; }
+	    public string SelectedCollectionName { get; set; }
+	    public string SearchResultTitle { get; set; }
+	    public string SearchResultDescription { get; set; }
+	}
 	```
-
-1.	In the Solution Explorer window, right-click the **AdventureDocs** project and select **Add -> New Folder**:
+1.	In the Solution Explorer window, right-click the **AdventureDocs** project and use the **Add -> New Folder** command to add a folder named "Helpers."
 	
-    ![Adding a new folder](Images/vs-select-add-new-folder.png)
-
-    _Adding a new folder_
-
-1.	Type "Helpers" (without quotation marks) into the **Name** box, and then click **OK**.
-	
-    ![Renaming the Helpers folder](Images/vs-rename-folder.png)
-
-    _Renaming the Helpers folder_
-
-1.	Right-click the project's **Helpers** folder created in the previous step and select **Add -> Class**:
-	
-    ![Adding a class to the Helpers folder](Images/vs-add-class-to-helpers.png)
-
-    _Adding a class to the Helpers folder_
-
-1.	Type "DocumentHelper.cs" (without quotation marks) into the **Name** box, and then click **OK**.
-	
-    ![Adding the DocumentHelper class to the Helpers folder](Images/vs-adding-documenthelper-class.png)
-
-    _Adding the DocumentHelper class to the Helpers folder_
-
-1.	Replace the **entire contents** of the DocumentHelper class with the following using statements, namespace declaration, and class definition, and note that you are making the class public rather than private:
+1. Right-click the "Helpers" folder and use the **Add -> Class** command to add a file named **DocumentHelper.cs**. Replace the contents of the file with the following statements:
 
 	```C#
 	using System;
@@ -696,130 +609,118 @@ To create an Azure Web App in Visual Studio 2015:
 	}
 	```
 
-1.	In the Solution Explorer, find *HomeController.cs* in the **Controllers** folder and double-click it to open it.
-	
-    ![Opening the HomeController.cs](Images/vs-open-homecontroller.png)
-
-    _Opening the HomeController.cs_
-
-1.	Add the following using statements to the top of the file:
+1. Open **HomeController.cs** in the project's "Controllers" folder. Add the following using statements to the top of the file:
 
 	```C#
 	using System.Threading.Tasks;
 	using AdventureDocs.Models;
 	```
 
-1.	Replace the **Index** method in HomeController.cs with the following implementation:
+1. Replace the *Index* method in **HomeController.cs** with the following implementation:
 
 	```C#
-	 public async Task<ActionResult> Index()
-	        {
-	            var model = new OrderViewModel() { SearchResults = new List<SearchResultInformation>() };
+	public async Task<ActionResult> Index()
+	{
+	    var model = new OrderViewModel() { SearchResults = new List<SearchResultInformation>() };
 	
-	            var documentClient = Helpers.DocumentHelper.GetDocumentClient();
+	    var documentClient = Helpers.DocumentHelper.GetDocumentClient();
 	
-	            var availableCollections = await Helpers.DocumentHelper.GetAvailableCollectionNamesAsync(documentClient);
+	    var availableCollections = await Helpers.DocumentHelper.GetAvailableCollectionNamesAsync(documentClient);
 	
-	            var searchResults = (List<SearchResultInformation>)TempData["SearchResults"];
-	            var searchQuery = (string)Request["SearchQuery"];
+	    var searchResults = (List<SearchResultInformation>)TempData["SearchResults"];
+	    var searchQuery = (string)Request["SearchQuery"];
 	
-	            if (searchResults != null)
-	            {
-	                model.SearchQuery = (string)TempData["SearchQuery"];
-	                model.SearchResults = (List<SearchResultInformation>)TempData["SearchResults"];
+	    if (searchResults != null)
+	    {
+	        model.SearchQuery = (string)TempData["SearchQuery"];
+	        model.SearchResults = (List<SearchResultInformation>)TempData["SearchResults"];
 	
-	                model.SelectedCollectionName = (string)TempData["SelectedCollectionName"];
-	                model.SearchResultTitle = $"{model.SelectedCollectionName}";
-	                model.SearchResultDescription = $"The following results were found in {model.SelectedCollectionName} for '{model.SearchQuery.ToUpper()}':";
-	            }
-	            else if (!string.IsNullOrEmpty(searchQuery))
-	            {
-	                model.SearchQuery = searchQuery;
+	        model.SelectedCollectionName = (string)TempData["SelectedCollectionName"];
+	        model.SearchResultTitle = $"{model.SelectedCollectionName}";
+	        model.SearchResultDescription = $"The following results were found in {model.SelectedCollectionName} for '{model.SearchQuery.ToUpper()}':";
+	    }
+	    else if (!string.IsNullOrEmpty(searchQuery))
+	    {
+	        model.SearchQuery = searchQuery;
 	
-	                searchResults = Helpers.DocumentHelper.GetOrdersByCustomer(documentClient, searchQuery);
+	        searchResults = Helpers.DocumentHelper.GetOrdersByCustomer(documentClient, searchQuery);
 	
-	                model.SearchResults = searchResults;
+	        model.SearchResults = searchResults;
 	
-	                model.SelectedCollectionName = "Customers";
-	                model.SearchResultTitle = $"{model.SelectedCollectionName}";
-	                model.SearchResultDescription = $"The following results were found in {model.SelectedCollectionName} for '{model.SearchQuery.ToUpper()}':";
-	            }
-	            else
-	            {
-	                model.SearchQuery = "";
-	                model.SelectedCollectionName = "Customers";
-	                model.SearchResultTitle = "";
-	                model.SearchResultDescription = "";
-	            }
+	        model.SelectedCollectionName = "Customers";
+	        model.SearchResultTitle = $"{model.SelectedCollectionName}";
+	        model.SearchResultDescription = $"The following results were found in {model.SelectedCollectionName} for '{model.SearchQuery.ToUpper()}':";
+	    }
+	    else
+	    {
+	        model.SearchQuery = "";
+	        model.SelectedCollectionName = "Customers";
+	        model.SearchResultTitle = "";
+	        model.SearchResultDescription = "";
+	    }
 	
-	            model.Collections = availableCollections;
-	
-	
-	            return View(model);
-	        }
+	    model.Collections = availableCollections;
+	    return View(model);
+	}
 	
 	```
 	
-1.	Add the following methods to the **HomeController** class in HomeController.cs:
+1. Add the following methods to the *HomeController* class in **HomeController.cs**:
 	
 	```C#
-	        public ActionResult Lookup()
-	        {
-	            ViewBag.Message = "Your application description page.";
-	
-	            return View();
-	        }
+	public ActionResult Lookup()
+	{
+	    ViewBag.Message = "Your application description page.";
+        return View();
+    }
 	      
-	        [HttpGet]
-	        public ActionResult ViewSource(string[] content)
-	        {
-	            return new JsonResult
-	            {
-	                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-	                Data = content[0]
-	            };
+    [HttpGet]
+    public ActionResult ViewSource(string[] content)
+    {
+        return new JsonResult
+	    {
+	        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+	        Data = content[0]
+	    };
+    }
 	
-	        }
+    [HttpPost]
+    public ActionResult Search(OrderViewModel model)
+    {
+        ViewBag.Message = "Your application description page.";
 	
-	        [HttpPost]
-	        public ActionResult Search(OrderViewModel model)
-	        {
-	            ViewBag.Message = "Your application description page.";
+        string searchQuery = model.SearchQuery + "";
 	
-	            string searchQuery = model.SearchQuery + "";
+        var documentClient = Helpers.DocumentHelper.GetDocumentClient();
 	
-	            var documentClient = Helpers.DocumentHelper.GetDocumentClient();
+        List<SearchResultInformation> searchResults = new List<SearchResultInformation>();
 	
-	            List<SearchResultInformation> searchResults = new List<SearchResultInformation>();
+        switch (model.SelectedCollectionName)
+        {
+            case "Customers":
+                searchResults = Helpers.DocumentHelper.GetOrdersByCustomer(documentClient, searchQuery);
+                break;
+            case "Products":
+                searchResults = Helpers.DocumentHelper.GetOrdersByProduct(documentClient, searchQuery);
+                break;
+            case "Orders":
+                searchResults = Helpers.DocumentHelper.GetOrdersByOrder(documentClient, searchQuery);
+                break;
+            default:
+                break;
+        }
 	
-	            switch (model.SelectedCollectionName)
-	            {
-	                case "Customers":
-	                    searchResults = Helpers.DocumentHelper.GetOrdersByCustomer(documentClient, searchQuery);
-	                    break;
-	                case "Products":
-	                    searchResults = Helpers.DocumentHelper.GetOrdersByProduct(documentClient, searchQuery);
-	                    break;
-	                case "Orders":
-	                    searchResults = Helpers.DocumentHelper.GetOrdersByOrder(documentClient, searchQuery);
-	                    break;
-	                default:
-	                    break;
-	            }
+        TempData["SearchQuery"] = searchQuery;
+        TempData["SearchResults"] = searchResults;
+        TempData["SelectedCollectionName"] = model.SelectedCollectionName;
 	
-	            TempData["SearchQuery"] = searchQuery;
-	            TempData["SearchResults"] = searchResults;
-	            TempData["SelectedCollectionName"] = model.SelectedCollectionName;
-	
-	            return RedirectToAction("Index");
-	        }
+        return RedirectToAction("Index");
+    }
 	```
 
-1.	In the Solution Explorer, find Index.cshmtl in the **Views/Home** folder and double-click it to open it. This is the view that serves as the application's home page.
+1. Open **Index.cshmtl** in the "Views/Home" folder and replace its contents with the following statements:
 
-1.	Replace the contents of Index.cshtml with the following code and markup:
-
-	```C#
+	```HTML
 	@{
 	    ViewBag.Title = "AdventureDocs";
 	}
@@ -833,26 +734,21 @@ To create an Azure Web App in Visual Studio 2015:
 	        </p>
 	
 	        @using (Html.BeginForm("Search", "Home", FormMethod.Post))
-	            {
+	        {
 	            <div>Search for:</div>
 	            @Html.TextBoxFor(o => Model.SearchQuery)
 	            <p></p>
-	                <div>Select a collection:</div>
-	
-	                @Html.DropDownListFor(x => x.SelectedCollectionName, new SelectList(Model.Collections))
-	
-	                <input type="submit" value="Search">
-	
+	            <div>Select a collection:</div>
+	            @Html.DropDownListFor(x => x.SelectedCollectionName, new SelectList(Model.Collections))
+	            <input type="submit" value="Search">
 	        }
-	
 	
 	        <div>
 	            <h4>@Html.DisplayFor(o => Model.SearchResultTitle)</h4>
 	            <div>@Html.DisplayFor(o => Model.SearchResultDescription)</div>
 	            <table style="margin:10px" border="0" cellpadding="3">
-	
 	                @foreach (var item in Model.SearchResults)
-	            {
+	                {
 	                    <tr>
 	                        <td>
 	                            <strong>@Html.DisplayFor(modelItem => item.Title)</strong>
@@ -873,49 +769,35 @@ To create an Azure Web App in Visual Studio 2015:
 	                }
 	            </table>
 	        </div>
-	
 	    </div>
 	</div>
-	
 	```
 
-1.	Find About.cshmtl in the **Views/Home** folder. Right-click the **file** and select **Rename** and replace "About" with "Lookup" (without quotation marks) into the **Name** box, and then click **OK**.
-	
-    ![Selecting the About.cshtml file](Images/vs-select-about.png)
+1. Find **About.cshmtl** in the "Views/Home" folder. Right-click the file and use the **Rename** command to change its name to **Lookup.cshtml**. This is the view that will serve as the document lookup page.
 
-    _Selecting the About.cshtml file_
-	
-    ![Renaming the About.cshtml file](Images/vs-rename-lookup.png)
+1. Replace the contents of **Lookup.cshtml** with the following statements:
 
-    _Renaming the About.cshtml file_
-
-1.	Double-click the Lookup.cshtml file to open it. This is the view that will serve as the document lookup page.
-
-1.	Replace the contents of Lookup.cshtml with the following code and markup:
-
-	```C#
+	```HTML
 	@Scripts.Render("~/bundles/jqueryui")
 	
 	<script type="text/javascript">
 	    $(document).ready(function () {
 	 
-	    $('#customers').autocomplete({
-	        source: '@Url.Action("Suggest")',
-	        autoFocus: true,
-	        select: function (event, ui) {
+	        $('#customers').autocomplete({
+	            source: '@Url.Action("Suggest")',
+	            autoFocus: true,
+	            select: function (event, ui) {
 	
-	            if (ui.item) {
-	                $("#SearchQuery").val(ui.item.value);
-	                $("form").submit();
+	                if (ui.item) {
+	                    $("#SearchQuery").val(ui.item.value);
+	                    $("form").submit();
+	                }
 	            }
-	            }
-	
-	            }); 
-	            })
+	        }); 
+	    })
 	</script>
 	
 	<div class="row">
-	
 	    <div class="col-md-4">
 	        <h2>Customer Lookup</h2>
 	        <p>
@@ -927,51 +809,47 @@ To create an Azure Web App in Visual Studio 2015:
 	            <input hidden="hidden" id="SearchQuery" name="SearchQuery" type="text" />
 	        </form>
 	    </div>
-	
 	    <div style="height:400px" class="col-md-4"></div>
-	
 	</div>
 	```
 
-1.	In the Solution Explorer, find BundleConfig.cs in the **App_Start** folder and double-click it to open it. This is the view that serves as the application's home page.
-
-1.	Add the following code at the end of the **RegisterBundles** method:
+1. Open **BundleConfig.cs** in the project's "App_Start" folder. Add the following code at the end of the **RegisterBundles** method:
 
 	```C#
-	  	bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include("~/Scripts/jquery-ui-{version}.js"));
-	    bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+	bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include("~/Scripts/jquery-ui-{version}.js"));
+	bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
 	            "~/Content/themes/base/jquery.ui.core.css",
 	            "~/Content/themes/base/jquery.ui.autocomplete.css",
 	            "~/Content/themes/base/jquery.ui.theme.css"));
 	```
 
-1.	Use Visual Studio's **Debug -> Start Without Debugging** command (or press **Ctrl+F5**) to launch the application in your browser. 
+1. Use Visual Studio's **Debug -> Start Without Debugging** command (or press **Ctrl+F5**) to launch the application in your browser. 
 
-1.	**Type** the letter "a" (without quotes) in the **Search for** and click the **Search** button. After a few seconds, a listing of all customer documents starting with the letter A on the page:
+1. **Type** the letter "a" in the **Search for** box and click the **Search** button. Confirm that a list of all customer names starting with the letter A appears on the page:
 	
-    ![Viewing Customer documents](Images/vs-documentsearch-01.png)
+    ![Searching for customer names that begin with A](Images/vs-documentsearch-01.png)
 
-    _Viewing Customer documents_
+    _Searching for customer names that begin with A_
 
-1.	Change the **Select a collection** dropdown to **Products** and click the **Search** button. After a few seconds, a listing of all customer documents starting with the letter A appears on the page:
+1. Select **Products** from the list of collections and click the **Search** button. Confirm that a list of all product names starting with the letter A appears on the page:
 	
-    ![Viewing Product documents](Images/vs-documentsearch-02.png)
+    ![Searching for product names that begin with A](Images/vs-documentsearch-02.png)
 
-    _Viewing Product documents_
+    _Searching for product names that begin with A_
 
-1.	Replace the letter "a" in the **Search for** with the letter "m", change the **Select a collection** dropdown to **Orders** and click the **Search** button. After a few seconds, a listing of all customer orders shipped to countries starting with the letter M appears on the page:
+1. Replace the letter "a" in the **Search for** box with the letter "m." Then select **Orders** and click the **Search** button. Confirm that a list of all countries beginning with M that orders were shipped to appears on the page:
 	
-    ![Viewing Order documents](Images/vs-documentsearch-03.png)
+    ![Searching orders](Images/vs-documentsearch-03.png)
 
-    _Viewing Order documents_
+    _Searching orders_
 
-1.	The Orders listing displays the CompanyName and ShipRegion values returned from search results associated with documents on the Orders collection. To view an entire document, click **[view document]** in the far right column for an order. A new web page appears with the entire JSON-formatted document displayed.
+1. The Orders listing displays the CompanyName and ShipRegion values from the orders returned in the search results. To view the entire order, click **[view document]** to the right of an order. The result is the JSON defining the order:
 	
-    ![Viewing Order document marku](Images/vs-documentsearch-04.png)
+    ![Viewing an entire order](Images/vs-documentsearch-04.png)
 
-    _Viewing Order document markup_	
+    _Viewing an entire order_	
 
-Although your web app is able to easily access documents in your Customers, Products, and Orders collections, and you’ve written code to retrieve and view documents and schemas, your current search method searches for documents based on arbitrary characters entered by a user. It’s far more intuitive for a user to select from values "guaranteed" to exist in the document data. To create this experience, it’s time to add an "Autosuggest" control by leveraging Azure Search in [Exercise 6: Add document search to an Azure Web App](#Exercise6").
+This is a great start, and it demonstrates how an ASP.NET MVC Web app can access data stored in the cloud in a DocumentDB database. But right now, the search UI is somewhat clumsy; you have to enter letters blindly, without any feedback to tell you whether there are any matching documents. Let's polish the UI by adding auto-suggest.
 
 <a name="Exercise6"></a>
 ## Exercise 6: Add document search to an Azure Web App ##
