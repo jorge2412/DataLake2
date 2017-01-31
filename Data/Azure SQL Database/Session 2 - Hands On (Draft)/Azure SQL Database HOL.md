@@ -28,6 +28,7 @@ In this hands-on lab, you will learn how to:
 The following are required to complete this hands-on lab:
 
 - An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
+- Windows 10
 - [Visual Studio 2015 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher with the Windows 10 SDK installed
 - [SQL Server Data Tools for Visual Studio 2015](https://msdn.microsoft.com/en-us/library/mt204009.aspx)
 
@@ -40,8 +41,8 @@ This hands-on lab includes the following exercises:
 
 - [Exercise 1: Create an Azure SQL Database](#Exercise1)
 - [Exercise 2: Add records to the database](#Exercise2)
-- [Exercise 3: Create an Azure SQL Database API service](#Exercise3)
-- [Exercise 4: Build an API-aware Windows Store app](#Exercise4)
+- [Exercise 3: Create an Azure API App](#Exercise3)
+- [Exercise 4: Build a UWP app that consumes the database](#Exercise4)
 - [Exercise 5: Manage record permissions and masks](#Exercise5)
 - [Exercise 6: Delete the resource group](#Exercise6)
  
@@ -121,7 +122,7 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
     _Connecting to the database from Visual Studio_	
 
-1. When prompted to create a new firewall rule, accept the defaults and click **OK**. This will allow Visual Studio to get through the firewall on the server side and connect to the SQL Database.
+1. When prompted to create a new firewall rule, accept the defaults and click **OK**. This will allow Visual Studio to get through the firewall on the server and connect to the SQL Database.
 
     ![Creating a new firewall rule](Images/vs-firewall-rule-dialog.png)
 
@@ -170,217 +171,163 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 Your SQL Database is now populated with customers, products, orders, and other information. You will be adding additional functionality to the database in later exercises to facilitate row-level security. But for now, the next step is to make the database accessible to applications over the Web.
 
 <a name="Exercise3"></a>
-## Exercise 3: Create an Azure SQL Database API service ##
+## Exercise 3: Create an Azure API App ##
 
-In most modern app development scenarios data is stored remotely, either in an on-premises database server, or in the cloud, as with Azure SQL Databases. In order to access and expose this data in a reusable way, a data-access layer should be created, providing a simple mechanism to perform actions, such as creating, updating, and deleting records. In this exercise you will create an Azure API App to serve as a data layer between your Azure SQL Database and the Windows Store app you will create in a later exercise.
+Most modern apps — mobile apps especially — store data remotely, either in an on-premises database or in the cloud. In order to access this data, developers often deploy a Web service that connects to the database and provides methods for performing actions such as creating, reading, updating, and deleting records. In this exercise, you will create an [Azure API App](https://azure.microsoft.com/services/app-service/api/) to front-end your SQL Database, and in [Exercise 4](#Exercise4), you will write an app that connects to the database through the API App.
 
-To create an Azure API App to access data:
+1. In Visual Studio, select **File -> New -> Project** to create a new project. In the "New Project" dialog, select the Visual C# **ASP.NET Web Application** template and name the project "OrderViewServices." Then click **OK**.
 
-1. Start Visual Studio 2015, or return to it if Visual Studio is still open from the previous exercise.
+    ![Creating a new project](Images/vs-create-new-web-project.png)
 
-1. In the Visual Studio menu click **File > New > Project** and select the **ASP.NET Web Application** template.
-
-1. Enter “OrderViewServices” (without the quotes) as the **project name**, and click **OK**.
+    _Creating a new project_		
  
-    ![Creating a new web project](Images/vs-create-new-web-project.png)
-
-    _Creating a new web project_		
+1. In the "New ASP.NET Project" dialog, select the **Azure API App** template, make sure **Host in the cloud** is checked, and click **OK**.
  
-1. In the "Select a template" dialog, select the **Azure API App** template, make sure **Host in the cloud** is checked, and click **OK**. You will be redirected to the "Create App Service" dialog.
+    ![Configuring the project](Images/vs-select-api-template.png)
+
+    _Configuring the project_		
+
+1.	In the "Create App Service" dialog, make sure **SQLDatabaseResourceGroup** is selected under **Resource Group**. (This will add the Azure API App to the same resource group as the SQL Database, which is handy because deleting the resource group will delete both.) Then click the **New** button next to **App Service Plan** and select the location nearest you for hosting the Web App, and **Free** as the **Size.** Click **OK** to dismiss the "Configure App Service Plan" dialog. Then click **Create** at the bottom of the "Create App Service" dialog.
  
-    ![Selecting the Azure API template](Images/vs-select-api-template.png)
+    ![Creating an App Service](Images/vs-create-app-service.png)
 
-    _Selecting the Azure API template_		
+    _Creating an App Service_		 
+
+1. Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's API controllers, and a folder named "Models" that holds the project's model classes. You will be working with assets in these folders and others as you implement the API App.
+
+1. With the basic project structure in place, the next step is to add logic to access the SQL Database in Azure. You will start by connecting an [Entity Framework](https://msdn.microsoft.com/library/aa937723(v=vs.113).aspx) model to the database. In Solution Explorer, right-click the project and use the **Add -> New Folder** command to create a folder named "Data" at the root of the project.
  
-1. In the "Create App Service" dialog, enter a name into the **API App Name** entry, or accept the default. (The default name will include a bunch of numbers. Since this name will form part of the DNS name through which the app is accessed once it's deployed to Azure, it must be unique within Azure. For this reason, you probably won't be able to use the name "OrderViewServices" pictured in the screen shot.) 
+    ![Adding a new folder to the project](Images/vs-create-new-folder-01.png)
+
+    _Adding a new folder to the project_		 
+
+1. Right-click the "Data" folder and select **Add -> New Item...**. In the "Add New Item" dialog, select **ADO.NET Entity Data Model** and type "OrdersModel" into the **Name** field. Then click the **Add** button.
  
-1. Type "TrainingLabResources" (without quotation marks) into the **Resource Group** box to make the App Service that's being created part of the same resource group as the Azure SQL Database you created in Exercise 1. 	
- 
-1. Click the **New** button to the right of **App Service Plan** to open the "Configure App Service Plan" dialog. In that dialog, set **Location** to the same location you specified for the database account in Exercise 1, and make sure **Free** is selected in the **Size** drop-down. Click **OK** to close the dialog.
- 
-    ![Creating an Azure App service plan](Images/vs-create-app-service-plan.png)
+    ![Adding an entity data model](Images/vs-add-orders-model.png)
 
-    _Creating an Azure App service plan_		
+    _Adding Adding an entity data model_		 
 
-	Finish up by clicking the **Create** button in the lower-right corner of the "Create App Service" dialog. 
- 
-    ![Creating an Azure App service](Images/vs-create-app-service.png)
-
-    _Creating an Azure App service_		 
-
-Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's API controllers, and a folder named "Models" that will hold the project's model classes. You'll be working with assets in these folders and others as you implement the application.
-
-With the basic project structure in place, the next step is to add the data logic and class files to your API App to access your Azure SQL Database. We’ll start by connecting an Entity Framework model to your database.
-
-To connect an Entity Framework model to your Azure SQL Database:
-
-1. In the Solution Explorer, right-click over the **OrderViewServices** project and select **Add > New Folder**, and name your new folder **Data**.
- 
-    ![Adding a new folder](Images/vs-create-new-folder-01.png)
-
-    _Adding a new folder_		 
-
-1. Right-click over your new **Data** folder and select **Add > New Item**. 
-
-1. In the "Add New Item" dialog select **Data > ADO.NET Entity Data Model**, and enter the value “OrdersModel” in the **Name** field.
- 
-    ![Adding the OrdersModel](Images/vs-add-orders-model.png)
-
-    _Adding the OrdersModel_		 
-
-1. Click the **Add** button to view the Entity Data Model Wizard.
-
-1. Select **EF Designer from database** and click **Next**. The "Connection" dialog will appear, prompting you to enter a database connection.
+1. Select **EF Designer from database** and click **Next**.
  
     ![Selecting the EF Designer](Images/vs-select-ef-designer.png)
 
     _Selecting the EF Designer_		 
 
-1. Click the **New Connection** button to view the "Connection Properties" dialog.
+1. Click the **New Connection** button.
  
-    ![Selecting New Connection](Images/vs-select-new-connection.png)
+    ![Creating a new connection](Images/vs-select-new-connection.png)
 
-    _Selecting New Connection_		 
+    _Creating a new connection_		 
 
-1. In the **Server** name box, enter the name of the Azure SQL Database server configured in Exercise 1, followed by “.database.windows.net” such as **traininglab01**.database.windows.net.
- 
-	>This will be the same server name value displayed in the SQL Server Object Explorer in the previous exercise.
-	
-1. Change the **Authentication type** to **SQL Server Authentication**, and enter "trainingadmin" in the **User name** box, as well as “Password_1” in the **Password** box. You will now be able to select a database.
+1. If you are prompted to choose a data source, select **Microsoft SQL Server** and click **Continue**.
 
-1. Select **Northwind** in the **Select or enter a database name** list, and click **OK**. You will be redirected back to the original dialog and your connection string property will be displayed in the **Connection string** window.
+	![Choosing a data source](Images/choose-data-source.png)
+
+	_Choosing a data source_
+
+1. In the **Server name** box, type the name that you assigned to the database server in Exercise 1, Step 4, followed by ".database.windows.net." Change **Authentication type** to **SQL Server Authentication**, and enter the user name ("sqladmin") and password ("Password_1") for the database server. Select **Northwind** under **Select or enter a database name**, and then click **OK**.
  
     ![Setting connection properties](Images/vs-setting-connection-properties.png)
 
     _Setting connection properties_	
 	
-1. Select **No, exclude sensitive data from the connection string. I will set it in my application code**. Selecting this option will remove any password information from your Web.config file. 
+1. Select **No, exclude sensitive data from the connection string**. (Selecting this option will keep the database password out of the project's Web.config file.) Then click **Next**.
 
-1. Click **Next** to proceed to the "Entity Framework version" dialog, Leave the default of Entity Framework 6.x and click **Next**.
+    ![Setting connection string properties](Images/vs-setting-connection-security.png)
+
+    _Setting connection string properties_	
+
+1. Select **Entity Framework 6.x** and click **Next**.
+
+    ![Specifying the Entity Framework version](Images/vs-set-connection-version.png)
+
+    _Specifying the Entity Framework version_		
+	
+1. Expand the Tables node and check the **dbo** box. This will allow all of the tables in the database to be accessed through the Entity Framework model. Then click **Finish**.
  
-    ![Setting connection properties](Images/vs-setting-connection-security.png)
+    ![Specifying which tables to include in the model](Images/vs-select-dbo-entities.png)
 
-    _Setting connection properties_	
+    _Specifying which tables to include in the model_			
 
-    ![Setting the connection version](Images/vs-set-connection-version.png)
+1. Confirm that **OrdersModel.edmx** is added to the project and that the data model is depicted as shown below.
 
-    _Setting the connection version_		
+    ![The OrdersModel data model](Images/vs-model-created.png)
+
+    _The OrdersModel data model_			
 	
-1. On the "Choose Your Database Objects and Settings" dialog, expand the **Tables** node and check the box labeled as **dbo**. This will select all the tables from your Northwind database for access through your Entity Framework model. 
- 
-1. Leave the remainder of the selections and settings as the defaults and click **Finish**. The Entity Framework Data Model Wizard will create all the data mappings necessary for accessing the data in your Northwind database.
-
-    ![Selecting all tables](Images/vs-select-dbo-entities.png)
-
-    _Selecting all tables_			
-	
-	>Creation of mappings typically takes between 30 to 60 seconds. When mapping is complete, an OrdersModel.edmx file will appear in your primary Visual Studio pane.
-
-    ![The newly created OrdersModel](Images/vs-model-created.png)
-
-    _The newly created OrdersModel_			
-	
-Now you’re ready to start writing code to access the data models you created, to add data access logic:
-
-1. In the Solution Explorer, right-click the **Models** folder and select **Add -> Class**.
-
-1. Type "OrderInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
-
-    ![Creating a new class file](Images/vs-add-class-to-models.png)
-
-    _Creating a new class file_			
+1. Now it is time to write code to access the data model. In Solution Explorer, right-click the "Models" folder and select **Add -> Class...** to add a class file to the "Models" folder. Type "OrderInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
 
     ![Adding the OrderInformation class](Images/vs-add-orderinfomation-class.png)
 
     _Adding the OrderInformation class_				
 	
-1. Replace the empty OrderInformation class with the following class definitions, and note that you are making the class public rather than private:
- 
-    ![The empty OrderInformation class](Images/vs-empty-order-class.png)
-
-    _The empty OrderInformation class_		
+1. Replace the empty *OrderInformation* class with the following class definitions, and note that you are making the classes public rather than private. The purpose of these classes is to model the data for customers, products, and orders.
 	
 	```C#
-	 public class OrderInformation
-	    {
-	        public int OrderId { get; set; }
-	        public string CustomerId { get; set; }
-	        public Nullable<int> EmployeeId { get; set; }
-	        public string EmployeeName { get; set; }
-	        public Nullable<System.DateTime> OrderDate { get; set; }
-	        public Nullable<System.DateTime> RequiredDate { get; set; }
-	        public Nullable<System.DateTime> ShippedDate { get; set; }
-	        public Nullable<int> ShipVia { get; set; }
-	        public Nullable<decimal> Freight { get; set; }
-	        public string ShipName { get; set; }
-	        public string ShipAddress { get; set; }
-	        public string ShipCity { get; set; }
-	        public string ShipRegion { get; set; }
-	        public string ShipPostalCode { get; set; }
-	        public string ShipCountry { get; set; }
-	        public List<OrderDetailInformation> OrderDetails { get; set; }
-	        public CustomerInformation Customer { get; set; }
+	public class OrderInformation
+	{
+	    public int OrderId { get; set; }
+	    public string CustomerId { get; set; }
+	    public Nullable<int> EmployeeId { get; set; }
+	    public string EmployeeName { get; set; }
+	    public Nullable<System.DateTime> OrderDate { get; set; }
+	    public Nullable<System.DateTime> RequiredDate { get; set; }
+	    public Nullable<System.DateTime> ShippedDate { get; set; }
+	    public Nullable<int> ShipVia { get; set; }
+	    public Nullable<decimal> Freight { get; set; }
+	    public string ShipName { get; set; }
+	    public string ShipAddress { get; set; }
+	    public string ShipCity { get; set; }
+	    public string ShipRegion { get; set; }
+	    public string ShipPostalCode { get; set; }
+	    public string ShipCountry { get; set; }
+	    public List<OrderDetailInformation> OrderDetails { get; set; }
+	    public CustomerInformation Customer { get; set; }
+	}
 	
-	    }
-	    public class CustomerInformation
-	    {
-	        public string CustomerId { get; set; }
-	        public string CompanyName { get; set; }
-	        public string ContactName { get; set; }
-	        public string ContactTitle { get; set; }
-	        public string Address { get; set; }
-	        public string City { get; set; }
-	        public string Region { get; set; }
-	        public string PostalCode { get; set; }
-	        public string Country { get; set; }
-	        public string Phone { get; set; }
-	        public string Fax { get; set; }
-	    }
+	public class CustomerInformation
+	{
+	    public string CustomerId { get; set; }
+	    public string CompanyName { get; set; }
+	    public string ContactName { get; set; }
+	    public string ContactTitle { get; set; }
+	    public string Address { get; set; }
+	    public string City { get; set; }
+	    public string Region { get; set; }
+	    public string PostalCode { get; set; }
+	    public string Country { get; set; }
+	    public string Phone { get; set; }
+	    public string Fax { get; set; }
+	}
 	
-	    public class OrderDetailInformation
-	    {
-	        public int OrderId { get; set; }
-	        public int ProductId { get; set; }
-	        public decimal UnitPrice { get; set; }
-	        public short Quantity { get; set; }
-	        public float Discount { get; set; }
+	public class OrderDetailInformation
+	{
+	    public int OrderId { get; set; }
+	    public int ProductId { get; set; }
+	    public decimal UnitPrice { get; set; }
+	    public short Quantity { get; set; }
+	    public float Discount { get; set; }
+	    public ProductInformation Product { get; set; }
+	}
 	
-	        public ProductInformation Product { get; set; }
-	    }
-	
-	    public class ProductInformation
-	    {
-	        public int ProductId { get; set; }
-	        public string ProductName { get; set; }
-	        public Nullable<int> SupplierId { get; set; }
-	        public Nullable<int> CategoryId { get; set; }
-	        public string QuantityPerUnit { get; set; }
-	        public Nullable<decimal> UnitPrice { get; set; }
-	        public Nullable<short> UnitsInStock { get; set; }
-	        public Nullable<short> UnitsOnOrder { get; set; }
-	        public Nullable<short> ReorderLevel { get; set; }
-	        public bool Discontinued { get; set; }
-	    }
+	public class ProductInformation
+	{
+	    public int ProductId { get; set; }
+	    public string ProductName { get; set; }
+	    public Nullable<int> SupplierId { get; set; }
+	    public Nullable<int> CategoryId { get; set; }
+	    public string QuantityPerUnit { get; set; }
+	    public Nullable<decimal> UnitPrice { get; set; }
+	    public Nullable<short> UnitsInStock { get; set; }
+	    public Nullable<short> UnitsOnOrder { get; set; }
+	    public Nullable<short> ReorderLevel { get; set; }
+	    public bool Discontinued { get; set; }
+	}
 	```	
 	
-	>These class definitions will provide the model for your customer, product, and order data.
+1. In Solution Explorer, right-click the project and use the **Add -> New Folder** command to add a folder named "Helpers" to the root of the project.
  
-	
-1. In the Solution Explorer, right-click the **OrderViewServices** project and select **Add > New Folder** and name the new folder **Helpers**.
- 
-    ![The new Helpers folder](Images/vs-new-helpers-folder.png)
-
-    _The new Helpers folder_		 
-
-1. Right-click the new **Helpers** folder and select **Add -> Class**.
-
-1. Type "OrderHelper.cs" (without quotation marks) into the **Name** box, and then click **OK**.
- 
-    ![Adding the OrderHelper class](Images/vs-add-orderhelper-class.png)
-
-    _Adding the OrderHelper class_		 
- 
-1. Replace the entire contents of the class file with the following class definition, and note that you are making the class public rather than private, as well as marking the methods as static:
+1. Right-click the "Helpers" folder and use the **Add -> Class...** command to add a class file named **OrderHelper.cs**. Then replace the contents of the file with the statements below. The methods in this class provide access to order data via the Entity Framework data model:
 
 	```C#
 	using OrderViewServices.Models;
@@ -395,16 +342,17 @@ Now you’re ready to start writing code to access the data models you created, 
 	    {
 	        public static string CreateConnectionString()
 	        {
-	            string userName = (string)System.Web.HttpContext.Current.Cache["CurrentUser"];
-	            string password = "Password_1";
-	
-	            if (string.IsNullOrEmpty(userName))
-	            {
-	                userName = "trainingadmin";
-	                password = "Password_1";
-	            }
-	
-	            return string.Format("data source=traininglabs01.database.windows.net;initial catalog=Northwind;user id={0};password={1};MultipleActiveResultSets=True;App=EntityFramework", userName, password);
+                string userName = (string)System.Web.HttpContext.Current.Cache["CurrentUser"];
+                string password = "Password_1";
+
+                if (string.IsNullOrEmpty(userName))
+                {
+                    userName = "sqladmin";
+                    password = "Password_1";
+                }
+
+                string serverName = "database_server_name";
+                return string.Format("data source={0}.database.windows.net;initial catalog=Northwind;user id={1};password={2};MultipleActiveResultSets=True;App=EntityFramework", serverName, userName, password);
 	        }
 	
 	        public static List<OrderInformation> GetOrders()
@@ -418,12 +366,10 @@ Now you’re ready to start writing code to access the data models you created, 
 	
 	                try
 	                {
-	
 	                    foreach (var result in entities.Orders.OrderByDescending(o => o.OrderDate).Take(20))
 	                    {
 	                        orders.Add(result.ToOrderInformation());
 	                    }
-	
 	                }
 	                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
 	                {
@@ -455,7 +401,6 @@ Now you’re ready to start writing code to access the data models you created, 
 	                    {
 	                        order = result.ToOrderInformation();
 	                    }
-	
 	                }
 	                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
 	                {
@@ -472,32 +417,12 @@ Now you’re ready to start writing code to access the data models you created, 
 	    }
 	}
 	```
-	
-	>NOTE These methods will be used to access order data from your data layer via the Entity Framework OrdersModel created earlier in this exercise.
 
-1. Location the **CreateConnectionString** method at the top of the class and replace **“database_server_name”** with the name of your Azure SQL Database server created in Exercise 1, Step 10. 
+1. Locate the *CreateConnectionString* method near the top of the file and replace *database_server_name* on line 22 with the name you assigned to the database server in Exercise 1, Step 4. 
 
-    ![Replacing the database name](Images/vs-replace-database-name.png)
+1. In Solution Explorer, right-click the project and use the **Add -> New Folder** command to add a folder named "Extensions" to the root of the project.
 
-    _Replacing the database name_	
-
-	>Make sure you leave .database.windows.net value as it is, only replacing the **server name**.
-
-1. In the Solution Explorer, right-click the **OrderViewServices** project and select **Add > New Folder** and name the new folder **Extensions**.
-
-    ![The new Extensions folder](Images/vs-new-extensions-folder.png)
-
-    _The new Extensions folder_	
-
-1. Right-click the new **Extensions** folder and select **Add -> Class**.
-
-1. Type "ListExtensions.cs" (without quotation marks) into the **Name** box, and then click **OK**.
-
-    ![Adding the ListExtensions class](Images/vs-adding-listextensions-class.png)
-
-    _Adding the ListExtensions class_	
-
-1. Replace the entire contents of the class file with the following class definitions, and note that you are making the class public rather than private:
+1. Right-click the "Extensions" folder and use the **Add -> Class...** command to add a class file named **ListExtensions.cs**. Then replace the contents of the file with the following statements:
 
 	```C#
 	using OrderViewServices.Models;
@@ -593,88 +518,64 @@ Now you’re ready to start writing code to access the data models you created, 
 	}
 	```
 
-1. In the Solution Explorer, right-click the **Controllers** folder and select **Add -> Controller**.
+1. In Solution Explorer, right-click the "Controllers" folder and select **Add -> Controller...**.
 
-1. Select the** Web API 2 Controller – Empty** template and click **Add**, and then type "OrdersController" in the name box and click **Add**. A new API controller will be added to your project.
+1. Select **Web API 2 Controller – Empty** and click **Add**. Name the controller "OrdersController" and add it to the project.
  
     ![Adding a new controller](Images/vs-add-new-controller.png)
 
     _Adding a new controller_	
- 
-    ![Adding the OrdersController](Images/vs-adding-orderscontroller.png)
-
-    _Adding the OrdersController_	
 
 1. Add the following using statement to the top of the file:
+
 	```C#
 	using OrderViewServices.Models;
 	```
 
-1. Add the following API controller methods to the **OrdersController** class:
+1. Add the following API controller methods to the *OrdersController* class:
  
-    ![The empty OrdersController](Images/vs-empty-orderscontroller.png)
-
-    _The empty OrdersController_	
- 
-
-```C#
-  public IEnumerable<OrderInformation> GetOrders()
-        {
-            return Helpers.OrderHelper.GetOrders();
-        }
+	```C#
+	public IEnumerable<OrderInformation> GetOrders()
+    {
+        return Helpers.OrderHelper.GetOrders();
+    }
          
-        public OrderInformation Get(int id)
-        {
-            return Helpers.OrderHelper.GetOrder(id);
-        }
+    public OrderInformation Get(int id)
+    {
+        return Helpers.OrderHelper.GetOrder(id);
+    }
                
-        public IHttpActionResult Post(string value)
-        {
-            System.Web.HttpContext.Current.Cache["CurrentUser"] = value;
+    public IHttpActionResult Post(string value)
+    {
+        System.Web.HttpContext.Current.Cache["CurrentUser"] = value;
+        return Created("CurrentUser", value);
+    }
+	```
 
-            return Created("CurrentUser", value);
-        }
-```
-
-	> These API controller methods will provide REST-based methods for accessing order information from other apps and services.
-
-All the code, classes, and models have now been written, and you can validate access to customer, product and order information to see the how data will be returned from your API App.
-
-To validate access to your Azure SQL Database data:
-
-1. Use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application in your browser. Here's how the application looks when an API method has not been specified:
+1. You can use your browser to test the API App by calling methods and seeing what's returned. Use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application in your browser. Initially, you will see a 403 error because no method was specified. But now append "/api/Orders" to the URL in the browser's address bar and press **Enter**. This will call the *GetOrders* method in the *OrdersController class*. Confirm that an array of JSON objects representing orders is returned:
  
-    ![No API methods specified screen](Images/ie-forbidden-screen.png)
+    ![JSON returned by the GetOrders method](Images/ie-api-specified.png)
 
-    _No API methods specified screen_	
+    _JSON returned by the GetOrders method_	
 
-1. To retrieve a list of orders, append “/api/Orders” (without the quotation marks) to the end of the URL in your browser and hit the enter key on your keyboard. This will call the GetOrders method in your OrdersController class. Here’s how the output looks after calling the GetOrders method:
+1. The next step is to deploy the app to the cloud. Visual Studio makes it easy. (Remember that **Host in the cloud** box you checked at the beginning of this exercise?) Begin by right-clicking the project in Solution Explorer and selecting **Publish...** from the context menu. In the ensuing dialog, make sure **Web Deploy** is selected as the publish method, and then click the **Publish** button.
+
+	> Web Deploy is an awesome feature of Visual Studio that lets you publish apps to the cloud without having to manually FTP a bunch of files. Moreover, Web Deploy only publishes files that have changed, so if you have a large project with thousands of files and change just one or two, republishing takes almost no time at all. Web Deploy also works with many third-party hosting services such as GoDaddy.
  
-    ![An API method specified](Images/ie-api-specified.png)
+    ![Publishing the API app](Images/vs-publish-api-app.png)
 
-    _An API method specified_	
+    _Publishing the API app_	
 
-Up to now, you have been running the API app locally. Web Deploy makes it incredibly easy to publish to the Web without having to FTP up a bunch of files. You will be deploying the Azure API App to the Azure App Service that was created when you created the project in Visual Studio. (Remember that **Host in the cloud** box you checked? If not, refer to Step 4.)
-
-1. Right-click the project in Solution Explorer and select **Publish...** from the context menu.
-
-1. In the ensuing dialog, make sure **Web Deploy** is selected as the **Publish method**. Then click the **Publish** button.
- 
-    ![Publishing your API app](Images/vs-publish-api-app.png)
-
-    _Publishing your API app_	
- 
-	>After a few moments, the app will appear in a browser window. Note the URL in the address bar. You will need this URL value for the next exercise. The app is no longer running locally; it's on the Web, where it's accessible by other apps and services.
+1. After a few moments, the app will appear in a browser window. Note the URL in the address bar. You will need this URL in the next exercise, so copy it into your favorite text editor where you can easily retrieve it. The app is no longer running locally; it's on the Web, where it's accessible to apps and other services.
  
     ![The published API app](Images/ie-published-api-app.png)
 
     _The published API app_	
- 
 
-In this exercise you’ve create a data access layer connected to your Azure SQL Database, and written code to retrieve customer, product, and order records encapsulated within REST-based API methods. You’ve also published the API methods to an App Service in Azure for use by other apps and services. The next step in to create a Windows Store app to access your Azure SQL Database API services.
+Now that you have a Web service through which the Azure SQL Database that you created can be accessed, the next step is to write an app that uses it.
 
 <a name="Exercise4"></a>
-## Exercise 4: Build an API-aware Windows Store app ##
+## Exercise 4: Build a UWP app that consumes the database ##
 
 The whole reason for creating and deploying your Azure SQL Database API App is so you can build smart apps that can interact with the data in your Azure SQL Database. There are a variety of ways to build such apps. You could call the service from a Web app using JavaScript and AJAX, for example, or you could use Visual Studio to write a Xamarin app that runs on iOS, Android, and Windows and places calls to the service using .NET's HttpClient class.
 
@@ -797,7 +698,6 @@ The shell for your application has been created successfully, now it’s time to
 	        }
 	    }
 	}
-
 	```
 
 1. In the Solution Explorer, right-click the **OrderView** project and select **Add > New Folder** and name the new folder **Models**.
