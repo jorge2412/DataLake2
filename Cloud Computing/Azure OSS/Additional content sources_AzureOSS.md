@@ -1,7 +1,6 @@
-**The following content has been created by the Microsoft Azure PG and is optimized for Community engagement.**
-The topics focus around Node.js and Java on Azure.
+**NodeCamp:**
 
-**Links to the content:**
+Owner: [Rami Sayar](https://twitter.com/ramisayar)
 
 Intro to Node.js:
 https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/IntroToNodeJS
@@ -9,30 +8,26 @@ https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/IntroToNodeJS
 Intro to Express Framework:
 https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/IntroToExpress
 
-
 Building the Backend:
 https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/BuildingTheBackend
-
 
 Building the User Interface:
 https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/CreatingTheUI
 
-
 Connecting Frontend to Backend:
 https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/ConnectingFrontAndBack
-
 
 Provisioning, Deploying, Debugging on Azure:
 https://github.com/Microsoft-Web/NodeCamp/tree/master/Presentation/AzureDeployAndDebug
 
 
+**The following content has been created by the Microsoft Azure PG and is optimized for Community engagement.**
+
 Adding Intelligence to Node.js App:
 https://github.com/SharePointing/Azure.Intelligence
 
-
-
-
 **Content produced by Microsoft WesternEurope:**
+
 Owner: Jessica Perez 
 
 Includes an OSS demo as a set of hands-on-labs: https://github.com/msdevno/hol-oss-devops
