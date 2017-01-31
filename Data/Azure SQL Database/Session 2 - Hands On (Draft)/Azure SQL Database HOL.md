@@ -42,7 +42,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 1: Create an Azure SQL Database](#Exercise1)
 - [Exercise 2: Add records to the database](#Exercise2)
 - [Exercise 3: Create an Azure API App](#Exercise3)
-- [Exercise 4: Build a UWP app that consumes the database](#Exercise4)
+- [Exercise 4: Build a UWP client](#Exercise4)
 - [Exercise 5: Manage record permissions and masks](#Exercise5)
 - [Exercise 6: Delete the resource group](#Exercise6)
  
@@ -566,7 +566,7 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 
     _Publishing the API app_	
 
-1. After a few moments, the app will appear in a browser window. Note the URL in the address bar. You will need this URL in the next exercise, so copy it into your favorite text editor where you can easily retrieve it. The app is no longer running locally; it's on the Web, where it's accessible to apps and other services.
+1. After a few moments, the app will appear in a browser window. Note the URL in the address bar. You will need this URL in the next exercise, so **copy it into your favorite text editor where you can easily retrieve it**. The app is no longer running locally; it's on the Web, where it's accessible to apps and other services.
  
     ![The published API app](Images/ie-published-api-app.png)
 
@@ -575,73 +575,25 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 Now that you have a Web service through which the Azure SQL Database that you created can be accessed, the next step is to write an app that uses it.
 
 <a name="Exercise4"></a>
-## Exercise 4: Build a UWP app that consumes the database ##
+## Exercise 4: Build a UWP client ##
 
-The whole reason for creating and deploying your Azure SQL Database API App is so you can build smart apps that can interact with the data in your Azure SQL Database. There are a variety of ways to build such apps. You could call the service from a Web app using JavaScript and AJAX, for example, or you could use Visual Studio to write a Xamarin app that runs on iOS, Android, and Windows and places calls to the service using .NET's HttpClient class.
-
-In this exercise, you will write a client app that targets the Universal Windows Platform, or UWP. The beauty of such apps is that they run on a variety of Windows devices, including PCs, tablets, phones, and even on Xbox One. The app you will write enables you to access orders for a specific salesperson as well as viewing order and customer details.
-
-To create a Windows Store app:
+A Web service that features a REST interface like the Azure API App you deployed in the previous exercise can be called from virtually any kind of app. In this exercise, you will write a Universal Windows Platform, or UWP, app to talk to the API App. The beauty of UWP apps is that they run on a variety of Windows devices, including PCs, tablets, phones, and even on Xbox One. The app you will write enables you to view orders for Northwind salespersons as well as order and customer details.
 
 1. In order to build and run UWP apps on a Windows 10 PC, you must enable developer mode on the device. To ensure that developer mode is enabled, click the **Windows** button (also known as the Start button) in the lower-left corner of the desktop. Then select **Settings** from the menu and click **Update & security** in the **Settings** dialog. Now click **For developers** on the left and select **Developer mode** on the right, as shown below.
  
     ![Enabling developer mode](Images/windows-use-dev-mode.png)
 
     _Enabling developer mode_	
+
+1. In Solution Explorer, right-click the "OrderViewServices" solution (the solution, not the project) and select **Add -> New Project**. Select **Blank App (Universal Windows)** as the project type and name the project "OrderView." Then click **OK**. When prompted tp choose platform versions, accept the defaults.
  
-1. In Visual Studio, right-click over the **OrderViewServices solution** and select **Add > New Project** to create a new **Blank App (Universal Windows)** project named "OrderView."
+    ![Adding a UWP project](Images/vs-add-new-uwp-project.png)
 
-	>Ensure you right-click over the **solution** and not the project in this step.
+    _Adding a UWP project_	
  
-    ![Adding a new UWP project](Images/vs-add-new-uwp-project.png)
-
-    _Adding a new UWP project_	
+1. In Solution Explorer, right-click the new "OrderView" project and select **Set as Startup Project** from the context menu.
  
-1. Click **OK** to accept the default target version and minimum version. A new UWP app names OrderView will be added to your OrderViewServices solution.
- 
-    ![Setting the target versions](Images/vs-set-target-versions.png)
-
-    _Setting the target versions_ 
- 
-    ![Adding a new UWP project](Images/vs-add-new-uwp-project.png)
-
-    _Adding a new UWP project_	
- 
-1. In the Solution Explorer, right-click the new **OrderView** project and select **Set as startup project**.
- 
-    ![Setting the startup project](Images/vs-set-startup-project.png)
-
-    _Setting the startup project_ 
- 
-1. Again, in the Solution Explorer, right-click over the **OrderView** project and select **Deploy**. This will deploy your app to the local computer and is required prior to running an application when it’s part of a mixed-platform solution.
- 
-    ![Deploying the project](Images/vs-deploy-project.png)
-
-    _Deploying the project_ 
- 
-1. Now use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application on your computer. Here's how the application looks in its present state:
- 
-    ![The blank OrderView app](Images/vs-blank-orderview-app.png)
-
-    _The blank OrderView app_  
-
-The shell for your application has been created successfully, now it’s time to write code to access the Azure SQL Database API methods created in the previous exercise, and add user interface elements to visualize the data. 
-
-1. In the Solution Explorer, right-click the **OrderView** project and select **Add > New Folder** and name the new folder **Common**.
- 
-    ![The new Common folder](Images/vs-new-common-folder.png)
-
-    _The new Common folder_  
-
-1. Right-click the new **Common** folder and select **Add -> Class**.
-
-1. Type "BindableBase.cs" (without quotation marks) into the **Name** box, and then click **OK**.
- 
-    ![Adding the BindableBase class](Images/vs-adding-bindablebase-class.png)
-
-    _Adding the BindableBase class_  
-
-1. Replace the entire contents of the class file with the following code:
+1. Right-click the "OrderView" project again and use the **Add -> New Folder** command to add a folder named "Common" to the root of the project. Right-click the "Common" folder and use the **Add -> Class...** command to add a class file named **BindableBase.cs**. Then replace the contents of the file with the following statements:
 
 	```C#
 	using System;
@@ -700,25 +652,7 @@ The shell for your application has been created successfully, now it’s time to
 	}
 	```
 
-1. In the Solution Explorer, right-click the **OrderView** project and select **Add > New Folder** and name the new folder **Models**.
- 
-    ![Adding the Models folder](Images/vs-new-models-folder.png)
-
-    _Adding the Models folder_  
-
-1. Right-click the new **Models** folder and select **Add -> Class**.
-
-1. Type "OrderInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
- 
-    ![Adding the OrderInformation class](Images/vs-new-orderinfomation-class.png)
-
-    _Adding the OrderInformation class_  
-
-1. Replace the empty **OrderInformation** class with the following class definitions, and note that you are making the class public rather than private:
- 
-    ![The empty OrderInformation class](Images/vs-empty-orderinformation-class.png)
-
-    _The empty OrderInformation class_  
+1. Right-click the "OrderView" project and use the **Add -> New Folder** command to add a folder named "Models" to the root of the project. Right-click the "Models" folder and use the **Add -> Class...** command to add a class file named **OrderInformation.cs**. Then replace the empty *OrderInformation* class with the following class definitions:
 
 	```C#
   
@@ -727,6 +661,7 @@ The shell for your application has been created successfully, now it’s time to
         public string Label { get; set; }
         public string UserName { get; set; }
     }
+
     public class ProductInformation
     {
         public int ProductId { get; set; }
@@ -768,6 +703,7 @@ The shell for your application has been created successfully, now it’s time to
         public string Phone { get; set; }
         public string Fax { get; set; }
     }
+
     public class OrderInformation
     {
         public int OrderId { get; set; }
@@ -787,7 +723,6 @@ The shell for your application has been created successfully, now it’s time to
         public string ShipCountry { get; set; }
         public List<OrderDetailInformation> OrderDetails { get; set; }
         public CustomerInformation Customer { get; set; }
-
     }
 
     public class OrderDetailInformation
@@ -802,17 +737,7 @@ The shell for your application has been created successfully, now it’s time to
     }
 	```
 
-	>Just as in the previous exercise, these class definitions will provide the model for your customer, product, and order data.
-
-1. Right-click once more over the **Models** folder and select **Add -> Class**.
-
-1. Type "MainViewModel.cs" (without quotation marks) into the **Name** box, and then click **OK**.
- 
-    ![Adding the MainViewModel class](Images/vs-add-mainviewmodel-class.png)
-
-    _Adding the MainViewModel class_  
-
-1. Replace the empty **MainViewModel** class with the following class definitions, and note that you are implementing the BindableBase class created earlier:
+1. Right-click the "Models" folder again and use the **Add -> Class...** command to add a class file named **MainViewModel.cs**. Replace the contents of the file with the following statements, and observe that the *MainViewModel* class implements the *BindableBase* class created earlier:
 
 	```C#
 	using System;
@@ -880,7 +805,6 @@ The shell for your application has been created successfully, now it’s time to
 	            LoadOrdersAsync(selectedCustomer);
 	        }
 	
-	
 	        public void ChangeUser(SalespersonInformation salesperson)
 	        {
 	            this.SelectedSalesperson = salesperson;
@@ -904,7 +828,6 @@ The shell for your application has been created successfully, now it’s time to
 	            }
 	
 	            this.IsLoading = false;
-	
 	        }
 	
 	        public async void LoadOrdersAsync()
@@ -923,27 +846,14 @@ The shell for your application has been created successfully, now it’s time to
 	            }
 	
 	            this.IsLoading = false;
-	
 	        }
 	    }
 	}
 	```
 
-1. In the Solution Explorer, right-click the **OrderView** project and select **Add > New Folder** and name the new folder **Helpers**.
+1. Right-click the "OrderView" project and use the **Add -> New Folder** command to add a folder named "Helpers" to the root of the project.
  
-    ![The new Helpers folder](Images/vs-created-helpers-folder.png)
-
-    _The new Helpers folder_  
-
-1. Right-click the new **Helpers** folder and select **Add -> Class**.
-
-1. Type "OrderHelper.cs" (without quotation marks) into the **Name** box, and then click **OK**.
- 
-    ![Creating the OrderHelper class](Images/vs-new-orderhelper-class.png)
-
-    _Creating the OrderHelper class_  
-
-1. Replace the entire contents of the class file with the following class definition, and note that you are making the class public rather than private, as well as marking the methods as static:
+1. Right-click the "Helpers" folder and use the **Add -> Class...** command add a class file named **OrderHelper.cs**. Replace the contents of the file with the following statements:
 
 	```C#
 	using OrderView.Models;
@@ -1022,24 +932,12 @@ The shell for your application has been created successfully, now it’s time to
 	    }
 	}
 	```
- 
-	>These methods will be used to access the API methods created earlier in the previous exercise.
 
-1. Locate the **OrderViewApi** property at the top of the class definition and replace **“order_api_url”** highlighted below with the **URL** value of your Azure API App from the last step in Exercise 3.
- 
-    ![Replacing the order_api_url value](Images/vs-replace-order-api.png)
+1. Replace *order_api_url* on line 14 with the URL of your API App — the one you copied into your favorite text editor at the end of [Exercise 3](#Exercisw3).
 
-    _Replacing the order_api_url value_  
+1. Open **MainPage.xaml** and replace the empty `Grid` element with the following markup:
 
-1. Open MainPage.xaml and find the empty Grid element highlighted below.
- 
-    ![The empty Grid element](Images/vs-empty-grid-element.png)
-
-    _The empty Grid element_  
-
-1. Replace the empty Grid with the following markup:
-
-	```C#
+	```XML
 	<Page.Resources>
         <Style x:Key="SmallerLabelStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="12"/>
@@ -1129,15 +1027,15 @@ The shell for your application has been created successfully, now it’s time to
 
     </Grid>
 	```
-	>The markup that you just inserted is Extensible Application Markup Language, or XAML. XAML is a language created by Microsoft for building user interfaces. It was originally created for WPF, but has since been repurposed for universal Windows apps. Combined with Xamarin Forms, it can even be used to build user interfaces for iOS and Android. It is an extremely expressive language that enjoys designer support in Visual Studio and other popular tools.
+	> The markup that you just inserted is Extensible Application Markup Language, or XAML. XAML is a language created by Microsoft for building user interfaces. It was originally created for WPF, but has since been repurposed for Universal Windows apps. Combined with Xamarin Forms, it can even be used to build user interfaces for iOS and Android. It is an extremely expressive language that enjoys designer support in Visual Studio and other popular tools.
 
-1. Now open MainPage.xaml.cs and add the following using statement to those already at the top of the page:
+1. Now open **MainPage.xaml.cs** and add the following `using` statement to those already at the top of the page:
 
 	```C#
 	using OrderView.Models;
 	```
 
-1. Still in MainPage.xaml.cs, replace everything inside the **MainPage** class with the following code:
+1. Still in **MainPage.xaml.cs**, replace everything inside the *MainPage* class with the following code:
 
 	```C#
 	MainViewModel ViewModel = new MainViewModel();
@@ -1171,25 +1069,21 @@ The shell for your application has been created successfully, now it’s time to
     }
 	```
 
-1. In the Solution Explorer, right-click over the **OrderView** project and select **Deploy**. This will deploy your app to the local computer and is required prior to running an application when it’s part of a mixed-platform solution.
- 
-    ![Deploying the project](Images/vs-deploy-project.png)
+1. In Solution Explorer, right-click the "OrderView" project and select **Deploy** from the context menu. This will deploy the app to your local computer and enable it to run even though it's part of a mixed-platform solution.
 
-    _Deploying the project_ 
-
-1. Now use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application on your computer. Here's how the application looks in its completed state:
+1. Now use Visual Studio's **Debug -> Start Without Debugging** command (or press **Ctrl+F5**) to launch the app. Confirm that it shows a list of orders for Janet:
  
     ![Running the completed UWP app](Images/vs-uwp-complete.png)
 
     _Running the completed UWP app_ 
 
-When you populated your Azure SQL Database in Exercise 2, three (3) users were created: Janet, Andrew, and Nancy. Janet is a Sales Manager and should have permission to view all orders, however Andrew and Nancy are Salespersons, and should only be able to view orders they created. The current state of your OrderView app shows all orders regardless of which user is using the app. To simulate viewing orders, the app contains a selection dropdown control to view orders “AS” a specific user. Review how the list of orders being returned does not change when you select a different salesperson. 
+1. Select **Andrew** from the **SALESPERSON** list and wait for the orders to refresh. How does what Andrew sees differ from what Janet sees, if at all?
 
-To limit as Salesperson’s ability to view only their orders, we can take advantage of Azure SQL Database **row-level security**.
+1. Close the app and return to Visual Studio.
 
-There is also information in each customer record that should be “private” and not available for viewing through your app. In this scenario customer phone numbers should be “hidden” from users, however we don’t want to add the complexity into our code to “check and filter” the labels based on a user’s role. Instead we can implement Azure SQL Database **dynamic data masking** to mask these values in our application.
+When you initialized the Azure SQL Database in [Exercise 2](#Exercise2), three users were created: Janet, Andrew, and Nancy. Janet is a sales manager and should have permission to view all orders, but Andrew and Nancy are salespersons and should only be able to view orders they created. At present, all users see all orders. In addition, there is certain "sensitive" information displayed in each order that should be hidden from non-sales managers.
 
-In the next exercise you will add row-level security and dynamic data masking to your Azure SQL Database to make sure Salesperson are only able to view the records and fields allowed in the requirements.
+You could modify the UWP app to filter what users see based on their roles, but it's better to filter such data on the back end. That way, the data isn't even transmitted from the server if it isn't needed. That's where SQL Database permissions and masks come in.
 
 <a name="Exercise5"></a>
 ## Exercise 5: Manage record permissions and masks ##
