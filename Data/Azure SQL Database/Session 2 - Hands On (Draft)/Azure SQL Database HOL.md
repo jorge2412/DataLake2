@@ -43,6 +43,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 3: Create an Azure SQL Database API service](#Exercise3)
 - [Exercise 4: Build an API-aware Windows Store app](#Exercise4)
 - [Exercise 5: Manage record permissions and masks](#Exercise5)
+- [Exercise 6: Delete the resource group](#Exercise6)
  
 Estimated time to complete this lab: **60** minutes.
 
@@ -98,122 +99,75 @@ Your Azure SQL Database is now provisioned and ready to be populated with data. 
 <a name="Exercise2"></a>
 ## Exercise 2: Add records to the database ##
 
-Now that you’ve created an Azure SQL Database, it’s time to populate your database with records. In this exercise you’ll be populating the Northwind database created in Exercise 1 with customer, product and order records using the SQL Server Data Tools (SSDT) in Visual Studio. If you haven’t installed SSDT you will need to do so before continuing with this exercise.
+Now that you've created a SQL Database in Azure, the next step is to add data. In this exercise, you will populate the Northwind database created in [Exercise 1](#Exercise1) with customer, product, and order records using the SQL Server Data Tools (SSDT) in Visual Studio. If you haven't installed [SSDT](https://msdn.microsoft.com/en-us/library/mt204009.aspx), please take a moment to do so now.
 
-Once you have confirmed the SQL Server Data Tools have been added to Visual Studio, you can open your Azure SQL Database easily through the Azure Portal. To open your database in SSDT:
+1. Click the SQL Database that you deployed in [Exercise 1](#Exercise1).
 
-1. Open the Azure Portal dashboard (if it’s not already open from Exercise 1) and click the **“hamburger”** icon to open the side drawer menu.
+    ![Opening the Northwind database](Images/open-database.png)
 
-1. Click **Resource Groups** followed by **TrainingLabResources**.
+    _Opening the Northwind database_	
 
-1. Select the **Overview** tab.
+1. Click **Tools**. Then click **Open in Visual Studio** in the "Tools" blade, and click the **Open in Visual Studio** button in the "Open in Visual Studio" blade. 
 
-1. Click **Northwind** to open your newly provisioned Azure SQL Database.
+	> You may be prompted to allow the Microsoft Visual Studio Web Protocol Handler to switch from your browser to Visual Studio. If you are, click **Yes**.
  
-    ![Selecting the Northwind database](Images/portal-select-northwind-database.png)
+    ![Opening the database in Visual Studio](Images/open-in-visual-studio.png)
 
-    _Selecting the Northwind database_	
-
-1. Click **Tools** in the top menu of the **Overview** panel. The Tools panel will contain a number of tools. Click the **Open in Visual Studio** tool and the click the **Open in Visual Studio** button. 
+    _Opening the database in Visual Studio_	
  
-    ![The Open in Visual Studio tool](Images/portal-select-tools_open-vs.png)
-
-    _The Open in Visual Studio tool_	
+1. In Visual Studio's "Connect" dialog, enter the password ("Password_1") you specified in Exercise 1, Step 4. Then check the **Remember Password** box and click **Connect**. 
  
-	>You may be prompted to allow the Microsoft Visual Studio Web Protocol Handler to switch from your browser to Visual Studio. Click **Yes**.
-	
-1. After a short delay, Visual Studio 2015 will open and display a "Connect" dialog, prepopulated with configuration information from your Azure SQL Database. Enter the **database password** created in the previous exercise (“Password_1”) check **Remember password**, and click **Connect**. 
+    ![Connecting to the database from Visual Studio](Images/vs-connect-dialog.png)
+
+    _Connecting to the database from Visual Studio_	
+
+1. When prompted to create a new firewall rule, accept the defaults and click **OK**. This will allow Visual Studio to get through the firewall on the server side and connect to the SQL Database.
+
+    ![Creating a new firewall rule](Images/vs-firewall-rule-dialog.png)
+
+    _Creating a new firewall rule_	
+
+1. In Visual Studio's SQL Server Object Explorer (SSOE), right-click the node representing the database server that you deployed in the previous exercise and select **New Query...**.
  
-    ![The Visual Studio Connect dialog](Images/vs-connect-dialog.png)
+    ![Starting a new query](Images/vs-select-new-query-01.png)
 
-    _The Visual Studio Connect dialog_	
+    _Starting a new query_	
 
-1. The "Create new firewall rule" dialog will display, prompting to allow local firewall access between your local computer and your Azure SQL Database. Review the default settings and click **OK**. Visual Studio will now load your database in the SQL Server Object Explorer (SSOE) and begin populating database information.
-
-    ![The Visual Studio Firewall rule dialog](Images/vs-firewall-rule-dialog.png)
-
-    _The Visual Studio Firewall rule dialog_	
-
-	 >If prompted to login to the portal do so with your Microsoft account.
-
-1. Right-click over the **newly added server mode** displaying the full path of your new Azure SQL Database server (such as traininglab01.database.windows.net) in the SSOE and select **New Query…** after which a new query script window will open in the main content panel of your environment.
+1. Use the **Edit -> Insert File as Text...** command to insert the file named **Create MASTER logins.sql** located in the "Resources" folder of this lab.
  
-    ![Selecting the New Query command](Images/vs-select-new-query-01.png)
+    ![Inserting "Create MASTER logins.sql"](Images/vs-selecting-file-open.png)
 
-    _Selecting the New Query command_	
+    _Inserting "Create MASTER logins.sql"_	
 
-1. From the Visual Studio menu select **Edit > Insert File as Text** and browse to the **Resources > Scripts** folder included with this lab.
+1. Right-click anywhere in the script and select **Execute**. This script creates the user logins used in subsequent exercises.
  
-    ![Selecting the Open File command](Images/vs-selecting-file-open.png)
+    ![Executing the script](Images/vs-execute-master-script.png)
 
-    _Selecting the Insert File as Text command_	
+    _Executing the script_	
 
-1. Select the **Create MASTER logins.sql** script and click **Open**. 
+1. In the SQL Server Object Explorer, expand the node for your database server and right-click the Northwind database. Then select **New Query...** from the context menu.
  
-    ![Opening the Create MASTER logins script](Images/vs-select-master-script.png)
+    ![Starting a new query](Images/vs-select-new-query-02.png)
 
-    _Opening the Create MASTER logins script_	
+    _Starting a new query_	
 
-1. When the script loads in the main Visual Studio pane, right-click over **any area in the script** and select **Execute**.
+1. Use the **Edit -> Insert File as Text...** command to insert the file named **Create NORTHWIND tables.sql** located in the "Resources" folder of this lab. Then right-click anywhere in the script and select **Execute**. This script creates tables and other objects in the Northwind database and typically takes 2 to 5 minutes to run.
+
+1. At this point, it might be helpful to familiarize yourself with some of the tables created by the script that just executed. Expand the "Northwind" node in SSOE, and then expand the "Tables" node to reveal the tables in the database. Right-click the Customers table and select **View Data** from the context menu.
  
-    ![Executing the Create MASTER logins script](Images/vs-execute-master-script.png)
+    ![Opening the Customers table](Images/vs-select-view-data.png)
 
-    _Executing the Create MASTER logins script_	
+    _Opening the Customers table_		
 
-	>This script will create the user logins needed for the remaining exercises. When the script has completed executing a Query completed message will appear at the bottom of the query windows.
- 
-    ![Query executed succesfully message](Images/vs-query-executed.png)
-
-    _Query executed succesfully message_	
-	
-1. Expand the server **Databases** node and then right-click over the **Northwind** database node and then select **New Query…** after which another new query script window will open in the main content panel of your environment.
- 
-    ![Selecting the New Query command](Images/vs-select-new-query-02.png)
-
-    _Selecting the New Query command_	
-
-1. From the Visual Studio menu select **Edit > Insert File as Text** and browse to the** Resources > Scripts** folder included with this lab.
-
-1. Select the **Create NORTHWIND tables.sql** script and click **Open**.
- 
-    ![Opening the Create NORTHWIND tables script](Images/vs-select-create-script.png)
-
-    _Opening the Create NORTHWIND tables script_	
-
-1. When the script loads in the main Visual Studio pane, right-click over **any area in the script** and select **Execute**.
- 
-    ![Executing the Create NORTHWIND tables script](Images/vs-execute-tables-script.png)
-
-    _Executing the Create NORTHWIND tables script_	
-
-	>This script will create the tables and other dependent objects needed for the remaining exercises, and typically takes between 2 and 5 minutes to complete, depending on your current network connectivity. When the script has completed executing a Query completed message will appear at the bottom of the query window.
- 
-    ![Query executed succesfully message](Images/vs-query-executed.png)
-
-    _Query executed succesfully message_		
-
-At this point your Azure SQL Database has been configured and populated with the data necessary for the remaining exercises. Before moving to the next exercise, it may be helpful to familiarize yourself with some of the objects created in the previous steps. To review some of the tables created:
-
-1. Expand the **Northwind** node in the SSOE, and then expand the **Tables** node. The Tables node should now have a list of tables available, populated with customer, product, and order records.
-
-1. Right-click over the **Customers** table and select **View Data** to view employee records.
- 
-    ![Selecting the View Data command_](Images/vs-select-view-data.png)
-
-    _Selecting the View Data command_		
-
+1. Confirm that you see a list of customers like the one below.
  
     ![Viewing customer records](Images/vs-view-customers.png)
 
     _Viewing customer records_		
 
-1. Right-click over the **Employees** table and select **View Data** to view customer records.
- 
-    ![Viewing employee records](Images/vs-view-employees.png)
+1. Open other tables in the database to see what's in them, especially the Employees and Orders tables.
 
-    _Viewing employee records_		
-
-Your Azure SQL Database is now populated with customers, products, and orders. You will be adding additional functionality to your database in a later exercise to provide row-level security. The next step is to create an Azure API service to access and expose your Azure SQL Database data to other apps and services.
+Your SQL Database is now populated with customers, products, orders, and other information. You will be adding additional functionality to the database in later exercises to facilitate row-level security. But for now, the next step is to make the database accessible to applications over the Web.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Create an Azure SQL Database API service ##
@@ -1449,6 +1403,21 @@ To view and verify row-level security and dynamic data masking, let’s go back 
 Notice how you didn’t need to make any changes to your data access layer (you’re Azure API App) in order to limit the information available to salespersons. A few simple scripts or settings in the database itself were enough to create these types of security features.
 
 You’ve now create an Azure SQL Database, written and deployed an Azure API app to serve as the data access layer, and created a simple UWP app to view orders based on a selected salesperson. 
+
+<a id="Exercise6"/></a>
+## Exercise 6: Delete the resource group
+
+In this exercise, you will delete the resource group created in [Exercise 1](#Exercise1) when you created the SQL Database. Deleting the resource group deletes everything in it, including the SQL Database, database server, API Service, and other resources created during the course of this lab, and prevents any further charges from being incurred for it.
+
+1. In the Azure Portal, open the blade for the resource group created for the SQL Database. Then click the **Delete** button at the top of the blade.
+
+	![Deleting the resource group](Images/delete-resource-group.png)
+
+	_Deleting the resource group_
+
+1. For safety, you are required to type in the resource group's name. (Once deleted, a resource group cannot be recovered.) Type the name of the resource group. Then click the **Delete** button to remove all traces of this lab from your account.
+
+After a few minutes, the resource group and all of its resources will be deleted.
 
 <a name="Summary"></a>
 ## Summary ##
