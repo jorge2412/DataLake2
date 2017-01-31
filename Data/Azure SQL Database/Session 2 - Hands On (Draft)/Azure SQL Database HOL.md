@@ -1,16 +1,16 @@
 <a name="HOLTitle"></a>
-# Azure SQL Database #
+# Using Azure SQL Database #
 
 ---
 
 <a name="Overview"></a>
 ## Overview ##
 
-Whether yo'’re a novice hobbyist experimenting with mobile apps in your free time, or an experienced large-scale enterprise developer writing multitenant apps servicing thousands of customers, you’re often challenged with balancing customer performance, management, and security, as well as storing, accessing, and exposing data to customers. Azure SQL Database allows you to focus on what you do best: building great apps. 
+[Azure SQL Database](https://azure.microsoft.com/en-us/services/sql-database/) is a cloud-based relational database service based on Microsoft's SQL Server engine. It delivers predictable performance, dynamic scalability, and robust data protection so you can focus on app development rather than managing virtual machines and physical infrastructure. SQL Database supports existing SQL Server tools, libraries, and APIs, making it simple to migrate existing database solutions to the cloud and to use those solutions without climbing a learning curve. And it features the largest compliance portfolio in the industry, including [HIPAA](https://www.microsoft.com/en-us/trustcenter/Compliance/HIPAA), [FERPA](https://www.microsoft.com/en-us/trustcenter/Compliance/FERPA), and even [Singapore MTCS Level 3](https://www.microsoft.com/en-us/TrustCenter/Compliance/MTCS).
 
-Azure SQL Database is a cloud-based, relational database service, based on the Microsoft SQL Server engine, and designed to deliver predictable, scalable performance, business continuity, and data protection without the administration challenges. Azure SQL Database supports existing SQL Server tools, libraries and APIs, making it simple for administrators and developers to migrate existing database solutions to the cloud.
+One of the advantages of running SQL Database on Microsoft Azure is being able to scale performance up or down, manually or automatically, to quickly adapt to changing demand. SQL Database features a broad spectrum of performance levels, with each level offering guaranteed performance. It also offers [elastic pools](https://docs.microsoft.com/azure/sql-database/sql-database-design-patterns-multi-tenancy-saas-applications) for hosting multitenant apps without the usual trade-off in performance, management, and security.  
 
-In this lab, you’ll create and configure an Azure SQL Database, and populate it with records for a fictitious company. You will create an Azure API App to communicate with your Azure SQL Database, create a Windows Store app to access these APIs, and use features of Azure SQL Database to limit the information returned to users based on their role in an organization.
+In this lab, you will create an Azure SQL Database and populate it with records. You will create an Azure API App to communicate with the database, create a Universal Windows Platform app to access the APIs, and use features of SQL Database to limit the information returned to users based on their role in the organization.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -27,9 +27,9 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
-- An active Microsoft Azure subscription, or [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
-- [Visual Studio 2015 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx "Visual Studio 2015 Community edition") or higher with the Windows 10 SDK.
-- [SQL Server Data Tools for Visual Studio 2015](https://msdn.microsoft.com/en-us/library/mt204009.aspx "SQL Server Data Tools for Visual Studio 2015") or higher.
+- An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
+- [Visual Studio 2015 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher with the Windows 10 SDK installed
+- [SQL Server Data Tools for Visual Studio 2015](https://msdn.microsoft.com/en-us/library/mt204009.aspx)
 
 ---
 
@@ -38,8 +38,8 @@ The following are required to complete this hands-on lab:
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Create and configure an Azure SQL Database](#Exercise1)
-- [Exercise 2: Populate a database with records](#Exercise2)
+- [Exercise 1: Create an Azure SQL Database](#Exercise1)
+- [Exercise 2: Add records to the database](#Exercise2)
 - [Exercise 3: Create an Azure SQL Database API service](#Exercise3)
 - [Exercise 4: Build an API-aware Windows Store app](#Exercise4)
 - [Exercise 5: Manage record permissions and masks](#Exercise5)
@@ -47,11 +47,11 @@ This hands-on lab includes the following exercises:
 Estimated time to complete this lab: **60** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Create and configure an Azure SQL Database ##
+## Exercise 1: Create an Azure SQL Database ##
 
-The first step in working with Azure SQL Database is to create a database to hold your data. In this exercise, you will create an Azure SQL Database and configure Azure SQL Database server settings.
+The first step in working with Azure SQL Database is to create a database to hold your data. In this exercise, you will create an Azure SQL Database and configure database server settings.
 
-1. Open the Azure Management Portal, if asked to login, do so with your Microsoft Account.
+1. Open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to sign in, do so with your Microsoft Account.
 
 1. Click **+ New**, followed by **Database** and **SQL Database**.
 
@@ -59,58 +59,44 @@ The first step in working with Azure SQL Database is to create a database to hol
 
     _Creating a new Azure SQL Database_
 
-1. The Azure portal will display a form for creating a new Azure SQL Database. Enter the name "Northwind" (without the quotation marks) for the database.
+1. In the "SQL Database" blade, enter "Northwind" (without quotation marks) as the database name. Select **Create new** under **Resource group** and name the resource group "SQLDatabaseResourceGroup." Leave **Select source** set to **Blank database** and click **Server - Configure required settings**.
+
+	> Using the name "Northwind" for your database is required for the exercises in this lab.
+
+    ![Configuring an Azure SQL Database](Images/portal-select-server-blade.png)
+
+    _Configuring an Azure SQL Database_
+
+1. Click **Create a new server**. In the "New Server" blade, enter a unique name for **Server name** and make sure a green check mark appears next to it. (You can only use numbers and lowercase letters since the name becomes part of a DNS name.) Specify "sqladmin" as the user name and "Password_1" as the password. Select the location nearest you, and then click the **Select** button. 
  
-	>Using the name **Northwind** for your database is required for the exercises in this lab.
+    ![Creating a database server](Images/portal-create-new-server.png)
 
-1. Under **Resource Group** select **Create New**, enter a Resource Group name such as "TrainingLabResources”, leaving the Select source as the default **Blank database**. 
-
-1. Click the **Server** panel to open the "Azure SQL Server" blade. Your Azure SQL Database needs to be connected with a Server instance for administration purposes.
-
-    ![Creating a new Azure SQL Database](Images/portal-select-server-blade.png)
-
-    _Creating a new Azure SQL Database_
-
-1. Click **+ Create a new server** and enter "traininglab01” in the Server name.
- 
-	>Azure SQL Database names can be 3 to 24 characters in length and can only contain numbers, lowercase letters, and a limited set of special characters. In addition, the name you enter must be unique within Azure. If someone else has chosen the same name, you'll be notified that the name isn't available with a red exclamation mark in the **Server name** field.
+    _Creating a database server_
 	
-1. Enter "trainingadmin” in the **Server admin login** entry, as well as "Password_1” in both the **Password** and **Confirm password** fields.
-
-1. Select the location nearest you, and leave the **Create V12 server** set to **Yes** as well as the **Allow azure services to access server** selection **checked**, and click **Create**. 
+1. Click the **Create** button at the bottom of the "SQL Database" blade.
  
-    ![Configuring a new Azure SQL Database server](Images/portal-create-new-server.png)
+    ![Creating the database](Images/portal-create-new-database.png)
 
-    _Configuring a new Azure SQL Database server
-	
-	>V12 server indicates the version (version 12 in this instance) of the underlying SQL Server engine and schema support.
+    _Creating the database_	
 
-1. The Server blade will close and return you to the SQL Database panel. Leave **Pricing tier** and **Collation** as the defaults, and click **Create**.
+1. Click **Resource groups** in the ribbon on the left side of the portal, and then click the resource group created for the SQL Database.
  
-    ![Configuring a new Azure SQL Database](Images/portal-create-new-database.png)
+    ![Opening the resource group](Images/open-resource-group.png)
 
-    _Configuring a new Azure SQL Database_	
+    _Opening the resource group_
 
-The Azure Portal will redirect you to the Azure Portal Dashboard while it provisions your server and database. It typically takes around one to three to fully provision a new server and database. To monitor provisioning of your database from the Azure Portal:
+1. Wait until "Deploying" changes to "Succeeded," indicating that the SQL Database has been deployed.
 
-1. Click the **“hamburger”** icon in the Azure Portal to open the side drawer
+	> Refresh the page in the browser every now and then to update the deployment status. Clicking the **Refresh** button in the resource-group blade refreshes the list of resources in the resource group, but does not reliably update the deployment status.
 
-1. Click **Resource Groups** followed by **TrainingLabResources**.
+    ![Viewing the deployment status](Images/deployment-status.png)
 
-1. Select the **Overview** tab.
+    _Viewing the deployment status_
 
-1. Review the **Last deployment** label and watch for the status to change from “Deploying” to “Succeeded”, at which time your Azure SQL Database server and database have been successfully provisioned.
- 
-    ![Resource Group deployment status](Images/portal-resource-deployment-status.png)
-
-    _Resource Group deployment status_	
-
-	> You may need to refresh the page in your browser from time to time to see the most recent deployment status changes.
-
-Your Azure SQL Database is now provisioned and you’re ready to start populating it with records. To get familiar with running scripts and populating records through Visual Studio 2015, you will be using the SQL Server Data Tools from within Visual Studio.
+Your Azure SQL Database is now provisioned and ready to be populated with data. For that, you will use the SQL Server Data Tools for Visual Studio 2015.
 
 <a name="Exercise2"></a>
-## Exercise 2: Populate a database with records ##
+## Exercise 2: Add records to the database ##
 
 Now that you’ve created an Azure SQL Database, it’s time to populate your database with records. In this exercise you’ll be populating the Northwind database created in Exercise 1 with customer, product and order records using the SQL Server Data Tools (SSDT) in Visual Studio. If you haven’t installed SSDT you will need to do so before continuing with this exercise.
 
