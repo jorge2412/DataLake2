@@ -17,11 +17,11 @@ In this lab, you will deploy an Azure DocumentDB database to store customer and 
 
 In this hands-on lab, you will learn how to:
 
-- Create an Azure DocumentDB account, database and collections
-- Populate Azure Document DB collections with documents
-- Create and configure an Azure Search service and index
+- Create an Azure DocumentDB account
+- Create DocumentDB collections and populate them with documents
+- Create an Azure Search service and and use it to index DocumentDB data
 - Access Azure DocumentDB collections from your apps
-- Query Azure Search services connected to DocumentDB content
+- Query the Azure Search service connected to a DocumentDB database
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
@@ -43,8 +43,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 3: Populate collections with documents](#Exercise3)
 - [Exercise 4: Connect Azure Search](#Exercise4)
 - [Exercise 5: Build an Azure Web App](#Exercise5)
-- [Exercise 6: Add document search to an Azure Web App](#Exercise6)
-
+- [Exercise 6: Add auto-suggest](#Exercise6)
  
 Estimated time to complete this lab: **60** minutes.
 
@@ -460,7 +459,7 @@ With the DocumentDB database deployed and an Azure Search instance indexing it, 
     }
 	```
 
-1. Right-click the "Models" folder again and use the **Add -> Class** command to add a file named **SearchResultInformation.cs**. Replace the empty *SearchResultInformation* class with the following class definition, and note that you are making the class public rather than private:
+1. Right-click the "Models" folder again and use the **Add -> Class** command to add a file named **SearchResultInformation.cs** to the folder. Replace the empty *SearchResultInformation* class with the following class definition, and note that you are making the class public rather than private:
 
 	```C#
 	public class SearchResultInformation
@@ -486,7 +485,7 @@ With the DocumentDB database deployed and an Azure Search instance indexing it, 
 	```
 1.	In the Solution Explorer window, right-click the **AdventureDocs** project and use the **Add -> New Folder** command to add a folder named "Helpers."
 	
-1. Right-click the "Helpers" folder and use the **Add -> Class** command to add a file named **DocumentHelper.cs**. Replace the contents of the file with the following statements:
+1. Right-click the "Helpers" folder and use the **Add -> Class** command to add a file named **DocumentHelper.cs** to the folder. Replace the contents of the file with the following statements:
 
 	```C#
 	using System;
@@ -852,26 +851,12 @@ With the DocumentDB database deployed and an Azure Search instance indexing it, 
 This is a great start, and it demonstrates how an ASP.NET MVC Web app can access data stored in the cloud in a DocumentDB database. But right now, the search UI is somewhat clumsy; you have to enter letters blindly, without any feedback to tell you whether there are any matching documents. Let's polish the UI by adding auto-suggest.
 
 <a name="Exercise6"></a>
-## Exercise 6: Add document search to an Azure Web App ##
+## Exercise 6: Add auto-suggest ##
 
-Azure Search services deliver a "highly-performant" mechanism for providing super-fast retrieval of meaningful, indexed values in various data stores, based on identified and configured indexes. These values can be retrieved and displayed to users to provide a "lookup" of information "known to exist", as it draws from the actual values stored, such as documents in the Customers collection populated in Exercise 2.
+Azure Search enables super-fast retrieval of indexed values in various data stores. In this exercise, you will leverage that speed to add an auto-suggest list to the **Search for** box to provide feedback to the user as he or she types.
 
-To add document search to your web app:   
+1. Return to Visual Studio. Right-click the "Helpers" folder and use the **Add -> Class** command to add a file named **SearchHelper.cs** to the folder. Replace the contents of the file with the following statements:
 
-1.	Right-click the project's **Helpers** folder created in the previous step and select **Add -> Class**:
-	
-    ![Adding a class to the Helpers folder](Images/vs-add-class-to-helpers.png)
-
-    _Adding a class to the Helpers folder_
-
-1.	Type "SearchHelper.cs" (without quotation marks) into the **Name** box, and then click **OK**.
-	
-    ![Adding the SearchHelper class to the Helpers folder](Images/vs-adding-searchhelper-class.png)
-
-    _Adding the SearchHelper class to the Helpers folder_
-
-1.	**Replace** the **entire contents** of the SearchHelper class with the following using statements, namespace declaration, and class definition, and note that you are making the class public rather than private:
-	
 	```C#
 	using Microsoft.Azure.Search;
 	using Microsoft.Azure.Search.Models;
@@ -908,103 +893,83 @@ To add document search to your web app:
 	}
 	```
 
-1. In the Solution Explorer window, double-click *Web.config* to open it for editing and add the following statement to the \<appSettings\> section, replacing ***search_service_name*** with the name of the Azure Search service created in Exercise 4.
-	
-    ![Replacing the SearchServiceName value](Images/vs-highlight-searchservice-name.png)
+1. Open **Web.config** and add the following statement to the \<appSettings\> section, replacing *search_service_name* with the name you assigned to the Azure Search service in Exercise 4, Step 2:
 
-    _Replacing the SearchServiceName value_
+	```XML
+	<add key="SearchServiceName" value="search_service_name" />
+	```
 
-1.	Return to the Azure Portal for a moment and open the blade for the Azure Search service you created in Exercise 4. Then click **Keys** in the "GENERAL" panel. 
-	
-    ![Selecting the Search service Keys settings](Images/portal-select-search-service-key-settings.png)
-
-    _Selecting the Search service Keys settings_
-
-1.	Click **Manage query keys** to open the "Keys" panel, and then select and copy the **<empty> key value** to copy the query key to the clipboard. 
-
+1. Return to the Azure Portal and open the blade for the Azure Search service. Click **Keys**, followed by **Manage query keys**. Then copy the query key to the clipboard. 
 
     ![Copying the Search query key to the clipboard](Images/portal-copy-search-query-key.png)
 
     _Copying the Search query key to the clipboard_
 
+1. Return to Visual Studio. Add the following statement to the \<appSettings\> section of **Web.config**, replacing *search_service_key* with the query key on the clipboard.
 
-1.	Return to Visual Studio. In Web.config, add the following statement to the \<appSettings\> section, replacing **search_service_key** with the query key you copied to the clipboard in the previous step.
-	
-    ![Replacing the SearchServiceKey value](Images/vs-highlight-searchservice-key.png)
+	```XML
+	<add key="SearchServiceKey" value="search_service_key" />
+	```
 
-    _Replacing the SearchServiceKey value_
-
-1.	In Solution Explorer, find **HomeController.cs** in the "Controllers" folder and double-click it to open it.
-
-1.	Add the following methods to the **HomeController** class in HomeController.cs:
+1. Add the following methods to the *HomeController* class in **HomeController.cs**:
 	
 	```C#
 	[HttpPost]
-	        public ActionResult AutoSearch(string item)
-	        {
-	            ViewBag.Message = "Your application description page.";
+	public ActionResult AutoSearch(string item)
+	{
+	    ViewBag.Message = "Your application description page.";
 	
-	            string searchQuery = item + "";
+	    string searchQuery = item + "";
 	
-	            TempData["SearchQuery"] = searchQuery;
-	            TempData["SelectedCollectionName"] = "Customers";
+	    TempData["SearchQuery"] = searchQuery;
+	    TempData["SelectedCollectionName"] = "Customers";
 	
-	            return RedirectToAction("Index");
-	        }
+	    return RedirectToAction("Index");
+	}
 	
-	        [HttpGet]
-	        public ActionResult Suggest(string term)
-	        {
-	            List<string> suggestions = new List<string>();
+	[HttpGet]
+	public ActionResult Suggest(string term)
+	{
+	    List<string> suggestions = new List<string>();
 	
-	            suggestions = Helpers.SearchHelper.GetSuggestions(term);
+	    suggestions = Helpers.SearchHelper.GetSuggestions(term);
 	
-	            return new JsonResult
-	            {
-	                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-	                Data = suggestions
-	            };
-	
-	        }
+	    return new JsonResult
+	    {
+	        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+	        Data = suggestions
+	    };
+	}
 	```
 
 1.	Use Visual Studio's **Debug -> Start Without Debugging** command (or press **Ctrl+F5**) to launch the application in your browser. 
 
-1.	Click the **Customer Lookup** link in the top navigation to navigate to the **Customer Lookup** view.
+1. Click **Customer Lookup**. Then type "ar" into the **Search for** box and wait for a list of suggested customers to appear.
 
-1.	Type the characters "ar" (without quotes) in the **Search for** entry and after a short delay an "autosuggestion" list will appear, populated with actual customers from documents in the Customers collection.
+    ![Auto-suggest in action](Images/vs-view-autosuggest.png)
 
-    ![Using the Azure Search integrated autosuggest control](Images/vs-view-autosuggest.png)
+    _Auto-suggest in action_
 
-    _Using the Azure Search integrated autosuggest control_
+1. Select **Around the Horn** and press **Enter** to search for customers named "Around the Horn."
 
+Auto-suggest vastly improves the search experience and is relatively easy to add thanks to some of the classes you imported in NuGet packages in [Exercise 5](#Exercise5).
 
-1.	Select **Around the Horn** from the list of customers. After a few seconds, a single document for the customer *Around the Horn* appears on the Document Search view.
-	
-    ![Viewing the Azure Search integrated autosuggest result](Images/vs-view-autosuggest-result.png)
+When you created the project for the Web app in Visual Studio, you checked the **Host in the cloud** box so the app could be deployed to Azure, and you created an Azure App Service to host it. Up to now, the app has run locally. If you would like to deploy it to Azure so it can be opened from anywhere, simply right-click the project in Solution Explorer, select **Publish** from the context menu, and click the **Publish** button in the ensuing dialog.
 
-    _Viewing the Azure Search integrated autosuggest result_
-
-1.	Click **[view document]** in the far right column to view the entire document indexed and retrieved by the Azure Search service.
-
-	![Viewing the Azure Search integrated autosuggest result](Images/vs-documentsearch-05.png)
-
-    _Viewing the Azure Search integrated autosuggest result_
-
-In this exercise you added code to connect an Azure Search service to your existing document search experience, providing a super-fast retrieval of document information for display to a user in the form of a "lookup" control. Although you used the values from a Customer CompanyName field, adding additional lookups is as easy and accessing values in any fields included in the index created in Exercise 4. 
+When you're finished using the app, it is recommended that you delete the resource group containing it. Since you placed the Azure Web App in the same resource group as the DocumentDB instance and the Search Instance, deleting the resource group deletes **all** of these resources and removes all traces of this lab from your account. To delete the resource group, simply open the resource-group blade and click **Delete** at the top of the blade. You will be asked to type the resource group's name to confirm that you want to delete it, because once deleted, a resource group can't be recovered.
 
 <a name="Summary"></a>
 ## Summary ##
 
 In this hands-on lab you learned how to:
 
-- Create an Azure DocumentDB account, database and collections
-- Populate Azure Document DB collections with documents
-- Create and configure an Azure Search service and index
+- Create an Azure DocumentDB account
+- Create DocumentDB collections and populate them with documents
+- Create an Azure Search service and and use it to index DocumentDB data
 - Access Azure DocumentDB collections from your apps
-- Query Azure Search services connected to DocumentDB content
+- Query the Azure Search service connected to a DocumentDB database
 
-This is just a beginning, as there’s a whole lot more you can do to leverage the power of Azure DocumentDB. Start experimenting with other DocumentDB features, especially triggers, stored procedures, and user-defined functions, and identify other ways you can enhance your data and search strategies through integrating Azure DocumentDB into your application ecosystems.
+Not surprisingly, there is much more you can do to leverage the power of Azure DocumentDB. Experiment with other DocumentDB features, especially [triggers, stored procedures, and user-defined functions](https://docs.microsoft.com/en-us/azure/documentdb/documentdb-programming), and identify other ways you can enhance your data and search strategies by integrating Azure DocumentDB into your application ecosystems.
 
 ----
 
