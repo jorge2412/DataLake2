@@ -6,10 +6,11 @@
 <a name="Overview"></a>
 ## Overview ##
 
-PowerShell has been on the Windows platform since 2006 and is both a command, or terminal, environment as well as a full-blown scripting tool. What makes PowerShell interesting is that everything you work with is an object. The idea is that instead of relying on text parsing, also known as "prayer-based parsing", you manipulate the properties and methods on an object to achieve the result you want.
+PowerShell has been available for Windows since 2006 and is a vital tool in the hands of software developers and sysadmins alike. In August 2016, Microsoft introduced PowerShell for Linux, macOS, and Windows as an [open-source project on GitHub](https://github.com/PowerShell/PowerShell). Microsoft works closely with the community to refine and expand the product and to make sure that it works equally well on any operating system and with a variety of Linux distros. For more information about where to get it, the many learning resources that are available, and how to contribute, see the [official announcement](https://blogs.msdn.microsoft.com/powershell/2016/08/18/powershell-on-linux-and-open-source-2/) in the Windows PowerShell blog.
 
-With entire books written on PowerShell and its capabilities, you will not have time to cover everything PowerShell can do in this set of hands-on-labs. The assumption for them is that you are new to PowerShell and the goal is to get you familiar and ready to tackle the command line. Along the way, in conjunction with the lecture section of this talk, you will learn the “Zen of PowerShell” so you have the learning hooks to start your own exploration of what PowerShell can do.
+PowerShell is both a command/terminal environment and a scripting tool. One of the more remarkable aspects of its architecture is that PowerShell commands are object-based. You use commands to manipulate the properties and methods on objects to achieve the result you want. Once you learn about the numerous objects available, formulating commands is a straightforward process that is not unlike manipulating objects in code.
 
+In this lab, you will install PowerShell on the operating system of your choice and perform a few exercises to familiarize yourself with PowerShell and learn about a few of the many things it can do. Along the way, you will experience the "Zen of PowerShell" and build a foundation for further learning.
 
 <a name="Objectives"></a>
 ### Objectives ###
