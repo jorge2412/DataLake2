@@ -60,7 +60,7 @@ The first step in using PowerShell on a Mac is to download it and install it. In
 
     _Finding the latest release_
 
-1. Scroll down to the "Downloads" section below the latest release and click the **.pkg** file.
+1. Scroll down to the "Downloads" section for the latest release and click the **.pkg** file.
 
     ![Downloading the macOS package](Images/ex1_Select_macOS_pkg.png)
 
@@ -87,225 +87,90 @@ The first step in using PowerShell on a Mac is to download it and install it. In
     brew install curl --with-openssl
     ```
 
-1. Once PowerShell is installed, open the Terminal application. Type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the color, user name, and prompt will be different on your computer.
+1. Once PowerShell is installed, open the Terminal application. Type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
 
     ![Running PowerShell](Images/ex1_PowerShell_Started.png)
 
 Now skip to [Exercise 4](#Exercise4) to continue the lab. Exercises 2 and 3 are for Linux users only.
 
 <a name="Exercise2"></a>
-## Exercise 2: Installing and Running PowerShell on Ubuntu ##
+## Exercise 2: Installing PowerShell on Ubuntu ##
 
-Microsoft loves Ubuntu as does the PowerShell team. They fully support PowerShell on Ubuntu 14.04 and 16.04 at the current time. This exercise will walk you through installing PowerShell on your Ubuntu desktop. 
+At present, PowerShell supports Ubuntu 14.04 and 16.04. If you are running either version, follow the instructions in this exercise to install PowerShell on your Ubuntu desktop. If you are running CentOS/Oracle/Red Hat Linux instead, skip to [Exercise 3](#Exercise3).
 
-1. In your Ubuntu computer, open a **Terminal** window and check your version by typing the following command:
+1. Open a Terminal window and check the Ubuntu version number by executing the following command:
 
-    <pre>
+    ```
     lsb_release -r
-    </pre>
+    ```
 
-    If the reported version number is anything other than 14.04 or 16.04, please update your Ubuntu installation to one of those version.
+    If the reported version number is anything other than 14.04 or 16.04, please update your Ubuntu installation to one of those versions.
 
-    Here is an example of a correctly reported version
-
-    <pre>
-    john@ubuntu:~$ lsb_release -r
-    Release:	14.04
-    </pre>
-
-1. Open a web browser go to the following URL: [https://github.com/PowerShell/PowerShell/releases](https://github.com/PowerShell/PowerShell/releases) to go to the PowerShell release page on GitHub. 
-
-1. On the Released page, look for the **Latest release** tag.
+1. Open a browser and navigate to https://github.com/PowerShell/PowerShell/releases. Then click **Latest release**.
 
     ![Finding the latest release](Images/ex1_Latest_Release_Tag.png)
 
     _Finding the latest release_
 
-1. Scroll down to the **Downloads** below the latest release. Note that the file names listed will also have the name of the release in them. For Ubuntu, click on the **.DEB** file that corresponds to your version of Ubuntu to down load the correct file.
+1. Scroll down to the "Downloads" section for the latest release and click the **.deb** file that corresponds to your version of Ubuntu.
 
     ![Downloading the Ubuntu package](Images/ex2_Ubuntu_Releases.png)
 
     _Downloading the Ubuntu package_
 
-1. With the default Mozilla Firefox download location is **~/Downloads**. In your Terminal window change to that directory. If you have customized your download location, substitute that in for **Downloads**. In your Ubuntu Terminal window, execute the following commands replacing the filename with the filename for the version you downloaded.
+1. In the Terminal window, navigate to the directory that the **.deb** file was downloaded to. (For Mozilla Firefox, the default download location is "~/Downloads." Other browsers may differ.) Then execute the following commands, replacing *filename* with the name of the **.deb** file you downloaded:
 
     <pre>
-    sudo dpkg -i powershell_6.0.0-alpha.13-1ubuntu1.14.04.1_amd64.deb 
-    sudo apt-get install -f
-    </pre>
+    sudo dpkg -i <i>filename</i> 
+    sudo apt-get install -f</pre>
 
-    The dpkg command will report there was an error installing, but that will be fixed by the apt-get command.
+    The `dpkg` command may report an error, but that will be fixed by the `apt-get` command.
 
-    A correct installtion looks like the following:
-
-    <pre>
-    john@ubuntu:~$ sudo dpkg -i powershell_6.0.0-alpha.13-1ubuntu1.13.04.1_amd64.deb 
-    [sudo] password for john: 
-    Selecting previously unselected package powershell.
-    (Reading database ... 164429 files and directories currently installed.)
-    Preparing to unpack .../powershell_6.0.0-alpha.13-1ubuntu1.14.04.1_amd64.deb ...
-    Unpacking powershell (6.0.0-alpha.14-1ubuntu1.13.04.1) ...
-    dpkg: dependency problems prevent configuration of powershell:
-    powershell depends on libunwind8; however:
-    Package libunwind8 is not installed.
-    dpkg: error processing package powershell (--install):
-    dependency problems - leaving unconfigured
-    Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
-    Errors were encountered while processing:
-    powershell
-    john@ubuntu:~$ sudo apt-get install -f
-    Reading package lists... Done
-    Building dependency tree       
-    Reading state information... Done
-    Correcting dependencies... Done
-    The following extra packages will be installed:
-    libunwind8
-    0 upgraded, 1 newly installed, 0 to remove and 218 not upgraded.
-    1 not fully installed or removed.
-    Need to get 48.3 kB of archives.
-    After this operation, 194 kB of additional disk space will be used.
-    Do you want to continue? [Y/n] Y
-    Get:1 http://us.archive.ubuntu.com/ubuntu/ trusty/main libunwind8 amd64 1.1-2.2ubuntu3 [48.3 kB]
-    Fetched 48.3 kB in 3s (14.6 kB/s)       
-    Selecting previously unselected package libunwind8.
-    (Reading database ... 164957 files and directories currently installed.)
-    Preparing to unpack .../libunwind8_1.1-2.2ubuntu3_amd64.deb ...
-    Unpacking libunwind8 (1.1-2.2ubuntu3) ...
-    Setting up libunwind8 (1.1-2.2ubuntu3) ...
-    Setting up powershell (6.0.0-alpha.14-1ubuntu1.14.04.1) ...
-    Processing triggers for libc-bin (2.19-0ubuntu6.7) ...
-    </pre>
-
-1. Once PowerShell is installed, in your Terminal window, type **powershell** and press Enter to start it. It should look like the following. Note that the color, username, and prompt will be different on your computer.
+1. Once PowerShell is installed, type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
 
     ![Running PowerShell](Images/ex2_PowerShell_Started.png)
 
     _Running PowerShell_
 
-Installing and running PowerShell is easy on Ubuntu. Make sure to check back to the [PowerShell release page](https://github.com/PowerShell/PowerShell/releases) every couple of weeks because the team is progressing very fast. Please jump to [Exercise 4](#Exercise4) to continue the hand-on-labs.
+Now skip to [Exercise 4](#Exercise4) to continue the lab. Exercise 3 is for CentOS/Oracle/Red Hat Linux users only.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Installing PowerShell on CentOS/Oracle/Red Hat Linux ##
 
-Microsoft loves Linux as does the PowerShell team. They fully support PowerShell on CentOS 7, Oracle Linux 7, and Red Hat Enterprise 7. This exercise will walk you through installing PowerShell on one of those operating systems.
+Microsoft loves Linux, as does the PowerShell team. If you are running CentOS 7, Oracle Linux 7, or Red Hat Enterprise 7, follow the instructions in this exercise to install PowerShell.
 
-1. In your CentOS/Oracle Linux/Red Hat computer, open a **Terminal** window and check your version by typing the following command:
+1. Open a Terminal window and check the version number of your operating system by executing the following command:
 
-    <pre>
+    ```
     cat /etc/*release*
-    </pre>
+    ```
 
-    Here is the example output from CentOS 7. If you do not see at least version 7.0, please update your operating system.
+    If you don't see the version number 7.0 or higher, please update your operating system.
 
-    <pre>
-    [john@centos-linux ~]$ cat /etc/*release*
-    CentOS Linux release 7.3.1611 (Core) 
-    Derived from Red Hat Enterprise Linux 7.3 (Source)
-    NAME="CentOS Linux"
-    VERSION="7 (Core)"
-    ID="centos"
-    ID_LIKE="rhel fedora"
-    VERSION_ID="7"
-    PRETTY_NAME="CentOS Linux 7 (Core)"
-    ANSI_COLOR="0;31"
-    CPE_NAME="cpe:/o:centos:centos:7"
-    HOME_URL="https://www.centos.org/"
-    BUG_REPORT_URL="https://bugs.centos.org/"
-    CENTOS_MANTISBT_PROJECT="CentOS-7"
-    CENTOS_MANTISBT_PROJECT_VERSION="7"
-    REDHAT_SUPPORT_PRODUCT="centos"
-    REDHAT_SUPPORT_PRODUCT_VERSION="7"
-    CentOS Linux release 7.3.1611 (Core) 
-    CentOS Linux release 7.3.1611 (Core) 
-    </pre>
-
-1. Open a web browser go to the following URL: [https://github.com/PowerShell/PowerShell/releases](https://github.com/PowerShell/PowerShell/releases) to go to the PowerShell release page on GitHub.
-
-1. On the Released page, look for the **Latest release** tag.
+1. Open a browser and navigate to https://github.com/PowerShell/PowerShell/releases. Then click **Latest release**.
 
     ![Finding the latest release](Images/ex1_Latest_Release_Tag.png)
 
     _Finding the latest release_
 
-1. Scroll down to the **Downloads** below the latest release. Note that the file names listed will also have the name of the release in them. For CentOS/Oracle Linus/Red Hat, click on the **owershell-6.0.0_alpha.??-1.el7.centos.x86_64.rpm** file to down load the correct file, where "??" is the build number.
+1. Scroll down to the "Downloads" section for the latest release and click the **.rpm** file.
 
     ![Downloading the CentOS/Oracle Linux/Red Hat package](Images/ex3_Select_CentOS-rpm.png)
 
     _Downloading the CentOS/Oracle Linux/Red Hat package_
 
-1. With the default Mozilla Firefox download location is **~/Downloads**. In your Terminal window change to that directory. If you have customized your download location, substitute that in for **Downloads**. In your Ubuntu Terminal window, execute the following commands replacing the filename with the filename for the version you downloaded.
+1. In the Terminal window, navigate to the directory that the **.rpm** file was downloaded to. (For Mozilla Firefox, the default download location is "~/Downloads." Other browsers may differ.) Then execute the following commands, replacing *filename* with the name of the **.rpm** file you downloaded:
 
     <pre>
-    sudo yum install ./powershell-6.0.0_alpha.14-1.el7.centos.x86_64.rpm 
-    </pre>
+    sudo yum install ./<i>filename</i></pre>
 
-    A correct installation will look like the following:
-
-    <pre>
-    [john@centos-linux Downloads]$ sudo yum install ./powershell-6.0.0_alpha.13-1.el7.centos.x86_64.rpm 
-    We trust you have received the usual lecture from the local System
-    Administrator. It usually boils down to these three things:
-        #1) Respect the privacy of others.
-        #2) Think before you type.
-        #3) With great power comes great responsibility.
-    [sudo] password for john: 
-    Loaded plugins: fastestmirror, langpacks
-    Examining ./powershell-6.0.0_alpha.13-1.el7.centos.x86_64.rpm: powershell-6.0.0_alpha.14-1.el7.centos.x86_64
-    Marking ./powershell-6.0.0_alpha.13-1.el7.centos.x86_64.rpm to be installed
-    Resolving Dependencies
-    --> Running transaction check
-    ---> Package powershell.x86_64 0:6.0.0_alpha.13-1.el7.centos will be installed
-    --> Processing Dependency: uuid for package: powershell-6.0.0_alpha.14-1.el7.centos.x86_64
-    Loading mirror speeds from cached hostfile
-    * base: ftp.usf.edu
-    * extras: mirror.es.its.nyu.edu
-    * updates: mirrors.gigenet.com
-    --> Running transaction check
-    ---> Package uuid.x86_64 0:1.6.2-26.el7 will be installed
-    --> Finished Dependency Resolution
-    Dependencies Resolved
-    ================================================================================
-    Package
-        Arch   Version       Repository                                      Size
-    ================================================================================
-    Installing:
-    powershell
-        x86_64 6.0.0_alpha.13-1.el7.centos
-                            /powershell-6.0.0_alpha.13-1.el7.centos.x86_64 124 M
-    Installing for dependencies:
-    uuid x86_64 1.6.2-26.el7  base                                            55 k
-    Transaction Summary
-    ================================================================================
-    Install  1 Package (+1 Dependent package)
-    Total size: 124 M
-    Total download size: 55 k
-    Installed size: 124 M
-    Is this ok [y/d/N]: Y
-    Downloading packages:
-    uuid-1.6.2-26.el7.x86_64.rpm                               |  55 kB   00:00     
-    Running transaction check
-    Running transaction test
-    Transaction test succeeded
-    Running transaction
-    Installing : uuid-1.6.2-26.el7.x86_64                                     1/2 
-    Installing : powershell-6.0.0_alpha.13-1.el7.centos.x86_64                2/2 
-    Verifying  : uuid-1.6.2-26.el7.x86_64                                     1/2 
-    Verifying  : powershell-6.0.0_alpha.13-1.el7.centos.x86_64                2/2 
-    Installed:
-    powershell.x86_64 0:6.0.0_alpha.14-1.el7.centos                               
-    Dependency Installed:
-    uuid.x86_64 0:1.6.2-26.el7                                                    
-    Complete!
-    </pre>
-
-
-1. Once PowerShell is installed, in your Terminal window, type **powershell** and press Enter to start it. It should look like the following. Note that the color, username, and prompt will be different on your computer.
+1. Once PowerShell is installed, type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
 
     ![Running PowerShell](Images/ex3_PowerShell_Started.png)
 
     _Running PowerShell_
 
-Installing and running PowerShell is easy on CentOS/Oracle Linux/Red Hat. Make sure to check back to the [PowerShell release page](https://github.com/PowerShell/PowerShell/releases) every couple of weeks because the team is progressing very fast. 
+Now proceed to [Exercise 4](#Exercise4) to learn about the PowerShell command line. 
 
 <a name="Exercise4"></a>
 ## Exercise 4: Using the PowerShell Command Line ##
