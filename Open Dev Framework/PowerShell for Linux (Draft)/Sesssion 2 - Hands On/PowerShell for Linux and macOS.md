@@ -10,7 +10,7 @@ PowerShell has been available for Windows since 2006 and is a vital tool in the 
 
 PowerShell is both a command/terminal environment and a scripting tool. One of the more remarkable aspects of its architecture is that PowerShell commands are object-based. You use commands to manipulate the properties and methods on objects to achieve the result you want. Once you learn about the numerous objects available, formulating commands is a straightforward process that is not unlike manipulating objects in code.
 
-In this lab, you will install PowerShell on the operating system of your choice and perform a few exercises to familiarize yourself with PowerShell and learn about a few of the many things it can do. Along the way, you will experience the "Zen of PowerShell" and build a foundation for further learning.
+In this lab, you will install PowerShell on the macOS or Linux and perform a few exercises to familiarize yourself with PowerShell and learn about a few of the many things it can do. Along the way, you will experience the "Zen of PowerShell" and build a foundation for further learning.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -28,8 +28,10 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
-- A live internet connection
-- The permissions to install software on your Linux desktop or macOS desktop
+- An Internet connection
+- Sufficient permissions to install software on your Linux desktop or Mac
+- Ubuntu 14.04 or 16.04 or CentOS/Oracle/Red Hat 7 or higher  (Linux users)
+- macOS 10.11 or higher (Mac users)
 
 ---
 
@@ -38,33 +40,31 @@ The following are required to complete this hands-on lab:
 
 This hands-on lab includes the following exercises:
 
-- [Exercise 1: Installing and Running PowerShell on macOS](#Exercise1)
-- [Exercise 2: Installing and Running PowerShell on Ubuntu](#Exercise2)
-- [Exercise 3: Installing and Running PowerShell on CentOS/Oracle Linux/Red Hat Linux](#Exercise3)
-- [Exercise 4: The Command Line Editing Experience](#Exercise4)
+- [Exercise 1: Installing PowerShell on macOS](#Exercise1)
+- [Exercise 2: Installing PowerShell on Ubuntu](#Exercise2)
+- [Exercise 3: Installing PowerShell on CentOS/Oracle/Red Hat Linux](#Exercise3)
+- [Exercise 4: Using the PowerShell Command Line](#Exercise4)
 - [Exercise 5: Copying and Manipulating Files](#Exercise5)
 - [Exercise 6: Working with the Contents of Files](#Exercise6)
  
 Estimated time to complete this lab: **45** minutes.
 
 <a name="Exercise1"></a>
-## Exercise 1: Installing and Running PowerShell on macOS##
+## Exercise 1: Installing PowerShell on macOS ##
 
-If you are using an Apple computer running macOS 10.11 (Yosemite) or higher, this exercise walks you through installing PowerShell on your computer. If you are using a Linux desktop operating system, please jump to [Exercise 2](#Exercise2) or [Exercise 3](#Exercise3) for those instructions. 
+The first step in using PowerShell on a Mac is to download it and install it. Installation requires an Apple computer running macOS 10.11 (Yosemite) or higher. If you are using a Linux desktop operating system, please skip this exercise and go to [Exercise 2](#Exercise2) or [Exercise 3](#Exercise3). 
 
-1. Your first step is to download the latest release of PowerShell from GitHub. All releases are posted at the following URL: [https://github.com/PowerShell/PowerShell/releases](https://github.com/PowerShell/PowerShell/releases). Click on that link to browse to that location in your browser. 
+1. Open a browser and navigate to https://github.com/PowerShell/PowerShell/releases. Then click **Latest release**.
 
-1. On the Released page, look for the **Latest release** tag.
+    ![Finding the latest release](Images/ex1_Latest_Release_Tag.png)
 
-    ![Latest Release](Images/ex1_Latest_Release_Tag.png)
+    _Finding the latest release_
 
-    _The Latest Release_
+1. Scroll down to the "Downloads" section below the latest release and click the **.pkg** file.
 
-1. Scroll down to the **Downloads** below the latest release. Note that the file names listed will also have the name of the release in them. For macOS, click on the **.PKG** file to down load the correct file.
+    ![Downloading the macOS package](Images/ex1_Select_macOS_pkg.png)
 
-    ![The macOS Package](Images/ex1_Select_macOS_pkg.png)
-
-    _The macOS Package_
+    _Downloading the macOS package_
 
 1. Because of the [App Sandbox](https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html) protections in macOS, you **CANNOT** just double click on the installer to run it. You will see the following message, which prevents you from installing PowerShell. This limitation will go away once PowerShell reaches beta levels as Microsoft will digitally sign the installer at that point.
 
@@ -129,15 +129,15 @@ Microsoft loves Ubuntu as does the PowerShell team. They fully support PowerShel
 
 1. On the Released page, look for the **Latest release** tag.
 
-    ![Latest Release](Images/ex1_Latest_Release_Tag.png)
+    ![Finding the latest release](Images/ex1_Latest_Release_Tag.png)
 
-    _The Latest Release_
+    _Finding the latest release_
 
 1. Scroll down to the **Downloads** below the latest release. Note that the file names listed will also have the name of the release in them. For Ubuntu, click on the **.DEB** file that corresponds to your version of Ubuntu to down load the correct file.
 
-    ![The Ubuntu Packages](Images/ex2_Ubuntu_Releases.png)
+    ![Downloading the Ubuntu package](Images/ex2_Ubuntu_Releases.png)
 
-    _The Ubuntu Packages_
+    _Downloading the Ubuntu package_
 
 1. With the default Mozilla Firefox download location is **~/Downloads**. In your Terminal window change to that directory. If you have customized your download location, substitute that in for **Downloads**. In your Ubuntu Terminal window, execute the following commands replacing the filename with the filename for the version you downloaded.
 
@@ -197,7 +197,7 @@ Microsoft loves Ubuntu as does the PowerShell team. They fully support PowerShel
 Installing and running PowerShell is easy on Ubuntu. Make sure to check back to the [PowerShell release page](https://github.com/PowerShell/PowerShell/releases) every couple of weeks because the team is progressing very fast. Please jump to [Exercise 4](#Exercise4) to continue the hand-on-labs.
 
 <a name="Exercise3"></a>
-## Exercise 3: Installing and Running PowerShell on CentOS/Oracle Linux/Red Hat Linux ##
+## Exercise 3: Installing PowerShell on CentOS/Oracle/Red Hat Linux ##
 
 Microsoft loves Linux as does the PowerShell team. They fully support PowerShell on CentOS 7, Oracle Linux 7, and Red Hat Enterprise 7. This exercise will walk you through installing PowerShell on one of those operating systems.
 
@@ -235,15 +235,15 @@ Microsoft loves Linux as does the PowerShell team. They fully support PowerShell
 
 1. On the Released page, look for the **Latest release** tag.
 
-    ![Latest Release](Images/ex1_Latest_Release_Tag.png)
+    ![Finding the latest release](Images/ex1_Latest_Release_Tag.png)
 
-    _The Latest Release_
+    _Finding the latest release_
 
 1. Scroll down to the **Downloads** below the latest release. Note that the file names listed will also have the name of the release in them. For CentOS/Oracle Linus/Red Hat, click on the **owershell-6.0.0_alpha.??-1.el7.centos.x86_64.rpm** file to down load the correct file, where "??" is the build number.
 
-    ![The CentOS/Oracle Linux/Red Hat Package](Images/ex3_Select_CentOS-rpm.png)
+    ![Downloading the CentOS/Oracle Linux/Red Hat package](Images/ex3_Select_CentOS-rpm.png)
 
-    _The CentOS/Oracle Linux/Red Hat Package_
+    _Downloading the CentOS/Oracle Linux/Red Hat package_
 
 1. With the default Mozilla Firefox download location is **~/Downloads**. In your Terminal window change to that directory. If you have customized your download location, substitute that in for **Downloads**. In your Ubuntu Terminal window, execute the following commands replacing the filename with the filename for the version you downloaded.
 
@@ -319,9 +319,8 @@ Microsoft loves Linux as does the PowerShell team. They fully support PowerShell
 
 Installing and running PowerShell is easy on CentOS/Oracle Linux/Red Hat. Make sure to check back to the [PowerShell release page](https://github.com/PowerShell/PowerShell/releases) every couple of weeks because the team is progressing very fast. 
 
-
 <a name="Exercise4"></a>
-## Exercise 4: The Command Line Editing Experience ##
+## Exercise 4: Using the PowerShell Command Line ##
 
 PowerShell offers an outstanding command line editing experience. In this exercise, you will learn about its features because they can help you immensely when learning and using PowerShell.
 
