@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Azure SQL Database HOL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Using Azure SQL Database</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p><a href="https://azure.microsoft.com/en-us/services/sql-database/">Azure SQL Database</a> is a cloud-based relational database service based on Microsoft's SQL Server engine. It delivers predictable performance, dynamic scalability, and robust data protection so you can focus on front-end app development rather than managing machines and infrastructure. SQL Database supports existing SQL Server tools, libraries, and APIs, making it simple to migrate existing database solutions to the cloud and leverage them using skills you already have. And it features the largest compliance portfolio in the industry, including <a href="https://www.microsoft.com/en-us/trustcenter/Compliance/HIPAA">HIPAA</a>, <a href="https://www.microsoft.com/en-us/trustcenter/Compliance/FERPA">FERPA</a>, and even <a href="https://www.microsoft.com/en-us/TrustCenter/Compliance/MTCS">Singapore MTCS Level 3</a>.</p>
+<p>One of the advantages of running SQL Database on Microsoft Azure is being able to scale up or down, manually or automatically, to quickly adapt to changing demand. SQL Database features a broad spectrum of <a href="https://docs.microsoft.com/azure/sql-database/sql-database-service-tiers#single-database-service-tiers-and-performance-levels">performance levels</a>, with each level offering guaranteed performance and uptime. It also offers <a href="https://docs.microsoft.com/azure/sql-database/sql-database-design-patterns-multi-tenancy-saas-applications">elastic pools</a> for hosting multitenant apps without the usual trade-off in performance, management, and security.</p>
+<p>In this lab, you will create an Azure SQL Database and populate it with data from the venerable Northwind datase. You will create an Azure API App to expose the database securely to clients using REST calls, create a Universal Windows Platform app to access the database through the API App, and use security features of SQL Database to limit the information returned.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Create an Azure SQL Database</li>
+<li>Populate an Azure SQL Database with data</li>
+<li>Create an Azure API App that connects to the database</li>
+<li>Write apps that access the database through the Azure API App</li>
+<li>Use security features of Azure SQL Database to restrict access to data</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li>A PC or laptop running Windows 10</li>
+<li>An active Microsoft Azure subscription. If you don't have one, <a href="http://aka.ms/WATK-FreeTrial">sign up for a free trial</a>.</li>
+<li><a href="https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx">Visual Studio 2015 Community edition</a> or higher with the Windows 10 SDK installed</li>
+<li><a href="https://msdn.microsoft.com/en-us/library/mt204009.aspx">SQL Server Data Tools for Visual Studio 2015</a></li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Create an Azure SQL Database</a></li>
+<li><a href="#Exercise2">Exercise 2: Add records to the database</a></li>
+<li><a href="#Exercise3">Exercise 3: Create an Azure API App</a></li>
+<li><a href="#Exercise4">Exercise 4: Build a UWP client</a></li>
+<li><a href="#Exercise5">Exercise 5: Apply permissions and data masks</a></li>
+<li><a href="#Exercise6">Exercise 6: Delete the resource group</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>60</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Create an Azure SQL Database</h2>
+<p>The first step in working with Azure SQL Database is to create a database account. In this exercise, you will use the Azure Portal to create a SQL Database account and a database server to go with it.</p>
+<ol>
+<li>
+<p>Open the <a href="https://portal.azure.com">Azure Portal</a> in your browser. If you are asked to sign in, do so with your Microsoft Account.</p>
+</li>
+<li>
+<p>Click <strong>+ New</strong>, followed by <strong>Databases</strong> and <strong>SQL Database</strong>.</p>
+<p><a href="Images/portal-select-new-azure-sql.png" target="_blank"><img src="Images/portal-select-new-azure-sql.png" alt="Creating a new Azure SQL Database" style="max-width:100%;"></a></p>
+<p><em>Creating a new Azure SQL Database</em></p>
+</li>
+<li>
+<p>In the "SQL Database" blade, enter "Northwind" (without quotation marks) as the database name. Select <strong>Create new</strong> under <strong>Resource group</strong> and name the resource group "SQLDatabaseResourceGroup." Leave <strong>Select source</strong> set to <strong>Blank database</strong> and click <strong>Server - Configure required settings</strong>.</p>
+<p><a href="Images/portal-select-server-blade.png" target="_blank"><img src="Images/portal-select-server-blade.png" alt="Configuring an Azure SQL Database" style="max-width:100%;"></a></p>
+<p><em>Configuring an Azure SQL Database</em></p>
+</li>
+<li>
+<p>Click <strong>Create a new server</strong>. In the "New Server" blade, enter a unique name for <strong>Server name</strong> and make sure a green check mark appears next to it. (You can only use numbers and lowercase letters since the name becomes part of a DNS name.) Specify "sqladmin" as the user name and "Password_1" as the password. Select the location nearest you, and then click the <strong>Select</strong> button.</p>
+<p><a href="Images/portal-create-new-server.png" target="_blank"><img src="Images/portal-create-new-server.png" alt="Creating a database server" style="max-width:100%;"></a></p>
+<p><em>Creating a database server</em></p>
+</li>
+<li>
+<p>Click the <strong>Create</strong> button at the bottom of the "SQL Database" blade.</p>
+<p><a href="Images/portal-create-new-database.png" target="_blank"><img src="Images/portal-create-new-database.png" alt="Creating the database" style="max-width:100%;"></a></p>
+<p><em>Creating the database</em></p>
+</li>
+<li>
+<p>Click <strong>Resource groups</strong> in the ribbon on the left side of the portal, and then click the resource group created for the SQL Database.</p>
+<p><a href="Images/open-resource-group.png" target="_blank"><img src="Images/open-resource-group.png" alt="Opening the resource group" style="max-width:100%;"></a></p>
+<p><em>Opening the resource group</em></p>
+</li>
+<li>
+<p>Wait until "Deploying" changes to "Succeeded," indicating that the SQL Database has been deployed.</p>
+<blockquote>
+<p>Refresh the page in the browser every now and then to update the deployment status. Clicking the <strong>Refresh</strong> button in the resource-group blade refreshes the list of resources in the resource group, but does not reliably update the deployment status.</p>
+</blockquote>
+<p><a href="Images/deployment-status.png" target="_blank"><img src="Images/deployment-status.png" alt="Monitoring the deployment status" style="max-width:100%;"></a></p>
+<p><em>Monitoring the deployment status</em></p>
+</li>
+</ol>
+<p>Your Azure SQL Database is now provisioned and ready to be populated with data. For that, you will use the SQL Server Data Tools for Visual Studio 2015.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Add records to the database</h2>
+<p>Now that you've created a SQL Database in Azure, the next step is to add data. In this exercise, you will populate the Northwind database created in <a href="#Exercise1">Exercise 1</a> with customer, product, and order records using the SQL Server Data Tools (SSDT) in Visual Studio. If you haven't installed <a href="https://msdn.microsoft.com/en-us/library/mt204009.aspx">SSDT</a>, please take a moment to do so now.</p>
+<ol>
+<li>
+<p>Click the SQL Database that you deployed in <a href="#Exercise1">Exercise 1</a>.</p>
+<p><a href="Images/open-database.png" target="_blank"><img src="Images/open-database.png" alt="Opening the Northwind database" style="max-width:100%;"></a></p>
+<p><em>Opening the Northwind database</em></p>
+</li>
+<li>
+<p>Click <strong>Tools</strong>. Then click <strong>Open in Visual Studio</strong> in the "Tools" blade, and click the <strong>Open in Visual Studio</strong> button in the "Open in Visual Studio" blade.</p>
+<blockquote>
+<p>You may be prompted to allow the Microsoft Visual Studio Web Protocol Handler to switch from your browser to Visual Studio. If you are, click <strong>Yes</strong>.</p>
+</blockquote>
+<p><a href="Images/open-in-visual-studio.png" target="_blank"><img src="Images/open-in-visual-studio.png" alt="Opening the database in Visual Studio" style="max-width:100%;"></a></p>
+<p><em>Opening the database in Visual Studio</em></p>
+</li>
+<li>
+<p>In Visual Studio's "Connect" dialog, enter the password ("Password_1") you specified in Exercise 1, Step 4. Then check the <strong>Remember Password</strong> box and click <strong>Connect</strong>.</p>
+<p><a href="Images/vs-connect-dialog.png" target="_blank"><img src="Images/vs-connect-dialog.png" alt="Connecting to the database from Visual Studio" style="max-width:100%;"></a></p>
+<p><em>Connecting to the database from Visual Studio</em></p>
+</li>
+<li>
+<p>When prompted to create a new firewall rule, accept the defaults and click <strong>OK</strong>. This will allow Visual Studio to get through the firewall on the server and connect to the SQL Database.</p>
+<p><a href="Images/vs-firewall-rule-dialog.png" target="_blank"><img src="Images/vs-firewall-rule-dialog.png" alt="Creating a new firewall rule" style="max-width:100%;"></a></p>
+<p><em>Creating a new firewall rule</em></p>
+</li>
+<li>
+<p>In Visual Studio's SQL Server Object Explorer (SSOE), right-click the node representing the SQL Database server that you deployed in the previous exercise and select <strong>New Query...</strong>.</p>
+<p><a href="Images/vs-select-new-query-01.png" target="_blank"><img src="Images/vs-select-new-query-01.png" alt="Starting a new query" style="max-width:100%;"></a></p>
+<p><em>Starting a new query</em></p>
+</li>
+<li>
+<p>Use the <strong>Edit -&gt; Insert File as Text...</strong> command to open the file named <strong>Create MASTER logins.sql</strong> located in the "Resources" folder of this lab.</p>
+<p><a href="Images/vs-selecting-file-open.png" target="_blank"><img src="Images/vs-selecting-file-open.png" alt="Inserting a SQL script" style="max-width:100%;"></a></p>
+<p><em>Inserting a SQL script</em></p>
+</li>
+<li>
+<p>Right-click anywhere in the script and select <strong>Execute</strong>. This script creates three user logins that will be used in later exercises.</p>
+<p><a href="Images/vs-execute-master-script.png" target="_blank"><img src="Images/vs-execute-master-script.png" alt="Executing the script" style="max-width:100%;"></a></p>
+<p><em>Executing the script</em></p>
+</li>
+<li>
+<p>In the SQL Server Object Explorer, expand the node for your SQL Database server and right-click the Northwind database. Then select <strong>New Query...</strong> from the context menu.</p>
+<p><a href="Images/vs-select-new-query-02.png" target="_blank"><img src="Images/vs-select-new-query-02.png" alt="Starting a new query" style="max-width:100%;"></a></p>
+<p><em>Starting a new query</em></p>
+</li>
+<li>
+<p>Use the <strong>Edit -&gt; Insert File as Text...</strong> command to open the file named <strong>Create NORTHWIND tables.sql</strong> located in the "Resources" folder of this lab. Then right-click anywhere in the script and select <strong>Execute</strong>. This script creates tables and other objects in the Northwind database and typically takes 2 to 5 minutes to run.</p>
+</li>
+<li>
+<p>At this point, it might be helpful to familiarize yourself with some of the tables that the script created. Expand the "Northwind" node in SSOE, and then expand the "Tables" node to reveal the tables in the database. Right-click the Customers table and select <strong>View Data</strong> from the context menu.</p>
+<p><a href="Images/vs-select-view-data.png" target="_blank"><img src="Images/vs-select-view-data.png" alt="Opening the Customers table" style="max-width:100%;"></a></p>
+<p><em>Opening the Customers table</em></p>
+</li>
+<li>
+<p>Confirm that you see a list of customers like the one below.</p>
+<p><a href="Images/vs-view-customers.png" target="_blank"><img src="Images/vs-view-customers.png" alt="Viewing customer records" style="max-width:100%;"></a></p>
+<p><em>Viewing customer records</em></p>
+</li>
+</ol>
+<p>Your SQL Database is now populated with customers, products, orders, and other information. You will be adding additional objects to the database in later exercises to facilitate row-level security. But for now, the next step is to make the database accessible to applications over the Web.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Create an Azure API App</h2>
+<p>Most modern apps — mobile apps especially — store data remotely, either in an on-premises database or in the cloud. In order to access this data, developers often deploy a Web service that connects to the database and provides methods for performing actions such as creating, reading, updating, and deleting records. In this exercise, you will create an <a href="https://azure.microsoft.com/services/app-service/api/">Azure API App</a> to front-end your SQL Database, and in <a href="#Exercise4">Exercise 4</a>, you will write an app that connects to the database through the API App.</p>
+<ol>
+<li>
+<p>In Visual Studio, select <strong>File -&gt; New -&gt; Project</strong> to create a new project. In the "New Project" dialog, select the Visual C# <strong>ASP.NET Web Application</strong> template and name the project "OrderViewServices." Then click <strong>OK</strong>.</p>
+<p><a href="Images/vs-create-new-web-project.png" target="_blank"><img src="Images/vs-create-new-web-project.png" alt="Creating a new project" style="max-width:100%;"></a></p>
+<p><em>Creating a new project</em></p>
+</li>
+<li>
+<p>In the "New ASP.NET Project" dialog, select the <strong>Azure API App</strong> template, make sure <strong>Host in the cloud</strong> is checked, and click <strong>OK</strong>.</p>
+<p><a href="Images/vs-select-api-template.png" target="_blank"><img src="Images/vs-select-api-template.png" alt="Configuring the project" style="max-width:100%;"></a></p>
+<p><em>Configuring the project</em></p>
+</li>
+<li>
+<p>In the "Create App Service" dialog, make sure <strong>SQLDatabaseResourceGroup</strong> is selected under <strong>Resource Group</strong>. (This will add the Azure API App to the same resource group as the SQL Database, which is handy because deleting the resource group will delete both.) Then click the <strong>New...</strong> button next to <strong>App Service Plan</strong> and select the location nearest you for hosting the Web App, and <strong>Free</strong> as the <strong>Size.</strong> Click <strong>OK</strong> to dismiss the "Configure App Service Plan" dialog. Then click <strong>Create</strong> at the bottom of the "Create App Service" dialog.</p>
+<p><a href="Images/vs-create-app-service.png" target="_blank"><img src="Images/vs-create-app-service.png" alt="Creating an Azure App Service" style="max-width:100%;"></a></p>
+<p><em>Creating an Azure App Service</em></p>
+</li>
+<li>
+<p>Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's API controllers, and a folder named "Models" that holds the project's model classes. You will be working with assets in these folders and others as you implement the API App.</p>
+</li>
+<li>
+<p>With the basic project structure in place, the next step is to add logic to access the SQL Database in Azure. You will start by connecting an <a href="https://msdn.microsoft.com/library/aa937723(v=vs.113).aspx">Entity Framework</a> model to the database. In Solution Explorer, right-click the project and use the <strong>Add -&gt; New Folder</strong> command to create a folder named "Data" at the root of the project.</p>
+<p><a href="Images/vs-create-new-folder-01.png" target="_blank"><img src="Images/vs-create-new-folder-01.png" alt="Adding a new folder to the project" style="max-width:100%;"></a></p>
+<p><em>Adding a new folder to the project</em></p>
+</li>
+<li>
+<p>Right-click the "Data" folder and select <strong>Add -&gt; New Item...</strong>. In the "Add New Item" dialog, select <strong>ADO.NET Entity Data Model</strong> and type "OrdersModel" into the <strong>Name</strong> field. Then click the <strong>Add</strong> button.</p>
+<p><a href="Images/vs-add-orders-model.png" target="_blank"><img src="Images/vs-add-orders-model.png" alt="Adding an entity data model" style="max-width:100%;"></a></p>
+<p><em>Adding an entity data model</em></p>
+</li>
+<li>
+<p>Select <strong>EF Designer from database</strong> and click <strong>Next</strong>.</p>
+<p><a href="Images/vs-select-ef-designer.png" target="_blank"><img src="Images/vs-select-ef-designer.png" alt="Selecting the EF Designer" style="max-width:100%;"></a></p>
+<p><em>Selecting the EF Designer</em></p>
+</li>
+<li>
+<p>Click the <strong>New Connection...</strong> button.</p>
+<p><a href="Images/vs-select-new-connection.png" target="_blank"><img src="Images/vs-select-new-connection.png" alt="Creating a new connection" style="max-width:100%;"></a></p>
+<p><em>Creating a new connection</em></p>
+</li>
+<li>
+<p>If you are prompted to choose a data source, select <strong>Microsoft SQL Server</strong> and click <strong>Continue</strong>.</p>
+<p><a href="Images/choose-data-source.png" target="_blank"><img src="Images/choose-data-source.png" alt="Choosing a data source" style="max-width:100%;"></a></p>
+<p><em>Choosing a data source</em></p>
+</li>
+<li>
+<p>In the <strong>Server name</strong> box, type the name that you assigned to the database server in Exercise 1, Step 4, followed by ".database.windows.net." Change <strong>Authentication</strong> to <strong>SQL Server Authentication</strong>, and enter the user name ("sqladmin") and password ("Password_1") for the database server. Select <strong>Northwind</strong> under <strong>Select or enter a database name</strong>, and then click <strong>OK</strong>.</p>
+<p><a href="Images/vs-setting-connection-properties.png" target="_blank"><img src="Images/vs-setting-connection-properties.png" alt="Setting connection properties" style="max-width:100%;"></a></p>
+<p><em>Setting connection properties</em></p>
+</li>
+<li>
+<p>Select <strong>No, exclude sensitive data from the connection string</strong>. (Selecting this option will keep the database password out of the project's Web.config file.) Then click <strong>Next</strong>.</p>
+<p><a href="Images/vs-setting-connection-security.png" target="_blank"><img src="Images/vs-setting-connection-security.png" alt="Setting connection string properties" style="max-width:100%;"></a></p>
+<p><em>Setting connection string properties</em></p>
+</li>
+<li>
+<p>Select <strong>Entity Framework 6.x</strong> and click <strong>Next</strong>.</p>
+<p><a href="Images/vs-set-connection-version.png" target="_blank"><img src="Images/vs-set-connection-version.png" alt="Specifying the Entity Framework version" style="max-width:100%;"></a></p>
+<p><em>Specifying the Entity Framework version</em></p>
+</li>
+<li>
+<p>Expand the "Tables" node and check the <strong>dbo</strong> box. This will allow all of the tables in the database to be accessed through the Entity Framework model. Then click <strong>Finish</strong>.</p>
+<p><a href="Images/vs-select-dbo-entities.png" target="_blank"><img src="Images/vs-select-dbo-entities.png" alt="Specifying which tables to include in the model" style="max-width:100%;"></a></p>
+<p><em>Specifying which tables to include in the model</em></p>
+</li>
+<li>
+<p>Confirm that <strong>OrdersModel.edmx</strong> is added to the project and that the data model is depicted as below.</p>
+<p><a href="Images/vs-model-created.png" target="_blank"><img src="Images/vs-model-created.png" alt="The OrdersModel data model" style="max-width:100%;"></a></p>
+<p><em>The OrdersModel data model</em></p>
+</li>
+<li>
+<p>Now it is time to write code to access the data model. In Solution Explorer, right-click the "Models" folder and select <strong>Add -&gt; Class...</strong> to add a class file to the folder. Type "OrderInformation.cs" (without quotation marks) into the <strong>Name</strong> box, and then click <strong>OK</strong>.</p>
+<p><a href="Images/vs-add-orderinfomation-class.png" target="_blank"><img src="Images/vs-add-orderinfomation-class.png" alt="Adding the OrderInformation class" style="max-width:100%;"></a></p>
+<p><em>Adding the OrderInformation class</em></p>
+</li>
+<li>
+<p>Replace the empty <em>OrderInformation</em> class with the following class definitions, and note that you are making the classes public rather than private. The purpose of these classes is to model the data for customers, products, and orders.</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">OrderInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">OrderId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CustomerId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">EmployeeId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">EmployeeName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-en">System</span>.<span class="pl-en">DateTime</span>&gt; <span class="pl-en">OrderDate</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-en">System</span>.<span class="pl-en">DateTime</span>&gt; <span class="pl-en">RequiredDate</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-en">System</span>.<span class="pl-en">DateTime</span>&gt; <span class="pl-en">ShippedDate</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">ShipVia</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">decimal</span>&gt; <span class="pl-en">Freight</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipAddress</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipCity</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipRegion</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipPostalCode</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipCountry</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">List</span>&lt;<span class="pl-en">OrderDetailInformation</span>&gt; <span class="pl-en">OrderDetails</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">CustomerInformation</span> <span class="pl-en">Customer</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">CustomerInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CustomerId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CompanyName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ContactName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ContactTitle</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Address</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">City</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Region</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">PostalCode</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Country</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Phone</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Fax</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">OrderDetailInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">OrderId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">ProductId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">decimal</span> <span class="pl-en">UnitPrice</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">short</span> <span class="pl-en">Quantity</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">float</span> <span class="pl-en">Discount</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">ProductInformation</span> <span class="pl-en">Product</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ProductInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">ProductId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ProductName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">SupplierId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">CategoryId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">QuantityPerUnit</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">decimal</span>&gt; <span class="pl-en">UnitPrice</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">short</span>&gt; <span class="pl-en">UnitsInStock</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">short</span>&gt; <span class="pl-en">UnitsOnOrder</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">short</span>&gt; <span class="pl-en">ReorderLevel</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">bool</span> <span class="pl-en">Discontinued</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
+</li>
+<li>
+<p>In Solution Explorer, right-click the project and use the <strong>Add -&gt; New Folder</strong> command to add a folder named "Helpers" to the root of the project.</p>
+</li>
+<li>
+<p>Right-click the "Helpers" folder and use the <strong>Add -&gt; Class...</strong> command to add a class file named <strong>OrderHelper.cs</strong>. Then replace the contents of the file with the statements below. The methods in the <em>OrderHelper</em> class provide access to order data via the Entity Framework data model:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">OrderViewServices.Models</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Web</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">OrderViewServices.Helpers</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">OrderHelper</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">string</span> <span class="pl-en">CreateConnectionString</span>()
+        {
+            <span class="pl-k">string</span> <span class="pl-en">userName</span> = (<span class="pl-k">string</span>)System.Web.HttpContext.Current.Cache[<span class="pl-s"><span class="pl-pds">"</span>CurrentUser<span class="pl-pds">"</span></span>];
+            <span class="pl-k">string</span> <span class="pl-en">password</span> = <span class="pl-s"><span class="pl-pds">"</span>Password_1<span class="pl-pds">"</span></span>;
+
+            <span class="pl-k">if</span> (<span class="pl-k">string</span>.IsNullOrEmpty(userName))
+            {
+                userName = <span class="pl-s"><span class="pl-pds">"</span>sqladmin<span class="pl-pds">"</span></span>;
+                password = <span class="pl-s"><span class="pl-pds">"</span>Password_1<span class="pl-pds">"</span></span>;
+            }
+
+            <span class="pl-k">string</span> <span class="pl-en">serverName</span> = <span class="pl-s"><span class="pl-pds">"</span>database_server_name<span class="pl-pds">"</span></span>;
+            <span class="pl-k">return</span> <span class="pl-k">string</span>.Format(<span class="pl-s"><span class="pl-pds">"</span>data source={0}.database.windows.net;initial catalog=Northwind;user id={1};password={2};MultipleActiveResultSets=True;App=EntityFramework<span class="pl-pds">"</span></span>, serverName, userName, password);
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">List</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">GetOrders</span>()
+        {
+            <span class="pl-en">List</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">orders</span> = <span class="pl-k">new</span> <span class="pl-en">List</span>&lt;OrderInformation&gt;();
+
+            <span class="pl-k">using</span> (Data.<span class="pl-en">NorthwindEntities</span> <span class="pl-en">entities</span> = <span class="pl-k">new</span> <span class="pl-en">Data</span>.NorthwindEntities())
+            {
+                entities.Database.Connection.ConnectionString = CreateConnectionString();
+                entities.Database.Connection.Open();
+
+                <span class="pl-k">try</span>
+                {
+                    <span class="pl-k">foreach</span> (<span class="pl-k">var</span> <span class="pl-en">result in entities.Orders.OrderByDescending(o </span>=&gt; o.OrderDate).Take(<span class="pl-c1">20</span>))
+                    {
+                        orders.Add(result.ToOrderInformation());
+                    }
+                }
+                <span class="pl-k">catch</span> (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                {
+
+                }
+                <span class="pl-k">finally</span>
+                {
+                    entities.Database.Connection.Close();
+                }
+
+                <span class="pl-k">return</span> orders;
+            }
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">OrderInformation</span> <span class="pl-en">GetOrder</span>(<span class="pl-k">int</span> <span class="pl-smi">orderId</span>)
+        {
+            <span class="pl-en">OrderInformation</span> <span class="pl-en">order</span> = <span class="pl-c1">null</span>;
+
+            <span class="pl-k">using</span> (Data.<span class="pl-en">NorthwindEntities</span> <span class="pl-en">entities</span> = <span class="pl-k">new</span> <span class="pl-en">Data</span>.NorthwindEntities())
+            {
+                entities.Database.Connection.ConnectionString = CreateConnectionString();
+                entities.Database.Connection.Open();
+
+                <span class="pl-k">try</span>
+                {
+                    <span class="pl-k">var</span> <span class="pl-en">result </span>= entities.Orders.Where(w =&gt; w.OrderID == orderId).FirstOrDefault();
+
+                    <span class="pl-k">if</span> (result != <span class="pl-c1">null</span>)
+                    {
+                        order = result.ToOrderInformation();
+                    }
+                }
+                <span class="pl-k">catch</span> (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                {
+
+                }
+                <span class="pl-k">finally</span>
+                {
+                    entities.Database.Connection.Close();
+                }
+
+                <span class="pl-k">return</span> order;
+            }
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>Locate the <em>CreateConnectionString</em> method near the top of the file and replace <em>database_server_name</em> on line 22 with the name you assigned to the database server in Exercise 1, Step 4.</p>
+</li>
+<li>
+<p>In Solution Explorer, right-click the project and use the <strong>Add -&gt; New Folder</strong> command to add a folder named "Extensions" to the root of the project.</p>
+</li>
+<li>
+<p>Right-click the "Extensions" folder and use the <strong>Add -&gt; Class...</strong> command to add a class file named <strong>ListExtensions.cs</strong>. Then replace the contents of the file with the following statements:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">OrderViewServices.Models</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Web</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">OrderViewServices</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">ListExtensions</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">OrderInformation</span> <span class="pl-en">ToOrderInformation</span>(<span class="pl-en">this</span> <span class="pl-smi">Data</span>.Order order)
+        {
+            <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">OrderInformation</span>()
+            {
+                Customer = order.Customer.ToCustomerInformation(),
+                OrderDetails = order.Order_Details.ToOrderDetailInformationList(),
+
+                CustomerId = order.CustomerID,
+                EmployeeId = order.EmployeeID,
+                EmployeeName = order.EmployeeName,
+                Freight = order.Freight,
+                OrderDate = order.OrderDate,
+                OrderId = order.OrderID,
+                RequiredDate = order.RequiredDate,
+                ShipAddress = order.ShipAddress,
+                ShipCity = order.ShipCity,
+                ShipCountry = order.ShipCountry,
+                ShipName = order.ShipName,
+                ShippedDate = order.ShippedDate,
+                ShipPostalCode = order.ShipPostalCode,
+                ShipRegion = order.ShipRegion,
+                ShipVia = order.ShipVia,
+            };
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">static</span> <span class="pl-en">List</span>&lt;<span class="pl-en">OrderDetailInformation</span>&gt; <span class="pl-en">ToOrderDetailInformationList</span>(<span class="pl-en">this</span> <span class="pl-smi">ICollection</span>&lt;Data.Order_Detail&gt; orderDetails)
+        {
+            <span class="pl-k">return</span> (<span class="pl-k">from</span> detail <span class="pl-k">in</span> orderDetails <span class="pl-k">select</span> detail.ToOrderDetailInformation()).ToList();
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">OrderDetailInformation</span> <span class="pl-en">ToOrderDetailInformation</span>(<span class="pl-en">this</span> <span class="pl-smi">Data</span>.Order_Detail orderDetail)
+        {
+            <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">OrderDetailInformation</span>()
+            {
+                Discount = orderDetail.Discount,
+                OrderId = orderDetail.OrderID,
+                ProductId = orderDetail.ProductID,
+                Quantity = orderDetail.Quantity,
+                UnitPrice = orderDetail.UnitPrice,
+
+                Product = orderDetail.Product.ToProductInformation(),
+            };
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">CustomerInformation</span> <span class="pl-en">ToCustomerInformation</span>(<span class="pl-en">this</span> <span class="pl-smi">Data</span>.Customer customer)
+        {
+            <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">CustomerInformation</span>()
+            {
+                Address = customer.Address,
+                City = customer.City,
+                CompanyName = customer.CompanyName,
+                ContactName = customer.ContactName,
+                ContactTitle = customer.ContactTitle,
+                Country = customer.Country,
+                CustomerId = customer.CustomerID,
+                Fax = customer.Fax,
+                Phone = customer.Phone,
+                PostalCode = customer.PostalCode,
+                Region = customer.Region,
+
+            };
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">ProductInformation</span> <span class="pl-en">ToProductInformation</span>(<span class="pl-en">this</span> <span class="pl-smi">Data</span>.Product product)
+        {
+            <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">ProductInformation</span>()
+            {
+                CategoryId = product.CategoryID,
+                Discontinued = product.Discontinued,
+                ProductId = product.ProductID,
+                ProductName = product.ProductName,
+                QuantityPerUnit = product.QuantityPerUnit,
+                ReorderLevel = product.ReorderLevel,
+                SupplierId = product.SupplierID,
+                UnitPrice = product.UnitPrice,
+                UnitsInStock = product.UnitsInStock,
+                UnitsOnOrder = product.UnitsOnOrder,
+            };
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>In Solution Explorer, right-click the "Controllers" folder and select <strong>Add -&gt; Controller...</strong>.</p>
+</li>
+<li>
+<p>Select <strong>Web API 2 Controller – Empty</strong> and click <strong>Add</strong>. Name the controller "OrdersController" and add it to the project.</p>
+<p><a href="Images/vs-add-new-controller.png" target="_blank"><img src="Images/vs-add-new-controller.png" alt="Adding a new controller" style="max-width:100%;"></a></p>
+<p><em>Adding a new controller</em></p>
+</li>
+<li>
+<p>Add the following <code>using</code> statement to the top of the file:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">OrderViewServices.Models</span>;</pre></div>
+</li>
+<li>
+<p>Add the following API controller methods to the <em>OrdersController</em> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-en">IEnumerable</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">GetOrders</span>()
+{
+    <span class="pl-k">return</span> Helpers.OrderHelper.GetOrders();
+}
+     
+<span class="pl-k">public</span> <span class="pl-en">OrderInformation</span> <span class="pl-en">Get</span>(<span class="pl-k">int</span> <span class="pl-smi">id</span>)
+{
+    <span class="pl-k">return</span> Helpers.OrderHelper.GetOrder(id);
+}
+           
+<span class="pl-k">public</span> <span class="pl-en">IHttpActionResult</span> <span class="pl-en">Post</span>(<span class="pl-k">string</span> <span class="pl-smi">value</span>)
+{
+    System.Web.HttpContext.Current.Cache[<span class="pl-s"><span class="pl-pds">"</span>CurrentUser<span class="pl-pds">"</span></span>] = <span class="pl-k">value</span>;
+    <span class="pl-k">return</span> Created(<span class="pl-s"><span class="pl-pds">"</span>CurrentUser<span class="pl-pds">"</span></span>, <span class="pl-k">value</span>);
+}</pre></div>
+</li>
+<li>
+<p>You can use your browser to test the API App by calling methods and seeing what's returned. Use Visual Studio's <strong>Debug -&gt; Start Without Debugging</strong> command (or simply press <strong>Ctrl+F5</strong>) to launch the application in your browser. Initially, you will see a 403 error because no method was specified. But now append "/api/Orders" to the URL in the browser's address bar and press <strong>Enter</strong>. This will call the <em>GetOrders</em> method in the <em>OrdersController class</em>. Confirm that an array of JSON objects representing orders is returned:</p>
+<p><a href="Images/ie-api-specified.png" target="_blank"><img src="Images/ie-api-specified.png" alt="JSON returned by the GetOrders method" style="max-width:100%;"></a></p>
+<p><em>JSON returned by the GetOrders method</em></p>
+</li>
+<li>
+<p>The next step is to deploy the app to the cloud. Visual Studio makes it easy. (Remember that <strong>Host in the cloud</strong> box you checked at the beginning of this exercise?) Begin by right-clicking the project in Solution Explorer and selecting <strong>Publish...</strong> from the context menu. In the ensuing dialog, make sure <strong>Web Deploy</strong> is selected as the publish method, and then click the <strong>Publish</strong> button.</p>
+<blockquote>
+<p>Web Deploy is an awesome feature of Visual Studio that lets you publish apps to the cloud without having to manually FTP a bunch of files. Moreover, Web Deploy only publishes files that have changed, so if you have a large project with thousands of files and change just one or two, republishing takes almost no time at all. Web Deploy also works with many third-party hosting services such as GoDaddy.</p>
+</blockquote>
+<p><a href="Images/vs-publish-api-app.png" target="_blank"><img src="Images/vs-publish-api-app.png" alt="Publishing the API app" style="max-width:100%;"></a></p>
+<p><em>Publishing the API app</em></p>
+</li>
+<li>
+<p>After a few moments, the app will appear in a browser window. Note the URL in the address bar. You will need this URL in the next exercise, so <strong>copy it into your favorite text editor where you can easily retrieve it</strong>. The app is no longer running locally; it's on the Web, where it's accessible to apps and other services.</p>
+<p><a href="Images/ie-published-api-app.png" target="_blank"><img src="Images/ie-published-api-app.png" alt="The published API app" style="max-width:100%;"></a></p>
+<p><em>The published API app</em></p>
+</li>
+</ol>
+<p>Now that you have a Web service through which the Azure SQL Database that you created can be accessed, the next step is to write an app that uses it.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Build a UWP client</h2>
+<p>A Web service that features a REST interface like the Azure API App you deployed in the previous exercise can be called from virtually any kind of app. In this exercise, you will write a Universal Windows Platform, or UWP, app to talk to the API App. The beauty of UWP apps is that they run on a variety of Windows devices, including PCs, tablets, phones, and even on Xbox One. The app you will write enables you to view orders for Northwind salespersons as well as order and customer details.</p>
+<ol>
+<li>
+<p>In order to build and run UWP apps on a Windows 10 PC, you must enable developer mode on the device. To ensure that developer mode is enabled, click the <strong>Windows</strong> button (also known as the Start button) in the lower-left corner of the desktop. Then select <strong>Settings</strong> from the menu and click <strong>Update &amp; security</strong> in the <strong>Settings</strong> dialog. Now click <strong>For developers</strong> on the left and select <strong>Developer mode</strong> on the right, as shown below.</p>
+<p><a href="Images/windows-use-dev-mode.png" target="_blank"><img src="Images/windows-use-dev-mode.png" alt="Enabling developer mode" style="max-width:100%;"></a></p>
+<p><em>Enabling developer mode</em></p>
+</li>
+<li>
+<p>In Solution Explorer, right-click the "OrderViewServices" solution (the solution, not the project) and select <strong>Add -&gt; New Project</strong>. Select <strong>Blank App (Universal Windows)</strong> as the project type and name the project "OrderView." Then click <strong>OK</strong>. When prompted to choose platform versions, accept the defaults.</p>
+<p><a href="Images/vs-add-new-uwp-project.png" target="_blank"><img src="Images/vs-add-new-uwp-project.png" alt="Adding a UWP project" style="max-width:100%;"></a></p>
+<p><em>Adding a UWP project</em></p>
+</li>
+<li>
+<p>In Solution Explorer, right-click the new "OrderView" project and select <strong>Set as Startup Project</strong> from the context menu.</p>
+</li>
+<li>
+<p>Right-click the "OrderView" project again and use the <strong>Add -&gt; New Folder</strong> command to add a folder named "Common" to the root of the project. Right-click the "Common" folder and use the <strong>Add -&gt; Class...</strong> command to add a class file named <strong>BindableBase.cs</strong>. Then replace the contents of the file with the following statements:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.ComponentModel</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Runtime.CompilerServices</span>;	
+
+<span class="pl-k">namespace</span> <span class="pl-en">OrderView.Common</span>
+{
+    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> Implementation of &lt;<span class="pl-ent">see</span> <span class="pl-e">cref</span>=<span class="pl-s"><span class="pl-pds">"</span>INotifyPropertyChanged<span class="pl-pds">"</span></span>/&gt; to simplify models.<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+
+    <span class="pl-k">public</span> abstract <span class="pl-k">class</span> <span class="pl-en">BindableBase</span> : <span class="pl-en">INotifyPropertyChanged</span>
+    {
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> Multicast event for property change notifications.<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-k">public event </span><span class="pl-en">PropertyChangedEventHandler</span> <span class="pl-en">PropertyChanged</span>;
+
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> Checks if a property already matches a desired value.  Sets the property and<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> notifies listeners only when necessary.<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">typeparam</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>T<span class="pl-pds">"</span></span>&gt;Type of the property.&lt;/<span class="pl-ent">typeparam</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>storage<span class="pl-pds">"</span></span>&gt;Reference to a property with both getter and setter.&lt;/<span class="pl-ent">param</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>&gt;Desired value for the property.&lt;/<span class="pl-ent">param</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>propertyName<span class="pl-pds">"</span></span>&gt;Name of the property used to notify listeners.  This<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> value is optional and can be provided automatically when invoked from compilers that<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> support CallerMemberName.&lt;/<span class="pl-ent">param</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">returns</span>&gt;True if the value was changed, false if the existing value matched the<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> desired value.&lt;/<span class="pl-ent">returns</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-k">protected</span> <span class="pl-k">bool</span> <span class="pl-en">SetProperty</span>&lt;<span class="pl-en">T</span>&gt;(<span class="pl-k">ref</span> <span class="pl-en">T</span> <span class="pl-smi">storage</span>, <span class="pl-en">T</span> <span class="pl-smi">value</span>, [CallerMemberName] <span class="pl-en">String</span> <span class="pl-smi">propertyName</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>)
+        {
+            <span class="pl-k">if</span> (<span class="pl-k">object</span>.Equals(storage, <span class="pl-k">value</span>)) <span class="pl-k">return</span> <span class="pl-c1">false</span>;
+
+            storage = <span class="pl-k">value</span>;
+            <span class="pl-c1">this</span>.OnPropertyChanged(propertyName);
+            <span class="pl-k">return</span> <span class="pl-c1">true</span>;
+        }
+
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> Notifies listeners that a property value has changed.<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">param</span> <span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>propertyName<span class="pl-pds">"</span></span>&gt;Name of the property used to notify listeners.  This<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> value is optional and can be provided automatically when invoked from compilers<span class="pl-c"></span></span>
+        <span class="pl-c"><span class="pl-c">///</span> that support &lt;<span class="pl-ent">see</span> <span class="pl-e">cref</span>=<span class="pl-s"><span class="pl-pds">"</span>CallerMemberNameAttribute<span class="pl-pds">"</span></span>/&gt;.&lt;/<span class="pl-ent">param</span>&gt;<span class="pl-c"></span></span>
+        <span class="pl-k">protected</span> <span class="pl-k">void</span> <span class="pl-en">OnPropertyChanged</span>([CallerMemberName] <span class="pl-k">string</span> <span class="pl-smi">propertyName</span> <span class="pl-k">=</span> <span class="pl-c1">null</span>)
+        {
+            <span class="pl-k">var</span> <span class="pl-en">eventHandler </span>= <span class="pl-c1">this</span>.PropertyChanged;
+            <span class="pl-k">if</span> (eventHandler != <span class="pl-c1">null</span>)
+            {
+                eventHandler(<span class="pl-c1">this</span>, <span class="pl-k">new</span> <span class="pl-en">PropertyChangedEventArgs</span>(<span class="pl-en">propertyName</span>));
+            }
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>Right-click the "OrderView" project and use the <strong>Add -&gt; New Folder</strong> command to add a folder named "Models" to the root of the project. Right-click the "Models" folder and use the <strong>Add -&gt; Class...</strong> command to add a class file named <strong>OrderInformation.cs</strong>. Then replace the empty <em>OrderInformation</em> class with the following class definitions:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">SalespersonInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Label</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">UserName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">ProductInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">ProductId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ProductName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">SupplierId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">CategoryId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">QuantityPerUnit</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">decimal</span>&gt; <span class="pl-en">UnitPrice</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">short</span>&gt; <span class="pl-en">UnitsInStock</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">short</span>&gt; <span class="pl-en">UnitsOnOrder</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">short</span>&gt; <span class="pl-en">ReorderLevel</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">bool</span> <span class="pl-en">Discontinued</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">SuggestionInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">odatacontext</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Value</span>[] <span class="pl-en">value</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">Value</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">float</span> <span class="pl-en">searchscore</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CustomerID</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CompanyName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">CustomerInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CustomerId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CompanyName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ContactName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ContactTitle</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Address</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">City</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Region</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">PostalCode</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Country</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Phone</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Fax</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">OrderInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">OrderId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">CustomerId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">EmployeeId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">EmployeeName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-en">System</span>.<span class="pl-en">DateTime</span>&gt; <span class="pl-en">OrderDate</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-en">System</span>.<span class="pl-en">DateTime</span>&gt; <span class="pl-en">RequiredDate</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-en">System</span>.<span class="pl-en">DateTime</span>&gt; <span class="pl-en">ShippedDate</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">int</span>&gt; <span class="pl-en">ShipVia</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">Nullable</span>&lt;<span class="pl-k">decimal</span>&gt; <span class="pl-en">Freight</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipName</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipAddress</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipCity</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipRegion</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipPostalCode</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">ShipCountry</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">List</span>&lt;<span class="pl-en">OrderDetailInformation</span>&gt; <span class="pl-en">OrderDetails</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-en">CustomerInformation</span> <span class="pl-en">Customer</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">OrderDetailInformation</span>
+{
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">OrderId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">int</span> <span class="pl-en">ProductId</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">decimal</span> <span class="pl-en">UnitPrice</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">short</span> <span class="pl-en">Quantity</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public </span><span class="pl-k">float</span> <span class="pl-en">Discount</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    <span class="pl-k">public </span><span class="pl-en">ProductInformation</span> <span class="pl-en">Product</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+}</pre></div>
+</li>
+<li>
+<p>Right-click the "Models" folder again and use the <strong>Add -&gt; Class...</strong> command to add a class file named <strong>MainViewModel.cs</strong>. Replace the contents of the file with the following statements, and observe that the <em>MainViewModel</em> class implements the <em>BindableBase</em> class created earlier:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.ObjectModel</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Threading.Tasks</span>;
+<span class="pl-k">using</span> <span class="pl-en">OrderView.Models</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">OrderView.Models</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MainViewModel</span> : <span class="pl-en">Common.BindableBase</span>
+    {
+        <span class="pl-k">private </span><span class="pl-en">ObservableCollection</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">_currentOrders</span>;
+        <span class="pl-k">public </span><span class="pl-en">ObservableCollection</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">CurrentOrders</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._currentOrders; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._currentOrders, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">private </span><span class="pl-en">List</span>&lt;<span class="pl-en">SalespersonInformation</span>&gt; <span class="pl-en">_salespersons</span>;
+        <span class="pl-k">public </span><span class="pl-en">List</span>&lt;<span class="pl-en">SalespersonInformation</span>&gt; <span class="pl-en">Salespersons</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._salespersons; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._salespersons, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">private </span><span class="pl-en">SalespersonInformation</span> <span class="pl-en">_selectedSalesperson</span>;
+        <span class="pl-k">public </span><span class="pl-en">SalespersonInformation</span> <span class="pl-en">SelectedSalesperson</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._selectedSalesperson; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._selectedSalesperson, <span class="pl-k">value</span>); }
+        }
+
+
+        <span class="pl-k">private </span><span class="pl-en">ObservableCollection</span>&lt;<span class="pl-k">string</span>&gt; <span class="pl-en">_searchSuggestions</span>;
+        <span class="pl-k">public </span><span class="pl-en">ObservableCollection</span>&lt;<span class="pl-k">string</span>&gt; <span class="pl-en">SearchSuggestions</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._searchSuggestions; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._searchSuggestions, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">private </span><span class="pl-k">bool</span> <span class="pl-en">_isLoading</span>;
+
+        <span class="pl-k">public </span><span class="pl-k">bool</span> <span class="pl-en">IsLoading</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._isLoading; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._isLoading, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">public const </span><span class="pl-k">string</span> <span class="pl-en">OrderApiUrl</span> = <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
+
+        <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">Initialize</span>()
+        {
+            <span class="pl-c1">this</span>.CurrentOrders = <span class="pl-k">new</span> <span class="pl-en">ObservableCollection</span>&lt;OrderInformation&gt;();
+            <span class="pl-c1">this</span>.SearchSuggestions = <span class="pl-k">new</span> <span class="pl-en">ObservableCollection</span>&lt;<span class="pl-k">string</span>&gt;();
+            <span class="pl-c1">this</span>.Salespersons = Helpers.OrderHelper.GetSalespersons();
+
+            <span class="pl-c1">this</span>.SelectedSalesperson = <span class="pl-c1">this</span>.Salespersons.FirstOrDefault();	
+        }
+ 
+        <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">FilterByCustomer</span>(<span class="pl-k">string</span> <span class="pl-smi">selectedCustomer</span>)
+        {
+            LoadOrdersAsync(selectedCustomer);
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">ChangeUser</span>(<span class="pl-en">SalespersonInformation</span> <span class="pl-smi">salesperson</span>)
+        {
+            <span class="pl-c1">this</span>.SelectedSalesperson = salesperson;
+
+            LoadOrdersAsync();
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">LoadOrdersAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">filter</span>)
+        {
+            <span class="pl-c1">this</span>.IsLoading = <span class="pl-c1">true</span>;
+
+            <span class="pl-k">await</span> Helpers.OrderHelper.SetUserAsync(<span class="pl-c1">this</span>.SelectedSalesperson.UserName);
+
+            <span class="pl-c1">this</span>.CurrentOrders.Clear();
+
+            <span class="pl-k">var</span> <span class="pl-en">orders </span>= <span class="pl-k">await</span> Helpers.OrderHelper.GetOrdersAsync(filter);
+
+            <span class="pl-k">foreach</span> (var order <span class="pl-k">in</span> orders)
+            {
+                <span class="pl-c1">this</span>.CurrentOrders.Add(order);
+            }
+
+            <span class="pl-c1">this</span>.IsLoading = <span class="pl-c1">false</span>;
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">LoadOrdersAsync</span>()
+        {
+            <span class="pl-c1">this</span>.IsLoading = <span class="pl-c1">true</span>;
+
+            <span class="pl-k">await</span> Helpers.OrderHelper.SetUserAsync(<span class="pl-c1">this</span>.SelectedSalesperson.UserName);
+
+            <span class="pl-c1">this</span>.CurrentOrders.Clear();
+
+            <span class="pl-k">var</span> <span class="pl-en">orders </span>= <span class="pl-k">await</span> Helpers.OrderHelper.GetOrdersAsync();
+
+            <span class="pl-k">foreach</span> (var order <span class="pl-k">in</span> orders)
+            {
+                <span class="pl-c1">this</span>.CurrentOrders.Add(order);
+            }
+
+            <span class="pl-c1">this</span>.IsLoading = <span class="pl-c1">false</span>;
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>Right-click the "OrderView" project and use the <strong>Add -&gt; New Folder</strong> command to add a folder named "Helpers" to the root of the project. Then right-click the "Helpers" folder and use the <strong>Add -&gt; Class...</strong> command add a class file named <strong>OrderHelper.cs</strong>. Replace the contents of the file with the following statements:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">OrderView.Models</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Net.Http</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Runtime.Serialization.Json</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Threading.Tasks</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">OrderView.Helpers</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">OrderHelper</span>
+    {
+        <span class="pl-k">public const </span><span class="pl-k">string</span> <span class="pl-en">OrderApiUrl</span> = <span class="pl-s"><span class="pl-pds">"</span>order_api_url<span class="pl-pds">"</span></span>;
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">List</span>&lt;<span class="pl-en">SalespersonInformation</span>&gt; <span class="pl-en">GetSalespersons</span>()
+        {
+            <span class="pl-en">List</span>&lt;<span class="pl-en">SalespersonInformation</span>&gt; <span class="pl-en">salespersons</span> = <span class="pl-k">new</span> <span class="pl-en">List</span>&lt;SalespersonInformation&gt;();
+
+            salespersons.Add(<span class="pl-k">new</span> <span class="pl-en">SalespersonInformation</span>() { Label = <span class="pl-s"><span class="pl-pds">"</span>Janet (Sales Manager)<span class="pl-pds">"</span></span>, UserName = <span class="pl-s"><span class="pl-pds">"</span>Janet<span class="pl-pds">"</span></span> });
+            salespersons.Add(<span class="pl-k">new</span> <span class="pl-en">SalespersonInformation</span>() { Label = <span class="pl-s"><span class="pl-pds">"</span>Andrew (Salesperson)<span class="pl-pds">"</span></span>, UserName = <span class="pl-s"><span class="pl-pds">"</span>Andrew<span class="pl-pds">"</span></span> });
+            salespersons.Add(<span class="pl-k">new</span> <span class="pl-en">SalespersonInformation</span>() { Label = <span class="pl-s"><span class="pl-pds">"</span>Nancy (Salesperson)<span class="pl-pds">"</span></span>, UserName = <span class="pl-s"><span class="pl-pds">"</span>Nancy<span class="pl-pds">"</span></span> });
+
+            <span class="pl-k">return</span> salespersons;
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">async</span> <span class="pl-en">Task</span>&lt;<span class="pl-en">List</span>&lt;<span class="pl-en">OrderInformation</span>&gt;&gt; <span class="pl-en">GetOrdersAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">filter</span>)
+        {
+            <span class="pl-en">List</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">orders</span> = <span class="pl-k">new</span> <span class="pl-en">List</span>&lt;OrderInformation&gt;();
+
+            <span class="pl-en">Uri</span> <span class="pl-en">requestUri</span> = <span class="pl-k">new</span> <span class="pl-en">Uri</span>(OrderApiUrl + <span class="pl-s"><span class="pl-pds">"</span>/api/Orders<span class="pl-pds">"</span></span>);
+            <span class="pl-en">HttpClient</span> <span class="pl-en">client</span> = <span class="pl-k">new</span> <span class="pl-en">System</span>.Net.Http.HttpClient();
+            <span class="pl-en">HttpResponseMessage</span> <span class="pl-en">response</span> = <span class="pl-k">await</span> client.GetAsync(requestUri);
+
+            <span class="pl-k">var</span> <span class="pl-en">stream </span>= <span class="pl-k">await</span> response.Content.ReadAsStreamAsync();
+            stream.Position = <span class="pl-c1">0</span>;
+
+            <span class="pl-k">var</span> <span class="pl-en">settings </span>= <span class="pl-k">new</span> <span class="pl-en">DataContractJsonSerializerSettings</span> { DateTimeFormat = <span class="pl-k">new</span> <span class="pl-en">System</span>.Runtime.Serialization.DateTimeFormat(<span class="pl-s"><span class="pl-pds">"</span>yyyy-MM-dd'T'HH:mm:ss<span class="pl-pds">"</span></span>) };
+
+            <span class="pl-en">DataContractJsonSerializer</span> <span class="pl-en">ser</span> = <span class="pl-k">new</span> <span class="pl-en">DataContractJsonSerializer</span>(typeof(List&lt;OrderInformation&gt;), settings);
+            orders = (List&lt;OrderInformation&gt;)ser.ReadObject(stream);
+
+            <span class="pl-k">return</span> orders.Where(w =&gt; w.Customer.CompanyName.Equals(filter)).ToList();
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">async</span> <span class="pl-en">Task</span>&lt;<span class="pl-en">List</span>&lt;<span class="pl-en">OrderInformation</span>&gt;&gt; <span class="pl-en">GetOrdersAsync</span>()
+        {
+            <span class="pl-en">List</span>&lt;<span class="pl-en">OrderInformation</span>&gt; <span class="pl-en">orders</span> = <span class="pl-k">new</span> <span class="pl-en">List</span>&lt;OrderInformation&gt;();
+
+            <span class="pl-en">Uri</span> <span class="pl-en">requestUri</span> = <span class="pl-k">new</span> <span class="pl-en">Uri</span>(OrderApiUrl + <span class="pl-s"><span class="pl-pds">"</span>api/Orders<span class="pl-pds">"</span></span>);
+            <span class="pl-en">HttpClient</span> <span class="pl-en">client</span> = <span class="pl-k">new</span> <span class="pl-en">System</span>.Net.Http.HttpClient();
+            <span class="pl-en">HttpResponseMessage</span> <span class="pl-en">response</span> = <span class="pl-k">await</span> client.GetAsync(requestUri);
+
+            <span class="pl-k">var</span> <span class="pl-en">stream </span>= <span class="pl-k">await</span> response.Content.ReadAsStreamAsync();
+            stream.Position = <span class="pl-c1">0</span>;
+
+            <span class="pl-k">var</span> <span class="pl-en">settings </span>= <span class="pl-k">new</span> <span class="pl-en">DataContractJsonSerializerSettings</span> { DateTimeFormat = <span class="pl-k">new</span> <span class="pl-en">System</span>.Runtime.Serialization.DateTimeFormat(<span class="pl-s"><span class="pl-pds">"</span>yyyy-MM-dd'T'HH:mm:ss<span class="pl-pds">"</span></span>) };
+
+            <span class="pl-en">DataContractJsonSerializer</span> <span class="pl-en">ser</span> = <span class="pl-k">new</span> <span class="pl-en">DataContractJsonSerializer</span>(typeof(List&lt;OrderInformation&gt;), settings);
+            orders = (List&lt;OrderInformation&gt;)ser.ReadObject(stream);
+
+            <span class="pl-k">return</span> orders;
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">async</span> <span class="pl-en">Task</span>&lt;<span class="pl-k">bool</span>&gt; <span class="pl-en">SetUserAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">userName</span>)
+        {
+            <span class="pl-en">Uri</span> <span class="pl-en">requestUri</span> = <span class="pl-k">new</span> <span class="pl-en">Uri</span>(OrderApiUrl + <span class="pl-pds">$"</span><span class="pl-s">/api/Orders?value=</span>{userName}<span class="pl-pds">"</span>);
+
+            <span class="pl-k">var</span> <span class="pl-en">client </span>= <span class="pl-k">new</span> <span class="pl-en">System</span>.Net.Http.HttpClient();
+            <span class="pl-en">HttpResponseMessage</span> <span class="pl-en">respon</span> = <span class="pl-k">await</span> client.PostAsync(requestUri, <span class="pl-c1">null</span>);
+
+            <span class="pl-k">return</span> respon.IsSuccessStatusCode;
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>Replace <em>order_api_url</em> on line 14 with the URL of your API App — the one you copied into your favorite text editor at the end of <a href="#Exercisw3">Exercise 3</a>.</p>
+</li>
+<li>
+<p>Open <strong>MainPage.xaml</strong> and replace the empty <code>Grid</code> element with the following markup:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Page</span>.Resources&gt;
+    &lt;<span class="pl-ent">Style</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>SmallerLabelStyle<span class="pl-pds">"</span></span> <span class="pl-e">TargetType</span>=<span class="pl-s"><span class="pl-pds">"</span>TextBlock<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Property</span>=<span class="pl-s"><span class="pl-pds">"</span>FontSize<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Property</span>=<span class="pl-s"><span class="pl-pds">"</span>FontWeight<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>Light<span class="pl-pds">"</span></span>/&gt;
+    &lt;/<span class="pl-ent">Style</span>&gt;
+&lt;/<span class="pl-ent">Page</span>.Resources&gt;
+
+&lt;<span class="pl-ent">Grid</span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource ApplicationPageBackgroundThemeBrush}<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+        &lt;<span class="pl-ent">RowDefinition</span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">RowDefinition</span>/&gt;
+    &lt;/<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+
+    &lt;<span class="pl-ent">ComboBox</span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Left<span class="pl-pds">"</span></span> <span class="pl-e">ItemsSource</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Salespersons}<span class="pl-pds">"</span></span> <span class="pl-e">SelectedItem</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding SelectedSalesperson, Mode=TwoWay}<span class="pl-pds">"</span></span> <span class="pl-e">SelectionChanged</span>=<span class="pl-s"><span class="pl-pds">"</span>OnEmployeeChanged<span class="pl-pds">"</span></span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>240<span class="pl-pds">"</span></span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>40,40,40,0<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">ComboBox</span>.Header&gt;
+            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>0,0,0,-5<span class="pl-pds">"</span></span> <span class="pl-e">FontSize</span>=<span class="pl-s"><span class="pl-pds">"</span>12<span class="pl-pds">"</span></span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>Light<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>SELECT SALESPERSON<span class="pl-pds">"</span></span>/&gt;
+        &lt;/<span class="pl-ent">ComboBox</span>.Header&gt;
+        &lt;<span class="pl-ent">ComboBox</span>.ItemTemplate&gt;
+            &lt;<span class="pl-ent">DataTemplate</span>&gt;
+                &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>Light<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Label}<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">DataTemplate</span>&gt;
+        &lt;/<span class="pl-ent">ComboBox</span>.ItemTemplate&gt;
+    &lt;/<span class="pl-ent">ComboBox</span>&gt;
+
+    &lt;<span class="pl-ent">ScrollViewer</span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>40<span class="pl-pds">"</span></span>&gt;
+
+        &lt;<span class="pl-ent">GridView</span> <span class="pl-e">ItemsSource</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentOrders}<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">GridView</span>.ItemTemplate&gt;
+                &lt;<span class="pl-ent">DataTemplate</span>&gt;
+                    &lt;<span class="pl-ent">Grid</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>300<span class="pl-pds">"</span></span> <span class="pl-e">Tapped</span>=<span class="pl-s"><span class="pl-pds">"</span>OnShowCustomer<span class="pl-pds">"</span></span>&gt;
+                        &lt;<span class="pl-ent">FlyoutBase</span>.AttachedFlyout&gt;
+                            &lt;<span class="pl-ent">Flyout</span> <span class="pl-e">Placement</span>=<span class="pl-s"><span class="pl-pds">"</span>Top<span class="pl-pds">"</span></span> &gt;
+                                &lt;<span class="pl-ent">Grid</span>&gt;
+                                    &lt;<span class="pl-ent">StackPanel</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>SemiBold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.CompanyName}<span class="pl-pds">"</span></span> /&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{StaticResource SmallerLabelStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.Address}<span class="pl-pds">"</span></span> /&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{StaticResource SmallerLabelStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.City}<span class="pl-pds">"</span></span> /&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{StaticResource SmallerLabelStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.PostalCode}<span class="pl-pds">"</span></span> /&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{StaticResource SmallerLabelStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.Country}<span class="pl-pds">"</span></span> /&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{StaticResource SmallerLabelStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.Phone}<span class="pl-pds">"</span></span> /&gt;
+                                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{StaticResource SmallerLabelStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.Fax}<span class="pl-pds">"</span></span> /&gt;
+                                    &lt;/<span class="pl-ent">StackPanel</span>&gt;
+                                &lt;/<span class="pl-ent">Grid</span>&gt;
+                            &lt;/<span class="pl-ent">Flyout</span>&gt;
+                        &lt;/<span class="pl-ent">FlyoutBase</span>.AttachedFlyout&gt;
+
+                        &lt;<span class="pl-ent">Grid</span>.ColumnDefinitions&gt;
+                            &lt;<span class="pl-ent">ColumnDefinition</span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">ColumnDefinition</span> /&gt;
+                        &lt;/<span class="pl-ent">Grid</span>.ColumnDefinitions&gt;
+
+                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>0,0,10,0<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Top<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Left<span class="pl-pds">"</span></span> <span class="pl-e">FontSize</span>=<span class="pl-s"><span class="pl-pds">"</span>36<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span> <span class="pl-e">FontFamily</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SymbolThemeFontFamily}<span class="pl-pds">"</span></span>/&gt;
+
+                        &lt;<span class="pl-ent">StackPanel</span> Grid.Column=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>&gt;
+
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource CaptionTextBlockStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>CUSTOMER<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>SemiBold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Customer.CompanyName}<span class="pl-pds">"</span></span>/&gt;
+
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>0,10,0,0<span class="pl-pds">"</span></span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource CaptionTextBlockStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>SALESPERSON<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>SemiBold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding EmployeeName}<span class="pl-pds">"</span></span>/&gt;
+
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>0,10,0,0<span class="pl-pds">"</span></span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource CaptionTextBlockStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>ORDER NO<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>SemiBold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding OrderId}<span class="pl-pds">"</span></span>/&gt;
+
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>0,10,0,0<span class="pl-pds">"</span></span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource CaptionTextBlockStyle}<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>ORDER DATE<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>SemiBold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding OrderDate}<span class="pl-pds">"</span></span>/&gt;
+
+                            &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>0,10,0,0<span class="pl-pds">"</span></span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource CaptionTextBlockStyle}<span class="pl-pds">"</span></span>&gt;
+                        &lt;<span class="pl-ent">Run</span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>TOTAL ITEMS<span class="pl-pds">"</span></span>/&gt;
+                        &lt;<span class="pl-ent">Run</span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>SemiBold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding OrderDetails.Count}<span class="pl-pds">"</span></span>/&gt;
+                            &lt;/<span class="pl-ent">TextBlock</span>&gt;
+
+                        &lt;/<span class="pl-ent">StackPanel</span>&gt;
+
+                    &lt;/<span class="pl-ent">Grid</span>&gt;
+                &lt;/<span class="pl-ent">DataTemplate</span>&gt;
+            &lt;/<span class="pl-ent">GridView</span>.ItemTemplate&gt;
+            &lt;<span class="pl-ent">GridView</span>.ItemsPanel&gt;
+                &lt;<span class="pl-ent">ItemsPanelTemplate</span>&gt;
+                    &lt;<span class="pl-ent">ItemsWrapGrid</span> <span class="pl-e">Orientation</span>=<span class="pl-s"><span class="pl-pds">"</span>Horizontal<span class="pl-pds">"</span></span>/&gt;
+                &lt;/<span class="pl-ent">ItemsPanelTemplate</span>&gt;
+            &lt;/<span class="pl-ent">GridView</span>.ItemsPanel&gt;
+        &lt;/<span class="pl-ent">GridView</span>&gt;
+    &lt;/<span class="pl-ent">ScrollViewer</span>&gt;
+
+    &lt;<span class="pl-ent">ProgressRing</span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>160<span class="pl-pds">"</span></span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>160<span class="pl-pds">"</span></span> <span class="pl-e">IsActive</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding IsLoading}<span class="pl-pds">"</span></span> <span class="pl-e">IsEnabled</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding IsLoading}<span class="pl-pds">"</span></span>/&gt;
+
+&lt;/<span class="pl-ent">Grid</span>&gt;</pre></div>
+<blockquote>
+<p>The markup that you just inserted is Extensible Application Markup Language, or XAML. XAML is a language created by Microsoft for building user interfaces. It was originally created for WPF, but has since been repurposed for Universal Windows apps. Combined with Xamarin Forms, it can even be used to build user interfaces for iOS and Android. It is an extremely expressive language that enjoys designer support in Visual Studio and other popular tools.</p>
+</blockquote>
+</li>
+<li>
+<p>Now open <strong>MainPage.xaml.cs</strong> and add the following <code>using</code> statement to those already at the top of the page:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">OrderView.Models</span>;</pre></div>
+</li>
+<li>
+<p>Still in <strong>MainPage.xaml.cs</strong>, replace everything inside the <em>MainPage</em> class with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-en">MainViewModel</span> <span class="pl-en">ViewModel</span> = <span class="pl-k">new</span> <span class="pl-en">MainViewModel</span>();
+
+<span class="pl-k">public</span> MainPage()
+{
+    <span class="pl-c1">this</span>.InitializeComponent();
+    <span class="pl-c1">this</span>.Loaded += MainPage_Loaded;
+}
+
+<span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">MainPage_Loaded</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">RoutedEventArgs</span> <span class="pl-smi">e</span>)
+{
+    <span class="pl-c1">this</span>.ViewModel.Initialize();
+
+    <span class="pl-c1">this</span>.DataContext = <span class="pl-c1">this</span>.ViewModel;
+}	
+
+<span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnEmployeeChanged</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">SelectionChangedEventArgs</span> <span class="pl-smi">e</span>)
+{
+    <span class="pl-k">if</span> (<span class="pl-c1">this</span>.ViewModel.SelectedSalesperson != <span class="pl-c1">null</span>) <span class="pl-c1">this</span>.ViewModel.ChangeUser(<span class="pl-c1">this</span>.ViewModel.SelectedSalesperson);
+}	 
+
+<span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnShowCustomer</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">TappedRoutedEventArgs</span> <span class="pl-smi">e</span>)
+{
+    FlyoutBase.ShowAttachedFlyout(sender <span class="pl-k">as</span> <span class="pl-en">FrameworkElement</span>);	
+}
+
+<span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnSuggestionChosen</span>(<span class="pl-en">AutoSuggestBox</span> <span class="pl-smi">sender</span>, <span class="pl-en">AutoSuggestBoxSuggestionChosenEventArgs</span> <span class="pl-smi">args</span>)
+{
+    <span class="pl-c1">this</span>.ViewModel.FilterByCustomer((<span class="pl-k">string</span>)args.SelectedItem);
+}</pre></div>
+</li>
+<li>
+<p>In Solution Explorer, right-click the "OrderView" project and select <strong>Deploy</strong> from the context menu. This will deploy the app to your local computer and enable it to run even though it's part of a mixed-platform solution.</p>
+</li>
+<li>
+<p>Now use Visual Studio's <strong>Debug -&gt; Start Without Debugging</strong> command (or press <strong>Ctrl+F5</strong>) to launch the app. Confirm that it shows a list of orders for Janet:</p>
+<p><a href="Images/vs-uwp-complete.png" target="_blank"><img src="Images/vs-uwp-complete.png" alt="Running the completed UWP app" style="max-width:100%;"></a></p>
+<p><em>Running the completed UWP app</em></p>
+</li>
+<li>
+<p>Select <strong>Andrew</strong> from the <strong>SALESPERSON</strong> list and wait for the orders to refresh. How does what Andrew sees differ from what Janet sees, if at all?</p>
+</li>
+<li>
+<p>Click an order and confirm that a popup appears with information about the customer that placed the order, including the customer's phone number.</p>
+<p><a href="Images/order-popup-1.png" target="_blank"><img src="Images/order-popup-1.png" alt="Viewing information about the customer that placed an order" style="max-width:100%;"></a></p>
+<p><em>Viewing information about the customer that placed an order</em></p>
+</li>
+<li>
+<p>Close the app and return to Visual Studio.</p>
+</li>
+</ol>
+<p>When you initialized the Azure SQL Database in <a href="#Exercise2">Exercise 2</a>, three users were created: Janet, Andrew, and Nancy. Janet is a sales manager and should have permission to view all orders, but Andrew and Nancy are salespersons and should only be able to view orders they created. At present, all users see all orders. In addition, you might prefer to hide customer phone numbers since those could be considered sensitive information.</p>
+<blockquote>
+<p>Granted, phone numbers aren't usually considered sensitive information. But Social Security numbers and driver's license IDs and other forms of government ID are, and once you learn how to hide one field, you can apply it to any field in the database.</p>
+</blockquote>
+<p>You could modify the UWP app to filter what users see based on their identity, but it's better to filter such data on the back end. That way, the data isn't even transmitted from the server if it isn't needed. That's where SQL Database security comes in.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Apply permissions and data masks</h2>
+<p>To limit the orders that a salesperson can see, you can take advantage of <a href="https://azure.microsoft.com/blog/row-level-security-for-sql-database-is-generally-available/">row-level security</a> in Azure SQL Database. And to hide fields containing sensitive information, you can use <a href="https://docs.microsoft.com/azure/sql-database/sql-database-dynamic-data-masking-get-started">dynamic data masking</a>. In this exercise, you will use both to ensure that only Janet can see everyone else's orders, and that customer phone numbers are hidden from everyone.</p>
+<ol>
+<li>
+<p>Return to Visual Studio's SQL Server Object Explorer. Right-click the Northwind database and select <strong>New Query...</strong> from the context menu.</p>
+<p><a href="Images/vs-select-new-query-02.png" target="_blank"><img src="Images/vs-select-new-query-02.png" alt="Starting a new query" style="max-width:100%;"></a></p>
+<p><em>Starting a new query</em></p>
+</li>
+<li>
+<p>Use the <strong>Edit -&gt; Insert File as Text...</strong> command to open the file named <strong>Apply NORTHWIND security.sql</strong> located in the "Resources" folder of this lab. Then right-click anywhere in the script and select <strong>Execute</strong>. This script enables row-level security on the Orders table and effectively prevents anyone but Janet from seeing other salesperson's orders.</p>
+</li>
+<li>
+<p>Now let's use dynamic data masking to hide telephone numbers. Return to the Azure Portal and open the Northwind database.</p>
+<p><a href="Images/open-database.png" target="_blank"><img src="Images/open-database.png" alt="Opening the Northwind database" style="max-width:100%;"></a></p>
+<p><em>Opening the Northwind database</em></p>
+</li>
+<li>
+<p>In the "Northwind" blade, click <strong>Dynamic data masking</strong> in the menu on the left.</p>
+<p><a href="Images/portal-select-dynamic-data-masking.png" target="_blank"><img src="Images/portal-select-dynamic-data-masking.png" alt="Accessing dynamic data masking settings" style="max-width:100%;"></a></p>
+<p><em>Accessing dynamic data masking settings</em></p>
+</li>
+<li>
+<p>Click the <strong>Add Mask</strong> button for the Phone column in the Customers table. A new mask named "dbo_Customers_Phone" is created and assigned a default value of "0, xxxx, 01-01-1900."</p>
+<p><a href="Images/portal-add-customer-mask.png" target="_blank"><img src="Images/portal-add-customer-mask.png" alt="Applying a dynamic data mask" style="max-width:100%;"></a></p>
+<p><em>Applying a dynamic data mask</em></p>
+</li>
+<li>
+<p>This mask would actually do what we want it to do. However, it gives the impression that the field contains a date. Let's change it to something more appropriate. Click <strong>dbo_Customers_Phone</strong>. In the "Edit Masking Rule" blade, change <strong>Masking Field Format</strong> to <strong>Custom string</strong>, and enter "xxxxxxx" (without quotation marks) in the <strong>Padding String</strong> box. Then click <strong>Update</strong> in the "Edit Masking Rule" blade, and <strong>Save</strong> in the "Northwind" blade.</p>
+<p><a href="Images/portal-update-customer-mask.png" target="_blank"><img src="Images/portal-update-customer-mask.png" alt="Customizing the data mask" style="max-width:100%;"></a></p>
+<p><em>Customizing the data mask</em></p>
+</li>
+<li>
+<p>Return to Visual Studio and use the <strong>Debug -&gt; Start Without Debugging</strong> command (or press <strong>Ctrl+F5</strong>) to launch the OrderView app.</p>
+</li>
+<li>
+<p>When the app loads, Janet sees orders for all employees. Now select <strong>Andrew</strong> from the <strong>SALESPERSON</strong> list and confirm that Andrew only sees orders for Andrew.</p>
+<p><a href="Images/app-andrew-selected.png" target="_blank"><img src="Images/app-andrew-selected.png" alt="Row-level security in action" style="max-width:100%;"></a></p>
+<p><em>Row-level security in action</em></p>
+</li>
+<li>
+<p>To see dynamic data masking in action, click an order and confirm that the customer's phone number is XXXed out in the popup. (The number on the final line is a fax number, not a voice number.)</p>
+<p><a href="Images/order-popup-2.png" target="_blank"><img src="Images/order-popup-2.png" alt="Dynamic data masking in action" style="max-width:100%;"></a></p>
+<p><em>Dynamic data masking in action</em></p>
+</li>
+<li>
+<p>Close the app and return to Visual Studio.</p>
+</li>
+</ol>
+<p>Observe that you didn't have to modify the app to enact these measures. They were entirely implemented on the back end using security features available in Azure SQL Database.</p>
+<p><a id="user-content-Exercise6"></a></p>
+<h2>Exercise 6: Delete the resource group</h2>
+<p>In this exercise, you will delete the resource group created in <a href="#Exercise1">Exercise 1</a> when you created the SQL Database. Deleting the resource group deletes everything in it, including the SQL Database, database server, App Service, and other resources created during the course of this lab, and prevents any further charges from being incurred for it.</p>
+<ol>
+<li>
+<p>In the Azure Portal, open the blade for the "SQLDatabaseResourceGroup" resource group. Then click the <strong>Delete</strong> button at the top of the blade.</p>
+<p><a href="Images/delete-resource-group.png" target="_blank"><img src="Images/delete-resource-group.png" alt="Deleting the resource group" style="max-width:100%;"></a></p>
+<p><em>Deleting the resource group</em></p>
+</li>
+<li>
+<p>For safety, you are required to type in the resource group's name. (Once deleted, a resource group cannot be recovered.) Type the name of the resource group. Then click the <strong>Delete</strong> button to remove all traces of this lab from your account.</p>
+</li>
+</ol>
+<p>After a few minutes, the resource group and all of its resources will be deleted.</p>
+<p><a name="Summary"></a></p>
+<h2>Summary</h2>
+<p>In this hands-on lab you learned how to:</p>
+<ul>
+<li>Create an Azure SQL Database</li>
+<li>Populate an Azure SQL Database with data</li>
+<li>Create an Azure API App that connects to the database</li>
+<li>Write apps that access the database through the Azure API App</li>
+<li>Use security features of Azure SQL Database to restrict access to data</li>
+</ul>
+<p>There is <em>much</em> more to learn about Azure SQL Database than one lab can cover. For example, you can easily <a href="https://docs.microsoft.com/azure/sql-database/sql-database-geo-replication-overview">configure geo-replication</a> to safeguard your data by establishing up to four readable secondary databases in different data centers, and you can take advantage of <a href="https://docs.microsoft.com/azure/sql-database/sql-database-security-overview">built-in auditing and threat protection</a> and <a href="https://msdn.microsoft.com/library/dn948096.aspx">Transparent Data Encryption</a> to maximize the security of your data.  Whether the goal is to store data for a personal Web site or handle high-volume loads incurred by enterprise back ends and mobile apps, Azure SQL Database has a solution to fit every need.</p>
+<hr>
+<p>Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

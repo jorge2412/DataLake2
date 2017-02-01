@@ -6,11 +6,11 @@
 <a name="Overview"></a>
 ## Overview ##
 
-[Azure SQL Database](https://azure.microsoft.com/en-us/services/sql-database/) is a cloud-based relational database service based on Microsoft's SQL Server engine. It delivers predictable performance, dynamic scalability, and robust data protection so you can focus on app development rather than managing virtual machines and physical infrastructure. SQL Database supports existing SQL Server tools, libraries, and APIs, making it simple to migrate existing database solutions to the cloud and to use those solutions without climbing a learning curve. And it features the largest compliance portfolio in the industry, including [HIPAA](https://www.microsoft.com/en-us/trustcenter/Compliance/HIPAA), [FERPA](https://www.microsoft.com/en-us/trustcenter/Compliance/FERPA), and even [Singapore MTCS Level 3](https://www.microsoft.com/en-us/TrustCenter/Compliance/MTCS).
+[Azure SQL Database](https://azure.microsoft.com/en-us/services/sql-database/) is a cloud-based relational database service based on Microsoft's SQL Server engine. It delivers predictable performance, dynamic scalability, and robust data protection so you can focus on front-end app development rather than managing machines and infrastructure. SQL Database supports existing SQL Server tools, libraries, and APIs, making it simple to migrate existing database solutions to the cloud and leverage them using skills you already have. And it features the largest compliance portfolio in the industry, including [HIPAA](https://www.microsoft.com/en-us/trustcenter/Compliance/HIPAA), [FERPA](https://www.microsoft.com/en-us/trustcenter/Compliance/FERPA), and even [Singapore MTCS Level 3](https://www.microsoft.com/en-us/TrustCenter/Compliance/MTCS).
 
-One of the advantages of running SQL Database on Microsoft Azure is being able to scale performance up or down, manually or automatically, to quickly adapt to changing demand. SQL Database features a broad spectrum of performance levels, with each level offering guaranteed performance. It also offers [elastic pools](https://docs.microsoft.com/azure/sql-database/sql-database-design-patterns-multi-tenancy-saas-applications) for hosting multitenant apps without the usual trade-off in performance, management, and security.  
+One of the advantages of running SQL Database on Microsoft Azure is being able to scale up or down, manually or automatically, to quickly adapt to changing demand. SQL Database features a broad spectrum of [performance levels](https://docs.microsoft.com/azure/sql-database/sql-database-service-tiers#single-database-service-tiers-and-performance-levels), with each level offering guaranteed performance and uptime. It also offers [elastic pools](https://docs.microsoft.com/azure/sql-database/sql-database-design-patterns-multi-tenancy-saas-applications) for hosting multitenant apps without the usual trade-off in performance, management, and security.  
 
-In this lab, you will create an Azure SQL Database and populate it with data from the venerable Northwind datase. You will create an Azure API App to expose the database securely to clients using REST calls, create a Universal Windows Platform app to access the database through the API App, and use features of SQL Database to limit the information returned to users based on their identity.
+In this lab, you will create an Azure SQL Database and populate it with data from the venerable Northwind datase. You will create an Azure API App to expose the database securely to clients using REST calls, create a Universal Windows Platform app to access the database through the API App, and use security features of SQL Database to limit the information returned.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -28,8 +28,8 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
+- A PC or laptop running Windows 10
 - An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
-- Windows 10
 - [Visual Studio 2015 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher with the Windows 10 SDK installed
 - [SQL Server Data Tools for Visual Studio 2015](https://msdn.microsoft.com/en-us/library/mt204009.aspx)
 
@@ -52,11 +52,11 @@ Estimated time to complete this lab: **60** minutes.
 <a name="Exercise1"></a>
 ## Exercise 1: Create an Azure SQL Database ##
 
-The first step in working with Azure SQL Database is to create a database to hold your data. In this exercise, you will create an Azure SQL Database and configure database server settings.
+The first step in working with Azure SQL Database is to create a database account. In this exercise, you will use the Azure Portal to create a SQL Database account and a database server to go with it.
 
 1. Open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to sign in, do so with your Microsoft Account.
 
-1. Click **+ New**, followed by **Database** and **SQL Database**.
+1. Click **+ New**, followed by **Databases** and **SQL Database**.
 
     ![Creating a new Azure SQL Database](Images/portal-select-new-azure-sql.png)
 
@@ -64,14 +64,12 @@ The first step in working with Azure SQL Database is to create a database to hol
 
 1. In the "SQL Database" blade, enter "Northwind" (without quotation marks) as the database name. Select **Create new** under **Resource group** and name the resource group "SQLDatabaseResourceGroup." Leave **Select source** set to **Blank database** and click **Server - Configure required settings**.
 
-	> Using the name "Northwind" for your database is required for the exercises in this lab.
-
     ![Configuring an Azure SQL Database](Images/portal-select-server-blade.png)
 
     _Configuring an Azure SQL Database_
 
-1. Click **Create a new server**. In the "New Server" blade, enter a unique name for **Server name** and make sure a green check mark appears next to it. (You can only use numbers and lowercase letters since the name becomes part of a DNS name.) Specify "sqladmin" as the user name and "Password_1" as the password. Select the location nearest you, and then click the **Select** button. 
- 
+1. Click **Create a new server**. In the "New Server" blade, enter a unique name for **Server name** and make sure a green check mark appears next to it. (You can only use numbers and lowercase letters since the name becomes part of a DNS name.) Specify "sqladmin" as the user name and "Password_1" as the password. Select the location nearest you, and then click the **Select** button.
+
     ![Creating a database server](Images/portal-create-new-server.png)
 
     _Creating a database server_
@@ -92,9 +90,9 @@ The first step in working with Azure SQL Database is to create a database to hol
 
 	> Refresh the page in the browser every now and then to update the deployment status. Clicking the **Refresh** button in the resource-group blade refreshes the list of resources in the resource group, but does not reliably update the deployment status.
 
-    ![Viewing the deployment status](Images/deployment-status.png)
+    ![Monitoring the deployment status](Images/deployment-status.png)
 
-    _Viewing the deployment status_
+    _Monitoring the deployment status_
 
 Your Azure SQL Database is now provisioned and ready to be populated with data. For that, you will use the SQL Server Data Tools for Visual Studio 2015.
 
@@ -129,7 +127,7 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
     _Creating a new firewall rule_	
 
-1. In Visual Studio's SQL Server Object Explorer (SSOE), right-click the node representing the database server that you deployed in the previous exercise and select **New Query...**.
+1. In Visual Studio's SQL Server Object Explorer (SSOE), right-click the node representing the SQL Database server that you deployed in the previous exercise and select **New Query...**.
  
     ![Starting a new query](Images/vs-select-new-query-01.png)
 
@@ -137,17 +135,17 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
 1. Use the **Edit -> Insert File as Text...** command to open the file named **Create MASTER logins.sql** located in the "Resources" folder of this lab.
  
-    ![Inserting "Create MASTER logins.sql"](Images/vs-selecting-file-open.png)
+    ![Inserting a SQL script](Images/vs-selecting-file-open.png)
 
-    _Inserting "Create MASTER logins.sql"_	
+    _Inserting a SQL script_	
 
-1. Right-click anywhere in the script and select **Execute**. This script creates the user logins used in subsequent exercises.
+1. Right-click anywhere in the script and select **Execute**. This script creates three user logins that will be used in later exercises.
  
     ![Executing the script](Images/vs-execute-master-script.png)
 
     _Executing the script_	
 
-1. In the SQL Server Object Explorer, expand the node for your database server and right-click the Northwind database. Then select **New Query...** from the context menu.
+1. In the SQL Server Object Explorer, expand the node for your SQL Database server and right-click the Northwind database. Then select **New Query...** from the context menu.
  
     ![Starting a new query](Images/vs-select-new-query-02.png)
 
@@ -155,7 +153,7 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
 1. Use the **Edit -> Insert File as Text...** command to open the file named **Create NORTHWIND tables.sql** located in the "Resources" folder of this lab. Then right-click anywhere in the script and select **Execute**. This script creates tables and other objects in the Northwind database and typically takes 2 to 5 minutes to run.
 
-1. At this point, it might be helpful to familiarize yourself with some of the tables created by the script that just executed. Expand the "Northwind" node in SSOE, and then expand the "Tables" node to reveal the tables in the database. Right-click the Customers table and select **View Data** from the context menu.
+1. At this point, it might be helpful to familiarize yourself with some of the tables that the script created. Expand the "Northwind" node in SSOE, and then expand the "Tables" node to reveal the tables in the database. Right-click the Customers table and select **View Data** from the context menu.
  
     ![Opening the Customers table](Images/vs-select-view-data.png)
 
@@ -167,9 +165,7 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
     _Viewing customer records_		
 
-1. Open other tables in the database to see what's in them, especially the Employees and Orders tables.
-
-Your SQL Database is now populated with customers, products, orders, and other information. You will be adding additional functionality to the database in later exercises to facilitate row-level security. But for now, the next step is to make the database accessible to applications over the Web.
+Your SQL Database is now populated with customers, products, orders, and other information. You will be adding additional objects to the database in later exercises to facilitate row-level security. But for now, the next step is to make the database accessible to applications over the Web.
 
 <a name="Exercise3"></a>
 ## Exercise 3: Create an Azure API App ##
@@ -188,11 +184,11 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 
     _Configuring the project_		
 
-1.	In the "Create App Service" dialog, make sure **SQLDatabaseResourceGroup** is selected under **Resource Group**. (This will add the Azure API App to the same resource group as the SQL Database, which is handy because deleting the resource group will delete both.) Then click the **New** button next to **App Service Plan** and select the location nearest you for hosting the Web App, and **Free** as the **Size.** Click **OK** to dismiss the "Configure App Service Plan" dialog. Then click **Create** at the bottom of the "Create App Service" dialog.
+1.	In the "Create App Service" dialog, make sure **SQLDatabaseResourceGroup** is selected under **Resource Group**. (This will add the Azure API App to the same resource group as the SQL Database, which is handy because deleting the resource group will delete both.) Then click the **New...** button next to **App Service Plan** and select the location nearest you for hosting the Web App, and **Free** as the **Size.** Click **OK** to dismiss the "Configure App Service Plan" dialog. Then click **Create** at the bottom of the "Create App Service" dialog.
  
-    ![Creating an App Service](Images/vs-create-app-service.png)
+    ![Creating an Azure App Service](Images/vs-create-app-service.png)
 
-    _Creating an App Service_		 
+    _Creating an Azure App Service_		 
 
 1. Take a moment to review the project structure in the Solution Explorer window. Among other things, there's a folder named "Controllers" that holds the project's API controllers, and a folder named "Models" that holds the project's model classes. You will be working with assets in these folders and others as you implement the API App.
 
@@ -206,7 +202,7 @@ Most modern apps — mobile apps especially — store data remotely, either in a
  
     ![Adding an entity data model](Images/vs-add-orders-model.png)
 
-    _Adding Adding an entity data model_		 
+    _Adding an entity data model_		 
 
 1. Select **EF Designer from database** and click **Next**.
  
@@ -214,7 +210,7 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 
     _Selecting the EF Designer_		 
 
-1. Click the **New Connection** button.
+1. Click the **New Connection...** button.
  
     ![Creating a new connection](Images/vs-select-new-connection.png)
 
@@ -226,7 +222,7 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 
 	_Choosing a data source_
 
-1. In the **Server name** box, type the name that you assigned to the database server in Exercise 1, Step 4, followed by ".database.windows.net." Change **Authentication type** to **SQL Server Authentication**, and enter the user name ("sqladmin") and password ("Password_1") for the database server. Select **Northwind** under **Select or enter a database name**, and then click **OK**.
+1. In the **Server name** box, type the name that you assigned to the database server in Exercise 1, Step 4, followed by ".database.windows.net." Change **Authentication** to **SQL Server Authentication**, and enter the user name ("sqladmin") and password ("Password_1") for the database server. Select **Northwind** under **Select or enter a database name**, and then click **OK**.
  
     ![Setting connection properties](Images/vs-setting-connection-properties.png)
 
@@ -244,19 +240,19 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 
     _Specifying the Entity Framework version_		
 	
-1. Expand the Tables node and check the **dbo** box. This will allow all of the tables in the database to be accessed through the Entity Framework model. Then click **Finish**.
+1. Expand the "Tables" node and check the **dbo** box. This will allow all of the tables in the database to be accessed through the Entity Framework model. Then click **Finish**.
  
     ![Specifying which tables to include in the model](Images/vs-select-dbo-entities.png)
 
     _Specifying which tables to include in the model_			
 
-1. Confirm that **OrdersModel.edmx** is added to the project and that the data model is depicted as shown below.
+1. Confirm that **OrdersModel.edmx** is added to the project and that the data model is depicted as below.
 
     ![The OrdersModel data model](Images/vs-model-created.png)
 
     _The OrdersModel data model_			
 	
-1. Now it is time to write code to access the data model. In Solution Explorer, right-click the "Models" folder and select **Add -> Class...** to add a class file to the "Models" folder. Type "OrderInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
+1. Now it is time to write code to access the data model. In Solution Explorer, right-click the "Models" folder and select **Add -> Class...** to add a class file to the folder. Type "OrderInformation.cs" (without quotation marks) into the **Name** box, and then click **OK**.
 
     ![Adding the OrderInformation class](Images/vs-add-orderinfomation-class.png)
 
@@ -328,7 +324,7 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 	
 1. In Solution Explorer, right-click the project and use the **Add -> New Folder** command to add a folder named "Helpers" to the root of the project.
  
-1. Right-click the "Helpers" folder and use the **Add -> Class...** command to add a class file named **OrderHelper.cs**. Then replace the contents of the file with the statements below. The methods in this class provide access to order data via the Entity Framework data model:
+1. Right-click the "Helpers" folder and use the **Add -> Class...** command to add a class file named **OrderHelper.cs**. Then replace the contents of the file with the statements below. The methods in the *OrderHelper* class provide access to order data via the Entity Framework data model:
 
 	```C#
 	using OrderViewServices.Models;
@@ -527,7 +523,7 @@ Most modern apps — mobile apps especially — store data remotely, either in a
 
     _Adding a new controller_	
 
-1. Add the following using statement to the top of the file:
+1. Add the following `using` statement to the top of the file:
 
 	```C#
 	using OrderViewServices.Models;
@@ -586,7 +582,7 @@ A Web service that features a REST interface like the Azure API App you deployed
 
     _Enabling developer mode_	
 
-1. In Solution Explorer, right-click the "OrderViewServices" solution (the solution, not the project) and select **Add -> New Project**. Select **Blank App (Universal Windows)** as the project type and name the project "OrderView." Then click **OK**. When prompted tp choose platform versions, accept the defaults.
+1. In Solution Explorer, right-click the "OrderViewServices" solution (the solution, not the project) and select **Add -> New Project**. Select **Blank App (Universal Windows)** as the project type and name the project "OrderView." Then click **OK**. When prompted to choose platform versions, accept the defaults.
  
     ![Adding a UWP project](Images/vs-add-new-uwp-project.png)
 
@@ -852,9 +848,7 @@ A Web service that features a REST interface like the Azure API App you deployed
 	}
 	```
 
-1. Right-click the "OrderView" project and use the **Add -> New Folder** command to add a folder named "Helpers" to the root of the project.
- 
-1. Right-click the "Helpers" folder and use the **Add -> Class...** command add a class file named **OrderHelper.cs**. Replace the contents of the file with the following statements:
+1. Right-click the "OrderView" project and use the **Add -> New Folder** command to add a folder named "Helpers" to the root of the project. Then right-click the "Helpers" folder and use the **Add -> Class...** command add a class file named **OrderHelper.cs**. Replace the contents of the file with the following statements:
 
 	```C#
 	using OrderView.Models;
@@ -1139,7 +1133,7 @@ To limit the orders that a salesperson can see, you can take advantage of [row-l
 
     _Row-level security in action_
  
-1. To see dynamic data masking in action, click an order and confirm that the customer's phone number is XXXed out in the popup.
+1. To see dynamic data masking in action, click an order and confirm that the customer's phone number is XXXed out in the popup. (The number on the final line is a fax number, not a voice number.)
  
 	![Dynamic data masking in action](Images/order-popup-2.png)
 
@@ -1152,9 +1146,9 @@ Observe that you didn't have to modify the app to enact these measures. They wer
 <a id="Exercise6"/></a>
 ## Exercise 6: Delete the resource group
 
-In this exercise, you will delete the resource group created in [Exercise 1](#Exercise1) when you created the SQL Database. Deleting the resource group deletes everything in it, including the SQL Database, database server, API Service, and other resources created during the course of this lab, and prevents any further charges from being incurred for it.
+In this exercise, you will delete the resource group created in [Exercise 1](#Exercise1) when you created the SQL Database. Deleting the resource group deletes everything in it, including the SQL Database, database server, App Service, and other resources created during the course of this lab, and prevents any further charges from being incurred for it.
 
-1. In the Azure Portal, open the blade for the resource group created for the SQL Database. Then click the **Delete** button at the top of the blade.
+1. In the Azure Portal, open the blade for the "SQLDatabaseResourceGroup" resource group. Then click the **Delete** button at the top of the blade.
 
 	![Deleting the resource group](Images/delete-resource-group.png)
 
@@ -1175,7 +1169,7 @@ In this hands-on lab you learned how to:
 - Write apps that access the database through the Azure API App
 - Use security features of Azure SQL Database to restrict access to data
 
-There is *much* more to learn about Azure SQL Database than one lab can cover. For example, you can easily [configure geo-replication](https://docs.microsoft.com/azure/sql-database/sql-database-geo-replication-overview) to safeguard your data by establishing up to four readable secondary databases in different data centers, and you can take advantage of [built-in auditing and threat protection](https://docs.microsoft.com/azure/sql-database/sql-database-security-overview) and [Transparent Data Encryption](https://msdn.microsoft.com/library/dn948096.aspx) to maximize the security of your data.  Whether the goal is to store data for a personal Web site or handle high-volume loads incurred by enterprise sites and popular mobile apps, Azure SQL Database has a solution to fit every need.
+There is *much* more to learn about Azure SQL Database than one lab can cover. For example, you can easily [configure geo-replication](https://docs.microsoft.com/azure/sql-database/sql-database-geo-replication-overview) to safeguard your data by establishing up to four readable secondary databases in different data centers, and you can take advantage of [built-in auditing and threat protection](https://docs.microsoft.com/azure/sql-database/sql-database-security-overview) and [Transparent Data Encryption](https://msdn.microsoft.com/library/dn948096.aspx) to maximize the security of your data.  Whether the goal is to store data for a personal Web site or handle high-volume loads incurred by enterprise back ends and mobile apps, Azure SQL Database has a solution to fit every need.
 
 ----
 
