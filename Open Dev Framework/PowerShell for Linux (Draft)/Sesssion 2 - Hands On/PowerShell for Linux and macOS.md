@@ -66,44 +66,32 @@ The first step in using PowerShell on a Mac is to download it and install it. In
 
     _Downloading the macOS package_
 
-1. Because of the [App Sandbox](https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html) protections in macOS, you **CANNOT** just double click on the installer to run it. You will see the following message, which prevents you from installing PowerShell. This limitation will go away once PowerShell reaches beta levels as Microsoft will digitally sign the installer at that point.
+1. Because of [App Sandbox](https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html) protections in macOS, you **cennot** just double-click the installer to run it. If you do, you will see the following message. This limitation will go away once PowerShell reaches beta because Microsoft will digitally sign the installer.
 
-    ![macOS Sandbox Warning](Images/ex1_macOS_Sandbox_Warning.png)
+    ![macOS sandbox warning](Images/ex1_macOS_Sandbox_Warning.png)
 
-    _macOS Sandbox Warning_
+1. To install the PowerShell package, open Finder and navigate to the "Downloads" directory. Control-click the downloaded **.pkg** file, select **Open With**, and in the flyout menu, select **Installer (default)** (or "Installer.app (default)" if your Mac is configured to show file-name extensions).
 
-1. To install the PowerShell package, open up Finder and navigate to your **Downloads** directory. **Right click" on the "powershell-6.0.0-alpha.??.pkg" file, select **Open With**, and in the pop out menu, select "Installer (default)" or "Installer.app (default)" (if you have show file extensions turned on).
+    ![Opening the downloaded package](Images/ex1_Right_Click_Open.png)
 
-    ![Using Open With on the Downloaded File](Images/ex1_Right_Click_Open.png)
+    _Opening the downloaded package_
 
-    _Using Open With on the Downloaded File_
+1. A sandbox warning will appear, but this one will have an Open button. Click the **Open** button to start the installation. Then follow the prompts to complete the installation.
 
-1. A similar macOS App Sandbox warning will appear, but this one will have the **Open** button allowing you to continue with the installation. Click the **Open** button to start the installation.
+    ![macOS sandbox warning](Images/ex_1_macOS_Sandbox_Allow.png)
 
-    ![macOS Sandbox Warning After Open With](Images/ex_1_macOS_Sandbox_Allow.png)
+1. If you want to use PowerShell's networking functionality, you will also need to install OpenSSL. Apple deprecated OpenSSL in favor of their own libraries. The easiest way to install it is to install [Homebrew](http://brew.sh/) and execute the following commands in a Terminal window. **This is an optional step** and is not required to complete this hands-on-lab.
 
-    _macOS Sandbox Warning After Open With_
-
-1. The PowerShell installation is a standard macOS package Follow the prompts to complete the installation.
-
-    ![PowerShell Installation UI](Images/ex1_Installation_UI.png)
-
-    _PowerShell Installation UI_
-
-1. _**This is an optional step**_. If you want to use PowerShell's networking functionality, you will need to also install OpenSSL. Apple deprecated OpenSSL in favor of their own libraries. The easiest way to install is install [Homebrew](http://brew.sh/) and execute the following two commands in a Terminal window. Again, _**this is an optional step**_ and not required to complete this set of hands-on-labs.
-
-    <pre>
+    ```
     brew install openssl
     brew install curl --with-openssl
-    </pre>
+    ```
 
-1. Once PowerShell is installed, open the **Terminal** application. Once it is open, type **powershell** and press Enter to start it. It should look like the following. Note that the color, username, and prompt will be different on your computer.
+1. Once PowerShell is installed, open the Terminal application. Type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the color, user name, and prompt will be different on your computer.
 
     ![Running PowerShell](Images/ex1_PowerShell_Started.png)
 
-    _Running PowerShell_
-
-Installing and running PowerShell is easy on macOS. Make sure to check back to the [PowerShell release page](https://github.com/PowerShell/PowerShell/releases) every couple of weeks because the team is progressing very fast. Please jump to [Exercise 4](#Exercise4) to continue the hand-on-labs.
+Now skip to [Exercise 4](#Exercise4) to continue the lab. Exercises 2 and 3 are for Linux users only.
 
 <a name="Exercise2"></a>
 ## Exercise 2: Installing and Running PowerShell on Ubuntu ##
