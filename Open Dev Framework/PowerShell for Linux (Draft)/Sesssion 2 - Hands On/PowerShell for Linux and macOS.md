@@ -87,7 +87,7 @@ The first step in using PowerShell on a Mac is to download it and install it. In
     brew install curl --with-openssl
     ```
 
-1. Once PowerShell is installed, open the Terminal application. Type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
+1. Once PowerShell is installed, open the Terminal application. Type `powershell` and press `Enter` to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
 
     ![Running PowerShell](Images/ex1_PowerShell_Started.png)
 
@@ -126,7 +126,7 @@ At present, PowerShell supports Ubuntu 14.04 and 16.04. If you are running eithe
 
     The `dpkg` command may report an error, but that will be fixed by the `apt-get` command.
 
-1. Once PowerShell is installed, type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
+1. Once PowerShell is installed, type `powershell` and press `Enter` to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
 
     ![Running PowerShell](Images/ex2_PowerShell_Started.png)
 
@@ -164,7 +164,7 @@ Microsoft loves Linux, as does the PowerShell team. If you are running CentOS 7,
     <pre>
     sudo yum install ./<i>filename</i></pre>
 
-1. Once PowerShell is installed, type **powershell** and press **Enter** to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
+1. Once PowerShell is installed, type `powershell` and press `Enter` to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.
 
     ![Running PowerShell](Images/ex3_PowerShell_Started.png)
 
@@ -175,47 +175,45 @@ Now proceed to [Exercise 4](#Exercise4) to learn about the PowerShell command li
 <a name="Exercise4"></a>
 ## Exercise 4: Using the PowerShell Command Line ##
 
-PowerShell offers an outstanding command line editing experience. In this exercise, you will learn about its features because they can help you immensely when learning and using PowerShell.
+PowerShell offers an outstanding command-line editing experience. More than just a place to type commands, the command line is a place to *discover* commands and the parameters passed to them. In this exercise, you will learn about basic command-line features because they are a terrific aid not only when you're learning PowerShell, but when you're using it day to day.
 
-1. If you have PowerShell running in a Terminal window from the previous exercise, bring it to the foreground. If you do not have a terminal window open, start one and execute _powershell_ inside the window.
+1. Start PowerShell by opening a Terminal window and executing the following command:
 
-1. The PowerShell command line supports auto completion of almost everything. This runs from PowerShell cmdlets themselves, to the programs already on your computer. On macOS and Linux, you have a lot of programs you probably use every day from the command line. A good example is the vi editor. Because PowerShell is a command line environment, you can simply type _vi_ and launch it. 
+	```
+	powershell
+	```
 
-    What if you are unsure of the full program name? In that case PowerShell's autocompletion support comes into play. In your PowerShell environment, type the following. Note that **&lt;TAB&gt;** means press the tab key.
+1. The PowerShell command line supports auto-complete — not just for PowerShell commands (known as *cmdlets*), but for other programs installed on your computer. A great example is the vi editor. At the PowerShell prompt, you can simply type `vi` to launch vi. Or you can ask PowerShell to list all valid commands that begin with "vi."
 
-    <pre>
-    vi&lt;TAB&gt;&lt;TAB&gt;
-    </pre>
-
-    You will see something similar to the following. 
+	To demonstrate, type the following — the letters "vi" followed by two presses of the `Tab` key — at the PowerShell prompt:
 
     <pre>
+    vi&lt;TAB&gt;&lt;TAB&gt;</pre>
+
+    You will see something like this: 
+
+    ```
     PS /Users/john/Documents> vi             
     vi        vifs      vimdiff   vipw      visudo
-    view      vim       vimtutor  vis                                  PS /Users/john/Documents> vi    
-    </pre>
+    view      vim       vimtutor  vis
+	PS /Users/john/Documents> vi    
+    ```
 
-    The command prompt still has _vi_ so you can keep typing. Clear out the command line by pressing _CTRL+C_
+    You can launch vi by pressing `Enter` because `vi` still appears on the command line. Or you can clear the command line by pressing `CTRL+C`.
 
-1. While you are probably thinking that what you just did in the previous step is exactly what Bash does, you are correct. Now it is time to try something a little more interesting. Open up a new Terminal window running the standard shell for your computer (Bash, Zsh, or whatever). In that Terminal window type the following:
-
-    <pre>
-    ls -&lt;TAB&gt;&lt;TAB&gt;
-    </pre>
-
-    Nothing happens on most computers, unless you have installed some special helpers into your shell. Switch back to your PowerShell window and we will execute the PowerShell equivalent to the _ls_ command, _Get-ChildItem_.
+1. If you are thinking that what you did in the previous step is exactly what Bash does, you are correct. Now let's try something a little more interesting. Type the following at the PowerShell command prompt: 
 
     <pre>
-    Get-Chi&lt;TAB&gt;&lt;TAB&gt;
-    </pre>
+    Get-Chi&lt;TAB&gt;&lt;TAB&gt;</pre>
 
-    That auto expanded to the full _Get-ChildItem_. Add a space and a dash to the command line and press tab once more
+    After the second press of the `Tab` key, the command expands into `Get-ChildItem`, which is PowerShell's equivalent of the `ls` command.
+
+1. It gets even better. Add a space and a dash to the end of the command and press `Tab` twice:
 
     <pre>
-    Get-ChildItem -&lt;TAB&gt;&lt;TAB&gt;
-    </pre>
+    Get-ChildItem -&lt;TAB&gt;&lt;TAB&gt;</pre>
 
-    Do you see the magic? PowerShell knows all the possible parameters to cmdlets as shown below:
+    PowerShell responds by listing all possible parameters to the `Get-ChildItem` cmdlet:
 
     <pre>
     Path                 Attributes           WarningAction
@@ -226,31 +224,29 @@ PowerShell offers an outstanding command line editing experience. In this exerci
     Recurse              System               OutVariable
     Depth                Verbose              OutBuffer
     Force                Debug                PipelineVariable
-    Name                 ErrorAction                           
-    </pre>
+    Name                 ErrorAction</pre>
 
-    Of course, if you typed _-d&lt;TAB&gt;_ you would only see those parameters that started with the 'D' character.
+    Of course, if you typed -d followed by the `Tab` key, you would only see parameters that start with the letter D.
 
-    What is even more important is that any cmdlets you add to PowerShell, either by writing your own, or adding modules written by others, the full parameter discoverability is automatically supported. No adding of special tab completion code. It is just part of PowerShell.
+    What is even more important is that any cmdlets you add to PowerShell, whether they're ones you wrote or ones written by others, benefit from full discoverability as well. It is just part of PowerShell.
 
-1. The most important feature of the PowerShell command line is that the prompt can show you when your command line has an error. Type the following into your PowerShell window and do not press ENTER:
+1. Perhaps the most important feature of the PowerShell command line is that the prompt itself lets you know when there's an error. To see for yourself, type this at the PowerShell prompt, and then press `Enter`:
 
     <pre>
-    Get-ChildItem |
-    </pre>
+    Get-ChildItem |</pre>
 
-    That is an invalid command line because you are missing the cmdlet for the rest of the pipeline. The trick is to look carefully at your prompt as show below.
+    That is an invalid command because you are missing the cmdlet to the right of the piping operator. Look carefully at the &gt; character in the prompt:
 
-    ![Command Line Error Warning](Images/ex4_Command_Line_Error.png)
+    ![Command error](Images/ex4_Command_Line_Error.png)
 
-    _Command Line Error Warning_
+    The fact that it's red means there is an error. This quick error indicator is evaluated on each keystroke so it's apparent when the error is fixed.
 
-    Keep a good eye on the &gt; part of the prompt. If it is red, you have an error. This quick glance error indicator is evaluated on each keystroke so you can see when you fix the error. Do note that this just looks if there is a parsing error on the command line you are entering, not if the command is wrong or non-existant.
+	> The error indicator lights up when executing the command right now would result in a parsing error. It doesn't light up if the command is simply wrong or doesn't exist.
 
-What you have seen in this exercise is a few of the helpful command line editing features supported by PowerShell. As you get more serious about using PowerShell, you may be interested in extending the command line processing. See the discussion of [PSReadLine](https://blogs.technet.microsoft.com/heyscriptingguy/tag/psreadline/), the module that handles the command line editing.
+All of these features are part of the default command-line editing experience, but that experience is extensible. You can add modules to PowerShell to add syntax highlighting and other features to the command line. One such module is [PSReadLine](https://blogs.technet.microsoft.com/heyscriptingguy/tag/psreadline/), which was originally developed for Windows PowerShell and is now available for macOS and Linux, too.
 
 <a name="Exercise5"></a>
-## Exercise 5: Copying and Manipulating Files] ##
+## Exercise 5: Copying and Manipulating Files ##
 
 Now that you have seen some of the wonderful features of command line editing in PowerShell, it is time to turn to learning about the cmdlets and pipelines you can use to manipulate files. PowerShell can obviously do much more than just work with files, but this exercise will have you working with various parts of PowerShell and give you solid techniques for doing more on your own.
 
