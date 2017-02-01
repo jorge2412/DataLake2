@@ -10,7 +10,7 @@
 
 One of the advantages of running SQL Database on Microsoft Azure is being able to scale performance up or down, manually or automatically, to quickly adapt to changing demand. SQL Database features a broad spectrum of performance levels, with each level offering guaranteed performance. It also offers [elastic pools](https://docs.microsoft.com/azure/sql-database/sql-database-design-patterns-multi-tenancy-saas-applications) for hosting multitenant apps without the usual trade-off in performance, management, and security.  
 
-In this lab, you will create an Azure SQL Database and populate it with records. You will create an Azure API App to communicate with the database, create a Universal Windows Platform app to access the APIs, and use features of SQL Database to limit the information returned to users based on their role in the organization.
+In this lab, you will create an Azure SQL Database and populate it with data from the venerable Northwind datase. You will create an Azure API App to expose the database securely to clients using REST calls, create a Universal Windows Platform app to access the database through the API App, and use features of SQL Database to limit the information returned to users based on their identity.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -18,9 +18,10 @@ In this lab, you will create an Azure SQL Database and populate it with records.
 In this hands-on lab, you will learn how to:
 
 - Create an Azure SQL Database
-- Populate an Azure SQL Database with records
-- Access Azure SQL Database records from your apps
-- Filter and mask records based on user permissions
+- Populate an Azure SQL Database with data
+- Create an Azure API App that connects to the database
+- Write apps that access the database through the Azure API App
+- Use security features of Azure SQL Database to restrict access to data
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
@@ -43,7 +44,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 2: Add records to the database](#Exercise2)
 - [Exercise 3: Create an Azure API App](#Exercise3)
 - [Exercise 4: Build a UWP client](#Exercise4)
-- [Exercise 5: Manage record permissions and masks](#Exercise5)
+- [Exercise 5: Apply permissions and data masks](#Exercise5)
 - [Exercise 6: Delete the resource group](#Exercise6)
  
 Estimated time to complete this lab: **60** minutes.
@@ -134,7 +135,7 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
     _Starting a new query_	
 
-1. Use the **Edit -> Insert File as Text...** command to insert the file named **Create MASTER logins.sql** located in the "Resources" folder of this lab.
+1. Use the **Edit -> Insert File as Text...** command to open the file named **Create MASTER logins.sql** located in the "Resources" folder of this lab.
  
     ![Inserting "Create MASTER logins.sql"](Images/vs-selecting-file-open.png)
 
@@ -152,7 +153,7 @@ Now that you've created a SQL Database in Azure, the next step is to add data. I
 
     _Starting a new query_	
 
-1. Use the **Edit -> Insert File as Text...** command to insert the file named **Create NORTHWIND tables.sql** located in the "Resources" folder of this lab. Then right-click anywhere in the script and select **Execute**. This script creates tables and other objects in the Northwind database and typically takes 2 to 5 minutes to run.
+1. Use the **Edit -> Insert File as Text...** command to open the file named **Create NORTHWIND tables.sql** located in the "Resources" folder of this lab. Then right-click anywhere in the script and select **Execute**. This script creates tables and other objects in the Northwind database and typically takes 2 to 5 minutes to run.
 
 1. At this point, it might be helpful to familiarize yourself with some of the tables created by the script that just executed. Expand the "Northwind" node in SSOE, and then expand the "Tables" node to reveal the tables in the database. Right-click the Customers table and select **View Data** from the context menu.
  
@@ -1079,124 +1080,74 @@ A Web service that features a REST interface like the Azure API App you deployed
 
 1. Select **Andrew** from the **SALESPERSON** list and wait for the orders to refresh. How does what Andrew sees differ from what Janet sees, if at all?
 
+1. Click an order and confirm that a popup appears with information about the customer that placed the order, including the customer's phone number.
+ 
+	![Viewing information about the customer that placed an order](Images/order-popup-1.png)
+
+    _Viewing information about the customer that placed an order_
+
 1. Close the app and return to Visual Studio.
 
-When you initialized the Azure SQL Database in [Exercise 2](#Exercise2), three users were created: Janet, Andrew, and Nancy. Janet is a sales manager and should have permission to view all orders, but Andrew and Nancy are salespersons and should only be able to view orders they created. At present, all users see all orders. In addition, there is certain "sensitive" information displayed in each order that should be hidden from non-sales managers.
+When you initialized the Azure SQL Database in [Exercise 2](#Exercise2), three users were created: Janet, Andrew, and Nancy. Janet is a sales manager and should have permission to view all orders, but Andrew and Nancy are salespersons and should only be able to view orders they created. At present, all users see all orders. In addition, you might prefer to hide customer phone numbers since those could be considered sensitive information.
 
-You could modify the UWP app to filter what users see based on their roles, but it's better to filter such data on the back end. That way, the data isn't even transmitted from the server if it isn't needed. That's where SQL Database permissions and masks come in.
+> Granted, phone numbers aren't usually considered sensitive information. But Social Security numbers and driver's license IDs and other forms of government ID are, and once you learn how to hide one field, you can apply it to any field in the database.
+
+You could modify the UWP app to filter what users see based on their identity, but it's better to filter such data on the back end. That way, the data isn't even transmitted from the server if it isn't needed. That's where SQL Database security comes in.
 
 <a name="Exercise5"></a>
-## Exercise 5: Manage record permissions and masks ##
+## Exercise 5: Apply permissions and data masks ##
 
-In this exercise add row-level security and dynamic data masking to your Azure SQL Database to ensure Salesperson are only able to see the orders allowed by their organizational role (such as Sales Manager or Salesperson) as well as hiding the phone numbers for all customers.
+To limit the orders that a salesperson can see, you can take advantage of [row-level security](https://azure.microsoft.com/blog/row-level-security-for-sql-database-is-generally-available/) in Azure SQL Database. And to hide fields containing sensitive information, you can use [dynamic data masking](https://docs.microsoft.com/azure/sql-database/sql-database-dynamic-data-masking-get-started). In this exercise, you will use both to ensure that only Janet can see everyone else's orders, and that customer phone numbers are hidden from everyone.
 
-To add row-level security to your Azure SQL Database:
-
-1. In Visual Studio 2015, navigate to the **SQL Server Object Explorer**, and expand the server node to view the **Northwind** database.
- 
-    ![Expanding the server node to the Northwind database](Images/vs-expand-northwind.png)
-
-    _Expanding the server node to the Northwind database_ 
-
-1.  Right-click over the **Northwind** database and select **New Query…**.
+1. Return to Visual Studio's SQL Server Object Explorer. Right-click the Northwind database and select **New Query...** from the context menu.
   
-     ![Selecting the New Query command](Images/vs-select-new-query-02.png)
+     ![Starting a new query](Images/vs-select-new-query-02.png)
 
-    _Selecting the New Query command_		
+    _Starting a new query_		
 
-1. From the Visual Studio menu select **Edit > Insert File as Text** and browse to the **Resources > Scripts** folder included with this lab.
+1. Use the **Edit -> Insert File as Text...** command to open the file named **Apply NORTHWIND security.sql** located in the "Resources" folder of this lab. Then right-click anywhere in the script and select **Execute**. This script enables row-level security on the Orders table and effectively prevents anyone but Janet from seeing other salesperson's orders.
+
+1. Now let's use dynamic data masking to hide telephone numbers. Return to the Azure Portal and open the Northwind database.
  
-    ![Selecting the Open File command](Images/vs-selecting-file-open.png)
+    ![Opening the Northwind database](Images/open-database.png)
 
-    _Selecting the Insert File as Text command_	
+    _Opening the Northwind database_	
 
-1. Select the **Apply NORTHWIND security.sql** script and click **Open**.
+1. In the "Northwind" blade, click **Dynamic data masking** in the menu on the left.
  
-    ![Opening the Apply NORTHWIND security script](Images/vs-select-security-script.png)
+	![Accessing dynamic data masking settings](Images/portal-select-dynamic-data-masking.png)
 
-    _Opening the Apply NORTHWIND security script_	
+    _Accessing dynamic data masking settings_
 
-1. When the script loads in the main Visual Studio pane, right-click over **any area in the script** and select **Execute**.
+1. Click the **Add Mask** button for the Phone column in the Customers table. A new mask named "dbo_Customers_Phone" is created and assigned a default value of "0, xxxx, 01-01-1900." 
  
-    ![Executing the Apply NORTHWIND security script](Images/vs-execute-security-script.png)
+	![Applying a dynamic data mask](Images/portal-add-customer-mask.png)
 
-    _Executing the Apply NORTHWIND security script_	
-	
-	>This script will execute and add row-level security to the Orders table. When the script has completed executing a Query completed message will appear at the bottom of the query windows. Row-level security has now been added to your database. 
-	
-	![Query executed succesfully message](Images/vs-query-executed.png)
-
-    _Query executed succesfully message_
-
-Now let’s make sure customer phone numbers are hidden from users accessing your Azure SQL Database.	
-
-To add dynamic data masking to your Azure SQL Database we need to go back to the Azure Portal:
-
-1. Open the Azure Management Portal, if asked to login, do so with your Microsoft Account.
-
-1. Click the **“hamburger”** icon in the Azure Portal to open the side drawer.
-
-1. Click **Resource Groups** followed by **TrainingLabResources**.
-
-1. Click the **Northwind** database created in Exercise 1 to view database properties.	
+    _Applying a dynamic data mask_
  
-	![Selecting the Northwind database](Images/portal-select-northwind-database.png)
-
-    _Selecting the Northwind database_
-
-1. In the **Northwind** database properties **SETTINGS** section, select **Dynamic data masking** to open the **Dynamic data masking** panel.
+1. This mask would actually do what we want it to do. However, it gives the impression that the field contains a date. Let's change it to something more appropriate. Click **dbo_Customers_Phone**. In the "Edit Masking Rule" blade, change **Masking Field Format** to **Custom string**, and enter "xxxxxxx" (without quotation marks) in the **Padding String** box. Then click **Update** in the "Edit Masking Rule" blade, and **Save** in the "Northwind" blade.
  
-	![Opening the Dynamic data masking panel](Images/portal-select-dynamic-data-masking.png)
+	![Customizing the data mask](Images/portal-update-customer-mask.png)
 
-    _Opening the Dynamic data masking panel_
-
-1. In the **Masking rules panel**, locate the **Customers | Phone** masking recommendation and click the **Add Mask** button. A new mask named dbo_Customers_Phone has been created for customer phone number, with a default mask as 0, xxxx, 01-01-1900. 
+    _Customizing the data mask_ 
  
-	![Adding the customer phone mask](Images/portal-add-customer-mask.png)
+1. Return to Visual Studio and use the **Debug -> Start Without Debugging** command (or press **Ctrl+F5**) to launch the OrderView app.
 
-    _Adding the customer phone mask_
+1. When the app loads, Janet sees orders for all employees. Now select **Andrew** from the **SALESPERSON** list and confirm that Andrew only sees orders for Andrew.
  
-	This mask would meet the requirements; however, it gives the impression this value contains a date. Let’s change the mask to something more appropriate.
+	![Row-level security in action](Images/app-andrew-selected.png)
 
-1. Click the new **dbo_Customers_Phone** mask to open the **Edit Masking Rule** panel.
-
-1. Select **Custom string** from the **Masking field format** selection list, and then enter "xxxxxxx" (without the quotation marks) in the **Padding String** box.
-
-1. Click **Update** in the **Edit Masking Rule** menu, and the **Save** in the** Dynamic data masking** panel. Dynamic data masking has now been added to your Azure SQL Database.
+    _Row-level security in action_
  
-	![Updating the customer phone mask](Images/portal-update-customer-mask.png)
-
-    _Updating the customer phone mask_ 
+1. To see dynamic data masking in action, click an order and confirm that the customer's phone number is XXXed out in the popup.
  
-	![Saving Dynamic data mask changes](Images/portal-save-mask-changes.png)
+	![Dynamic data masking in action](Images/order-popup-2.png)
 
-    _Saving Dynamic data mask changes_ 
+    _Dynamic data masking in action_ 
 
-To view and verify row-level security and dynamic data masking, let’s go back to the OrderView app and review how orders are returned when we select different Salespersons. 
+1. Close the app and return to Visual Studio.
 
-1. Use Visual Studio's **Debug -> Start Without Debugging** command (or simply press **Ctrl+F5**) to launch the application on your computer.
-
-1. When the app loads, notice how the selected salesperson (Janet, as Sales Manager) is able to view records from multiple employees.
- 
-	![Viewing Sales Manager row-level security in the app](Images/app-manager-selected.png)
-
-    _Viewing Sales Manager row-level security in the app_
- 
-1. Now select **Andrew** from the **SELECT SALESPERSON** drop down and review how only orders created by Andrew are available for review.
- 
-	![Viewing Salesperson row-level security in the app](Images/app-salesperson-selected.png)
-
-    _Viewing Salesperson row-level security in the app_
- 
-1. To verify dynamic data masking, tap a **CUSTOMER NAME** label for any order. A small window will open with customer details, including a customer’s phone and fax number. A customer’s phone number is not available for viewing, but is instead “masked” as the value entered in Step 8 (“xxxxxx’).
- 
-	![Viewing a masked customer phone number](Images/app-show-phone-masked.png)
-
-    _Viewing a masked customer phone number_ 
-
-Notice how you didn’t need to make any changes to your data access layer (you’re Azure API App) in order to limit the information available to salespersons. A few simple scripts or settings in the database itself were enough to create these types of security features.
-
-You’ve now create an Azure SQL Database, written and deployed an Azure API app to serve as the data access layer, and created a simple UWP app to view orders based on a selected salesperson. 
+Observe that you didn't have to modify the app to enact these measures. They were entirely implemented on the back end using security features available in Azure SQL Database.
 
 <a id="Exercise6"/></a>
 ## Exercise 6: Delete the resource group
@@ -1219,11 +1170,12 @@ After a few minutes, the resource group and all of its resources will be deleted
 In this hands-on lab you learned how to:
 
 - Create an Azure SQL Database
-- Populate an Azure SQL Database with records
-- Access Azure SQL records from your apps
-- Filter and mask records based on user permissions
+- Populate an Azure SQL Database with data
+- Create an Azure API App that connects to the database
+- Write apps that access the database through the Azure API App
+- Use security features of Azure SQL Database to restrict access to data
 
-This is just a beginning, as there’s a whole lot more you can do to leverage the power of Azure SQL Database. Start experimenting with other Azure SQL Database features, especially dynamic data masking and geo-replication, as well as creating stored procedures, user-defined functions, and identifying other ways you can enhance your data strategies through the integration of Azure SQL Database into your application ecosystems.
+There is *much* more to learn about Azure SQL Database than one lab can cover. For example, you can easily [configure geo-replication](https://docs.microsoft.com/azure/sql-database/sql-database-geo-replication-overview) to safeguard your data by establishing up to four readable secondary databases in different data centers, and you can take advantage of [built-in auditing and threat protection](https://docs.microsoft.com/azure/sql-database/sql-database-security-overview) and [Transparent Data Encryption](https://msdn.microsoft.com/library/dn948096.aspx) to maximize the security of your data.  Whether the goal is to store data for a personal Web site or handle high-volume loads incurred by enterprise sites and popular mobile apps, Azure SQL Database has a solution to fit every need.
 
 ----
 
