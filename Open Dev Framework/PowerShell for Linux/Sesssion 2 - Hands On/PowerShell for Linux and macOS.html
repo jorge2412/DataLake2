@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PowerShell for Linux and macOS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>PowerShell for Linux and macOS</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>PowerShell has been available for Windows since 2006 and is a vital tool in the hands of software developers and sysadmins alike. In August 2016, Microsoft introduced PowerShell for Linux, macOS, and Windows as an <a href="https://github.com/PowerShell/PowerShell">open-source project on GitHub</a>. Microsoft works closely with the community to refine and expand the product and to make sure that it works equally well on any operating system and with a variety of Linux distros. For more information about where to get it, the many learning resources that are available, and how to contribute, see the <a href="https://blogs.msdn.microsoft.com/powershell/2016/08/18/powershell-on-linux-and-open-source-2/">official announcement</a> in the Windows PowerShell blog.</p>
+<p>PowerShell is both a command-line environment and a scripting tool. One of the more remarkable aspects of its architecture is that PowerShell commands are object-based. You use commands to manipulate properties and methods on objects to achieve the result you want. Once you learn about the numerous objects available, formulating commands is a straightforward process that is not unlike manipulating objects in code.</p>
+<p>In this lab, you will install PowerShell on the macOS or Linux and perform some exercises to familiarize yourself with PowerShell and learn about just a few of the many things it can do. Along the way, you will experience the "Zen of PowerShell" and build a foundation for further learning.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Install and run PowerShell on Linux and macOS</li>
+<li>Get help with commands as you type</li>
+<li>Use PowerShell to work with and files and directories</li>
+<li>Use regular expressions in PowerShell searches</li>
+<li>Build pipelines to perform complex tasks</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li>An Internet connection</li>
+<li>Sufficient permissions to install software on your Linux PC or Mac</li>
+<li>Ubuntu 14.04 or 16.04 or CentOS/Oracle/Red Hat 7 or higher  (Linux users)</li>
+<li>macOS 10.11 or higher (Mac users)</li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Installing PowerShell on macOS</a></li>
+<li><a href="#Exercise2">Exercise 2: Installing PowerShell on Ubuntu</a></li>
+<li><a href="#Exercise3">Exercise 3: Installing PowerShell on CentOS/Oracle/Red Hat Linux</a></li>
+<li><a href="#Exercise4">Exercise 4: Using the PowerShell Command Line</a></li>
+<li><a href="#Exercise5">Exercise 5: Listing and Copying Files</a></li>
+<li><a href="#Exercise6">Exercise 6: Working with the Contents of Files</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>45</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Installing PowerShell on macOS</h2>
+<p>The first step in using PowerShell on a Mac is to download it and install it. Installation requires an Apple computer running macOS 10.11 (Yosemite) or higher. If you are using a Linux desktop operating system, please skip this exercise and go to <a href="#Exercise2">Exercise 2</a> or <a href="#Exercise3">Exercise 3</a>.</p>
+<ol>
+<li>
+<p>Open a browser and navigate to <a href="https://github.com/PowerShell/PowerShell/releases">https://github.com/PowerShell/PowerShell/releases</a>. Then click <strong>Latest release</strong>.</p>
+<p><a href="Images/ex1_Latest_Release_Tag.png" target="_blank"><img src="Images/ex1_Latest_Release_Tag.png" alt="Finding the latest release" style="max-width:100%;"></a></p>
+<p><em>Finding the latest release</em></p>
+</li>
+<li>
+<p>Scroll down to the "Downloads" section for the latest release and click the <strong>.pkg</strong> file.</p>
+<p><a href="Images/ex1_Select_macOS_pkg.png" target="_blank"><img src="Images/ex1_Select_macOS_pkg.png" alt="Downloading the macOS package" style="max-width:100%;"></a></p>
+<p><em>Downloading the macOS package</em></p>
+</li>
+<li>
+<p>Because of <a href="https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html">App Sandbox</a> protections in macOS, you <strong>cannot</strong> just double-click the package to install it. If you do, you will see the following message. This limitation will go away once PowerShell reaches beta because Microsoft will digitally sign the package.</p>
+<p><a href="Images/ex1_macOS_Sandbox_Warning.png" target="_blank"><img src="Images/ex1_macOS_Sandbox_Warning.png" alt="macOS sandbox warning" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>To install the PowerShell package, open Finder and navigate to the "Downloads" directory. Control-click the downloaded <strong>.pkg</strong> file, select <strong>Open With</strong>, and in the flyout menu, select <strong>Installer (default)</strong>.</p>
+<p><a href="Images/ex1_Right_Click_Open.png" target="_blank"><img src="Images/ex1_Right_Click_Open.png" alt="Opening the downloaded package" style="max-width:100%;"></a></p>
+<p><em>Opening the downloaded package</em></p>
+</li>
+<li>
+<p>A sandbox warning will appear, but this one will have an Open button. Click the <strong>Open</strong> button to start the installation. Then follow the prompts to complete the installation.</p>
+<p><a href="Images/ex_1_macOS_Sandbox_Allow.png" target="_blank"><img src="Images/ex_1_macOS_Sandbox_Allow.png" alt="macOS sandbox warning" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>If you want to use PowerShell's networking functionality, you will also need to install OpenSSL. Apple deprecated OpenSSL in favor of their own libraries. The easiest way to install it is to install <a href="http://brew.sh/">Homebrew</a> and execute the following commands in a Terminal window. <strong>This is an optional step</strong> and is not required to complete this hands-on-lab.</p>
+<pre><code>brew install openssl
+brew install curl --with-openssl
+</code></pre>
+</li>
+<li>
+<p>Once PowerShell is installed, open the Terminal application. Type <code>powershell</code> and press <code>Enter</code> to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.</p>
+<p><a href="Images/ex1_PowerShell_Started.png" target="_blank"><img src="Images/ex1_PowerShell_Started.png" alt="Running PowerShell" style="max-width:100%;"></a></p>
+</li>
+</ol>
+<p>Now skip to <a href="#Exercise4">Exercise 4</a> to continue the lab. Exercises 2 and 3 are for Linux users only.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Installing PowerShell on Ubuntu</h2>
+<p>At present, PowerShell supports Ubuntu 14.04 and 16.04. If you are running either version, follow the instructions in this exercise to install PowerShell on your Ubuntu desktop. If you are running CentOS/Oracle/Red Hat Linux instead, skip to <a href="#Exercise3">Exercise 3</a>.</p>
+<ol>
+<li>
+<p>Open a Terminal window and check the Ubuntu version number by executing the following command:</p>
+<pre><code>lsb_release -r
+</code></pre>
+<p>If the reported version number is anything other than 14.04 or 16.04, please update your Ubuntu installation to one of those versions.</p>
+</li>
+<li>
+<p>Open a browser and navigate to <a href="https://github.com/PowerShell/PowerShell/releases">https://github.com/PowerShell/PowerShell/releases</a>. Then click <strong>Latest release</strong>.</p>
+<p><a href="Images/ex1_Latest_Release_Tag.png" target="_blank"><img src="Images/ex1_Latest_Release_Tag.png" alt="Finding the latest release" style="max-width:100%;"></a></p>
+<p><em>Finding the latest release</em></p>
+</li>
+<li>
+<p>Scroll down to the "Downloads" section for the latest release and click the <strong>.deb</strong> file that corresponds to your version of Ubuntu.</p>
+<p><a href="Images/ex2_Ubuntu_Releases.png" target="_blank"><img src="Images/ex2_Ubuntu_Releases.png" alt="Downloading the Ubuntu package" style="max-width:100%;"></a></p>
+<p><em>Downloading the Ubuntu package</em></p>
+</li>
+<li>
+<p>In the Terminal window, navigate to the directory that the <strong>.deb</strong> file was downloaded to. (For Mozilla Firefox, the default download location is "~/Downloads." Other browsers may differ.) Then execute the following commands, replacing <em>filename</em> with the name of the <strong>.deb</strong> file you downloaded:</p>
+ <pre> sudo dpkg -i <i>filename</i> 
+ sudo apt-get install -f</pre>
+<p>The <code>dpkg</code> command may report an error, but that will be fixed by the <code>apt-get</code> command.</p>
+</li>
+<li>
+<p>Once PowerShell is installed, type <code>powershell</code> and press <code>Enter</code> to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.</p>
+<p><a href="Images/ex2_PowerShell_Started.png" target="_blank"><img src="Images/ex2_PowerShell_Started.png" alt="Running PowerShell" style="max-width:100%;"></a></p>
+<p><em>Running PowerShell</em></p>
+</li>
+</ol>
+<p>Now skip to <a href="#Exercise4">Exercise 4</a> to continue the lab. Exercise 3 is for CentOS/Oracle/Red Hat Linux users only.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Installing PowerShell on CentOS/Oracle/Red Hat Linux</h2>
+<p>Microsoft loves Linux, as does the PowerShell team. If you are running CentOS 7, Oracle Linux 7, or Red Hat Enterprise 7, follow the instructions in this exercise to install PowerShell.</p>
+<ol>
+<li>
+<p>Open a Terminal window and check the version number of your operating system by executing the following command:</p>
+<pre><code>cat /etc/*release*
+</code></pre>
+<p>If you don't see the version number 7.0 or higher in the listing, please update your operating system.</p>
+</li>
+<li>
+<p>Open a browser and navigate to <a href="https://github.com/PowerShell/PowerShell/releases">https://github.com/PowerShell/PowerShell/releases</a>. Then click <strong>Latest release</strong>.</p>
+<p><a href="Images/ex1_Latest_Release_Tag.png" target="_blank"><img src="Images/ex1_Latest_Release_Tag.png" alt="Finding the latest release" style="max-width:100%;"></a></p>
+<p><em>Finding the latest release</em></p>
+</li>
+<li>
+<p>Scroll down to the "Downloads" section for the latest release and click the <strong>.rpm</strong> file.</p>
+<p><a href="Images/ex3_Select_CentOS-rpm.png" target="_blank"><img src="Images/ex3_Select_CentOS-rpm.png" alt="Downloading the CentOS/Oracle Linux/Red Hat package" style="max-width:100%;"></a></p>
+<p><em>Downloading the CentOS/Oracle Linux/Red Hat package</em></p>
+</li>
+<li>
+<p>In the Terminal window, navigate to the directory that the <strong>.rpm</strong> file was downloaded to. (For Mozilla Firefox, the default download location is "~/Downloads." Other browsers may differ.) Then execute the following command, replacing <em>filename</em> with the name of the <strong>.rpm</strong> file you downloaded:</p>
+ <pre> sudo yum install ./<i>filename</i></pre>
+</li>
+<li>
+<p>Once PowerShell is installed, type <code>powershell</code> and press <code>Enter</code> to start PowerShell. If all went well during the installation, you will be placed at the PowerShell prompt. Note that the user name and prompt will probably be different on your computer.</p>
+<p><a href="Images/ex3_PowerShell_Started.png" target="_blank"><img src="Images/ex3_PowerShell_Started.png" alt="Running PowerShell" style="max-width:100%;"></a></p>
+<p><em>Running PowerShell</em></p>
+</li>
+</ol>
+<p>Now proceed to <a href="#Exercise4">Exercise 4</a> to learn about the PowerShell command line.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Using the PowerShell Command Line</h2>
+<p>PowerShell offers an outstanding command-line editing experience. More than just a place to type commands, the command line is a place to <em>discover</em> commands and the parameters passed to them. In this exercise, you will learn about basic command-line features because they are a terrific aid not only when you're learning PowerShell, but when you're using it day to day.</p>
+<ol>
+<li>
+<p>Start PowerShell by opening a Terminal window and executing the following command:</p>
+<pre><code>powershell
+</code></pre>
+</li>
+<li>
+<p>PowerShell can help you complete commands — not just PowerShell commands (known as <em>cmdlets</em>), but also commands that launch other programs. A great example is the vi editor. At the PowerShell prompt, you can simply type <code>vi</code> to launch vi. Or you can ask PowerShell to list all valid commands that begin with "vi."</p>
+<p>To demonstrate, type the following — the letters "vi" followed by two presses of the <code>Tab</code> key — at the PowerShell prompt:</p>
+ <pre> vi&lt;TAB&gt;&lt;TAB&gt;</pre>
+<p>You will see something like this:</p>
+<pre><code>PS /Users/john/Documents&gt; vi             
+vi        vifs      vimdiff   vipw      visudo
+view      vim       vimtutor  vis
+PS /Users/john/Documents&gt; vi    
+</code></pre>
+<p><code>vi</code> still appears on the command line, so you can press <code>Enter</code> to launch it or continue typing. Or you can clear the command line by pressing <code>CTRL+C</code>.</p>
+</li>
+<li>
+<p>If you are thinking that what you did in the previous step is exactly what Bash does, you are correct. Now let's try something a little more interesting. Type the following at the PowerShell command prompt:</p>
+ <pre> Get-Chi&lt;TAB&gt;&lt;TAB&gt;</pre>
+<p>After the second press of the <code>Tab</code> key, the command expands into <code>Get-ChildItem</code>, which is PowerShell's equivalent of the <code>ls</code> command.</p>
+</li>
+<li>
+<p>It gets better. Add a space and a dash to the end of the command and press <code>Tab</code> twice:</p>
+ <pre> Get-ChildItem -&lt;TAB&gt;&lt;TAB&gt;</pre>
+<p>PowerShell responds by listing all possible parameters to <code>Get-ChildItem</code>:</p>
+ <pre> Path                 Attributes           WarningAction
+ LiteralPath          Directory            InformationAction
+ Filter               File                 ErrorVariable
+ Include              Hidden               WarningVariable
+ Exclude              ReadOnly             InformationVariable
+ Recurse              System               OutVariable
+ Depth                Verbose              OutBuffer
+ Force                Debug                PipelineVariable
+ Name                 ErrorAction</pre>
+<p>Of course, if you typed <code>-d</code> followed by the <code>Tab</code> key, you would only see parameters that start with the letter D.</p>
+<p>What is even more important is that any cmdlets you add to PowerShell, whether they're ones you wrote or ones written by others, benefit from full discoverability as well. It is just part of PowerShell.</p>
+</li>
+<li>
+<p>Perhaps the most important feature of the PowerShell command line is that it lets you know when executing a command would result in an error. To see for yourself, type this at the PowerShell prompt, but <strong>do not</strong> press <code>Enter</code>:</p>
+ <pre> Get-ChildItem |</pre>
+<p>This is an invalid command because it is missing the cmdlet to the right of the | operator. Look carefully at the &gt; character in the prompt:</p>
+<p><a href="Images/ex4_Command_Line_Error.png" target="_blank"><img src="Images/ex4_Command_Line_Error.png" alt="Command error" style="max-width:100%;"></a></p>
+<p>The fact that it's red means there is an error. This indicator is updated on each keystroke, so the moment the command becomes valid again, the red goes away.</p>
+<blockquote>
+<p>The error indicator lights up when executing the command right now would result in a parsing error. It doesn't light up if the command is simply wrong or doesn't exist.</p>
+</blockquote>
+</li>
+</ol>
+<p>All of these features are part of the default command-line editing experience, but that experience is extensible. You can add modules to PowerShell to add syntax highlighting and other features. One such module is <a href="https://blogs.technet.microsoft.com/heyscriptingguy/tag/psreadline/">PSReadLine</a>, which was originally developed for Windows PowerShell and is now available for macOS and Linux, too.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Listing and Copying Files</h2>
+<p><code>Get-ChildItem</code> is an example of a PowerShell cmdlet (pronounced "command-let"). It is one of hundreds of cmdlets that are included in PowerShell, and since you can write cmdlets of your own, there is no end to the number of commands you can execute at the PowerShell prompt. In this exercise, you will learn more about <code>Get-ChildItem</code> and other cmdlets for working with files. You will also learn about <em>pipelines</em>, which enable you to string cmdlets together to perform complex tasks.</p>
+<ol>
+<li>
+<p>You really only need to memorize three PowerShell cmdlets: <code>Get-Command</code>, <code>Get-Help</code>, and <code>Get-Member</code>. With these cmdlets, you can get all the information you need about other cmdlets. PowerShell follows a <em>verb-noun</em> approach to naming, which you can read about in <a href="https://msdn.microsoft.com/en-us/library/ms714428(v=vs.85).aspx">Approved Verbs for Windows PowerShell Commands</a>. Accordingly, you will see that <code>Get</code> is the verb to "specify an action that retrieves a resource."</p>
+<p>At the PowerShell prompt, execute the following command to display the parameters to <code>Get-Command</code>:</p>
+ <pre> Get-Command -&lt;TAB&gt;&lt;TAB&gt;</pre>
+<p>You will see a list of possible parameters:</p>
+ <pre> Name                  Syntax                Verbose
+ InformationVariable   Verb                  ShowCommandInfo
+ Debug                 OutVariable           Noun 
+ ArgumentList          ErrorAction           OutBuffer 
+ Module                All                   WarningAction
+ PipelineVariable      FullyQualifiedModule  ListImported          
+ InformationAction     CommandType           ParameterName         
+ ErrorVariable         TotalCount            ParameterType         
+ WarningVariable</pre>
+<p>Tucked away in the middle of the list is <code>Verb</code>. This is the one you use to find all the cmdlets that start with a specific verb. Use the following command to list all cmdlets that begin with <code>Get</code>:</p>
+ <pre> Get-Command -Verb Get</pre>
+<p>The list is long. There is even a <code>Get-Verb</code> cmdlet that lists all of the verbs you can use.</p>
+</li>
+<li>
+<p>Of all the <code>Get</code> cmdlets, the two that you will focus on for now are <code>Get-Item</code> and <code>Get-ChildItem</code>. These are the primary cmdlets PowerShell users use to list files and directories and the contents of directories. What is the difference between the two? Execute the following two commands and read the output carefully:</p>
+ <pre> Get-Help Get-Item
+ Get-Help Get-ChildItem</pre>
+<p>Both cmdlets "get" files and folders. The main difference is that <code>Get-Item</code> retrieves a single item, whereas <code>Get-ChildItem</code> returns all the files and folders in the specified path. To list the contents of a directory, <code>Get-ChildItem</code> is the cmdlet you want to use.</p>
+</li>
+<li>
+<p>Viewing help information in a Terminal window is great for getting a quick read on what a cmdlet does, but when you want to dig deeper, you can go online by including <code>-online</code> in the command. To demonstrate, type the following command:</p>
+ <pre> Get-Help Get-ChildItem -online</pre>
+<blockquote>
+<p>If you are using Mozilla Firefox on CentOS or Ubuntu, you may see some extranious output in the Terminal window if Firefox wasn't already running.</p>
+</blockquote>
+</li>
+<li>
+<p>Assuming you downloaded this lab as a zip file and expanded it to a local directory on your hard disk, use a <code>cd</code> command to navigate to the directory containing this lab (the directory containing the MD or HTML file you are reading). Then execute the following command to list the files and directories in the current directory:</p>
+ <pre> Get-ChildItem</pre>
+<p>The output should include a subdirectory named "resources." Use the following command to view the contents of the "resources" directory:</p>
+ <pre> Get-ChildItem ./resources/ -Recurse</pre>
+<p>You should find that the subdirectory contains 24 text files with names such as a.txt and b.txt.</p>
+</li>
+<li>
+<p>Now execute the following command to list all the cmdlets that begin with <code>Copy</code>:</p>
+ <pre> Get-Command -Verb Copy</pre>
+<p>If you wanted to copy a file, which cmdlet do you think you might use? If you guessed <code>Copy-Item</code>, you are correct. This is such an important cmdlet, you should browse the examples in the online help:</p>
+ <pre> Get-Help Copy-Item -Online</pre>
+</li>
+<li>
+<p>Example 2 in the online help shows how to copy the contents of a directory to another directory, which you will do in a moment. Before you jump feet-first into doing a <code>Copy-Item</code>, however, it might help to understand precisely what the command will do.</p>
+<p>Enter PowerShell's most powerful parameter: <code>-WhatIf</code>. This parameter can save your job — especially if you're about to delete a bunch of files or recursively delete a bunch of directories. To demonstrate, type the following command to preview what the <code>Copy-Item</code> command will do when passed a specific set of parameters:</p>
+ <pre> Copy-Item ./resources/ ./workspace -Recurse -WhatIf</pre>
+<p>In this case, <code>Copy-Item</code> will copy the contents of the "resources" subdirectory to the "workspace" directory.</p>
+</li>
+<li>
+<p>A good habit to get into with PowerShell is to be explicit with parameters so the results of a command don't depend on parameter order. To copy the files in the "resources" directory to the "workspace" directory (don't worry; the "workspace" directory will be created for you if it doesn't already exist), execute the following command and notice the explicit parameter usage:</p>
+ <pre> Copy-Item -Path ./resources/ -Destination ./workspace -Recurse</pre>
+</li>
+<li>
+<p>Now that the files have been copied, change to the "workspace" directory with the following command:</p>
+ <pre> cd workspace</pre>
+</li>
+<li>
+<p>Now that you know the basics of listing (and copying) files and directories, it is time to learn about the PowerShell pipeline. The first thing to realize is that you can use the piping operator | to "pipe" the output from one cmdlet to the input to another. The second thing to know is that in PowerShell, everything is an object. Even cmdlets return objects. Take this command, for example:</p>
+ <pre> Get-ChildItem | Get-Member</pre>
+<p>The results show that the object returned by <code>Get-ChildItem</code> is an object of type <em>System.IO.FileInfo</em>. Furthermore, it lists the methods and properties available on that object.  The list is a little hard to read because the methods and properties aren't listed in alphabetical order. You can fix that by piping the output from <code>Get-Member</code> to the <code>Sort-Object</code> cmdlet and specifying a property name. The following command sorts the values returned by <code>Get-Member</code> on the <em>Name</em> property:</p>
+ <pre> Get-ChildItem | Get-Member | Sort-Object Name</pre>
+</li>
+<li>
+<p>Notice that the alphabetized list contains a property named <em>FullName</em>. As you might suspect, this property returns the full name (path plus file name) of a file-system object. Suppose you wanted to list each file in the current directory using full names. You can use <code>ForEach-Object</code> to iterate over the files and display each file's <em>FullName</em> property. Demonstrate by executing the following command at the PowerShell prompt:</p>
+ <pre> Get-ChildItem | ForEach-Object FullName</pre>
+<p>The command you just executed uses the newer format for <code>ForEach-Object</code> where you simply specify the property name. The old format, which is used by many of the examples found on the Internet and will always be supported (and can still be handy at times), looks like this:</p>
+ <pre> Get-ChildItem | ForEach-Object {$_.FullName}</pre>
+<p>In a <code>ForEach-Object</code> loop, <code>$_</code> represents the object that is currently being iterated over.</p>
+</li>
+<li>
+<p>The next task is to sort the list of files by their sizes, but in reverse order. One of the many properties present in <em>System.IO.FileInfo</em> objects is the <em>Length</em> property. What is the output when you execute the following command?</p>
+ <pre> Get-ChildItem | Sort-Object Length</pre>
+<p>The default sort order is ascending, but check out the online help for <code>Sort-Object</code> to see if there might be a parameter for sorting in descending order:</p>
+ <pre> Get-Help Sort-Object</pre>
+</li>
+<li>
+<p>Did you find the appropriate parameter? Use the following pipelined command to see the results:</p>
+ <pre> Get-ChildItem | Sort-Object Length -Descending</pre>
+</li>
+<li>
+<p>The final task in this exercise is to list only the files that are between 800 and 1024 bytes in length (exclusive). Here, PowerShell's <code>Where-Object</code> cmdlet will come in handy, because it accepts a conditional expression. The conditional expression can use comparison operators such as <code>-lt</code> (less than), <code>-gt</code> (greater than), and <code>-and</code>. Here is the command that lists files of a certain size:</p>
+ <pre> Get-ChildItem | Where-Object {($_.Length -gt 800) -and ($_.Length -lt 1024)}</pre>
+<p>Run the command and the output should look like this:</p>
+ <pre> Mode                LastWriteTime         Length Name
+ ----                -------------         ------ ----
+ -a----       12/23/2016   9:36 AM            860 a.txt
+ -a----       12/23/2016   9:36 AM            835 f.txt
+ -a----       12/23/2016   9:36 AM           1003 i.txt
+ -a----       12/23/2016   9:36 AM            946 t.txt
+ -a----       12/23/2016   9:36 AM            815 y.txt
+ -a----       12/23/2016   9:36 AM            863 z.txt</pre>
+</li>
+</ol>
+<p>Constructing pipelines by using the piping operator to pipe output from one cmdlet to another, and using conditional expressions in those pipelines, is just one of the tools used by PowerShell users to accomplish file-system tasks. Of course, these concepts don't apply just to cmdlets that operate on the file system. They apply to <em>all</em> cmdlets, even custom ones used to extend PowerShell.</p>
+<p><a name="Exercise6"></a></p>
+<h2>Exercise 6: Working with the Contents of Files</h2>
+<p>It is time to take your PowerShell knowledge up a notch. In this exercise, you will learn how to work with the contents of files and how to find specific data in those files. You will also learn how to glean some interesting statistics from what you find. Be warned that you will be executing some complicated "one liners." That is PowerShell-speak for accomplishing a lot with a little and not having to write an app to do the work.</p>
+<ol>
+<li>
+<p>You already know how to list files; now you need to know how look inside files. Because you will be working with text files in the "resources" directory included with this lab, you need to find cmdlets that can work with strings. Execute the following command and see if there is a cmdlet that might help:</p>
+ <pre> Get-Command *string*</pre>
+<p>The <code>Get-Command</code> cmdlet happily accepts wildcards, so the results include all cmdlets with "string" in the name. One of those is <code>Select-String</code>. Pull up help for <code>Select-String</code> with the following command:</p>
+ <pre> Get-Help Select-String -Online</pre>
+<p>Read carefully through the help to learn what the <code>Select-String</code> cmdlet can do.</p>
+</li>
+<li>
+<p>Suppose you wanted to list all the lines containing "we" in the files in the current directory. The online help for <code>Select-String</code> reveals that it supports two parameters related to pattern matching: <code>-SimpleMatch</code> for basic string matching, and <code>-Pattern</code> for regular-expression matching. Execute the following command to demonstrate <code>-SimpleMatch</code>:</p>
+ <pre> Get-ChildItem | Select-String -SimpleMatch "we"</pre>
+<p>That yields dozens of matches. Look through the output and see how many "we" strings you matched.</p>
+</li>
+<li>
+<p>The previous command listed lines containing "we", but it also listed lines containing "were," "wealthy," and "weather," among others. Suppose you <em>only</em> wanted to find lines containing the word "we." One solution might be to search for "we " ("we" with a space at the end). Execute the following command to see how well that works:</p>
+ <pre> Get-ChildItem | Select-String -SimpleMatch "we "</pre>
+<p>This seems like a reasonable solution, but is it? What might you be missing here? Think about that for a moment.</p>
+</li>
+<li>
+<p>The previous command finds occurrences of "we" with a trailing space. But what happens if a line ends with "we" followed by a line break? What you <em>should</em> be searching for is "we" preceeded by either the start of the line or whitespace, or "we" followed by either the end of the line or whitespace. That screams regular expressions. What is the old joke about regular expressions? "You have a problem and you solve it with a regular expression. Now you have two problems!"</p>
+<p>Under the hood, PowerShell uses the .NET regular expression library. Here is the <a href="https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx">Regular Expression Quick Reference</a>, which is very helpful when working with regular expressions in PowerShell.</p>
+<p>For this step, the regular expression you want to use is <code>(^|\s)we($|\s)</code>. You can read this as "(beginline or whitespace)we(endline or whitespace)." Execute the following command at the PowerShell prompt:</p>
+ <pre> Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)"</pre>
+<p>If you compare the output of the last two commands, you will see that the latter found one more line than the former.</p>
+</li>
+<li>
+<p>What if the goal was to count the number of times the word "we" appears in these text files? You could manually count the lines, but why not let PowerShell count them for you? All you need is a cmdlet to do the counting. Start by executing the following command to list all the verbs that you can use in a PowerShell command:</p>
+ <pre> Get-Verb</pre>
+<p>Scroll down the list and pay attention to the "Diagnostic" group:</p>
+ <pre> Verb        Group
+ ----        -----
+ Debug       Diagnostic    
+ Measure     Diagnostic    
+ Ping        Diagnostic    
+ Repair      Diagnostic    
+ Resolve     Diagnostic    
+ Test        Diagnostic    
+ Trace       Diagnostic</pre>
+<p>The verb <code>Measure</code> looks promising. Now list the cmdlets that start with <code>Measure</code> with the following command:</p>
+ <pre> Get-Command -Verb Measure</pre>
+<p>The output reveals two cmdlets — <code>Measure-Command</code> and <code>Measure-Object</code> — that look interesting. Use the following command to view the online help for the latter:</p>
+ <pre> Get-Help Measure-Object -Online</pre>
+</li>
+<li>
+<p>Now try piping the output from <code>Select-String</code> to <code>Measure-Object</code>:</p>
+ <pre> Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)" | Measure-Object</pre>
+<p>The text includes a count, but it also includes a sum, an average, and other values that aren't relevant in this scenario:</p>
+ <pre> Count    : 6
+ Average  : 
+ Sum      : 
+ Maximum  : 
+ Minimum  : 
+ Property :</pre>
+</li>
+<li>
+<p>Execute the following command, which uses <code>Select-Object</code> to filter out unwanted information:</p>
+ <pre> Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)" | Measure-Object | Select-Object Count</pre>
+<p>Now the output tells you exactly what you wanted to know: how many times the word "we" appears in the text of the files that you searched.</p>
+</li>
+<li>
+<p><code>Measure-Object</code> is an extremely useful cmdlet. For example, to compute the total size of a set of files and to show the average length along with minimum and maximum lengths, you could do the following:</p>
+ <pre> Get-ChildItem | Measure-Object -Property Length -Average -Sum -Maximum -Minimum</pre>
+<p>Try it and see. Pretty cool, huh?</p>
+</li>
+<li>
+<p>How about a more complex example that really demonstrates the power of PowerShell? Suppose you want to replace all occurrences of "we" in the files with "nous," which is French for "we." Rather than write an app to do it, you can do it with PowerShell.</p>
+<p>A variable in PowerShell is represented as a dollar sign followed by the variable name. Some variables, such as <code>$PSVersionTable</code>, are built into PowerShell already. Execute the following command to see the value of that variable:</p>
+ <pre> $PSVersionTable</pre>
+<p>This is a useful variable because it reveals which version of PowerShell you are running.</p>
+</li>
+<li>
+<p>Now try the following command:</p>
+ <pre> Get-ChildItem  |
+ ForEach-Object {
+     $content = ($_ | Get-Content) 
+     $content = $content -replace "(^|\s)we($|\s)"," nous "
+     $content | Set-Content $_.FullName
+ }</pre>
+<p>This one-liner (it's technically just one command) gets the files in the current directory and pipes them to <code>ForEach-Object</code>. Inside the curly braces is a script block, where you can do pretty much anything you want. The first line reads the current file and writes its contents to the variable named <code>$content</code>. The second line does a search-and-replace on the value stored in the <code>$content</code> variable and assigns the result back to <code>$content</code>. The third line pipes the value of the <code>$content</code> variable to the <code>Set-Content</code> cmdlet, which writes the content to the current file, thus overwriting the original content.</p>
+<p>That is an amazing amount of work for a single command! You might be wondering why the replacement text is " nous " (notice the surrounding spaces) rather than "nous." That's because the regular expression matches the whitespace on both sides of "we," so if you don't put spaces around "nous," you will lose them.</p>
+</li>
+<li>
+<p>To verify the replacement worked as intended, execute the following command:</p>
+ <pre> Get-ChildItem | Select-String "nous"</pre>
+</li>
+<li>
+<p>If you want to delete the "workspace" directory, use the following commands:</p>
+ <pre> cd ..
+ Remove-Item ./workspace/ -Recurse -Force</pre>
+</li>
+</ol>
+<p>This exercise covered a lot of ground. You learned how to search files for text using simple matches and regular expressions, and how to measure the number of items returned by a cmdlet. You also saw a one-liner that performs a search-and-replace. Use these as a starting point for further exploration.</p>
+<p><a name="Summary"></a></p>
+<h2>Summary</h2>
+<p>In this hands-on lab, you learned how to:</p>
+<ul>
+<li>Install and run PowerShell on Linux and macOS</li>
+<li>Get help with commands as you type</li>
+<li>Use PowerShell to work with and files and directories</li>
+<li>Use regular expressions in PowerShell searches</li>
+<li>Build pipelines to perform complex tasks</li>
+</ul>
+<p>A recommended next step is to take time to read the PowerShell documentation at <a href="https://msdn.microsoft.com/en-us/powershell/scripting/powershell-scripting">https://msdn.microsoft.com/en-us/powershell/scripting/powershell-scripting</a>. You might also find <a href="https://technet.microsoft.com/en-us/library/dd772285.aspx">A Task-Based Guide to Windows PowerShell Cmdlets</a> helpful as a way to get to know your way around some of the cmdlets. Ultimately, the more you work with PowerShell, the more intutive it will feel and the more productive you will be with it. And now that dictum applies to Linux and macOS users as well as Windows users!</p>
+<hr>
+<p>Copyright 2016 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

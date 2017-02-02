@@ -8,9 +8,9 @@
 
 PowerShell has been available for Windows since 2006 and is a vital tool in the hands of software developers and sysadmins alike. In August 2016, Microsoft introduced PowerShell for Linux, macOS, and Windows as an [open-source project on GitHub](https://github.com/PowerShell/PowerShell). Microsoft works closely with the community to refine and expand the product and to make sure that it works equally well on any operating system and with a variety of Linux distros. For more information about where to get it, the many learning resources that are available, and how to contribute, see the [official announcement](https://blogs.msdn.microsoft.com/powershell/2016/08/18/powershell-on-linux-and-open-source-2/) in the Windows PowerShell blog.
 
-PowerShell is both a command/terminal environment and a scripting tool. One of the more remarkable aspects of its architecture is that PowerShell commands are object-based. You use commands to manipulate the properties and methods on objects to achieve the result you want. Once you learn about the numerous objects available, formulating commands is a straightforward process that is not unlike manipulating objects in code.
+PowerShell is both a command-line environment and a scripting tool. One of the more remarkable aspects of its architecture is that PowerShell commands are object-based. You use commands to manipulate properties and methods on objects to achieve the result you want. Once you learn about the numerous objects available, formulating commands is a straightforward process that is not unlike manipulating objects in code.
 
-In this lab, you will install PowerShell on the macOS or Linux and perform a few exercises to familiarize yourself with PowerShell and learn about a few of the many things it can do. Along the way, you will experience the "Zen of PowerShell" and build a foundation for further learning.
+In this lab, you will install PowerShell on the macOS or Linux and perform some exercises to familiarize yourself with PowerShell and learn about just a few of the many things it can do. Along the way, you will experience the "Zen of PowerShell" and build a foundation for further learning.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -18,10 +18,10 @@ In this lab, you will install PowerShell on the macOS or Linux and perform a few
 In this hands-on lab, you will learn how to:
 
 - Install and run PowerShell on Linux and macOS
-- Working with and manipulating files
-- Finding the right command (cmdlet) in PowerShell for accomplishing a task
-- How to get help in PowerShell
-- How to build complicated pipelines to accomplish a lot of work without coding
+- Get help with commands as you type
+- Use PowerShell to work with and files and directories
+- Use regular expressions in PowerShell searches
+- Build pipelines to perform complex tasks
 
 <a name="Prerequisites"></a>
 ### Prerequisites ###
@@ -29,7 +29,7 @@ In this hands-on lab, you will learn how to:
 The following are required to complete this hands-on lab:
 
 - An Internet connection
-- Sufficient permissions to install software on your Linux desktop or Mac
+- Sufficient permissions to install software on your Linux PC or Mac
 - Ubuntu 14.04 or 16.04 or CentOS/Oracle/Red Hat 7 or higher  (Linux users)
 - macOS 10.11 or higher (Mac users)
 
@@ -44,7 +44,7 @@ This hands-on lab includes the following exercises:
 - [Exercise 2: Installing PowerShell on Ubuntu](#Exercise2)
 - [Exercise 3: Installing PowerShell on CentOS/Oracle/Red Hat Linux](#Exercise3)
 - [Exercise 4: Using the PowerShell Command Line](#Exercise4)
-- [Exercise 5: Copying and Manipulating Files](#Exercise5)
+- [Exercise 5: Listing and Copying Files](#Exercise5)
 - [Exercise 6: Working with the Contents of Files](#Exercise6)
  
 Estimated time to complete this lab: **45** minutes.
@@ -66,11 +66,11 @@ The first step in using PowerShell on a Mac is to download it and install it. In
 
     _Downloading the macOS package_
 
-1. Because of [App Sandbox](https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html) protections in macOS, you **cennot** just double-click the installer to run it. If you do, you will see the following message. This limitation will go away once PowerShell reaches beta because Microsoft will digitally sign the installer.
+1. Because of [App Sandbox](https://developer.apple.com/library/content/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html) protections in macOS, you **cannot** just double-click the package to install it. If you do, you will see the following message. This limitation will go away once PowerShell reaches beta because Microsoft will digitally sign the package.
 
     ![macOS sandbox warning](Images/ex1_macOS_Sandbox_Warning.png)
 
-1. To install the PowerShell package, open Finder and navigate to the "Downloads" directory. Control-click the downloaded **.pkg** file, select **Open With**, and in the flyout menu, select **Installer (default)** (or "Installer.app (default)" if your Mac is configured to show file-name extensions).
+1. To install the PowerShell package, open Finder and navigate to the "Downloads" directory. Control-click the downloaded **.pkg** file, select **Open With**, and in the flyout menu, select **Installer (default)**.
 
     ![Opening the downloaded package](Images/ex1_Right_Click_Open.png)
 
@@ -145,7 +145,7 @@ Microsoft loves Linux, as does the PowerShell team. If you are running CentOS 7,
     cat /etc/*release*
     ```
 
-    If you don't see the version number 7.0 or higher, please update your operating system.
+    If you don't see the version number 7.0 or higher in the listing, please update your operating system.
 
 1. Open a browser and navigate to https://github.com/PowerShell/PowerShell/releases. Then click **Latest release**.
 
@@ -159,7 +159,7 @@ Microsoft loves Linux, as does the PowerShell team. If you are running CentOS 7,
 
     _Downloading the CentOS/Oracle Linux/Red Hat package_
 
-1. In the Terminal window, navigate to the directory that the **.rpm** file was downloaded to. (For Mozilla Firefox, the default download location is "~/Downloads." Other browsers may differ.) Then execute the following commands, replacing *filename* with the name of the **.rpm** file you downloaded:
+1. In the Terminal window, navigate to the directory that the **.rpm** file was downloaded to. (For Mozilla Firefox, the default download location is "~/Downloads." Other browsers may differ.) Then execute the following command, replacing *filename* with the name of the **.rpm** file you downloaded:
 
     <pre>
     sudo yum install ./<i>filename</i></pre>
@@ -183,7 +183,7 @@ PowerShell offers an outstanding command-line editing experience. More than just
 	powershell
 	```
 
-1. The PowerShell command line supports auto-complete — not just for PowerShell commands (known as *cmdlets*), but for other programs installed on your computer. A great example is the vi editor. At the PowerShell prompt, you can simply type `vi` to launch vi. Or you can ask PowerShell to list all valid commands that begin with "vi."
+1. PowerShell can help you complete commands — not just PowerShell commands (known as *cmdlets*), but also commands that launch other programs. A great example is the vi editor. At the PowerShell prompt, you can simply type `vi` to launch vi. Or you can ask PowerShell to list all valid commands that begin with "vi."
 
 	To demonstrate, type the following — the letters "vi" followed by two presses of the `Tab` key — at the PowerShell prompt:
 
@@ -230,25 +230,25 @@ PowerShell offers an outstanding command-line editing experience. More than just
 
     What is even more important is that any cmdlets you add to PowerShell, whether they're ones you wrote or ones written by others, benefit from full discoverability as well. It is just part of PowerShell.
 
-1. Perhaps the most important feature of the PowerShell command line is that the prompt itself lets you know when there's an error. To see for yourself, type this at the PowerShell prompt, and then press `Enter`:
+1. Perhaps the most important feature of the PowerShell command line is that it lets you know when executing a command would result in an error. To see for yourself, type this at the PowerShell prompt, but **do not** press `Enter`:
 
     <pre>
     Get-ChildItem |</pre>
 
-    That is an invalid command because it is missing the cmdlet to the right of the | operator. Look carefully at the &gt; character in the prompt:
+    This is an invalid command because it is missing the cmdlet to the right of the | operator. Look carefully at the &gt; character in the prompt:
 
     ![Command error](Images/ex4_Command_Line_Error.png)
 
-    The fact that it's red means there is an error. This quick error indicator is evaluated on each keystroke so that you know when the error is fixed.
+    The fact that it's red means there is an error. This indicator is updated on each keystroke, so the moment the command becomes valid again, the red goes away.
 
 	> The error indicator lights up when executing the command right now would result in a parsing error. It doesn't light up if the command is simply wrong or doesn't exist.
 
-All of these features are part of the default command-line editing experience, but that experience is extensible. You can add modules to PowerShell to add syntax highlighting and other features to the command line. One such module is [PSReadLine](https://blogs.technet.microsoft.com/heyscriptingguy/tag/psreadline/), which was originally developed for Windows PowerShell and is now available for macOS and Linux, too.
+All of these features are part of the default command-line editing experience, but that experience is extensible. You can add modules to PowerShell to add syntax highlighting and other features. One such module is [PSReadLine](https://blogs.technet.microsoft.com/heyscriptingguy/tag/psreadline/), which was originally developed for Windows PowerShell and is now available for macOS and Linux, too.
 
 <a name="Exercise5"></a>
-## Exercise 5: Copying and Manipulating Files ##
+## Exercise 5: Listing and Copying Files ##
 
-`Get-ChildItem` is an example of a PowerShell cmdlet (pronounced "command-let"). It is one of more than 200 cmdlets that are currently included in PowerShell, and since you can write cmdlets of your own, there is no end to the number of commands you can execute at the PowerShell prompt. In this exercise, you will learn more about `Get-ChildItem` and other cmdlets for working with files. You will also learn about *pipelines*, which enable you to string cmdlets together to perform complex tasks.
+`Get-ChildItem` is an example of a PowerShell cmdlet (pronounced "command-let"). It is one of hundreds of cmdlets that are included in PowerShell, and since you can write cmdlets of your own, there is no end to the number of commands you can execute at the PowerShell prompt. In this exercise, you will learn more about `Get-ChildItem` and other cmdlets for working with files. You will also learn about *pipelines*, which enable you to string cmdlets together to perform complex tasks.
 
 1. You really only need to memorize three PowerShell cmdlets: `Get-Command`, `Get-Help`, and `Get-Member`. With these cmdlets, you can get all the information you need about other cmdlets. PowerShell follows a _verb-noun_ approach to naming, which you can read about in [Approved Verbs for Windows PowerShell Commands](https://msdn.microsoft.com/en-us/library/ms714428(v=vs.85).aspx). Accordingly, you will see that `Get` is the verb to "specify an action that retrieves a resource."
 
@@ -302,7 +302,7 @@ All of these features are part of the default command-line editing experience, b
     <pre>
     Get-ChildItem ./resources/ -Recurse</pre>
 
-    You should find that the subdirectory contains 26 text files: a.txt, b.txt, and so on.
+    You should find that the subdirectory contains 24 text files with names such as a.txt and b.txt.
 
 1. Now execute the following command to list all the cmdlets that begin with `Copy`:
 
@@ -314,7 +314,7 @@ All of these features are part of the default command-line editing experience, b
     <pre>
     Get-Help Copy-Item -Online</pre>
 
-1. Example 2 in the online help shows how to copy the contents of a directory to another directory, which you will do in a moment. But before you jump feet-first into doing a `Copy-Item`, however, it might help to understand precisely what the command will do.
+1. Example 2 in the online help shows how to copy the contents of a directory to another directory, which you will do in a moment. Before you jump feet-first into doing a `Copy-Item`, however, it might help to understand precisely what the command will do.
  
 	Enter PowerShell's most powerful parameter: `-WhatIf`. This parameter can save your job — especially if you're about to delete a bunch of files or recursively delete a bunch of directories. To demonstrate, type the following command to preview what the `Copy-Item` command will do when passed a specific set of parameters: 
 
@@ -338,12 +338,12 @@ All of these features are part of the default command-line editing experience, b
     <pre>
     Get-ChildItem | Get-Member</pre>
 
-    The results show that the object returned by `Get-ChildItem` is an object whose type is *System.IO.FileInfo*. Furthermore, it lists the methods and properties available on that object.  The list is a little hard to read because the methods and properties aren't listed in alphabetical order. You can fix that by piping the output from `Get-Member` to the `Sort-Object` cmdlet and specifying a property name. The following command sorts the values returned by `Get-Member` on the *Name* property:
+    The results show that the object returned by `Get-ChildItem` is an object of type *System.IO.FileInfo*. Furthermore, it lists the methods and properties available on that object.  The list is a little hard to read because the methods and properties aren't listed in alphabetical order. You can fix that by piping the output from `Get-Member` to the `Sort-Object` cmdlet and specifying a property name. The following command sorts the values returned by `Get-Member` on the *Name* property:
 
     <pre>
     Get-ChildItem | Get-Member | Sort-Object Name</pre>
 
-1. Notice that alphabetized list contains a property named *FullName*. As you might suspect, this property returns the full name (path plus file name) of a file-system object. Suppose you wanted to list each file in the current directory using full names. You can use `ForEach-Object` to iterate over the files and display each file's *FullName* property. Demonstrate by executing the following command at the PowerShell prompt:
+1. Notice that the alphabetized list contains a property named *FullName*. As you might suspect, this property returns the full name (path plus file name) of a file-system object. Suppose you wanted to list each file in the current directory using full names. You can use `ForEach-Object` to iterate over the files and display each file's *FullName* property. Demonstrate by executing the following command at the PowerShell prompt:
 
     <pre>
     Get-ChildItem | ForEach-Object FullName</pre>
@@ -353,17 +353,19 @@ All of these features are part of the default command-line editing experience, b
     <pre>
     Get-ChildItem | ForEach-Object {$_.FullName}</pre>
 
+	In a `ForEach-Object` loop, `$_` represents the object that is currently being iterated over.
+
 1. The next task is to sort the list of files by their sizes, but in reverse order. One of the many properties present in *System.IO.FileInfo* objects is the *Length* property. What is the output when you execute the following command?
 
     <pre>
     Get-ChildItem | Sort-Object Length</pre>
 
-    The default sort order is ascending, but check out the online help for `Sort-Object` to see if there might be a parameter for soring in descending order:
+    The default sort order is ascending, but check out the online help for `Sort-Object` to see if there might be a parameter for sorting in descending order:
 
     <pre>
     Get-Help Sort-Object</pre>
 
-1. Did you find the appropriate parameter? Use the following pipeline to see the results:
+1. Did you find the appropriate parameter? Use the following pipelined command to see the results:
 
     <pre>
     Get-ChildItem | Sort-Object Length -Descending</pre>
@@ -385,12 +387,12 @@ All of these features are part of the default command-line editing experience, b
 	-a----       12/23/2016   9:36 AM            815 y.txt
 	-a----       12/23/2016   9:36 AM            863 z.txt</pre>
 
-Constructing pipelines by using the piping operator to pipe output from one cmdlet to another, and using conditional expressions in those pipelines, is just one of the tools used by PowerShell users to accomplish file-system tasks. Of course, these concepts don't apply just to cmdlets that operate on the file system. They apply to *all* cmdlets, even custom ones that you use to extend PowerShell.
+Constructing pipelines by using the piping operator to pipe output from one cmdlet to another, and using conditional expressions in those pipelines, is just one of the tools used by PowerShell users to accomplish file-system tasks. Of course, these concepts don't apply just to cmdlets that operate on the file system. They apply to *all* cmdlets, even custom ones used to extend PowerShell.
 
 <a name="Exercise6"></a>
 ## Exercise 6: Working with the Contents of Files ##
 
-It is time to take your PowerShell knowledge up a notch. In this exercise, you will learn how to work with the contents of files and how to find specific data in those files. You will also learn how to glean some interesting statistics from what you find. Be warned that you will be executing some complicated "one liners." That is PowerShell-speak for accomplishing a lot with a little and not having to write a program to do the same work.
+It is time to take your PowerShell knowledge up a notch. In this exercise, you will learn how to work with the contents of files and how to find specific data in those files. You will also learn how to glean some interesting statistics from what you find. Be warned that you will be executing some complicated "one liners." That is PowerShell-speak for accomplishing a lot with a little and not having to write an app to do the work.
 
 1. You already know how to list files; now you need to know how look inside files. Because you will be working with text files in the "resources" directory included with this lab, you need to find cmdlets that can work with strings. Execute the following command and see if there is a cmdlet that might help:
 
@@ -418,7 +420,7 @@ It is time to take your PowerShell knowledge up a notch. In this exercise, you w
 
     This seems like a reasonable solution, but is it? What might you be missing here? Think about that for a moment. 
 
-1. The previous command finds occurrences of "we" with a trailing space. But what happens if a line ends with "we" followed by a line break? What you *should* be searching for is "we" preceeded by either the start of the line or whitespace, and instances of "we" followed by either the end of the line or whitespace. That screams regular expressions. What is the old joke about regular expressions? "You have a problem and you solve it with a regular expression. Now you have two problems!" 
+1. The previous command finds occurrences of "we" with a trailing space. But what happens if a line ends with "we" followed by a line break? What you *should* be searching for is "we" preceeded by either the start of the line or whitespace, or "we" followed by either the end of the line or whitespace. That screams regular expressions. What is the old joke about regular expressions? "You have a problem and you solve it with a regular expression. Now you have two problems!" 
 
     Under the hood, PowerShell uses the .NET regular expression library. Here is the [Regular Expression Quick Reference](https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx), which is very helpful when working with regular expressions in PowerShell.
 
@@ -450,7 +452,7 @@ It is time to take your PowerShell knowledge up a notch. In this exercise, you w
     The verb `Measure` looks promising. Now list the cmdlets that start with `Measure` with the following command:
 
     <pre>
-    Get-Command -Verb measure</pre>
+    Get-Command -Verb Measure</pre>
     
     The output reveals two cmdlets — `Measure-Command` and `Measure-Object` — that look interesting. Use the following command to view the online help for the latter:
 
@@ -493,19 +495,19 @@ It is time to take your PowerShell knowledge up a notch. In this exercise, you w
     <pre>
     $PSVersionTable</pre>
 
-    This is a useful variable because it shows you which version of PowerShell you are running.
+    This is a useful variable because it reveals which version of PowerShell you are running.
 
 1. Now try the following command:
 
     <pre>
     Get-ChildItem  |
-    Foreach-Object {
+    ForEach-Object {
         $content = ($_ | Get-Content) 
         $content = $content -replace "(^|\s)we($|\s)"," nous "
         $content | Set-Content $_.FullName
     }</pre>
 
-    This one-liner (it's technically just one command) gets the files in the current directory and pipes them to `Foreach-Object`. Inside the curly braces is a script block, where you can do pretty much anything you want. The first line reads the current file and writes its contents to the variable named `$content`. The second line does a search-and-replace on the value stored in the `$content` variable and assigns the result back to `$content`. The third line pipes the value of the `$content` variable to the `Set-Content` cmdlet, which writes the content to the current file, thus overwriting the original content.
+    This one-liner (it's technically just one command) gets the files in the current directory and pipes them to `ForEach-Object`. Inside the curly braces is a script block, where you can do pretty much anything you want. The first line reads the current file and writes its contents to the variable named `$content`. The second line does a search-and-replace on the value stored in the `$content` variable and assigns the result back to `$content`. The third line pipes the value of the `$content` variable to the `Set-Content` cmdlet, which writes the content to the current file, thus overwriting the original content.
 
     That is an amazing amount of work for a single command! You might be wondering why the replacement text is " nous " (notice the surrounding spaces) rather than "nous." That's because the regular expression matches the whitespace on both sides of "we," so if you don't put spaces around "nous," you will lose them.
 
@@ -520,29 +522,20 @@ It is time to take your PowerShell knowledge up a notch. In this exercise, you w
     cd ..
     Remove-Item ./workspace/ -Recurse -Force</pre>
 
-This exercise covered a lot of ground. You learned how to search files for text using simple matches and regular expressions, and how to measure the number of items returned by a cmdlet. You also saw a one-liner that performs a search-and-replace. Use these as a starting point for exploring PowerShell on your own.
+This exercise covered a lot of ground. You learned how to search files for text using simple matches and regular expressions, and how to measure the number of items returned by a cmdlet. You also saw a one-liner that performs a search-and-replace. Use these as a starting point for further exploration.
 
 <a name="Summary"></a>
 ## Summary ##
 
-In this hands-on lab you learned how to:
+In this hands-on lab, you learned how to:
 
 - Install and run PowerShell on Linux and macOS
-- Working with and manipulating files
-- Finding the right command (cmdlet) in PowerShell for accomplishing a task
-- How to get help in PowerShell
-- How to build complicated pipelines to accomplish a lot of work without coding
+- Get help with commands as you type
+- Use PowerShell to work with and files and directories
+- Use regular expressions in PowerShell searches
+- Build pipelines to perform complex tasks
 
-PowerShell is a wonderful addition to the open source world. Having a command line environment that makes for easy discoverability and avoids "pray-based parsing" is a huge boon to macOS and Linux. This hands-on lab tried to teach you the Zen of PowerShell so you have some confidence when staring at that blinking cursor.
-
-To continue your PowerShell journey, take a good read of the [PowerShell documentation](https://msdn.microsoft.com/en-us/powershell/scripting/powershell-scripting). For macOS and Linux developers, Microsoft makes the free development environment, [Visual Studio Code](https://code.visualstudio.com/) and the free [PowerShell extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) to make it easy to write and debug one-liners and full scripts. Good luck on your journey!
-
-https://technet.microsoft.com/en-us/library/ff714569.aspx
-
-https://technet.microsoft.com/en-us/library/dd772285.aspx
-
-
-
+A recommended next step is to take time to read the PowerShell documentation at https://msdn.microsoft.com/en-us/powershell/scripting/powershell-scripting. You might also find [A Task-Based Guide to Windows PowerShell Cmdlets](https://technet.microsoft.com/en-us/library/dd772285.aspx) helpful as a way to get to know your way around some of the cmdlets. Ultimately, the more you work with PowerShell, the more intutive it will feel and the more productive you will be with it. And now that dictum applies to Linux and macOS users as well as Windows users!
 
 ----
 
