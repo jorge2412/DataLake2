@@ -199,7 +199,7 @@ PowerShell offers an outstanding command-line editing experience. More than just
 	PS /Users/john/Documents> vi    
     ```
 
-    You can launch vi by pressing `Enter` because `vi` still appears on the command line. Or you can clear the command line by pressing `CTRL+C`.
+    `vi` still appears on the command line, so you can press `Enter` to launch it or continue typing. Or you can clear the command line by pressing `CTRL+C`.
 
 1. If you are thinking that what you did in the previous step is exactly what Bash does, you are correct. Now let's try something a little more interesting. Type the following at the PowerShell command prompt: 
 
@@ -208,12 +208,12 @@ PowerShell offers an outstanding command-line editing experience. More than just
 
     After the second press of the `Tab` key, the command expands into `Get-ChildItem`, which is PowerShell's equivalent of the `ls` command.
 
-1. It gets even better. Add a space and a dash to the end of the command and press `Tab` twice:
+1. It gets better. Add a space and a dash to the end of the command and press `Tab` twice:
 
     <pre>
     Get-ChildItem -&lt;TAB&gt;&lt;TAB&gt;</pre>
 
-    PowerShell responds by listing all possible parameters to the `Get-ChildItem` cmdlet:
+    PowerShell responds by listing all possible parameters to `Get-ChildItem`:
 
     <pre>
     Path                 Attributes           WarningAction
@@ -226,7 +226,7 @@ PowerShell offers an outstanding command-line editing experience. More than just
     Force                Debug                PipelineVariable
     Name                 ErrorAction</pre>
 
-    Of course, if you typed -d followed by the `Tab` key, you would only see parameters that start with the letter D.
+    Of course, if you typed `-d` followed by the `Tab` key, you would only see parameters that start with the letter D.
 
     What is even more important is that any cmdlets you add to PowerShell, whether they're ones you wrote or ones written by others, benefit from full discoverability as well. It is just part of PowerShell.
 
@@ -235,11 +235,11 @@ PowerShell offers an outstanding command-line editing experience. More than just
     <pre>
     Get-ChildItem |</pre>
 
-    That is an invalid command because you are missing the cmdlet to the right of the piping operator. Look carefully at the &gt; character in the prompt:
+    That is an invalid command because it is missing the cmdlet to the right of the | operator. Look carefully at the &gt; character in the prompt:
 
     ![Command error](Images/ex4_Command_Line_Error.png)
 
-    The fact that it's red means there is an error. This quick error indicator is evaluated on each keystroke so it's apparent when the error is fixed.
+    The fact that it's red means there is an error. This quick error indicator is evaluated on each keystroke so that you know when the error is fixed.
 
 	> The error indicator lights up when executing the command right now would result in a parsing error. It doesn't light up if the command is simply wrong or doesn't exist.
 
@@ -248,23 +248,16 @@ All of these features are part of the default command-line editing experience, b
 <a name="Exercise5"></a>
 ## Exercise 5: Copying and Manipulating Files ##
 
-Now that you have seen some of the wonderful features of command line editing in PowerShell, it is time to turn to learning about the cmdlets and pipelines you can use to manipulate files. PowerShell can obviously do much more than just work with files, but this exercise will have you working with various parts of PowerShell and give you solid techniques for doing more on your own.
+`Get-ChildItem` is an example of a PowerShell cmdlet (pronounced "command-let"). It is one of more than 200 cmdlets that are currently included in PowerShell, and since you can write cmdlets of your own, there is no end to the number of commands you can execute at the PowerShell prompt. In this exercise, you will learn more about `Get-ChildItem` and other cmdlets for working with files. You will also learn about *pipelines*, which enable you to string cmdlets together to perform complex tasks.
 
-1. If you do not have a **Terminal** window open, start one and start PowerShell by typing **powershell**. In PowerShell navigate to the directory where you expanded the ZIP file of these hands-on-labs. If you expanded everything to ~/Documents/PowerShell, you would type the following in PowerShell to change directories.
+1. You really only need to memorize three PowerShell cmdlets: `Get-Command`, `Get-Help`, and `Get-Member`. With these cmdlets, you can get all the information you need about other cmdlets. PowerShell follows a _verb-noun_ approach to naming, which you can read about in [Approved Verbs for Windows PowerShell Commands](https://msdn.microsoft.com/en-us/library/ms714428(v=vs.85).aspx). Accordingly, you will see that `Get` is the verb to "specify an action that retrieves a resource."
 
-    <pre>
-    cd ~/Documents/PowerShell
-    </pre>
-
-1. Once in the correct location, you will want to take a look at the files included with this lab. As you saw in the slides, you only need to memorize three cmdlets: _Get-Command_, _Get-Help_, and _Get-Member_. None of those have anything to do with the file system so the first step is to find the command. PowerShell follows a _Verb-Noun_ approach to naming, which you can read about in the [Approved Verbs for Windows PowerShell Commands](https://msdn.microsoft.com/en-us/library/ms714428(v=vs.85).aspx) documentation. Accordingly, you will see that **Get** is the verb to "Specifies an action that retrieves a resource". 
-
-    In your PowerShell window, execute the following command so you can see the parameters to _Get-Command_:
+    At the PowerShell prompt, execute the following command to display the parameters to `Get-Command`:
 
     <pre>
-    Get-Command -&lt;TAB&gt;&lt;TAB&gt;
-    </pre>
+    Get-Command -&lt;TAB&gt;&lt;TAB&gt;</pre>
 
-    You will see the list of possible parameters: 
+    You will see a list of possible parameters: 
 
     <pre>
     Name                  Syntax                Verbose
@@ -275,166 +268,124 @@ Now that you have seen some of the wonderful features of command line editing in
     PipelineVariable      FullyQualifiedModule  ListImported          
     InformationAction     CommandType           ParameterName         
     ErrorVariable         TotalCount            ParameterType         
-    WarningVariable  
-    </pre>
+    WarningVariable</pre>
 
-    It might take a little looking, but do you see the _Verb_ parameter? That is the one you can use to find all the cmdlets that start with a specific verb. Execute the following to find all the cmdlets that start with _Get_.
-
-    <pre>
-    Get-Command -Verb Get 
-    </pre>
-
-    You will see that there are a lot of cmdlets that start with _Get_! As you look through the list you might notice there is a _Get-Verb_ cmdlet, which will list the approved verbs for PowerShell. But, that is not the cmdlet that will get you the list of files.
-
-    A little more looking shows two possible commands that look like they might be appropriate, _Get-Item_ and _Get-ChildItem_.
-
-1. What is the difference between _Get-Item_ and _Get-ChildItem_? Fortunately, it is easy to find out with the second command you have memorized, _Get-Help_. Execute the following two commands and read the output carefully:
+    Tucked away in the middle of the list is `Verb`. This is the one you use to find all the cmdlets that start with a specific verb. Use the following command to list all cmdlets that begin with `Get`:
 
     <pre>
-     Get-Help Get-Item
-     Get-Help Get-ChildItem
-    </pre>
+    Get-Command -Verb Get</pre>
 
-    As you can read, they both get files and folders. As you read through the help you will see that the main difference is that _Get-Item_ is great for finding a single item, where _Get-ChildItem_ returns all the files and folders. Since you want to return everything, _Get-ChildItem_ is the cmdlet you want to use.
+    The list is long. There is even a `Get-Verb` cmdlet that lists all of the verbs you can use.
 
-    While looking at the help in a Terminal window is great for quick looks at what a cmdlet does, when you want to really learn about a cmdlet, it is better to look at that help on the web so you can follow links and dig in more. To do that simply add the _-online_ option to open the help in your default browser. Practice that now by doing the following command:
+1. Of all the `Get` cmdlets, the two that you will focus on for now are `Get-Item` and `Get-ChildItem`. These are the primary cmdlets PowerShell users use to list files and directories and the contents of directories. What is the difference between the two? Execute the following two commands and read the output carefully:
 
     <pre>
-    Get-Help Get-ChildItem -online
-    </pre>
+	Get-Help Get-Item
+    Get-Help Get-ChildItem</pre>
 
-    Do note that if you are using Mozilla Firefox on CentOS or Ubuntu, you may see some extranious output in the Terminal window from FireFox pertaining to it's startup if it is not already running.
+    Both cmdlets "get" files and folders. The main difference is that `Get-Item` retrieves a single item, whereas `Get-ChildItem` returns all the files and folders in the specified path. To list the contents of a directory, `Get-ChildItem` is the cmdlet you want to use.
 
-1. With the right cmdlet in hand, execute it in the PowerShell window where you navigated to the folder where you extracted this set of hands-on-labs and look at the list of files by executing the following command:
-
-    <pre>
-    Get-ChildItem
-    </pre>
-
-    If you are in the correct location, you should see the following (the dates and lengths will probably be different):
+1. Viewing help information in a Terminal window is great for getting a quick read on what a cmdlet does, but when you want to dig deeper, you can go online by including `-online` in the command. To demonstrate, type the following command:
 
     <pre>
-    Directory: /Users/john/Documents/PowerShell
+    Get-Help Get-ChildItem -online</pre>
 
-    Mode                LastWriteTime         Length Name
-    ----                -------------         ------ ----
-    d-----         12/19/16   5:25 PM                Images
-    d-----         12/20/16   6:00 PM                resources
-    ------         12/21/16   2:43 PM          26412 PowerShell for Linux and macOS.md
-    ------         12/19/16   3:35 PM        1038661 PowerShellForLinux-macOS.pptx     
-    </pre>
+    > If you are using Mozilla Firefox on CentOS or Ubuntu, you may see some extranious output in the Terminal window if Firefox wasn't already running.
 
-    The files you are going to use in the lab are in the **resources** directory. To look in that folder, execute the following command:
+1. Assuming you downloaded this lab as a zip file and expanded it to a local directory on your hard disk, use a `cd` command to navigate to the directory containing this lab (the directory containing the MD or HTML file you are reading). Then execute the following command to list the files and directories in the current directory:
 
     <pre>
-    Get-ChildItem ./resources/ -Recurse
-    </pre>
+    Get-ChildItem</pre>
 
-    You will see there are a bunch of text files in that directory.
-
-1. Because you may want to do these hands-on-labs again, you will want to copy those files to another location so you retain the original set of files. First, you have to find which cmdlet does the copy. Execute the following command:
+	The output should include a subdirectory named "resources." Use the following command to view the contents of the "resources" directory:
 
     <pre>
-    Get-Command -Verb Copy
-    </pre>
+    Get-ChildItem ./resources/ -Recurse</pre>
 
-    Based on the output, which cmdlet do you think is the one to use? If you picked _Copy-Item_, you are correct. This is such an important cmdlet, you should read the full help to see all of parameters and examples. Execute the following to read the help:
+    You should find that the subdirectory contains 26 text files: a.txt, b.txt, and so on.
 
-    <pre>
-    Get-Help Copy-Item -Online
-    </pre>
-
-1. If you read the online help carefully, you saw that Example 2 showed how to copy the contents of a directory, which is the task you will do now. Before you jump into doing the copy, or any PowerShell cmdlet that might change state, you will want to see what that command will do. Back in the slides, you learned about the only parameter you need to memorize: _-WhatIf_. This parameter is the one that can save your job! 
-
-    To check what a cmdlet will do, type everything you normally would and add the magic _-WhatIf_ parameter to the end.
-
-    Execute the following command to see what _Copy-Item_ will do:
+1. Now execute the following command to list all the cmdlets that begin with `Copy`:
 
     <pre>
-    Copy-Item ./resources/ ./workspace -Recurse -WhatIf 
-    </pre>
+    Get-Command -Verb Copy</pre>
 
-    Now you can see what a command will do before you execute it. In the cmdlet you just executed, the _Copy-Item_ cmdlet automatically figured out what the source and destination folders are just by parameter order. A good PowerShell habit you will want to get into, especially if you start writing scripts, is to be explicit about all parameters so there are no mistakes.
-
-    To do the actual copy of the files to a new directory, execute the following command and notice the explicit parameter usage:
+    If you wanted to copy a file, which cmdlet do you think you might use? If you guessed `Copy-Item`, you are correct. This is such an important cmdlet, you should browse the examples in the online help:
 
     <pre>
-    Copy-Item -Path ./resources/ -Destination ./workspace -Recurse 
-    </pre>
+    Get-Help Copy-Item -Online</pre>
 
-    If you recall, there is no directory called **workspace** that currently exists in the folder. The good news for us is that the _Copy-Item_ cmdlet will automatically create the destination directories if needed. This even works if you specify a multi-layer path. 
-
-    Now that you have the files copied, change to temporary directory with the following command:
-
-    <pre>
-    cd workspace
-    </pre>
-
-1. With some of the basics out of the way, it is time to work with the PowerShell pipeline. The first task is to get the complete filenames of all files. As with any time you use the pipeline, you need to know the types being returned by a cmdlet. In the workspace directory, take a look at the type returned by _Get-ChildItem_ by executing the following command:
+1. Example 2 in the online help shows how to copy the contents of a directory to another directory, which you will do in a moment. But before you jump feet-first into doing a `Copy-Item`, however, it might help to understand precisely what the command will do.
+ 
+	Enter PowerShell's most powerful parameter: `-WhatIf`. This parameter can save your job — especially if you're about to delete a bunch of files or recursively delete a bunch of directories. To demonstrate, type the following command to preview what the `Copy-Item` command will do when passed a specific set of parameters: 
 
     <pre>
-    Get-ChildItem | Get-Member
-    </pre>
+    Copy-Item ./resources/ ./workspace -Recurse -WhatIf</pre>
 
-    You will see that for this directory, the type being returned is _System.IO.FileInfo_ and you see all the properties and methods supported by that object, which are returned in the order they are found on the object. That sometimes gets hard to read because they are not in alphabetical order. Fortunately, getting output in any form you want is easy to do with PowerShell!
+    In this case, `Copy-Item` will copy the contents of the "resources" subdirectory to the "workspace" directory.
 
-    What you want to do is sort the _Name_ column in alphabetical order. As you saw in the slide presentation, there is a _Sort-Object_ cmdlet. With that cmdlet, you tell it which property to sort on. In this case, that is the _Name_ column. Execute the following command:
-
-    <pre>
-    Get-ChildItem | Get-Member | Sort-Object Name
-    </pre>
-
-    Just because you are working with a key PowerShell cmdlet, _Get-Member_, does not mean you can not apply PowerShell to anything and everything. As you read through the alphabetized _Name_ output, do you see any method or property that would give you the full name?
-
-    If you guessed the _FullName_ property, you are correct. What you want to do is for each object coming down the pipeline from _Get-ChildItem_, you want to pass on just the _FullName_ property. Writing out, or thinking out, what you want to do in PowerShell, makes it easy to figure out which pipeline cmdlet you want to use. In this case, it is _ForEach-Object_. Execute the following command in your PowerShell window:
+1. A good habit to get into with PowerShell is to be explicit with parameters so the results of a command don't depend on parameter order. To copy the files in the "resources" directory to the "workspace" directory (don't worry; the "workspace" directory will be created for you if it doesn't already exist), execute the following command and notice the explicit parameter usage:
 
     <pre>
-    Get-ChildItem | ForEach-Object FullName 
-    </pre>
+    Copy-Item -Path ./resources/ -Destination ./workspace -Recurse</pre>
 
-    The pipeline you just entered is using the newer format for the ForEach-Object where you just specify the property name you want to pass on. The old format, which much of the examples you will find on the Internet and will always be supported looks like the following. Enter that into your PowerShell window to verify the output is the same.
+1. Now that the files have been copied, change to the "workspace" directory with the following command:
+
+    <pre>
+    cd workspace</pre>
+
+1. Now that you know the basics of listing (and copying) files and directories, it is time to learn about the PowerShell pipeline. The first thing to realize is that you can use the piping operator | to "pipe" the output from one cmdlet to the input to another. The second thing to know is that in PowerShell, everything is an object. Even cmdlets return objects. Take this command, for example:
+
+    <pre>
+    Get-ChildItem | Get-Member</pre>
+
+    The results show that the object returned by `Get-ChildItem` is an object whose type is *System.IO.FileInfo*. Furthermore, it lists the methods and properties available on that object.  The list is a little hard to read because the methods and properties aren't listed in alphabetical order. You can fix that by piping the output from `Get-Member` to the `Sort-Object` cmdlet and specifying a property name. The following command sorts the values returned by `Get-Member` on the *Name* property:
+
+    <pre>
+    Get-ChildItem | Get-Member | Sort-Object Name</pre>
+
+1. Notice that alphabetized list contains a property named *FullName*. As you might suspect, this property returns the full name (path plus file name) of a file-system object. Suppose you wanted to list each file in the current directory using full names. You can use `ForEach-Object` to iterate over the files and display each file's *FullName* property. Demonstrate by executing the following command at the PowerShell prompt:
+
+    <pre>
+    Get-ChildItem | ForEach-Object FullName</pre>
+
+    The command you just executed uses the newer format for `ForEach-Object` where you simply specify the property name. The old format, which is used by many of the examples found on the Internet and will always be supported (and can still be handy at times), looks like this:
     
     <pre>
-    Get-ChildItem | ForEach-Object {$_.FullName}
-    </pre>
+    Get-ChildItem | ForEach-Object {$_.FullName}</pre>
 
-1. Your next task is to sort the list of files by their sizes, but in reverse order. You saw in the previous step using _Sort-Object_ is just the thing you need for sorting on a property. As you looked through the properties and methods on the _System.IO.FileInfo_, there is a _Length_ property. What is the output when you execute the following?
-
-    <pre>
-    Get-ChildItem | Sort-Object Length 
-    </pre>
-
-    As you can see, the default sorting is in ascending order, but you were tasked with getting the results in descending order. It might be a good idea to look at the help for _Sort-Object_.
+1. The next task is to sort the list of files by their sizes, but in reverse order. One of the many properties present in *System.IO.FileInfo* objects is the *Length* property. What is the output when you execute the following command?
 
     <pre>
-    Get-Help Sort-Object
-    </pre>
+    Get-ChildItem | Sort-Object Length</pre>
 
-    Did you find the appropriate parameter? Execute the following pipeline to see the results:
-
-    <pre>
-    Get-ChildItem | Sort-Object Length -Descending
-    </pre>
-
-    That is all you have to do to sort in PowerShell.
-
-1. The final task of this exercise is to only show the files that are between 800 and 1024 bytes in length (exclusive). Think about how you can phase this task to give you a hint as to which pipeline cmdlets you would use.
-
-    "I want to output the files in the workspace directory, where they fall between 800 and 1024 bytes in size."
-
-    If you are thinking that _Where-Object_ is the pipeline cmdlet to use, you are correct!
-
-    Because you are going to have to do some conditional expressions with greater than and less than, you should review the "Comparison Operators" slide in the slide deck. PowerShell uses a different format than any scripting or programming language than you have probably used.
-
-    Before you look below at the answer, try to come up with the solution on your own.
+    The default sort order is ascending, but check out the online help for `Sort-Object` to see if there might be a parameter for soring in descending order:
 
     <pre>
-    Get-ChildItem | Where-Object {($_.Length -gt 800) -and ($_.Length-lt 1024)} 
-    </pre>
+    Get-Help Sort-Object</pre>
 
-    Execute the above statement and verify that it produced the correct information.
+1. Did you find the appropriate parameter? Use the following pipeline to see the results:
 
-This exercise gave you a good introduction to the pipeline to accomplish some basic tasks. As you can see, some of the most important commands are _Get-Command_, to find cmdlets and programs, as well as _Get-Help_, to learn about the commands.
+    <pre>
+    Get-ChildItem | Sort-Object Length -Descending</pre>
+
+1. The final task in this exercise is to list only the files that are between 800 and 1024 bytes in length (exclusive). Here, PowerShell's `Where-Object` cmdlet will come in handy, because it accepts a conditional expression. The conditional expression can use comparison operators such as `-lt` (less than), `-gt` (greater than), and `-and`. Here is the command that lists files of a certain size:
+
+    <pre>
+    Get-ChildItem | Where-Object {($_.Length -gt 800) -and ($_.Length -lt 1024)}</pre>
+
+    Run the command and the output should look like this:
+
+	<pre>
+	Mode                LastWriteTime         Length Name
+	----                -------------         ------ ----
+	-a----       12/23/2016   9:36 AM            860 a.txt
+	-a----       12/23/2016   9:36 AM            835 f.txt
+	-a----       12/23/2016   9:36 AM           1003 i.txt
+	-a----       12/23/2016   9:36 AM            946 t.txt
+	-a----       12/23/2016   9:36 AM            815 y.txt
+	-a----       12/23/2016   9:36 AM            863 z.txt</pre>
+
+Constructing pipelines by using the piping operator to pipe output from one cmdlet to another, and using conditional expressions in those pipelines, is just one of the tools used by PowerShell users to accomplish file-system tasks. Of course, these concepts don't apply just to cmdlets that operate on the file system. They apply to *all* cmdlets, even custom ones that you use to extend PowerShell.
 
 <a name="Exercise6"></a>
 ## Exercise 6: Working with the Contents of Files ##
@@ -614,7 +565,14 @@ In this hands-on lab you learned how to:
 
 PowerShell is a wonderful addition to the open source world. Having a command line environment that makes for easy discoverability and avoids "pray-based parsing" is a huge boon to macOS and Linux. This hands-on lab tried to teach you the Zen of PowerShell so you have some confidence when staring at that blinking cursor.
 
-To continue your PowerShell journey, take a good read of the [PowerShell documentation](https://msdn.microsoft.com/en-us/powershell/scripting/powershell-scripting). For macOS and Linux developers, Microsoft makes the free development environment, [Visual Studio Code](https://code.visualstudio.com/) and the free [PowerShell extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) to make it easy to write and debug one-liners and full scripts. Good luck on your journey! 
+To continue your PowerShell journey, take a good read of the [PowerShell documentation](https://msdn.microsoft.com/en-us/powershell/scripting/powershell-scripting). For macOS and Linux developers, Microsoft makes the free development environment, [Visual Studio Code](https://code.visualstudio.com/) and the free [PowerShell extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) to make it easy to write and debug one-liners and full scripts. Good luck on your journey!
+
+https://technet.microsoft.com/en-us/library/ff714569.aspx
+
+https://technet.microsoft.com/en-us/library/dd772285.aspx
+
+
+
 
 ----
 
