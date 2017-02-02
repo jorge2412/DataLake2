@@ -390,167 +390,137 @@ Constructing pipelines by using the piping operator to pipe output from one cmdl
 <a name="Exercise6"></a>
 ## Exercise 6: Working with the Contents of Files ##
 
-It is time to take your PowerShell knowledge up a notch. In this exercise you will work with the contents of the files and learn how to find particular data in those files. You will also see how to look at interesting statistics based on what you find. As part of this you will be building up some complicated "one liners." That is PowerShell-speak for doing a ton of work at the command line and not having to write a program to do the same work.
+It is time to take your PowerShell knowledge up a notch. In this exercise, you will learn how to work with the contents of files and how to find specific data in those files. You will also learn how to glean some interesting statistics from what you find. Be warned that you will be executing some complicated "one liners." That is PowerShell-speak for accomplishing a lot with a little and not having to write a program to do the same work.
 
-
-1. You already know how to look at files, now you need to look into files. Because you are working with text, you have to find the cmdlets that can work with strings. Execute the following command and look to see if there is a cmdlet that might help you out.
-
-    <pre>
-    Get-Command *string* 
-    </pre>
-
-    The _Get-Command_ cmdlet happily accepts wildcards so that command will return any programs and cmdlets that have "string" in the name. As you look through the output, you will see cmdlets related to converting to and from specific strings. As you look down the list, you will run into _Select-String_, that looks like a promising cmdlet.
-
-    Take a look at the help for _Select-String_ with the following command:
+1. You already know how to list files; now you need to know how look inside files. Because you will be working with text files in the "resources" directory included with this lab, you need to find cmdlets that can work with strings. Execute the following command and see if there is a cmdlet that might help:
 
     <pre>
-    Get-Help Select-String -Online 
-    </pre>
+    Get-Command *string*</pre>
 
-    Read through the help carefully to see what the _Select-String_ cmdlet can do.
-
-1. Based on your reading of the help, it looks like _Select-String_ will do exactly what we need. Your task in this step is to find all the lines that contain "we" in the files. The _Select-String_ help shows that there are two parameters related to pattern matching, _-SimpleMatch_ for basic string matching, and _-Pattern_ for full regular expression support. As you are starting with the task of finding all the "we" words in the files, it is best to start with _-SimpleMatch_.
-
-    Execute the following command in your PowerShell window:
+    The `Get-Command` cmdlet happily accepts wildcards, so the results include all cmdlets with "string" in the name. One of those is `Select-String`. Pull up help for `Select-String` with the following command:
 
     <pre>
-    Get-ChildItem | Select-String -SimpleMatch "we" 
-    </pre>
+    Get-Help Select-String -Online</pre>
 
-    That yielded a good number of matches. The output is in the form of **&lt;filename&gt;:&lt;line number&gt;:&lt;line&gt;**. Look through the output and see how many "we" strings you matched. 
+    Read carefully through the help to learn what the `Select-String` cmdlet can do.
 
-1. As you noticed, you matched "we", but you also matched "were", "wealthy", and "weather" among many others. Considering you only want the lines with "we" in them, you are going to have to think more about how you are going to pull the correct lines out. Because you are matching any words starting with "we", an easy solution might be to look for "we " (adding a space on the end). Execute the following command in your PowerShell window.
-
-    <pre>
-    Get-ChildItem | Select-String -SimpleMatch "we "
-    </pre>
-
-    Based on reading the output, you are now seeing just the files and lines that contain "we". This seems like a reasonable solution, but is it? What might you be missing here? Think about that for a moment. 
-
-1. Did you figure out what set of "we" words you might be missing? You are looking for "we " that has a trailing space. What happens if a line ends with "we" followed by a line break? Would you miss that instance? If that is what you were thinking, good job! What you really need to be searching for is a "we" that are preceeded by either the start of the line or whitespace and end with either a line end or whitespace. That screams turning to regular expressions. What is the old joke about regular expressions? "You have a problem and you solve it with a regular expression. Now you have two problems!" 
-
-    Regular expressions have a reputation as something magical, and it is partially earned. There is not enough time to give you a tutorial on regular expression in this hands-on-labs. PowerShell uses the .NET regular expression library under the hood. Here is the [Regular Expression Quick Reference](https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx), which is very helpful when working with PowerShell regular expressions.
-
-    For this step, the regular expression you want to use is **(^|\s)we($|\s)**. You can read this as (beginline or whitespace)we(endline or whitespace). Because you are switching over to regular expressions, you need to change the _Select-String_ parameter to _-Pattern_.
-
-    Execute the following command in your PowerShell window:
+1. Suppose you wanted to list all the lines containing "we" in the files in the current directory. The online help for `Select-String` reveals that it supports two parameters related to pattern matching: `-SimpleMatch` for basic string matching, and `-Pattern` for regular-expression matching. Execute the following command to demonstrate `-SimpleMatch`:
 
     <pre>
-    Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)"
-    </pre>
+    Get-ChildItem | Select-String -SimpleMatch "we"</pre>
 
-    Look carefully at the output of the two commands you just executed. Do you see any differences If you manually count the lines, you will see that with regular expression, you matched one more line. 
+    That yields dozens of matches. Look through the output and see how many "we" strings you matched. 
 
-1. Your original task here was to get the number of "we" words. Sure you can manually count the lines, but it seems that the count should be done by PowerShell. What you need are some cmdlets that can do the counting for you. Because everything in PowerShell follows the "verb-noun" format, you need to find the verb PowerShell uses. Instead of using _Get-Command_, this time you will use _Get-Verb_ to find the appropriate verb for counting, measuring, or summing.
-
-    In your PowerShell window, execute the following command:
+1. The previous command listed lines containing "we", but it also listed lines containing "were," "wealthy," and "weather," among others. Suppose you *only* wanted to find lines containing the word "we." One solution might be to search for "we " ("we" with a space at the end). Execute the following command to see how well that works:
 
     <pre>
-    Get-Verb
-    </pre>
+    Get-ChildItem | Select-String -SimpleMatch "we "</pre>
 
-    That cmdlet shows you the list of approved verbs and which group they belong. As you scroll down the list, pay attention to the Diagnostic group.
+    This seems like a reasonable solution, but is it? What might you be missing here? Think about that for a moment. 
+
+1. The previous command finds occurrences of "we" with a trailing space. But what happens if a line ends with "we" followed by a line break? What you *should* be searching for is "we" preceeded by either the start of the line or whitespace, and instances of "we" followed by either the end of the line or whitespace. That screams regular expressions. What is the old joke about regular expressions? "You have a problem and you solve it with a regular expression. Now you have two problems!" 
+
+    Under the hood, PowerShell uses the .NET regular expression library. Here is the [Regular Expression Quick Reference](https://msdn.microsoft.com/en-us/library/az24scfc(v=vs.110).aspx), which is very helpful when working with regular expressions in PowerShell.
+
+    For this step, the regular expression you want to use is `(^|\s)we($|\s)`. You can read this as "(beginline or whitespace)we(endline or whitespace)." Execute the following command at the PowerShell prompt:
+
+    <pre>
+    Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)"</pre>
+
+    If you compare the output of the last two commands, you will see that the latter found one more line than the former. 
+
+1. What if the goal was to count the number of times the word "we" appears in these text files? You could manually count the lines, but why not let PowerShell count them for you? All you need is a cmdlet to do the counting. Start by executing the following command to list all the verbs that you can use in a PowerShell command:
+
+    <pre>
+    Get-Verb</pre>
+
+    Scroll down the list and pay attention to the "Diagnostic" group:
 
     <pre>
     Verb        Group
     ----        -----
-    . . .
     Debug       Diagnostic    
     Measure     Diagnostic    
     Ping        Diagnostic    
     Repair      Diagnostic    
     Resolve     Diagnostic    
     Test        Diagnostic    
-    Trace       Diagnostic
-    . . .
-    </pre>
+    Trace       Diagnostic</pre>
 
-    The verb **Measure** looks promising. Now go look to see what cmdlets start with **Measure** by executing the following in your PowerShell window:
+    The verb `Measure` looks promising. Now list the cmdlets that start with `Measure` with the following command:
 
     <pre>
-    Get-Command -Verb measure
-    </pre>
+    Get-Command -Verb measure</pre>
     
-    You see there are two cmdlets, _Measure-Command_ and _Measure-Object_. Execute the following commands to read the help and decide which one is better for your task in this exercise.
+    The output reveals two cmdlets — `Measure-Command` and `Measure-Object` — that look interesting. Use the following command to view the online help for the latter:
 
     <pre>
-     Get-Help Measure-Command -Online
-     Get-Help Measure-Object -Online
-    </pre>
+    Get-Help Measure-Object -Online</pre>
 
-    If you think _Measure-Object_ is the right cmdlet, you are a winner.
-
-1. For the first step, simply pump the outout of _Select-String_ so you can see the result of _Measure-Object_ by executing the following into your PowerShell window:
+1. Now try piping the output from `Select-String` to `Measure-Object`:
 
     <pre>
-    Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)" | Measure-Object
-    </pre>
+    Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)" | Measure-Object</pre>
 
-    The text shows you the default output from _Measure-Object_:
+    The text includes a count, but it also includes a sum, an average, and other values that aren't relevant in this scenario:
 
     <pre>
-    Count    : 7
+    Count    : 6
     Average  : 
     Sum      : 
     Maximum  : 
     Minimum  : 
-    Property : 
-    </pre>
+    Property :</pre>
 
-    Because you don not care about the sum or averages, execute the following command to return just the important information:
-
-    <pre>
-    Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)" | Measure-Object | Select-Object Count
-    </pre>
-
-    Now your output tells you exactly what you needed to know.
-
-    _Measure-Object_ is an extremely useful cmdlet. For example, if your task was to find the total size of a set of files, with their average length and also showing the minimum and maximum lengths, all you have to do is the following:
+1. Execute the following command, which uses `Select-Object` to filter out unwanted information:
 
     <pre>
-    Get-ChildItem | Measure-Object -Property Length -Average -Sum -Maximum -Minimum
-    </pre>
+    Get-ChildItem | Select-String -Pattern "(^|\s)we($|\s)" | Measure-Object | Select-Object Count</pre>
 
-    Execute the above command and enjoy your new found power.
+    Now the output tells you exactly what you wanted to know: how many times the word "we" appears in the text of the files that you searched.
 
-1. Before ending, you should see a more complicated example that shows you some of the power in PowerShell. If your task was to replace "we" in all the files with "ya'll" (a Southern American expression), you might think you need to write a whole program. With PowerShell, you can do it all at the command line.
-
-    A variable in PowerShell starts with a dollar sign followed by the name. Some are built into PowerShell already, such as _$PSVersionTable_. Execute the following command to see the value of that variable:
+1. `Measure-Object` is an extremely useful cmdlet. For example, to compute the total size of a set of files and to show the average length along with minimum and maximum lengths, you could do the following:
 
     <pre>
-    $PSVersionTable 
-    </pre>
+    Get-ChildItem | Measure-Object -Property Length -Average -Sum -Maximum -Minimum</pre>
 
-    This is a good variable to know because it shows you the exact version of PowerShell you are running.
+    Try it and see. Pretty cool, huh?
 
-    Back to the task. Here is the command you will execute in your PowerShell window. It might be easiest to copy and paste it in.
+1. How about a more complex example that really demonstrates the power of PowerShell? Suppose you want to replace all occurrences of "we" in the files with "nous," which is French for "we." Rather than write an app to do it, you can do it with PowerShell.
+
+    A variable in PowerShell is represented as a dollar sign followed by the variable name. Some variables, such as `$PSVersionTable`, are built into PowerShell already. Execute the following command to see the value of that variable:
+
+    <pre>
+    $PSVersionTable</pre>
+
+    This is a useful variable because it shows you which version of PowerShell you are running.
+
+1. Now try the following command:
+
     <pre>
     Get-ChildItem  |
     Foreach-Object {
         $content = ($_ | Get-Content) 
-        $content = $content -replace "(^|\s)we($|\s)"," ya'll "
+        $content = $content -replace "(^|\s)we($|\s)"," nous "
         $content | Set-Content $_.FullName
-    }
-    </pre>
+    }</pre>
 
-    What this one-liner does is get the files in the directory and pipeline them to the _Foreach-Object_. Inside the curly braces of the _Foreach-Object_ is a **script block**, where you can do pretty much anything you want. In the first line, it takes the current file and reads in the contents storing it into variable _$content_. The second line does the search and replace on all contents in the _$content_ variable and assigns the result back to _$content_. The third line is where the contents of the $content variable is pipped into the _Set-Content_ cmdlet, which writes out the content to the current file's full name, thus overwriting the original content.
+    This one-liner (it's technically just one command) gets the files in the current directory and pipes them to `Foreach-Object`. Inside the curly braces is a script block, where you can do pretty much anything you want. The first line reads the current file and writes its contents to the variable named `$content`. The second line does a search-and-replace on the value stored in the `$content` variable and assigns the result back to `$content`. The third line pipes the value of the `$content` variable to the `Set-Content` cmdlet, which writes the content to the current file, thus overwriting the original content.
 
-    That is an amazing amount of work in a few lines at the command line! You might be wondering why the replacement us " ya'll " (notice the surrounding spaces). That is because the regular expression is matching the whitespace on both sides of "we" so if you do not use spaces around "ya'll" you will lose them.
+    That is an amazing amount of work for a single command! You might be wondering why the replacement text is " nous " (notice the surrounding spaces) rather than "nous." That's because the regular expression matches the whitespace on both sides of "we," so if you don't put spaces around "nous," you will lose them.
 
-    To verify the replacement worked, execute the following command:
+1. To verify the replacement worked as intended, execute the following command:
 
     <pre>
-     Get-ChildItem | Select-String "ya'll"
-    </pre>
+    Get-ChildItem | Select-String "nous"</pre>
 
-1. If you want to delete the **workspace** directory so you can start this hands-on labs again, execute the following two commands:
+1. If you want to delete the "workspace" directory, use the following commands:
 
     <pre>
     cd ..
-    Remove-Item ./workspace/ -Recurse -Force
-    </pre>
+    Remove-Item ./workspace/ -Recurse -Force</pre>
 
-This exercise covered a lot of ground. You learned how to pull text from files based on matches, how to measure the number of items returned in the pipeline. Finally, you saw a complicated one-liner that replaces text in files. As with anything PowerShell, the more time you spend reading the help, the more you will understand.
+This exercise covered a lot of ground. You learned how to search files for text using simple matches and regular expressions, and how to measure the number of items returned by a cmdlet. You also saw a one-liner that performs a search-and-replace. Use these as a starting point for exploring PowerShell on your own.
 
 <a name="Summary"></a>
 ## Summary ##
