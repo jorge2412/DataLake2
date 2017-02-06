@@ -1,4 +1,4 @@
-# Community Content - Visual Studio and Apache Cordova
+# Community Content - Apache Cordova
 
 This folder contains content introducing Apache Cordova and demonstrating how to use it with Visual Studio to build cross-platform mobile apps. The content is divided into two sessions:
 
