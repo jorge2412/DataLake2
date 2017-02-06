@@ -1,4 +1,4 @@
-# Community Content - HoloLens
+# Community Content - Microsoft HoloLens
 
 This folder contains content introducing Microsoft HoloLens and demonstrating how to build apps for it with Unity. The content is divided into two sessions:
 
