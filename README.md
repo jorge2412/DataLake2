@@ -3,7 +3,7 @@
 
 This repo includes technical content optimized for the use within Community Events about Microsoft Azure and other Microsoft technologies, and is available to anyone who wants to use it under the [MIT License](LICENSE.md). 
 
-The contents of this Repo have been produced by and for Technical Community Groups who are interested in Microsoft but also non-Micorosft Technologies.
+The contents of this Repo have been produced by and for Technical Community Groups who are interested in Microsoft but also non-Microsoft Technologies.
 Microsoft is hosting these community produced topics under the /Microsoft Github domain as we are convinced that these topics can be valuable especially for Community Event Leaders who are planning to cover a related technology on any upcoming Community Event.
 
 
