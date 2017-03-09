@@ -1,1 +1,0 @@
-This content has been moved. Click [here](https://github.com/Microsoft/TechnicalCommunityContent/tree/master/Mobile%20Development/Cordova) to view it in its new location.
