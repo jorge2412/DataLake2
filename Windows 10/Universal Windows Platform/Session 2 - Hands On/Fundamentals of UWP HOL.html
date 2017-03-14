@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fundamentals of UWP HOL</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Deveoping Apps for the Universal Windows Platform (UWP)</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>The <a href="https://docs.microsoft.com/en-us/windows/uwp/get-started/whats-a-uwp">Universal Windows Platform</a> (UWP) is a set of APIs and associated runtimes that provide a rich app platform for Windows 10. With UWP, you can use one set of APIs to build apps that run on a variety of Windows devices, including PCs, tablets, phones, Xbox, HoloLens, and Surface Hub.</p>
+<p>App structure, page layout, and navigation are the foundation of the UWP experience. Through <em>adaptive layout</em>, the Universal Windows Platform makes it extremely easy to create a user interface that harmonizes across a variety of devices with different display sizes, as well as navigation paradigms that make sense across devices. Because a UWP app runs on a range of devices with different form factors and modes of input, you want the apps that you write to be tailored to each device and to leverage the unique capabilities of each one. Each device family features unique APIs in addition to the guaranteed core API layer. By writing <em>adaptive code</em>, you can access those unique APIs conditionally so that your app lights up features specific to one type of device while presenting a different experience on other devices.</p>
+<p>In this lab, you will create a UWP app in Visual Studio 2017 using XAML and C# that enables users to view PDF documents and annotate pages in those documents with handwritten notes. You will also build adaptive layouts that adjust, resize, or reposition UI elements based on the screen or window width.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Create a Universal Windows Platform (UWP) app targeting multiple devices and form factors</li>
+<li>Brand an app with custom image assets</li>
+<li>Add common logic and models</li>
+<li>Add pages and page navigation</li>
+<li>Use visual states and adaptive triggers to create adaptive layouts</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li>Windows 10</li>
+<li><a href="https://www.visualstudio.com/">Visual Studio Community 2017</a> or higher</li>
+<li>The Visual Studio 2017 <strong>.NET desktop development</strong> workload</li>
+<li>The Visual Studio 2017 <strong>Universal Windows Platform development</strong> workload</li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Create a Universal Windows Platform solution</a></li>
+<li><a href="#Exercise2">Exercise 2: Add custom branding</a></li>
+<li><a href="#Exercise3">Exercise 3: Add common logic and models</a></li>
+<li><a href="#Exercise4">Exercise 4: Add pages and page navigation</a></li>
+<li><a href="#Exercise5">Exercise 5: Add visual states and adaptive triggers</a></li>
+<li><a href="#Exercise6">Exercise 6: Test the app</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>60</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Create a Universal Windows Platform solution</h2>
+<p>Creating a Universal Windows Platform (UWP) app is quick and easy using the built-in templates that ship with Visual Studio 2017. In this exercise, you will use Visual Studio 2017 to create a UWP solution that includes initial scaffolding for an app.</p>
+<ol>
+<li>
+<p>Start the Visual Studio installer. (An easy way to do that is to press the Windows key, type "installer," and select <strong>Visual Studio Installer</strong> from the menu.) Click the <strong>Modify</strong> button to view a list of installed components. Under "Workloads," make sure <strong>Universal Windows Platform development</strong> and <strong>.NET desktop development</strong> are checked. If they are not, check them and allow the installer to add these workloads.</p>
+<p><a href="Images/required-workloads.png" target="_blank"><img src="Images/required-workloads.png" alt="Installing the UWP and .NET development workloads" style="max-width:100%;"></a></p>
+<p><em>Installing the UWP and .NET development workloads</em></p>
+</li>
+<li>
+<p>Close the installer. Then start Visual Studio 2017 use the <strong>File</strong> -&gt; <strong>New</strong> -&gt; <strong>Project</strong> command to create a new Visual C# <strong>Blank App (Universal Windows)</strong> solution named "PdfReviewer"</p>
+<p><a href="Images/vs-select-blank-template.png" target="_blank"><img src="Images/vs-select-blank-template.png" alt="Creating a new UWP solution" style="max-width:100%;"></a></p>
+<p><em>Creating a new UWP solution</em></p>
+</li>
+<li>
+<p>When prompted to choose target and minimum platform requirements, accept the defaults and click <strong>OK</strong>.</p>
+<p><a href="Images/vs-target-platform.png" target="_blank"><img src="Images/vs-target-platform.png" alt="Specifying the platform versions" style="max-width:100%;"></a></p>
+<p><em>Specifying the platform versions</em></p>
+</li>
+<li>
+<p>Go to Solution Explorer and review the files and folders created for the solution, taking special notice of the "Assets" folder and the <strong>Package.appxmanifest</strong> file. You will be working with these in the next exercise.</p>
+<p><a href="Images/vs-new-project-items.png" target="_blank"><img src="Images/vs-new-project-items.png" alt="The new UWP solution" style="max-width:100%;"></a></p>
+<p><em>The new UWP solution</em></p>
+</li>
+</ol>
+<p>You could build and run the app right now, but it wouldn't be very exciting because the app has a blank UI and uses generic branding assets for icons, splash images, and other visuals. The next step is to begin customizing the app by applying app-specific branding.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Add custom branding</h2>
+<p>In this exercise, you will import images into the project and use them to customize the app's tiles, splash screen, and other visual assets.</p>
+<ol>
+<li>
+<p>In Solution Explorer, right-click the project's "Assets" folder and select <strong>Add</strong> -&gt; <strong>Existing Item...</strong>.</p>
+<p><a href="Images/vs-add-existing-item.png" target="_blank"><img src="Images/vs-add-existing-item.png" alt="Adding items to the &quot;Assets&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Adding items to the "Assets" folder</em></p>
+</li>
+<li>
+<p>In the "Add Existing Item" dialog, browse to the "Assets" folder in the "Resources" folder that accompanies this lab. Select all of the files in the "Assets" folder and click <strong>Add</strong>.</p>
+<p><a href="Images/fe-select-all-assets.png" target="_blank"><img src="Images/fe-select-all-assets.png" alt="Adding images to the &quot;Assets&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Adding images to the "Assets" folder</em></p>
+</li>
+<li>
+<p>In Solution Explorer, double-click <strong>Package.appxmanifest</strong> to open it for editing. This file, known as the "app manifest," contains information about the app regarding images, display names, permissions, and capabilities. In the manifest editor, ensure that <strong>Application</strong> is selected in the upper-left corner.</p>
+<p><a href="Images/vs-manifest-app-tab.png" target="_blank"><img src="Images/vs-manifest-app-tab.png" alt="The app manifest" style="max-width:100%;"></a></p>
+<p><em>The app manifest</em></p>
+</li>
+<li>
+<p>Change the app's display name from "Pdf Reviewer" to "Pdf Reviewer." (You are simply adding a space character between "Pdf" and "Reviewer" to give your app a more readable display name.) Then change the app's description to "Pdf Reviewer for Windows."</p>
+<p><a href="Images/vs-manifest-display-name.png" target="_blank"><img src="Images/vs-manifest-display-name.png" alt="Changing the display name and description" style="max-width:100%;"></a></p>
+<p><em>Changing the display name and description</em></p>
+</li>
+<li>
+<p>Click <strong>Visual Assets</strong> and ensure that <strong>All Visual Assets</strong> is selected on the left. These settings control the images, icons, and background colors used for the app's icons, logos, and splash screen.</p>
+<p><a href="Images/vs-manifest-visual-assets-tab.png" target="_blank"><img src="Images/vs-manifest-visual-assets-tab.png" alt="Viewing visual assets" style="max-width:100%;"></a></p>
+<p><em>Viewing visual assets</em></p>
+</li>
+<li>
+<p>Scroll down to "Display Settings" and enter the hexadecimal color value #CE0809 for both <strong>Tile background</strong> and <strong>Splash screen background</strong>.</p>
+<p><a href="Images/vs-update-app-colors.png" target="_blank"><img src="Images/vs-update-app-colors.png" alt="Updating the tile and splash-screen background colors" style="max-width:100%;"></a></p>
+<p><em>Updating the tile and splash-screen background colors</em></p>
+</li>
+<li>
+<p>Scroll down to "Preview Images." Type "Assets\SmallLogo.png" into the <strong>Small Tile</strong> box. Confirm that a thumbnail image appears below.</p>
+<p><a href="Images/vs-update-small-logo.png" target="_blank"><img src="Images/vs-update-small-logo.png" alt="Updating the small-tile image" style="max-width:100%;"></a></p>
+<p><em>Updating the small-tile image</em></p>
+<blockquote>
+<p>You can optionally provide small-tile images of various resolutions to make tiles created for your app look great on different devices. The Universal Windows Platform is smart enough to determine which image to display based on the screen resolution. If you provide only one image, Windows automatically scales it up and down as needed.</p>
+</blockquote>
+</li>
+<li>
+<p>Scroll down to <strong>Medium Tile</strong> and enter "Assets\MediumLogo.png" into the box.</p>
+<p><a href="Images/vs-update-medium-logo.png" target="_blank"><img src="Images/vs-update-medium-logo.png" alt="Updating the medium-tile image" style="max-width:100%;"></a></p>
+<p><em>Updating the medium-tile image</em></p>
+</li>
+<li>
+<p>Scroll down to <strong>Wide Tile</strong> and enter "Assets\WideLogo.png" into the box.</p>
+<p><a href="Images/vs-update-wide-logo.png" target="_blank"><img src="Images/vs-update-wide-logo.png" alt="Updating the wide-tile image" style="max-width:100%;"></a></p>
+<p><em>Updating the wide-tile image</em></p>
+</li>
+<li>
+<p>Repeat the previous steps to enter the following values for the following assets:</p>
+<ul>
+<li>For <strong>Large Tile</strong>, enter "Assets\LargeLogo.png"</li>
+<li>For <strong>App Icon</strong>, enter "Assets\AppIcon.png"</li>
+<li>For <strong>Splash Screen</strong>, enter "Assets\SplashLogo.png"</li>
+<li>For <strong>PackageLogo</strong>, enter "Assets\PackageLogo.png"</li>
+</ul>
+<p><a href="Images/vs-update-package-logo.png" target="_blank"><img src="Images/vs-update-package-logo.png" alt="Updating the package logo" style="max-width:100%;"></a></p>
+<p><em>Updating the package logo</em></p>
+</li>
+</ol>
+<p>These steps help make sure that your app will stand out from the rest with unique branding. Now it's time to write some code as a first step in making the app do something useful.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Add common logic and models</h2>
+<p>In most apps, but especially in a UWP app, it's helpful to write code that is centralized and shared by other parts of the app. As a best practice, the Model-View-ViewModel (MVVM) pattern is recommended for UWP apps. Implementing MVVM means creating pages ("views") to provide the visual experience, models to define the structure of data, and one or more view-models to connect views to models and manage the user experience. In this exercise, you will add a model and a view-model to the app.</p>
+<ol>
+<li>
+<p>In Solution Explorer, right-click the <strong>PdfReviewer (Windows Universal)</strong> project and use the <strong>Add</strong> -&gt; <strong>New Folder</strong> command to add a folder named "Models" to the project.</p>
+</li>
+<li>
+<p>Repeat the previous step to add a folder named "ViewModels" to the project.</p>
+</li>
+<li>
+<p>Right-click the "Models" folder and use the <strong>Add</strong> -&gt; <strong>Class</strong> command to add a class file named <strong>PreviewInformation.cs</strong> to the folder.</p>
+<p><a href="Images/vs-add-class.png" target="_blank"><img src="Images/vs-add-class.png" alt="Adding the PreviewInformation class" style="max-width:100%;"></a></p>
+<p><em>Adding the PreviewInformation class</em></p>
+</li>
+<li>
+<p>Change the scope of the <code>PreviewInformation</code> class to public by adding the keyword <code>public</code> to the class definition:</p>
+<p><a href="Images/vs-mark-public.png" target="_blank"><img src="Images/vs-mark-public.png" alt="Changing the class scope" style="max-width:100%;"></a></p>
+<p><em>Changing the class scope</em></p>
+</li>
+<li>
+<p>Add the following <code>using</code> statement to the top of the file:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml.Media.Imaging</span>;</pre></div>
+</li>
+<li>
+<p>Add the following property declarations to the <code>PreviewInformation</code> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">int </span><span class="pl-en">PageNumber</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+<span class="pl-k">public</span> <span class="pl-en">BitmapImage</span> PageImage { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+<span class="pl-k">public</span> <span class="pl-en">BitmapImage</span> AnnotationImage { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }</pre></div>
+</li>
+<li>
+<p>Right-click the "ViewModels" folder and use the <strong>Add</strong> -&gt; <strong>Class</strong> command to add a class file named <strong>MainViewModel.cs</strong> to the project.</p>
+<p><a href="Images/vs-add-vm-class.png" target="_blank"><img src="Images/vs-add-vm-class.png" alt="Adding the MainViewModel class" style="max-width:100%;"></a></p>
+<p><em>Adding the MainViewModel class</em></p>
+</li>
+<li>
+<p>Change the scope of the <code>MainViewModel</code> class to public by adding the keyword <code>public</code> to the class definition.</p>
+<p><a href="Images/vs-mark-public-2.png" target="_blank"><img src="Images/vs-mark-public-2.png" alt="Changing the class scope" style="max-width:100%;"></a></p>
+<p><em>Changing the class scope</em></p>
+</li>
+<li>
+<p>Add the following <code>using</code> statements to the top of the file:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">PdfReviewer.Models</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.ObjectModel</span>;</pre></div>
+</li>
+<li>
+<p>Add the following code to the <code>MainViewModel</code> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> MainViewModel()
+{
+    <span class="pl-c1">this</span>.AllDocuments = <span class="pl-k">new</span> <span class="pl-en">ObservableCollection</span>&lt;PreviewInformation&gt;();
+}
+
+<span class="pl-k">public</span> <span class="pl-en">ObservableCollection</span>&lt;<span class="pl-en">PreviewInformation</span>&gt; AllDocuments { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+<span class="pl-k">public</span> <span class="pl-en">PreviewInformation</span> SelectedDocument { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }</pre></div>
+</li>
+<li>
+<p>In Solution Explorer, click the triangle next to <strong>App.xaml</strong> to reveal <strong>App.xaml.cs</strong>. Then double-click <strong>App.xaml.cs</strong> to open it for editing, and add the following line of code to the <code>App</code> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">ViewModels.MainViewModel</span> ViewModel = new ViewModels.<span class="pl-en">MainViewModel</span>();</pre></div>
+<blockquote>
+<p>In UWP apps, the <code>App</code> class represents the app itself and contains code that executes at critical times during the app's lifetime, such as when the app starts up or the app is suspended.</p>
+</blockquote>
+</li>
+</ol>
+<p>The "Pdf Reviewer" app now contains a model to describe the data that the app manages (in this case, pages imported from PDF documents) and a view-model to drive the user experience. The next step is to begin crafting the user interface.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Add pages and page navigation</h2>
+<p>In this exercise, you will modify the page included in the app when the project was created to show thumbnails representing pages in a PDF, add add a page for displaying individual PDF pages. You will also leverage Inking controls included in the Universal Windows Platform to allow users to annotate those pages.</p>
+<ol>
+<li>
+<p>In Solution Explorer, open <strong>MainPage.xaml</strong>. Then replace the contents of the file with the following XAML:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Page</span>
+x:Class=<span class="pl-s"><span class="pl-pds">"</span>PdfReviewer.MainPage<span class="pl-pds">"</span></span>
+xmlns=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/winfx/2006/xaml/presentation<span class="pl-pds">"</span></span>
+xmlns:x=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/winfx/2006/xaml<span class="pl-pds">"</span></span>
+xmlns:local=<span class="pl-s"><span class="pl-pds">"</span>using:PdfReviewer<span class="pl-pds">"</span></span>  
+xmlns:d=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/expression/blend/2008<span class="pl-pds">"</span></span>
+xmlns:mc=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.openxmlformats.org/markup-compatibility/2006<span class="pl-pds">"</span></span>
+mc:Ignorable=<span class="pl-s"><span class="pl-pds">"</span>d<span class="pl-pds">"</span></span>&gt;
+
+&lt;<span class="pl-ent">Page</span>.BottomAppBar&gt;
+    &lt;<span class="pl-ent">CommandBar</span>  <span class="pl-e">IsOpen</span>=<span class="pl-s"><span class="pl-pds">"</span>True<span class="pl-pds">"</span></span> <span class="pl-e">IsSticky</span>=<span class="pl-s"><span class="pl-pds">"</span>True<span class="pl-pds">"</span></span> <span class="pl-e">RequestedTheme</span>=<span class="pl-s"><span class="pl-pds">"</span>Dark<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>Black<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">AppBarButton</span> <span class="pl-e">Icon</span>=<span class="pl-s"><span class="pl-pds">"</span>OpenFile<span class="pl-pds">"</span></span> <span class="pl-e">Label</span>=<span class="pl-s"><span class="pl-pds">"</span>Open<span class="pl-pds">"</span></span> <span class="pl-e">Click</span>=<span class="pl-s"><span class="pl-pds">"</span>OnOpenFileClick<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">CommandBar</span>&gt;
+&lt;/<span class="pl-ent">Page</span>.BottomAppBar&gt;
+
+&lt;<span class="pl-ent">Grid</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGrid<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource ApplicationPageBackgroundThemeBrush}<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+        &lt;<span class="pl-ent">RowDefinition</span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">RowDefinition</span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">RowDefinition</span>/&gt;
+    &lt;/<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+
+    &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10,0<span class="pl-pds">"</span></span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel<span class="pl-pds">"</span></span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>Bold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Welcome to Pdf Reviewer for Windows<span class="pl-pds">"</span></span>/&gt;
+    &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10,0<span class="pl-pds">"</span></span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel<span class="pl-pds">"</span></span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Tap 'Open' from the toolbar to load a Pdf document to view all pages. Tap a document page to make annotations.<span class="pl-pds">"</span></span>/&gt;
+
+    &lt;<span class="pl-ent">Border</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> <span class="pl-e">BorderThickness</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">BorderBrush</span>=<span class="pl-s"><span class="pl-pds">"</span>DarkGray<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">GridView</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> <span class="pl-e">DataContext</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding}<span class="pl-pds">"</span></span> <span class="pl-e">ItemsSource</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding AllDocuments}<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">GridView</span>.ItemTemplate&gt;
+                &lt;<span class="pl-ent">DataTemplate</span>&gt;
+                    &lt;<span class="pl-ent">Border</span> <span class="pl-e">BorderThickness</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">BorderBrush</span>=<span class="pl-s"><span class="pl-pds">"</span>DarkGray<span class="pl-pds">"</span></span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>200<span class="pl-pds">"</span></span>&gt;
+                        &lt;<span class="pl-ent">Grid</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span>&gt;
+                            &lt;<span class="pl-ent">Image</span> <span class="pl-e">Source</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding PageImage}<span class="pl-pds">"</span></span> <span class="pl-e">Stretch</span>=<span class="pl-s"><span class="pl-pds">"</span>Uniform<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">Image</span> <span class="pl-e">Source</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding AnnotationImage}<span class="pl-pds">"</span></span> <span class="pl-e">Stretch</span>=<span class="pl-s"><span class="pl-pds">"</span>Uniform<span class="pl-pds">"</span></span>/&gt;
+                            &lt;<span class="pl-ent">Border</span> <span class="pl-e">RequestedTheme</span>=<span class="pl-s"><span class="pl-pds">"</span>Dark<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Bottom<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Right<span class="pl-pds">"</span></span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>30<span class="pl-pds">"</span></span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>30<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>Black<span class="pl-pds">"</span></span>&gt;
+                                &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">TextAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding PageNumber}<span class="pl-pds">"</span></span>/&gt;
+                            &lt;/<span class="pl-ent">Border</span>&gt;
+                        &lt;/<span class="pl-ent">Grid</span>&gt;
+                    &lt;/<span class="pl-ent">Border</span>&gt;
+
+                &lt;/<span class="pl-ent">DataTemplate</span>&gt;
+            &lt;/<span class="pl-ent">GridView</span>.ItemTemplate&gt;
+        &lt;/<span class="pl-ent">GridView</span>&gt;
+    &lt;/<span class="pl-ent">Border</span>&gt;
+
+    &lt;<span class="pl-ent">ProgressBar</span> <span class="pl-e">Foreground</span>=<span class="pl-s"><span class="pl-pds">"</span>#FFCE0809<span class="pl-pds">"</span></span> <span class="pl-e">Visibility</span>=<span class="pl-s"><span class="pl-pds">"</span>Collapsed<span class="pl-pds">"</span></span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>20<span class="pl-pds">"</span></span> Grid.RowSpan=<span class="pl-s"><span class="pl-pds">"</span>3<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>loadingProgress<span class="pl-pds">"</span></span>/&gt;
+
+&lt;/<span class="pl-ent">Grid</span>&gt;
+&lt;/<span class="pl-ent">Page</span>&gt;</pre></div>
+</li>
+<li>
+<p>Open <strong>MainPage.xaml.cs</strong> file and replace the contents of that file with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">PdfReviewer.Models</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Data.Pdf</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Storage</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Storage.Pickers</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Storage.Streams</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml.Controls</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml.Media.Imaging</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">PdfReviewer</span>
+{
+    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> An empty page that can be used on its own or navigated to within a Frame.<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-k">public</span> sealed <span class="pl-k">partial</span> <span class="pl-k">class</span> <span class="pl-en">MainPage</span> : <span class="pl-en">Page</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-en">MainPage</span>()
+        {
+            <span class="pl-c1">this</span>.InitializeComponent();
+            <span class="pl-c1">this</span>.Loading += MainPage_Loading;
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">MainPage_Loading</span>(<span class="pl-en">FrameworkElement</span> <span class="pl-smi">sender</span>, <span class="pl-k">object</span> <span class="pl-smi">args</span>)
+        {
+            <span class="pl-c1">this</span>.DataContext = App.ViewModel;
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnOpenFileClick</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">RoutedEventArgs</span> <span class="pl-smi">e</span>)
+        {
+            BrowseForFileAsync();
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">BrowseForFileAsync</span>()
+        {
+            <span class="pl-k">var</span> <span class="pl-en">picker </span>= <span class="pl-k">new</span> <span class="pl-en">FileOpenPicker</span>();
+            picker.FileTypeFilter.Add(<span class="pl-s"><span class="pl-pds">"</span>.pdf<span class="pl-pds">"</span></span>);
+            <span class="pl-en">StorageFile</span> <span class="pl-en">file</span> = <span class="pl-k">await</span> picker.PickSingleFileAsync();
+
+            <span class="pl-k">if</span> (file != <span class="pl-c1">null</span>)
+            {
+                App.ViewModel.AllDocuments.Clear();
+                <span class="pl-k">var</span> <span class="pl-en">pdfDocument </span>= <span class="pl-k">await</span> PdfDocument.LoadFromFileAsync(file);
+
+                <span class="pl-k">var</span> <span class="pl-en">pageCount </span>= pdfDocument.PageCount;
+
+                loadingProgress.Visibility = Visibility.Visible;
+                loadingProgress.Minimum = <span class="pl-c1">1</span>;
+                loadingProgress.Maximum = pageCount;
+
+                <span class="pl-k">for</span> (<span class="pl-k">int</span> <span class="pl-en">i</span> = <span class="pl-c1">0</span>; i &lt; pageCount; i++)
+                {
+
+                    <span class="pl-k">using</span> (<span class="pl-en">PdfPage</span> <span class="pl-en">page</span> = pdfDocument.GetPage((<span class="pl-k">uint</span>)i))
+                    {
+                        loadingProgress.Value = i + <span class="pl-c1">1</span>;
+                        <span class="pl-k">var</span> <span class="pl-en">stream </span>= <span class="pl-k">new</span> <span class="pl-en">InMemoryRandomAccessStream</span>();
+                        <span class="pl-k">var</span> <span class="pl-en">options1 </span>= <span class="pl-k">new</span> <span class="pl-en">PdfPageRenderOptions</span>();
+                        <span class="pl-k">await</span> page.RenderToStreamAsync(stream);
+
+                        <span class="pl-en">BitmapImage</span> <span class="pl-en">src</span> = <span class="pl-k">new</span> <span class="pl-en">BitmapImage</span>();
+                        <span class="pl-k">await</span> src.SetSourceAsync(stream);
+
+                        App.ViewModel.AllDocuments.Add(<span class="pl-k">new</span> <span class="pl-en">PreviewInformation</span>()
+                        {
+                            PageNumber = i + <span class="pl-c1">1</span>,
+                            PageImage = src,
+                        });
+                    }
+                }
+
+            }
+
+            loadingProgress.Visibility = Visibility.Collapsed;
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnDocumentClick</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">ItemClickEventArgs</span> <span class="pl-smi">e</span>)
+        {
+        }
+    }
+}</pre></div>
+<p>Notice the <code>FileOpenPicker</code> used in the <code>BrowseForFileAsync</code> method. This control enables a user to browse files and folders on the device and select a PDF file. The file reference is then passed to the <code>PdfDocument</code> class to perform the magic of creating document thumbnails.</p>
+</li>
+<li>
+<p>In Solution Explorer, right-click the <strong>PdfReviewer (Universal Windows)</strong> project and use the <strong>Add</strong> -&gt; <strong>New Item...</strong> command to add a <strong>Blank Page</strong> named "ReviewPage.xaml."</p>
+<p><a href="Images/vs-add-blank-page.png" target="_blank"><img src="Images/vs-add-blank-page.png" alt="Adding a blank page to the project" style="max-width:100%;"></a></p>
+<p><em>Adding a blank page to the project</em></p>
+</li>
+<li>
+<p>Open <strong>ReviewPage.xaml</strong> and replace the contents of the file with the following XAML:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Page</span>
+x:Class=<span class="pl-s"><span class="pl-pds">"</span>PdfReviewer.ReviewPage<span class="pl-pds">"</span></span>
+xmlns=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/winfx/2006/xaml/presentation<span class="pl-pds">"</span></span>
+xmlns:x=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/winfx/2006/xaml<span class="pl-pds">"</span></span>
+xmlns:local=<span class="pl-s"><span class="pl-pds">"</span>using:PdfReviewer<span class="pl-pds">"</span></span>
+xmlns:d=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/expression/blend/2008<span class="pl-pds">"</span></span>
+xmlns:mc=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.openxmlformats.org/markup-compatibility/2006<span class="pl-pds">"</span></span>
+mc:Ignorable=<span class="pl-s"><span class="pl-pds">"</span>d<span class="pl-pds">"</span></span>&gt;
+
+&lt;<span class="pl-ent">Page</span>.BottomAppBar&gt;
+    &lt;<span class="pl-ent">CommandBar</span> <span class="pl-e">IsOpen</span>=<span class="pl-s"><span class="pl-pds">"</span>True<span class="pl-pds">"</span></span> <span class="pl-e">IsSticky</span>=<span class="pl-s"><span class="pl-pds">"</span>True<span class="pl-pds">"</span></span> <span class="pl-e">RequestedTheme</span>=<span class="pl-s"><span class="pl-pds">"</span>Dark<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>Black<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">AppBarButton</span> <span class="pl-e">Icon</span>=<span class="pl-s"><span class="pl-pds">"</span>Cancel<span class="pl-pds">"</span></span> <span class="pl-e">Label</span>=<span class="pl-s"><span class="pl-pds">"</span>Cancel<span class="pl-pds">"</span></span> <span class="pl-e">Click</span>=<span class="pl-s"><span class="pl-pds">"</span>OnCancelClick<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">AppBarButton</span> <span class="pl-e">Icon</span>=<span class="pl-s"><span class="pl-pds">"</span>Undo<span class="pl-pds">"</span></span> <span class="pl-e">Label</span>=<span class="pl-s"><span class="pl-pds">"</span>Undo<span class="pl-pds">"</span></span> <span class="pl-e">Click</span>=<span class="pl-s"><span class="pl-pds">"</span>OnUndoClick<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">AppBarButton</span> <span class="pl-e">Icon</span>=<span class="pl-s"><span class="pl-pds">"</span>Save<span class="pl-pds">"</span></span> <span class="pl-e">Label</span>=<span class="pl-s"><span class="pl-pds">"</span>Save<span class="pl-pds">"</span></span> <span class="pl-e">Click</span>=<span class="pl-s"><span class="pl-pds">"</span>OnSaveClick<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">CommandBar</span>&gt;
+&lt;/<span class="pl-ent">Page</span>.BottomAppBar&gt;
+
+&lt;<span class="pl-ent">Grid</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGrid<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource ApplicationPageBackgroundThemeBrush}<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+        &lt;<span class="pl-ent">RowDefinition</span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">RowDefinition</span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">RowDefinition</span>/&gt;
+    &lt;/<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+
+    &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10,0<span class="pl-pds">"</span></span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel<span class="pl-pds">"</span></span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>Bold<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Annotations<span class="pl-pds">"</span></span>/&gt;
+    &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10,0<span class="pl-pds">"</span></span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel<span class="pl-pds">"</span></span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Use the Ink Canvas toolbar to make annotations to your document. Tap 'Save' when complete.<span class="pl-pds">"</span></span>/&gt;
+
+    &lt;<span class="pl-ent">Border</span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>2<span class="pl-pds">"</span></span> <span class="pl-e">BorderBrush</span>=<span class="pl-s"><span class="pl-pds">"</span>DarkGray<span class="pl-pds">"</span></span> <span class="pl-e">BorderThickness</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">Grid</span>&gt;
+            &lt;<span class="pl-ent">Image</span> <span class="pl-e">Source</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding PageImage}<span class="pl-pds">"</span></span> <span class="pl-e">Stretch</span>=<span class="pl-s"><span class="pl-pds">"</span>Uniform<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span>/&gt;
+            &lt;<span class="pl-ent">InkCanvas</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>inkCanvas<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> /&gt;
+            &lt;<span class="pl-ent">InkToolbar</span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Top<span class="pl-pds">"</span></span> <span class="pl-e">TargetInkCanvas</span>=<span class="pl-s"><span class="pl-pds">"</span>{x:Bind inkCanvas}<span class="pl-pds">"</span></span> /&gt; 
+        &lt;/<span class="pl-ent">Grid</span>&gt;
+    &lt;/<span class="pl-ent">Border</span>&gt;
+
+&lt;/<span class="pl-ent">Grid</span>&gt;
+&lt;/<span class="pl-ent">Page</span>&gt;</pre></div>
+<p>Notice the <code>InkCanvas</code> and <code>InkToolbar</code> controls declared in the page. These controls enable digital ink strokes to be rendered using pen, touch, or mouse input. They also provide a toolbar for changing inking options such as stroke type and stroke color. You will see these controls in action in <a href="#Exercise6">Exercise 6</a>.</p>
+</li>
+<li>
+<p>Open <strong>ReviewPage.xaml.cs</strong> and replace its contents with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Storage.Streams</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Core</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Input.Inking</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml.Controls</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml.Media.Imaging</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">PdfReviewer</span>
+{
+    <span class="pl-c"><span class="pl-c">///</span> &lt;<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> An empty page that can be used on its own or navigated to within a Frame.<span class="pl-c"></span></span>
+    <span class="pl-c"><span class="pl-c">///</span> &lt;/<span class="pl-ent">summary</span>&gt;<span class="pl-c"></span></span>
+    <span class="pl-k">public</span> sealed <span class="pl-k">partial</span> <span class="pl-k">class</span> <span class="pl-en">ReviewPage</span> : <span class="pl-en">Page</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-en">ReviewPage</span>()
+        {
+            <span class="pl-c1">this</span>.InitializeComponent();
+            inkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
+            <span class="pl-c1">this</span>.DataContext = App.ViewModel.SelectedDocument;
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnSaveClick</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">RoutedEventArgs</span> <span class="pl-smi">e</span>)
+        {
+            RenderInkImageAsync();
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">RenderInkImageAsync</span>()
+        {
+            <span class="pl-en">IReadOnlyList</span>&lt;<span class="pl-en">InkStroke</span>&gt; <span class="pl-en">currentStrokes</span> = inkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+
+            <span class="pl-k">if</span> (currentStrokes.Count &gt; <span class="pl-c1">0</span>)
+            {
+                Windows.Storage.<span class="pl-en">StorageFolder</span> <span class="pl-en">storageFolder</span> = Windows.Storage.ApplicationData.Current.TemporaryFolder;
+                Windows.Storage.<span class="pl-en">StorageFile</span> <span class="pl-en">file</span> = <span class="pl-k">await</span> storageFolder.CreateFileAsync(<span class="pl-pds">$"</span>{Guid.NewGuid()}<span class="pl-s">.png</span><span class="pl-pds">"</span>, Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                <span class="pl-k">if</span> (file != <span class="pl-c1">null</span>)
+                {
+                    Windows.Storage.CachedFileManager.DeferUpdates(file);
+                    <span class="pl-en">IRandomAccessStream</span> <span class="pl-en">stream</span> = <span class="pl-k">await</span> file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+
+                    <span class="pl-k">using</span> (<span class="pl-en">IOutputStream</span> <span class="pl-en">outputStream</span> = stream.GetOutputStreamAt(<span class="pl-c1">0</span>))
+                    {
+                        <span class="pl-k">await</span> inkCanvas.InkPresenter.StrokeContainer.SaveAsync(outputStream);
+                        <span class="pl-k">await</span> outputStream.FlushAsync();
+                    }
+                    stream.Dispose();
+                }
+
+                <span class="pl-en">BitmapImage</span> <span class="pl-en">bm</span> = <span class="pl-k">new</span> <span class="pl-en">BitmapImage</span>(<span class="pl-k">new</span> <span class="pl-en">Uri</span>(<span class="pl-pds">$"</span><span class="pl-s">ms-appdata:///temp/</span>{file.Name}<span class="pl-pds">"</span>));
+                App.ViewModel.SelectedDocument.AnnotationImage = bm;
+            }
+
+            Frame.GoBack();	
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnUndoClick</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">RoutedEventArgs</span> <span class="pl-smi">e</span>)
+        {
+            <span class="pl-c1">this</span>.inkCanvas.InkPresenter.StrokeContainer.Clear();
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnCancelClick</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">RoutedEventArgs</span> <span class="pl-smi">e</span>)
+        {
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>With the main page and the review page in place, the next task is to add logic for navigating between pages. To begin, open <strong>MainPage.xaml</strong> and locate the <code>GridView</code> control.</p>
+<p><a href="Images/vs-main-gridview.png" target="_blank"><img src="Images/vs-main-gridview.png" alt="The MainPage GridView control" style="max-width:100%;"></a></p>
+<p><em>The MainPage GridView control</em></p>
+</li>
+<li>
+<p>Add the following attribute/value pairs immediately before the <code>GridView</code> control's <code>Margin</code> property to enable actions when a <code>GridView</code> item is clicked:</p>
+<div class="highlight highlight-text-xml"><pre>ItemClick="OnDocumentClick" IsItemClickEnabled="True"</pre></div>
+<p><a href="Images/vs-added-main-events.png" target="_blank"><img src="Images/vs-added-main-events.png" alt="Updating the GridView control" style="max-width:100%;"></a></p>
+<p><em>Updating the GridView control</em></p>
+</li>
+<li>
+<p>Right-click <code>OnDocumentClick</code> in the XAML you just added and select <strong>Go to Definition</strong> from the context menu. Then add the following code to the <code>OnDocumentClick</code> method.</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-en">App.ViewModel.SelectedDocument</span> = e.ClickedItem as PreviewInformation;
+<span class="pl-en">Frame.Navigate</span>(<span class="pl-en">typeof</span>(ReviewPage));</pre></div>
+<p>Notice the use of <code>Frame.Navigate</code> to navigate to the review page when the user clicks an item in the <code>GridView</code> control.</p>
+</li>
+<li>
+<p>Open <strong>ReviewPage.xaml.cs</strong> and add the following statement to the <code>OnCancelClick</code> method:</p>
+<div class="highlight highlight-source-cs"><pre> <span class="pl-en">Frame.GoBack</span>();</pre></div>
+<p>UWP's <code>Frame</code> control provides several useful methods for navigating among an app's pages, including the <code>GoBack</code> method used here.</p>
+</li>
+<li>
+<p>When designing an app's user experience, it is helpful to preview pages in Visual Studio's XAML designer to make sure everything looks the way you expect. This makes it easy to review page layouts at different resolutions and screen orientations before running the app.</p>
+<p>Open <strong>MainPage.xaml</strong> and click the <strong>horizontal split icon</strong> to make sure the XAML designer is visible.</p>
+<p><a href="Images/vs-split-selected.png" target="_blank"><img src="Images/vs-split-selected.png" alt="Previewing the UI in the XAML designer" style="max-width:100%;"></a></p>
+<p><em>Previewing the UI in the XAML designer</em></p>
+</li>
+<li>
+<p>Locate the device-preview selector in the upper-left corner and select <strong>5" Phone (1920 x 1080) 300% scale</strong>. Observe that text is truncated on the right side of the page.</p>
+<p><a href="Images/vs-select-5-inch.png" target="_blank"><img src="Images/vs-select-5-inch.png" alt="Previewing MainPage.xaml on a 5&quot; phone" style="max-width:100%;"></a></p>
+<p><em>Previewing MainPage.xaml on a 5" phone</em></p>
+</li>
+<li>
+<p>Select <strong>23" Desktop (1920 x 1080) 100% scale</strong> from the device selector and observe the changes in the designer.</p>
+<p><a href="Images/vs-select-23-inch.png" target="_blank"><img src="Images/vs-select-23-inch.png" alt="Previewing MainPage.xaml on a 23&quot; desktop monitor" style="max-width:100%;"></a></p>
+<p><em>Previewing MainPage.xaml on a 23" desktop monitor</em></p>
+</li>
+<li>
+<p>Now select <strong>8" Tablet (1280 x 800) 125% scale</strong>.</p>
+<p><a href="Images/vs-select-8-inch.png" target="_blank"><img src="Images/vs-select-8-inch.png" alt="Previewing MainPage.xaml on an 8&quot; tablet" style="max-width:100%;"></a></p>
+<p><em>Previewing MainPage.xaml on an 8" tablet</em></p>
+</li>
+<li>
+<p>Click the portrait icon to see how <strong>MainPage.xaml</strong> looks on an 8" tablet rotated to portrait mode.</p>
+<p><a href="Images/select-portrait-view.png" target="_blank"><img src="Images/select-portrait-view.png" alt="Previewing MainPage.xaml in portrait mode" style="max-width:100%;"></a></p>
+<p><em>Previewing MainPage.xaml in portrait mode</em></p>
+</li>
+</ol>
+<p>One of the most critical elements in the design of an app that can run on multiple devices and screen sizes is making sure it looks equally great on every one. From the previews in the XAML designer, it's obvious that more must be done to make sure this app meets this requirement. That's where visual states and adaptive triggers come in.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Add visual states and adaptive triggers</h2>
+<p>One of the challenges to developing apps that run on a variety of devices is creating a user interface that looks great on any screen, and at any resolution. Before the Universal Windows Platform, this was often a cumbersome task, and code was difficult to maintain, especially as new devices entered the market. With UWP, building and maintaining adaptive user interfaces is a breeze. In this exercise, you will update the pages added in the previous exercise to take advantage of adaptive triggers and visual states.</p>
+<ol>
+<li>
+<p>Open <strong>MainPage.xaml</strong> and locate the closing <code>Grid</code> tag near the end of the file.</p>
+<p><a href="Images/vs-closing-grid-tag.png" target="_blank"><img src="Images/vs-closing-grid-tag.png" alt="The Grid control's closing tag" style="max-width:100%;"></a></p>
+<p><em>The Grid control's closing tag</em></p>
+</li>
+<li>
+<p>Add the following statements directly above the closing tag to define a pair of visual states named "WideLayout" and "NarrowLayout:"</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">VisualStateManager</span>.VisualStateGroups&gt;
+    &lt;<span class="pl-ent">VisualStateGroup</span>&gt;
+        &lt;<span class="pl-ent">VisualState</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>WideLayout<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                &lt;<span class="pl-ent">AdaptiveTrigger</span> <span class="pl-e">MinWindowWidth</span>=<span class="pl-s"><span class="pl-pds">"</span>900<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+            &lt;<span class="pl-ent">VisualState</span>.Setters&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGrid.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>40<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource TitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.Setters&gt;
+        &lt;/<span class="pl-ent">VisualState</span>&gt;
+
+        &lt;<span class="pl-ent">VisualState</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>NarrowLayout<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                &lt;<span class="pl-ent">AdaptiveTrigger</span> <span class="pl-e">MinWindowWidth</span>=<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+            &lt;<span class="pl-ent">VisualState</span>.Setters&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGrid.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource BodyTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.Setters&gt;
+        &lt;/<span class="pl-ent">VisualState</span>&gt;
+    &lt;/<span class="pl-ent">VisualStateGroup</span>&gt;
+&lt;/<span class="pl-ent">VisualStateManager</span>.VisualStateGroups&gt;</pre></div>
+</li>
+<li>
+<p>Observe the change to the wrapping of the text in the XAML designer.</p>
+<p><a href="Images/vs-new-wrapping.png" target="_blank"><img src="Images/vs-new-wrapping.png" alt="Previewing changes in the XAML designer" style="max-width:100%;"></a></p>
+<p><em>Previewing changes in the XAML designer</em></p>
+</li>
+<li>
+<p>Examine the visual state named "WideLayout." Using an <code>AdaptiveTrigger</code>, this layout defines values for properties of certain elements in the user interface when the screen or window width is at least 900 effective pixels. Observe that visual states can define values not only for simple properties such as <code>Margin</code>, but also for more complex properties such as <code>Style</code>.</p>
+<p><a href="Images/vs-wide-layout.png" target="_blank"><img src="Images/vs-wide-layout.png" alt="The &quot;WideLayout&quot; visual state" style="max-width:100%;"></a></p>
+<p><em>The "WideLayout" visual state</em></p>
+</li>
+<li>
+<p>Now examine the visual state named "NarrowLayout." This visual state assigns new values to  properties of the same elements in the user interface when the screen or window width is less than 900 effective pixels.</p>
+<p><a href="Images/vs-narrow-layout.png" target="_blank"><img src="Images/vs-narrow-layout.png" alt="The &quot;NarrowLayout&quot; visual state" style="max-width:100%;"></a></p>
+<p><em>The "NarrowLayout" visual state</em></p>
+</li>
+<li>
+<p>In the device-preview selector, select a different device size and resolution, such as <strong>23" Desktop (1920 x 1080) 100% scale</strong>. Notice the changes that occur in the designer, including the increased margin size.</p>
+<p><a href="Images/vs-margin-change.png" target="_blank"><img src="Images/vs-margin-change.png" alt="Previewing the layout on a 23-inch 1920 x 1080 desktop monitor" style="max-width:100%;"></a></p>
+<p><em>Previewing the layout on a 23-inch 1920 x 1080 desktop monitor</em></p>
+</li>
+<li>
+<p>Open <strong>ReviewPage.xaml</strong> and locate the closing <code>Grid</code> tag near the end of the file.</p>
+<p><a href="Images/vs-closing-grid-tag-2.png" target="_blank"><img src="Images/vs-closing-grid-tag-2.png" alt="The Grid control's closing tag" style="max-width:100%;"></a></p>
+<p><em>The Grid control's closing tag</em></p>
+</li>
+<li>
+<p>Add the following statements directly above the closing tag:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">VisualStateManager</span>.VisualStateGroups&gt;
+    &lt;<span class="pl-ent">VisualStateGroup</span>&gt;
+        &lt;<span class="pl-ent">VisualState</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>WideLayout<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                &lt;<span class="pl-ent">AdaptiveTrigger</span> <span class="pl-e">MinWindowWidth</span>=<span class="pl-s"><span class="pl-pds">"</span>900<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+            &lt;<span class="pl-ent">VisualState</span>.Setters&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGrid.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>40<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource TitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.Setters&gt;
+        &lt;/<span class="pl-ent">VisualState</span>&gt;
+
+        &lt;<span class="pl-ent">VisualState</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>NarrowLayout<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                &lt;<span class="pl-ent">AdaptiveTrigger</span> <span class="pl-e">MinWindowWidth</span>=<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+            &lt;<span class="pl-ent">VisualState</span>.Setters&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGrid.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>10<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource BodyTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+            &lt;/<span class="pl-ent">VisualState</span>.Setters&gt;
+        &lt;/<span class="pl-ent">VisualState</span>&gt;
+    &lt;/<span class="pl-ent">VisualStateGroup</span>&gt;
+&lt;/<span class="pl-ent">VisualStateManager</span>.VisualStateGroups&gt;</pre></div>
+</li>
+<li>
+<p>Note the changes that occur in the designer as a result of the visual states you added.</p>
+<p><a href="Images/vs-visual-state.png" target="_blank"><img src="Images/vs-visual-state.png" alt="Previewing changes in the XAML designer" style="max-width:100%;"></a></p>
+<p><em>Previewing changes in the XAML designer</em></p>
+<blockquote>
+<p>You may notice that the XAML used for the visual states and adaptive triggers is the same for both pages. This isn't a requirement, and it's only the case here because the layout of the two pages is similar.</p>
+</blockquote>
+</li>
+</ol>
+<p>Visual states and adaptive triggers are important elements in most UWP apps and are the first line of defense in creating truly adaptive layouts. Realize that visual states can be considerably more complex than the ones you saw here. It is not uncommon for apps to define more than two states for each page and for each visual state to specify values for dozens of properties. UWP even supports custom triggers that can change the look and layout of a page in response to stimuli other than changing window widths. If you'd like to learn more about custom triggers, read <a href="https://blogs.msdn.microsoft.com/mvpawardprogram/2017/02/07/state-triggers-uwp-apps/">Using State Triggers to Customize UWP apps Across Devices</a>.</p>
+<p><a name="Exercise6"></a></p>
+<h2>Exercise 6: Test the app</h2>
+<p>In the final exercise, you will see the results of your efforts thus far by using the app to view and annotate PDF pages.</p>
+<ol>
+<li>
+<p>In order to build and run UWP apps on a Windows 10 PC, you must enable developer mode on the device. To ensure that developer mode is enabled, click the <strong>Windows</strong> button (also known as the Start button) in the lower-left corner of the desktop. Then select <strong>Settings</strong> from the menu and click <strong>Update &amp; security</strong> in the Settings dialog. Now click <strong>For developers</strong> on the left and select <strong>Developer mode</strong> on the right, as shown below.</p>
+<p><a href="Images/enable-developer-mode.png" target="_blank"><img src="Images/enable-developer-mode.png" alt="Enabling developer mode in Windows 10" style="max-width:100%;"></a></p>
+<p><em>Enabling developer mode in Windows 10</em></p>
+</li>
+<li>
+<p>In Visual Studio, use the <strong>Debug</strong> -&gt; <strong>Start Without Debugging</strong> command (or press <strong>CTRL+F5</strong>) to launch the app. Notice the splash screen that's displayed when the app starts. This is one of the image assets you imported in <a href="#Exercise2">Exercise 2</a>.</p>
+<p><a href="Images/vs-app-splash.png" target="_blank"><img src="Images/vs-app-splash.png" alt="The Pdf Reviewer splash screen" style="max-width:100%;"></a></p>
+<p><em>The Pdf Reviewer splash screen</em></p>
+</li>
+<li>
+<p>Click <strong>Open</strong> in the app's bottom app bar and browse to the "Resources\Documents" folder included with this lab.</p>
+<p><a href="Images/app-click-open.png" target="_blank"><img src="Images/app-click-open.png" alt="Opening a PDF file" style="max-width:100%;"></a></p>
+<p><em>Opening a PDF file</em></p>
+</li>
+<li>
+<p>Select the file named <strong>The Universal Windows Platform.pdf</strong> and click <strong>Open</strong>. Confirm that the app displays a collection of thumbnails representing pages in the document.</p>
+<p><a href="Images/app-first-view.png" target="_blank"><img src="Images/app-first-view.png" alt="Pages in &quot;The Universal Windows Platform.pdf&quot;" style="max-width:100%;"></a></p>
+<p><em>Pages in "The Universal Windows Platform.pdf"</em></p>
+</li>
+<li>
+<p>Resize the window to make it narrower and observe how the layout changes due to the adaptive trigger.</p>
+<p><a href="Images/app-states-in-action.png" target="_blank"><img src="Images/app-states-in-action.png" alt="Adaptive layout in action" style="max-width:100%;"></a></p>
+<p><em>Adaptive layout in action</em></p>
+</li>
+<li>
+<p>Tap or click one of the page thumbnails to navigate to the review page and see an enlarged view of the page.</p>
+<p><a href="Images/app-review-page.png" target="_blank"><img src="Images/app-review-page.png" alt="Page 2 of the document" style="max-width:100%;"></a></p>
+<p><em>Page 2 of the document</em></p>
+</li>
+<li>
+<p>Using your mouse, pen, or finger if you're on a touch screen, select a color, such as red, from the Inking toolbar's "Ballpoint Pen" menu.</p>
+<p><a href="Images/app-select-red.png" target="_blank"><img src="Images/app-select-red.png" alt="Using the Inking toolbar to change color" style="max-width:100%;"></a></p>
+<p><em>Using the Inking toolbar to change color</em></p>
+</li>
+<li>
+<p>Draw an annotation on the page.</p>
+<p><a href="Images/app-with-annotations.png" target="_blank"><img src="Images/app-with-annotations.png" alt="Annotating the page" style="max-width:100%;"></a></p>
+<p><em>Annotating the page</em></p>
+</li>
+<li>
+<p>Experiment with other Inking control types such the Pencil, Highlighter, or Eraser, and try changing the size of the Inking element.</p>
+<p><a href="Images/app-with-annotations-2.png" target="_blank"><img src="Images/app-with-annotations-2.png" alt="Using additonal Inking toolbar controls" style="max-width:100%;"></a></p>
+<p><em>Using additonal Inking toolbar controls</em></p>
+</li>
+<li>
+<p>When you’re satisfied with your annotations, click <strong>Save</strong> in the bottom app bar.</p>
+<p><a href="Images/app-click-save.png" target="_blank"><img src="Images/app-click-save.png" alt="Saving your annotations" style="max-width:100%;"></a></p>
+<p><em>Saving your annotations</em></p>
+</li>
+<li>
+<p>As you make other annotations on other pages, observe that your annotations appear in the page thumbnails on the home screen as well.</p>
+<p><a href="Images/app-saved-annotations.png" target="_blank"><img src="Images/app-saved-annotations.png" alt="Thumbnails with annotations" style="max-width:100%;"></a></p>
+<p><em>Thumbnails with annotations</em></p>
+</li>
+</ol>
+<p>Feel free to experiment with the app on other UWP devices, including the built-in mobile emulators and even the <a href="https://developer.microsoft.com/en-us/windows/holographic/install_the_tools">HoloLens Emulator</a> if you're curious to see how the app might look on a HoloLens.</p>
+<p><a name="Summary"></a></p>
+<h2>Summary</h2>
+<p>In this hands-on lab you learned how to:</p>
+<ul>
+<li>Create a Universal Windows Platform (UWP) app targeting multiple devices and form factors</li>
+<li>Brand an app with custom image assets</li>
+<li>Add common logic and models</li>
+<li>Add pages and page navigation</li>
+<li>Use visual states and adaptive triggers to create adaptive layouts</li>
+</ul>
+<p>This is just one example of how you can leverage the power of the Universal Windows Platform to develop robust, adaptive, and intelligent apps that can run on a range of devices and form factors, all while utilizing common and intuitive APIs, services, and controls. And it's a great place to start because it demonstrates some of the most important aspects of designing and executing a UWP app.</p>
+<hr>
+<p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
