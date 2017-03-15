@@ -1,5 +1,5 @@
 <a name="HOLTitle"></a>
-# Deveoping Apps for the Universal Windows Platform (UWP) #
+# Developing Apps for the Universal Windows Platform (UWP) #
 
 ---
 
