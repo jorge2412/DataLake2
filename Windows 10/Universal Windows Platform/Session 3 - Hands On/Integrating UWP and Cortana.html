@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>readme</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><a name="HOLTitle"></a></p>
+<h1>Enhancing Universal Windows Platform (UWP) Apps with Cortana</h1>
+<hr>
+<p><a name="Overview"></a></p>
+<h2>Overview</h2>
+<p>In a <a href="https://www.youtube.com/watch?v=hShY6xZWVGE">famous scene</a> from the movie <a href="http://www.imdb.com/title/tt0092007/">Star Trek IV: The Voyage Home</a>, chief engineer Scotty attempts to talk to a vintage PC. When the computer fails to respond, Scotty is handed a mouse — whereupon he holds the mouse like a microphone and says "Hello, computer."</p>
+<p>Voice input and output, once considered a novelty in computer applications, are becoming more commonplace every day. That is the driving principle behind voice and speech APIs in the Universal Windows Platform (UWP), which, combined with <a href="https://www.microsoft.com/en-us/mobile/experiences/cortana/">Microsoft Cortana</a>, provides a robust, extensible framework for building apps that react to voice commands and respond in kind with vocalizations of their own. Incorporating voice and speech in your apps is good not only for usability, but for accessibility as well.</p>
+<p>In this lab, you will use Visual Studio 2017 to create a UWP app named Factoid that integrates with Cortana to present users with random, interesting facts, and that incorporates voice commands and speech synthesis to interact with users as naturally as they interact with each other.</p>
+<p><a name="Objectives"></a></p>
+<h3>Objectives</h3>
+<p>In this hands-on lab, you will learn how to:</p>
+<ul>
+<li>Create a Universal Windows Platform (UWP) app</li>
+<li>Integrate Cortana voice commands</li>
+<li>Incorporate speech synthesis</li>
+<li>Create a UWP service</li>
+<li>Utilize Cortana's "Personal Assistant" capabilities in an app</li>
+</ul>
+<p><a name="Prerequisites"></a></p>
+<h3>Prerequisites</h3>
+<p>The following are required to complete this hands-on lab:</p>
+<ul>
+<li>Windows 10</li>
+<li><a href="https://www.visualstudio.com/">Visual Studio Community 2017</a> or higher</li>
+<li>The Visual Studio 2017 <strong>.NET desktop development</strong> workload</li>
+<li>The Visual Studio 2017 <strong>Universal Windows Platform development</strong> workload</li>
+<li>A microphone and speaker connected to your PC</li>
+</ul>
+<hr>
+<p><a name="Exercises"></a></p>
+<h2>Exercises</h2>
+<p>This hands-on lab includes the following exercises:</p>
+<ul>
+<li><a href="#Exercise1">Exercise 1: Create a Universal Windows Platform app</a></li>
+<li><a href="#Exercise2">Exercise 2: Add common logic, models, and UI controls</a></li>
+<li><a href="#Exercise3">Exercise 3: Integrate Cortana voice commands</a></li>
+<li><a href="#Exercise4">Exercise 4: Add speech synthesis</a></li>
+<li><a href="#Exercise5">Exercise 5: Create a UWP Service</a></li>
+<li><a href="#Exercise6">Exercise 6: Add Personal Assistant actions</a></li>
+</ul>
+<p>Estimated time to complete this lab: <strong>60</strong> minutes.</p>
+<p><a name="Exercise1"></a></p>
+<h2>Exercise 1: Create a Universal Windows Platform app</h2>
+<p>Creating a Universal Windows Platform (UWP) app is quick and easy using the built-in templates that ship with Visual Studio 2017. In this exercise, you will use Visual Studio 2017 to create a UWP app with custom branding to serve as a platform for subsequent exercises.</p>
+<ol>
+<li>
+<p>Start the Visual Studio installer. (An easy way to do that is to press the Windows key, type "installer," and select <strong>Visual Studio Installer</strong> from the menu.) Click the <strong>Modify</strong> button to view a list of installed components. Under "Workloads," make sure <strong>Universal Windows Platform development</strong> and <strong>.NET desktop development</strong> are checked. If they are not, check them and allow the installer to add these workloads.</p>
+<p><a href="Images/required-workloads.png" target="_blank"><img src="Images/required-workloads.png" alt="Installing the UWP and .NET development workloads" style="max-width:100%;"></a></p>
+<p><em>Installing the UWP and .NET development workloads</em></p>
+</li>
+<li>
+<p>Close the installer. Then start Visual Studio 2017 use the <strong>File</strong> -&gt; <strong>New</strong> -&gt; <strong>Project</strong> command to create a new Visual C# <strong>Blank App (Universal Windows)</strong> solution named "Factoid."</p>
+<p><a href="Images/vs-select-blank-template.png" target="_blank"><img src="Images/vs-select-blank-template.png" alt="Creating a new UWP solution" style="max-width:100%;"></a></p>
+<p><em>Creating a new UWP solution</em></p>
+</li>
+<li>
+<p>When prompted to choose target and minimum platform requirements, accept the defaults and click <strong>OK</strong>.</p>
+<p><a href="Images/vs-target-platform.png" target="_blank"><img src="Images/vs-target-platform.png" alt="Specifying the platform versions" style="max-width:100%;"></a></p>
+<p><em>Specifying the platform versions</em></p>
+</li>
+<li>
+<p>Go to Solution Explorer and review the files and folders created for the solution, taking special notice of the "Assets" folder and the <strong>Package.appxmanifest</strong> file.</p>
+<p><a href="Images/vs-new-project-items.png" target="_blank"><img src="Images/vs-new-project-items.png" alt="The new UWP solution" style="max-width:100%;"></a></p>
+<p><em>The new UWP solution</em></p>
+</li>
+<li>
+<p>Next, you will add custom images to the project and update <strong>Package.appxmanifest</strong> to references those images and apply custom branding. In Solution Explorer, right-click the project's "Assets" folder and select <strong>Add</strong> -&gt; <strong>Existing Item...</strong>.</p>
+<p><a href="Images/vs-add-existing-item.png" target="_blank"><img src="Images/vs-add-existing-item.png" alt="Adding items to the &quot;Assets&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Adding items to the "Assets" folder</em></p>
+</li>
+<li>
+<p>In the "Add Existing Item" dialog, browse to the "Assets" folder in the "Resources" folder that accompanies this lab. Select all of the files in the "Assets" folder and click <strong>Add</strong>.</p>
+<p><a href="Images/fe-select-all-assets.png" target="_blank"><img src="Images/fe-select-all-assets.png" alt="Adding images to the &quot;Assets&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Adding images to the "Assets" folder</em></p>
+</li>
+<li>
+<p>In Solution Explorer, double-click <strong>Package.appxmanifest</strong> to open it for editing. This file, known as the "app manifest," contains information about the app regarding images, display names, permissions, and capabilities.</p>
+</li>
+<li>
+<p>Select the <strong>Visual Assets</strong> tab and ensure that <strong>All Visual Assets</strong> is selected on the left. These settings control the images, icons, and background colors used for the app's icons, logos, and splash screen.</p>
+<p><a href="Images/vs-ensure-visual-assets.png" target="_blank"><img src="Images/vs-ensure-visual-assets.png" alt="Viewing visual assets" style="max-width:100%;"></a></p>
+<p><em>Viewing visual assets</em></p>
+</li>
+<li>
+<p>Scroll down to "Display Settings" and enter the hexadecimal color value #298FCC for both <strong>Tile background</strong> and <strong>Splash screen background</strong>.</p>
+<p><a href="Images/vs-display-settings.png" target="_blank"><img src="Images/vs-display-settings.png" alt="Updating the tile and splash-screen background colors" style="max-width:100%;"></a></p>
+<p><em>Updating the tile and splash-screen background colors</em></p>
+</li>
+<li>
+<p>Scroll down to "Preview Images." Type "Assets\SmallLogo.png" into the <strong>Small Tile</strong> box. Confirm that a thumbnail image appears below.</p>
+<p><a href="Images/vs-update-small-logo.png" target="_blank"><img src="Images/vs-update-small-logo.png" alt="Updating the small-tile image" style="max-width:100%;"></a></p>
+<p><em>Updating the small-tile image</em></p>
+<blockquote>
+<p>You can optionally provide small-tile images of various resolutions to make tiles created for your app look great on different devices. The Universal Windows Platform is smart enough to determine which image to display based on the screen resolution. If you provide only one image, Windows automatically scales it up and down as needed.</p>
+</blockquote>
+</li>
+<li>
+<p>Scroll down to <strong>Medium Tile</strong> and enter "Assets\MediumLogo.png" into the box.</p>
+<p><a href="Images/vs-update-medium-logo.png" target="_blank"><img src="Images/vs-update-medium-logo.png" alt="Updating the medium-tile image" style="max-width:100%;"></a></p>
+<p><em>Updating the medium-tile image</em></p>
+</li>
+<li>
+<p>Scroll down to <strong>Wide Tile</strong> and enter "Assets\WideLogo.png" into the box.</p>
+<p><a href="Images/vs-update-wide-logo.png" target="_blank"><img src="Images/vs-update-wide-logo.png" alt="Updating the wide-tile image" style="max-width:100%;"></a></p>
+<p><em>Updating the wide-tile image</em></p>
+</li>
+<li>
+<p>Repeat the previous steps to enter the following values for the following assets:</p>
+<ul>
+<li>For <strong>Large Tile</strong>, enter "Assets\LargeLogo.png"</li>
+<li>For <strong>App Icon</strong>, enter "Assets\AppIcon.png"</li>
+<li>For <strong>Splash Screen</strong>, enter "Assets\SplashLogo.png"</li>
+<li>For <strong>PackageLogo</strong>, enter "Assets\PackageLogo.png"</li>
+</ul>
+<p><a href="Images/vs-update-package-logo.png" target="_blank"><img src="Images/vs-update-package-logo.png" alt="Updating the package logo" style="max-width:100%;"></a></p>
+<p><em>Updating the package logo</em></p>
+</li>
+<li>
+<p>Next, you will import a NuGet package that simplifies the handling of JSON data. In Solution Explorer, right-click <strong>References</strong> and select <strong>Manage NuGet Packages...</strong> from the context menu.</p>
+<p><a href="Images/vs-manage-nuget-02.png" target="_blank"><img src="Images/vs-manage-nuget-02.png" alt="Managing NuGet packages" style="max-width:100%;"></a></p>
+<p><em>Managing NuGet packages</em></p>
+</li>
+<li>
+<p>Make sure <strong>Browse</strong> is selected in the NuGet Package Manager. Then select the <strong>Newtonsoft.Json</strong> package and click <strong>Install</strong> to install the latest stable version. If prompted to review changes, click <strong>OK</strong>.</p>
+<p><a href="Images/vs-install-json-net.png" target="_blank"><img src="Images/vs-install-json-net.png" alt="Installing JSON.NET" style="max-width:100%;"></a></p>
+<p><em>Installing JSON.NET</em></p>
+</li>
+</ol>
+<p>Key elements of the app are now in place, including images for custom branding and a library to simplify dealing with JSON data. The next step is to write some code.</p>
+<p><a name="Exercise2"></a></p>
+<h2>Exercise 2: Add common logic, models, and UI controls</h2>
+<p>In most apps, but especially in a UWP app, it's helpful to write code that is centralized and shared by other parts of the app. As a best practice, the Model-View-ViewModel (MVVM) pattern is recommended for UWP apps. Implementing MVVM means creating pages ("views") to provide the visual experience, models to define the structure of data, and one or more view-models to connect views to models and manage the user experience. In this exercise, you will add a model and a view-model to the app. You will also begin crafting a user experience by adding controls to the app's UI.</p>
+<ol>
+<li>
+<p>In Solution Explorer, right-click the <strong>Factoid (Windows Universal)</strong> project and use the <strong>Add</strong> -&gt; <strong>New Folder</strong> command to add a folder named "Common" to the project.</p>
+</li>
+<li>
+<p>Repeat this process to add folders named "Helpers," "Models," and "ViewModels" to the project.</p>
+</li>
+<li>
+<p>Right-click the "Common" folder and select <strong>Add</strong> -&gt; <strong>Existing Item...</strong>. Browse to the "Resources\Common" folder included with this lab, select all of the files in that folder, and click <strong>Add</strong> to import the files into the project's "Common" folder.</p>
+<p><a href="Images/fe-select-all-common.png" target="_blank"><img src="Images/fe-select-all-common.png" alt="Importing files into the &quot;Common&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Importing files into the "Common" folder</em></p>
+</li>
+<li>
+<p>Right-click the "Helpers" folder and use the <strong>Add</strong> -&gt; <strong>Class</strong> command to add a class file named <strong>FactHelper.cs</strong> to the folder.</p>
+<p><a href="Images/vs-add-fact-helper.png" target="_blank"><img src="Images/vs-add-fact-helper.png" alt="Adding the FactHelper class" style="max-width:100%;"></a></p>
+<p><em>Adding the FactHelper class</em></p>
+</li>
+<li>
+<p>Replace the contents of the file with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">Newtonsoft.Json</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Net.Http</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Runtime.Serialization.Json</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Threading.Tasks</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">Factoid.Helpers</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">class</span> <span class="pl-en">FactHelper</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">static</span> <span class="pl-en">Task</span>&lt;<span class="pl-k">string</span>&gt; <span class="pl-en">GetFactAsync</span>()
+        {
+            <span class="pl-k">string</span> <span class="pl-en">fact</span> = <span class="pl-c1">null</span>;
+
+            <span class="pl-k">using</span> (<span class="pl-en">HttpClient</span> <span class="pl-en">client</span> = <span class="pl-k">new</span> <span class="pl-en">HttpClient</span>())
+            {
+                <span class="pl-k">var</span> <span class="pl-en">response </span>= <span class="pl-k">await</span> client.GetStringAsync(<span class="pl-k">new</span> <span class="pl-en">Uri</span>(<span class="pl-s"><span class="pl-pds">"</span>https://traininglabservices.azurewebsites.net/api/Facts/1<span class="pl-pds">"</span></span>));
+                fact = JsonConvert.DeserializeObject&lt;<span class="pl-k">string</span>&gt;(<span class="pl-en">response</span>);
+            }
+
+            <span class="pl-k">return</span> fact;
+        }
+    }
+}</pre></div>
+<p>The <code>GetFactAsync</code> method calls an external Azure App Service to retrieve a random fact for the app to display.</p>
+</li>
+<li>
+<p>Right-click the "Models" folder and use the <strong>Add</strong> -&gt; <strong>Class</strong> command to add a class file named <strong>FactInformation.cs</strong>. Then replace the contents of the file with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">Factoid.Common</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Threading.Tasks</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Windows.Input</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">Factoid.Models</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">FactInformation</span> : <span class="pl-en">Common.ObservableBase</span>
+    {
+        <span class="pl-k">private </span><span class="pl-en">Guid</span> <span class="pl-en">_id</span>;
+        <span class="pl-k">public </span><span class="pl-en">Guid</span> <span class="pl-en">Id</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._id; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._id, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">private </span><span class="pl-k">string</span> <span class="pl-en">_label</span>;
+        <span class="pl-k">public </span><span class="pl-k">string</span> <span class="pl-en">Label</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._label; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._label, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">private </span><span class="pl-k">bool</span> <span class="pl-en">_isFavorite</span>;
+        <span class="pl-k">public </span><span class="pl-k">bool</span> <span class="pl-en">IsFavorite</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._isFavorite; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._isFavorite, <span class="pl-k">value</span>); }
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>Right-click the "ViewModels" folder and use the <strong>Add</strong> -&gt; <strong>Class</strong> command to add a class file named <strong>MainViewModel.cs</strong>. Then replace the contents of the file with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">Factoid.Models</span>;
+<span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.ObjectModel</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Threading.Tasks</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">Factoid.ViewModels</span>
+{
+    <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MainViewModel</span> : <span class="pl-en">Common.ObservableBase</span>
+    {
+        <span class="pl-k">public</span> <span class="pl-en">MainViewModel</span>()
+        {
+            <span class="pl-c1">this</span>.AllFacts = <span class="pl-k">new</span> <span class="pl-en">ObservableCollection</span>&lt;FactInformation&gt;();
+        }
+
+        <span class="pl-k">private </span><span class="pl-en">ObservableCollection</span>&lt;<span class="pl-en">FactInformation</span>&gt; <span class="pl-en">_allFacts</span>;
+        <span class="pl-k">public </span><span class="pl-en">ObservableCollection</span>&lt;<span class="pl-en">FactInformation</span>&gt; <span class="pl-en">AllFacts</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._allFacts; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._allFacts, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">private </span><span class="pl-en">FactInformation</span> <span class="pl-en">_currentFact</span>;
+        <span class="pl-k">public </span><span class="pl-en">FactInformation</span> <span class="pl-en">CurrentFact</span>
+        {
+            <span class="pl-k">get</span> { <span class="pl-k">return</span> <span class="pl-c1">this</span>._currentFact; }
+            <span class="pl-k">set</span> { <span class="pl-c1">this</span>.SetProperty(ref <span class="pl-c1">this</span>._currentFact, <span class="pl-k">value</span>); }
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">LoadFactsAsync</span>()
+        {
+            <span class="pl-k">for</span> (<span class="pl-k">int</span> <span class="pl-en">i</span> = <span class="pl-c1">0</span>; i &lt;= <span class="pl-c1">10</span>; i++)
+            {
+                <span class="pl-k">var</span> <span class="pl-en">fact </span>= <span class="pl-k">await</span> Helpers.FactHelper.GetFactAsync();
+                <span class="pl-c1">this</span>.AllFacts.Add(<span class="pl-k">new</span> <span class="pl-en">FactInformation</span>() { Id = Guid.NewGuid(), IsFavorite = <span class="pl-en">false</span>, <span class="pl-en">Label</span> = fact });
+            }
+        }
+
+        <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">LoadFactAsync</span>()
+        {
+            <span class="pl-k">var</span> <span class="pl-en">fact </span>= <span class="pl-k">await</span> Helpers.FactHelper.GetFactAsync();
+            <span class="pl-c1">this</span>.CurrentFact = <span class="pl-k">new</span> <span class="pl-en">FactInformation</span>() { Id = Guid.NewGuid(), IsFavorite = <span class="pl-en">false</span>, <span class="pl-en">Label</span> = fact };
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>In Solution Explorer, open <strong>App.xaml</strong> and locate the closing <code>&lt;/Application&gt;</code> tag</p>
+<p><a href="Images/vs-app-xaml-closing-app.png" target="_blank"><img src="Images/vs-app-xaml-closing-app.png" alt="Locating the closing Application tag" style="max-width:100%;"></a></p>
+<p><em>Locating the closing Application tag</em></p>
+</li>
+<li>
+<p>Add the following statements directly above the closing tag:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Application</span>.Resources&gt;
+    &lt;<span class="pl-ent">ResourceDictionary</span>&gt;
+        &lt;<span class="pl-ent">Color</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>AppMainAccentColor<span class="pl-pds">"</span></span>&gt;#FF298FCC&lt;/<span class="pl-ent">Color</span>&gt;
+        &lt;<span class="pl-ent">local</span><span class="pl-ent">:</span><span class="pl-ent">HasContextToEnabledConverter</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>HasContextToEnabledConverter<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">local</span><span class="pl-ent">:</span><span class="pl-ent">IsFavoriteBackgroundConverter</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>IsFavoriteBackgroundConverter<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">local</span><span class="pl-ent">:</span><span class="pl-ent">IsFavoriteThemeConverter</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>IsFavoriteThemeConverter<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">local</span><span class="pl-ent">:</span><span class="pl-ent">FavoriteSymbolConverter</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>FavoriteSymbolConverter<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">local</span><span class="pl-ent">:</span><span class="pl-ent">FavoriteLabelConverter</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Key</span>=<span class="pl-s"><span class="pl-pds">"</span>FavoriteLabelConverter<span class="pl-pds">"</span></span> /&gt;
+    &lt;/<span class="pl-ent">ResourceDictionary</span>&gt;
+&lt;/<span class="pl-ent">Application</span>.Resources&gt;</pre></div>
+</li>
+<li>
+<p>Open <strong>App.xaml.cs</strong> and add the following line of code to the <code>App</code> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-en">ViewModels.MainViewModel</span> ViewModel = new ViewModels.<span class="pl-en">MainViewModel</span>();</pre></div>
+<p><a href="Images/vs-add-static-view-model.png" target="_blank"><img src="Images/vs-add-static-view-model.png" alt="Modifying the App class" style="max-width:100%;"></a></p>
+<p><em>Modifying the App class</em></p>
+</li>
+<li>
+<p>The Factoid app now contains a model describing the "data" used by the app — in this case, random, interesting facts — and a view-model to drive the user experience. Now it is time to add controls to the main page of the app in order to display those facts. Begin by opening <strong>MainPage.xaml</strong> and replacing the current contents of the file with the following XAML:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Page</span>
+x:Class=<span class="pl-s"><span class="pl-pds">"</span>Factoid.MainPage<span class="pl-pds">"</span></span>
+xmlns=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/winfx/2006/xaml/presentation<span class="pl-pds">"</span></span>
+xmlns:x=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/winfx/2006/xaml<span class="pl-pds">"</span></span>
+xmlns:local=<span class="pl-s"><span class="pl-pds">"</span>using:Factoid<span class="pl-pds">"</span></span>
+xmlns:d=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/expression/blend/2008<span class="pl-pds">"</span></span>
+xmlns:mc=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.openxmlformats.org/markup-compatibility/2006<span class="pl-pds">"</span></span>
+mc:Ignorable=<span class="pl-s"><span class="pl-pds">"</span>d<span class="pl-pds">"</span></span>&gt;
+
+&lt;<span class="pl-ent">Grid</span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource ApplicationPageBackgroundThemeBrush}<span class="pl-pds">"</span></span>&gt;
+
+    &lt;<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+        &lt;<span class="pl-ent">RowDefinition</span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>Auto<span class="pl-pds">"</span></span> /&gt;
+        &lt;<span class="pl-ent">RowDefinition</span>/&gt;
+    &lt;/<span class="pl-ent">Grid</span>.RowDefinitions&gt;
+
+    &lt;<span class="pl-ent">StackPanel</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>headerPanel<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Welcome to Factoid<span class="pl-pds">"</span></span> <span class="pl-e">TextWrapping</span>=<span class="pl-s"><span class="pl-pds">"</span>Wrap<span class="pl-pds">"</span></span>/&gt;
+        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel<span class="pl-pds">"</span></span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>Light<span class="pl-pds">"</span></span> <span class="pl-e">TextWrapping</span>=<span class="pl-s"><span class="pl-pds">"</span>Wrap<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">Run</span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Here are a few interesting facts just for you.<span class="pl-pds">"</span></span>/&gt;
+            &lt;<span class="pl-ent">LineBreak</span>/&gt;
+            &lt;<span class="pl-ent">Run</span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>Select a fact and tap 'Hear' to have the fact read aloud.<span class="pl-pds">"</span></span>/&gt;
+        &lt;/<span class="pl-ent">TextBlock</span>&gt;
+    &lt;/<span class="pl-ent">StackPanel</span>&gt;
+
+    &lt;<span class="pl-ent">GridView</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGridView<span class="pl-pds">"</span></span> <span class="pl-e">SelectionMode</span>=<span class="pl-s"><span class="pl-pds">"</span>Single<span class="pl-pds">"</span></span> <span class="pl-e">SelectedItem</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact, Mode=TwoWay}<span class="pl-pds">"</span></span> Grid.Row=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> <span class="pl-e">ItemsSource</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding AllFacts}<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">GridView</span>.ItemTemplate&gt;
+            &lt;<span class="pl-ent">DataTemplate</span>&gt;
+                &lt;<span class="pl-ent">Border</span> <span class="pl-e">RequestedTheme</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding IsFavorite, Converter={StaticResource IsFavoriteThemeConverter}}<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding IsFavorite, Converter={StaticResource IsFavoriteBackgroundConverter}}<span class="pl-pds">"</span></span> <span class="pl-e">Width</span>=<span class="pl-s"><span class="pl-pds">"</span>260<span class="pl-pds">"</span></span> <span class="pl-e">Height</span>=<span class="pl-s"><span class="pl-pds">"</span>200<span class="pl-pds">"</span></span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span> <span class="pl-e">BorderBrush</span>=<span class="pl-s"><span class="pl-pds">"</span>DarkGray<span class="pl-pds">"</span></span> <span class="pl-e">BorderThickness</span>=<span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>&gt;
+                    &lt;<span class="pl-ent">Grid</span> ToolTipService.ToolTip=<span class="pl-s"><span class="pl-pds">"</span>{Binding Label}<span class="pl-pds">"</span></span>&gt;
+                        &lt;<span class="pl-ent">TextBlock</span> <span class="pl-e">TextTrimming</span>=<span class="pl-s"><span class="pl-pds">"</span>CharacterEllipsis<span class="pl-pds">"</span></span> <span class="pl-e">Style</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> <span class="pl-e">FontWeight</span>=<span class="pl-s"><span class="pl-pds">"</span>Light<span class="pl-pds">"</span></span> <span class="pl-e">HorizontalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">VerticalAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">TextAlignment</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> <span class="pl-e">TextWrapping</span>=<span class="pl-s"><span class="pl-pds">"</span>Wrap<span class="pl-pds">"</span></span> <span class="pl-e">Margin</span>=<span class="pl-s"><span class="pl-pds">"</span>20<span class="pl-pds">"</span></span> <span class="pl-e">Text</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding Label}<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">TextBlock</span>&gt;
+                    &lt;/<span class="pl-ent">Grid</span>&gt;
+                &lt;/<span class="pl-ent">Border</span>&gt;
+            &lt;/<span class="pl-ent">DataTemplate</span>&gt;
+        &lt;/<span class="pl-ent">GridView</span>.ItemTemplate&gt;
+    &lt;/<span class="pl-ent">GridView</span>&gt;
+
+    &lt;<span class="pl-ent">VisualStateManager</span>.VisualStateGroups&gt;
+        &lt;<span class="pl-ent">VisualStateGroup</span>&gt;
+            &lt;<span class="pl-ent">VisualState</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>WideLayout<span class="pl-pds">"</span></span>&gt;
+                &lt;<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                    &lt;<span class="pl-ent">AdaptiveTrigger</span> <span class="pl-e">MinWindowWidth</span>=<span class="pl-s"><span class="pl-pds">"</span>900<span class="pl-pds">"</span></span> /&gt;
+                &lt;/<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                &lt;<span class="pl-ent">VisualState</span>.Setters&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>headerPanel.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>40,40,40,0<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGridView.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>40,10,40,40<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGridView.HorizontalAlignment<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>Stretch<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource TitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                &lt;/<span class="pl-ent">VisualState</span>.Setters&gt;
+            &lt;/<span class="pl-ent">VisualState</span>&gt;
+
+            &lt;<span class="pl-ent">VisualState</span> <span class="pl-e">x</span><span class="pl-e">:</span><span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>NarrowLayout<span class="pl-pds">"</span></span>&gt;
+                &lt;<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                    &lt;<span class="pl-ent">AdaptiveTrigger</span> <span class="pl-e">MinWindowWidth</span>=<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span> /&gt;
+                &lt;/<span class="pl-ent">VisualState</span>.StateTriggers&gt;
+                &lt;<span class="pl-ent">VisualState</span>.Setters&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>headerPanel.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>20,20,20,0<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGridView.Margin<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>20<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>mainGridView.HorizontalAlignment<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>Center<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>titleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource SubtitleTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                    &lt;<span class="pl-ent">Setter</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>subtitleLabel.Style<span class="pl-pds">"</span></span> <span class="pl-e">Value</span>=<span class="pl-s"><span class="pl-pds">"</span>{ThemeResource BodyTextBlockStyle}<span class="pl-pds">"</span></span> /&gt;
+                &lt;/<span class="pl-ent">VisualState</span>.Setters&gt;
+            &lt;/<span class="pl-ent">VisualState</span>&gt;
+        &lt;/<span class="pl-ent">VisualStateGroup</span>&gt;
+    &lt;/<span class="pl-ent">VisualStateManager</span>.VisualStateGroups&gt;
+
+&lt;/<span class="pl-ent">Grid</span>&gt;
+&lt;/<span class="pl-ent">Page</span>&gt;	</pre></div>
+<p>The main page uses UWP's <code>GridView</code> control to display random facts. And it uses visual states and adaptive triggers to implement a user experience that adapts to various device orientations and screen solutions.</p>
+</li>
+<li>
+<p>Open <strong>MainPage.xaml.cs</strong>. Locate the <code>MainPage</code> class constructor and replace it with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> MainPage()
+{
+    <span class="pl-c1">this</span>.InitializeComponent();
+    <span class="pl-c1">this</span>.Loaded += MainPage_Loaded;
+}
+
+<span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">MainPage_Loaded</span>(<span class="pl-k">object</span> <span class="pl-smi">sender</span>, <span class="pl-en">RoutedEventArgs</span> <span class="pl-smi">e</span>)
+{
+    App.ViewModel.LoadFactsAsync();
+    <span class="pl-c1">this</span>.DataContext = App.ViewModel;
+}</pre></div>
+<p>Notice the line of code that sets the page's <code>DataContext</code> property equal to the static <code>App.ViewModel</code> property added earlier in this exercise. This is what connects the view to the view-model.</p>
+</li>
+<li>
+<p>In order to build and run UWP apps on a Windows 10 PC, you must enable developer mode on the device. To ensure that developer mode is enabled, click the <strong>Windows</strong> button (also known as the Start button) in the lower-left corner of the desktop. Then select <strong>Settings</strong> from the menu and click <strong>Update &amp; security</strong> in the Settings dialog. Now click <strong>For developers</strong> on the left and select <strong>Developer mode</strong> on the right, as shown below.</p>
+<p><a href="Images/enable-developer-mode.png" target="_blank"><img src="Images/enable-developer-mode.png" alt="Enabling developer mode in Windows 10" style="max-width:100%;"></a></p>
+<p><em>Enabling developer mode in Windows 10</em></p>
+</li>
+<li>
+<p>Use Visual Studio's <strong>Debug</strong> -&gt; <strong>Start Without Debugging</strong> command (or press <strong>CTRL+F5</strong>) to launch the app.</p>
+<p><a href="Images/app-first-run.png" target="_blank"><img src="Images/app-first-run.png" alt="Factoid displaying random, interesting facts" style="max-width:100%;"></a></p>
+<p><em>Factoid displaying random, interesting facts</em></p>
+</li>
+<li>
+<p>Make the Factoid window narrower and notice how the UI adapts.</p>
+<p><a href="Images/app-first-run-thin.png" target="_blank"><img src="Images/app-first-run-thin.png" alt="Adaptive layout in action" style="max-width:100%;"></a></p>
+<p><em>Adaptive layout in action</em></p>
+</li>
+</ol>
+<p>It's a good start, but right now, the app is as deaf and dumb as the computer that Scotty spoke to in "The Voyage Home." Let's fix that by adding a dose of Cortana.</p>
+<p><a name="Exercise3"></a></p>
+<h2>Exercise 3: Integrate Cortana voice commands</h2>
+<p>In this exercise, you will modify Factoid to make Cortana aware of it. Afterwards, you will be able to launch Factoid by asking Cortana to tell you an interesting fact. Later, you will take this integration a step further and allow Cortana to tell you interesting facts without displaying Factoid.</p>
+<ol>
+<li>
+<p>In Solution Explorer, right-click the <strong>Factoid (Universal Windows)</strong> project and use the <strong>Add</strong> -&gt; <strong>New Item...</strong> command to add an XML file named <strong>FactoidVoiceCommands.xml</strong> to the project.</p>
+<p><a href="Images/vs-select-data-xml.png" target="_blank"><img src="Images/vs-select-data-xml.png" alt="Adding an XML file" style="max-width:100%;"></a></p>
+<p><em>Adding an XML file</em></p>
+</li>
+<li>
+<p>Add the following XML to the file directly after the opening <code>xml</code> element:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">VoiceCommands</span> <span class="pl-e">xmlns</span>=<span class="pl-s"><span class="pl-pds">"</span>http://schemas.microsoft.com/voicecommands/1.2<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">CommandSet</span> <span class="pl-e">xml</span><span class="pl-e">:</span><span class="pl-e">lang</span>=<span class="pl-s"><span class="pl-pds">"</span>en-US<span class="pl-pds">"</span></span> <span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>FactoidCommandSet_en-us<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">AppName</span>&gt;Factoid&lt;/<span class="pl-ent">AppName</span>&gt;
+    &lt;<span class="pl-ent">Example</span>&gt;Tell me an interesting fact&lt;/<span class="pl-ent">Example</span>&gt;
+	    
+    
+  &lt;/<span class="pl-ent">CommandSet</span>&gt;
+&lt;/<span class="pl-ent">VoiceCommands</span>&gt;</pre></div>
+<p>Observe the <code>xml:lang="en-US"</code> attribute on the <code>CommandSet</code> element. This attribute defines the command set for devices whose language is set for English (U.S.) and although optional, it is considered a best practice to define command sets on a per-language basis.</p>
+<p><a href="Images/vs-vc-lang.png" target="_blank"><img src="Images/vs-vc-lang.png" alt="Defining an English command set" style="max-width:100%;"></a></p>
+<p><em>Defining an English command set</em></p>
+</li>
+<li>
+<p>Add the following command definition after the <code>Example</code> element:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Command</span> <span class="pl-e">Name</span>=<span class="pl-s"><span class="pl-pds">"</span>TellMeFactCommand<span class="pl-pds">"</span></span>&gt;
+  &lt;<span class="pl-ent">Example</span>&gt;Tell me an interesting fact&lt;/<span class="pl-ent">Example</span>&gt;
+  &lt;<span class="pl-ent">ListenFor</span>&gt;Tell me [a] [an] [interesting] fact&lt;/<span class="pl-ent">ListenFor</span>&gt;
+  &lt;<span class="pl-ent">Feedback</span>&gt;Finding you an interesting fact&lt;/<span class="pl-ent">Feedback</span>&gt;
+  &lt;<span class="pl-ent">Navigate</span> /&gt;
+&lt;/<span class="pl-ent">Command</span>&gt;</pre></div>
+</li>
+<li>
+<p>Observe the plain language used in the <code>ListenFor</code> element, complete with words surrounded by square brackets indicating that these words are optional.</p>
+<p><a href="Images/vs-update-vc-file-02.png" target="_blank"><img src="Images/vs-update-vc-file-02.png" alt="The updated voice-command file" style="max-width:100%;"></a></p>
+<p><em>The updated voice-command file</em></p>
+</li>
+<li>
+<p>In Solution Explorer, right-click the "Helpers" folder and use the <strong>Add</strong> -&gt; <strong>Class</strong> command to add a class file named <strong>SpeechHelper.cs</strong> to the folder. Change the scope of the <code>SpeechHelper</code> class by adding the keywords <code>public static</code> to the class definition:</p>
+<p><a href="Images/vs-add-public-static.png" target="_blank"><img src="Images/vs-add-public-static.png" alt="Changing the class scope" style="max-width:100%;"></a></p>
+<p><em>Changing the class scope</em></p>
+</li>
+<li>
+<p>Add the following <code>using</code> statements to the top of the file:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">Windows.ApplicationModel.VoiceCommands</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Storage</span>;</pre></div>
+</li>
+<li>
+<p>Add the following method to the <code>SpeechHelper</code> class to load the voice-command file and pass it to Cortana:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">static</span> <span class="pl-en">Task</span> <span class="pl-en">InitializeVoiceCommandsAsync</span>(<span class="pl-k">bool</span> <span class="pl-smi">updatePhraseLists</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>)
+{
+    <span class="pl-k">try</span>
+    {
+        <span class="pl-en">StorageFile</span> <span class="pl-en">commandsFile</span> = <span class="pl-k">await</span> Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(<span class="pl-s"><span class="pl-pds">@"FactoidVoiceCommands.xml"</span></span>);
+        <span class="pl-k">await</span> VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(commandsFile);
+    }
+    <span class="pl-k">catch</span> (Exception ex)
+    {
+    }
+
+    <span class="pl-k">return</span>;
+}	</pre></div>
+</li>
+<li>
+<p>Open <strong>App.xaml.cs</strong> and add the following statement to the <code>OnLaunched</code> method, making it first statement in that method:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">await</span> <span class="pl-en">Helpers.SpeechHelper.InitializeVoiceCommandsAsync</span>();</pre></div>
+</li>
+<li>
+<p>Mark the <code>OnLaunched</code> method as asynchronous by adding the keyword <code>async</code>:</p>
+<p><a href="Images/vs-updated-on-launched.png" target="_blank"><img src="Images/vs-updated-on-launched.png" alt="Adding the async keyword" style="max-width:100%;"></a></p>
+<p><em>Adding the async keyword</em></p>
+</li>
+<li>
+<p>Use Visual Studio's <strong>Debug</strong> -&gt; <strong>Start Without Debugging</strong> command (or press <strong>CTRL+F5</strong>) to launch the app.</p>
+</li>
+<li>
+<p>Find Cortana in your PC's task bar (look in the lower-left corner of the desktop) and type "Factoid tell me an interesting fact." Then press <strong>Enter</strong>.</p>
+<p><a href="Images/ask-cortana.png" target="_blank"><img src="Images/ask-cortana.png" alt="Typing a Cortana command" style="max-width:100%;"></a></p>
+<p><em>Typing a Cortana command</em></p>
+</li>
+<li>
+<p>Confirm that Cortana brings Factoid, which is already running, to the foreground.</p>
+<p><a href="Images/app-show-facts.png" target="_blank"><img src="Images/app-show-facts.png" alt="Factoid activated after a hand-off from Cortana" style="max-width:100%;"></a></p>
+<p><em>Factoid activated after a hand-off from Cortana</em></p>
+</li>
+<li>
+<p>If there is a microphone attached to your PC, click the <strong>microphone icon</strong> next to "Ask me anything" in Cortana and <strong>speak</strong> the command "Factoid tell me an interesting fact." Confirm that Cortana once more activates the Factoid app.</p>
+</li>
+<li>
+<p>Close Factoid and return to Visual Studio.</p>
+</li>
+</ol>
+<p>So now Cortana understands the command "Factoid tell me an interesting fact" as a command to launch or activate Factoid. That's mildly interesting, but it's only the first step in building a bridge between Cortana and Factoid to allow it do things that are even more interesting.</p>
+<p><a name="Exercise4"></a></p>
+<h2>Exercise 4: Add speech synthesis</h2>
+<p>The Universal Windows Platform makes it easy to add speech synthesis to your apps. It's a great way to make apps more accessible to users with impaired vision, or to simply provide the convenience of having content read aloud. In this exercise, you will enhance Factoid to read facts to you.</p>
+<ol>
+<li>
+<p>Open <strong>SpeechHelper.cs</strong> in the project's "Helpers" folder. Add the following <code>using</code> statements to the top of the file:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">Windows.UI.Xaml.Controls</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Media.SpeechSynthesis</span>;</pre></div>
+</li>
+<li>
+<p>Now add the following method, which uses UWP's <code>SpeechSynthesize</code> class to synthesize speech from text, to the <code>SpeechHelper</code> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">static</span> <span class="pl-en">Task</span> <span class="pl-en">ReadFactAsync</span>(<span class="pl-k">string</span> <span class="pl-smi">fact</span>)
+{
+    <span class="pl-k">var</span> <span class="pl-en">synthesizer </span>= <span class="pl-k">new</span> <span class="pl-en">SpeechSynthesizer</span>();
+    synthesizer.Voice = SpeechSynthesizer.AllVoices.Where(w =&gt; w.Gender == VoiceGender.Female &amp;&amp; w.Language.Equals(System.Globalization.CultureInfo.CurrentUICulture.Name)).FirstOrDefault();
+    <span class="pl-en">SpeechSynthesisStream</span> <span class="pl-en">stream</span> = <span class="pl-k">await</span> synthesizer.SynthesizeTextToStreamAsync(fact);
+
+    <span class="pl-k">var</span> <span class="pl-en">mediaElement </span>= <span class="pl-k">new</span> <span class="pl-en">MediaElement</span>();
+    mediaElement.SetSource(stream, stream.ContentType);
+    mediaElement.Play();
+
+    <span class="pl-k">return</span>;
+}</pre></div>
+</li>
+<li>
+<p>Open <strong>FactInformation.cs</strong> in the project's "Models" folder. Add the following property definition after the other properties defined in the <code>FactInformation</code> class:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-en">ICommand</span> ReadCommand
+{
+    <span class="pl-k">get</span>
+    {
+        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">RelayCommand</span>(async () =&gt;
+        {
+            <span class="pl-k">await</span> Helpers.SpeechHelper.ReadFactAsync(<span class="pl-c1">this</span>.Label);
+        });
+    }
+}</pre></div>
+</li>
+<li>
+<p>Open <strong>MainPage.xaml</strong> and insert the following code directly above the opening <code>&lt;Grid&gt;</code> tag to create a <code>CommandBar</code> with an <code>AppBarButton</code> that is connected to the <code>ReadCommand</code> property you added in the previous step:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">Page</span>.BottomAppBar&gt;
+    &lt;<span class="pl-ent">CommandBar</span> <span class="pl-e">RequestedTheme</span>=<span class="pl-s"><span class="pl-pds">"</span>Dark<span class="pl-pds">"</span></span> <span class="pl-e">Background</span>=<span class="pl-s"><span class="pl-pds">"</span>#FF298FCC<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">AppBarButton</span> <span class="pl-e">IsEnabled</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact, Converter={StaticResource HasContextToEnabledConverter}}<span class="pl-pds">"</span></span> <span class="pl-e">Icon</span>=<span class="pl-s"><span class="pl-pds">"</span>Microphone<span class="pl-pds">"</span></span> <span class="pl-e">Label</span>=<span class="pl-s"><span class="pl-pds">"</span>Hear<span class="pl-pds">"</span></span> <span class="pl-e">Command</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact.ReadCommand}<span class="pl-pds">"</span></span>/&gt;
+    &lt;/<span class="pl-ent">CommandBar</span>&gt;
+&lt;/<span class="pl-ent">Page</span>.BottomAppBar&gt;</pre></div>
+</li>
+<li>
+<p>Use Visual Studio's <strong>Debug</strong> -&gt; <strong>Start Without Debugging</strong> command (or press <strong>CTRL+F5</strong>) to launch Factoid. Click one of the facts to select it, and then click the <strong>microphone icon</strong> in the app bar. Confirm that the fact you selected is read aloud.</p>
+<p><a href="Images/app-click-hear.png" target="_blank"><img src="Images/app-click-hear.png" alt="Reading a fact aloud" style="max-width:100%;"></a></p>
+<p><em>Reading a fact aloud</em></p>
+</li>
+<li>
+<p>Close Factoid and return to Visual Studio.</p>
+</li>
+</ol>
+<p>There is more than you can do with the <code>SpeechSynthesizer</code> class, including selecting different voices and languages. For more information, refer to <a href="https://docs.microsoft.com/en-us/uwp/api/windows.media.speechsynthesis.speechsynthesizer">https://docs.microsoft.com/en-us/uwp/api/windows.media.speechsynthesis.speechsynthesizer</a>.</p>
+<p><a name="Exercise5"></a></p>
+<h2>Exercise 5: Create a UWP Service</h2>
+<p>Cortana has powerful speech-recognition capabilities, and your app now incorporates speech synthesis, but how do you tie these together to create a seamless experience, particularly when your app isn’t active? The answer is a UWP app service. An app service is a type of background service that functions somewhat like an old-fashioned Windows service, but that is directly connected to your app. In this exercise, you will add an app service to the solution and update the voice command definition to allow Cortana to display facts retrieved from Factoid without launching the app.</p>
+<ol>
+<li>
+<p>In Solution Explorer, right-click the <strong>Factoid</strong> solution (not the project) and use the <strong>Add</strong> -&gt; <strong>New Project...</strong> command to add a <strong>Windows Runtime Component (Windows Universal)</strong> project named "Factoid.Services.Background" to the solution. When prompted to choose target and minimum platform requirements, accept the defaults and click <strong>OK</strong>.</p>
+<p><a href="Images/vs-create-new-rtc.png" target="_blank"><img src="Images/vs-create-new-rtc.png" alt="Adding a new project to the solution" style="max-width:100%;"></a></p>
+<p><em>Adding a new project to the solution</em></p>
+</li>
+<li>
+<p>In Solution Explorer, right-click the <strong>Class1.cs</strong> file in the new project and use the <strong>Rename</strong> command to rename the file "GeneralCommandService.cs." When asked if you want to rename all project references, click <strong>Yes</strong>.</p>
+</li>
+<li>
+<p>Replace the contents of <strong>GeneralCommandService.cs</strong> with the following code:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> <span class="pl-en">System</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Collections.Generic</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Linq</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Text</span>;
+<span class="pl-k">using</span> <span class="pl-en">System.Threading.Tasks</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.ApplicationModel.AppService</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.ApplicationModel.Background</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.ApplicationModel.VoiceCommands</span>;
+<span class="pl-k">using</span> <span class="pl-en">Windows.Media.SpeechRecognition</span>;
+
+<span class="pl-k">namespace</span> <span class="pl-en">Factoid.Services.Background</span>
+{
+    <span class="pl-k">public</span> sealed <span class="pl-k">class</span> <span class="pl-en">GeneralCommandService</span> : <span class="pl-en">IBackgroundTask</span>
+    {
+        <span class="pl-en">VoiceCommandServiceConnection</span> <span class="pl-en">voiceServiceConnection</span>;
+        <span class="pl-en">BackgroundTaskDeferral</span> <span class="pl-en">serviceDeferral</span>;
+
+        <span class="pl-k">public</span> <span class="pl-k">async</span> <span class="pl-k">void</span> <span class="pl-en">Run</span>(<span class="pl-en">IBackgroundTaskInstance</span> <span class="pl-smi">taskInstance</span>)
+        {
+            serviceDeferral = taskInstance.GetDeferral();
+            taskInstance.Canceled += OnTaskCanceled;
+
+            <span class="pl-k">var</span> <span class="pl-en">triggerDetails </span>= taskInstance.TriggerDetails <span class="pl-en">as</span> <span class="pl-en">AppServiceTriggerDetails</span>;
+
+            <span class="pl-k">try</span>
+            {
+                voiceServiceConnection = VoiceCommandServiceConnection.FromAppServiceTriggerDetails(triggerDetails);
+                voiceServiceConnection.VoiceCommandCompleted += OnVoiceCommandCompleted;
+                <span class="pl-en">VoiceCommand</span> <span class="pl-en">voiceCommand</span> = <span class="pl-k">await</span> voiceServiceConnection.GetVoiceCommandAsync();
+                <span class="pl-k">var</span> <span class="pl-en">interpretation </span>= voiceCommand.SpeechRecognitionResult.SemanticInterpretation;
+                <span class="pl-k">await</span> ProcessGenerateFactAsync(interpretation);
+                <span class="pl-c1">this</span>.serviceDeferral.Complete();
+            }
+            <span class="pl-k">catch</span> (Exception ex)
+            {
+            }
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">async</span> <span class="pl-en">Task</span> <span class="pl-en">ProcessGenerateFactAsync</span>(<span class="pl-en">SpeechRecognitionSemanticInterpretation</span> <span class="pl-smi">interpretation</span>)
+        {
+            <span class="pl-k">await</span> Helpers.ProgressHelper.ShowProgressScreenAsync(voiceServiceConnection, <span class="pl-s"><span class="pl-pds">"</span>Okay, get ready...<span class="pl-pds">"</span></span>);
+            <span class="pl-k">string</span> <span class="pl-en">fact</span> = <span class="pl-k">await</span> Helpers.FactHelper.GetFactAsync();
+            <span class="pl-k">var</span> <span class="pl-en">destinationsContentTiles </span>= <span class="pl-k">new</span> <span class="pl-en">List</span>&lt;VoiceCommandContentTile&gt;();
+            <span class="pl-k">var</span> <span class="pl-en">destinationTile </span>= <span class="pl-k">new</span> <span class="pl-en">VoiceCommandContentTile</span>();
+
+            <span class="pl-k">try</span>
+            {
+                destinationTile.ContentTileType = VoiceCommandContentTileType.TitleWithText;
+                destinationTile.AppContext = <span class="pl-c1">null</span>;
+                destinationTile.AppLaunchArgument = <span class="pl-s"><span class="pl-pds">"</span>fact=<span class="pl-pds">"</span></span> + fact;
+                destinationTile.Title = fact;
+                destinationTile.TextLine1 = <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
+                destinationTile.TextLine1 = <span class="pl-s"><span class="pl-pds">"</span>(tap to add to favorites)<span class="pl-pds">"</span></span>;
+
+                destinationsContentTiles.Add(destinationTile);
+            }
+            <span class="pl-k">catch</span> (Exception ex)
+            {
+            }
+
+            <span class="pl-en">VoiceCommandResponse</span> <span class="pl-en">response</span> = VoiceCommandResponse.CreateResponse(<span class="pl-k">new</span> <span class="pl-en">VoiceCommandUserMessage</span>()
+            {
+                DisplayMessage = <span class="pl-s"><span class="pl-pds">"</span>Did you know...<span class="pl-pds">"</span></span>,
+                SpokenMessage = fact
+
+            }, destinationsContentTiles);
+
+            <span class="pl-k">await</span> voiceServiceConnection.ReportSuccessAsync(response);
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnVoiceCommandCompleted</span>(<span class="pl-en">VoiceCommandServiceConnection</span> <span class="pl-smi">sender</span>, <span class="pl-en">VoiceCommandCompletedEventArgs</span> <span class="pl-smi">args</span>)
+        {
+            <span class="pl-k">if</span> (<span class="pl-c1">this</span>.serviceDeferral != <span class="pl-c1">null</span>)
+            {
+                <span class="pl-c1">this</span>.serviceDeferral.Complete();
+            }
+        }
+
+        <span class="pl-k">private</span> <span class="pl-k">void</span> <span class="pl-en">OnTaskCanceled</span>(<span class="pl-en">IBackgroundTaskInstance</span> <span class="pl-smi">sender</span>, <span class="pl-en">BackgroundTaskCancellationReason</span> <span class="pl-smi">reason</span>)
+        {
+            <span class="pl-k">if</span> (<span class="pl-c1">this</span>.serviceDeferral != <span class="pl-c1">null</span>)
+            {
+                <span class="pl-c1">this</span>.serviceDeferral.Complete();
+            }
+        }
+    }
+}</pre></div>
+</li>
+<li>
+<p>Right-click the <strong>Factoid.Services.Background (Windows Universal)</strong> project and use the <strong>Add</strong> -&gt; <strong>New Folder</strong> command to add a folder named "Helpers" to the project.</p>
+</li>
+<li>
+<p>Right-click the "Helpers" folder and select <strong>Add</strong> -&gt; <strong>Existing Item...</strong>. Browse to the "Resources\Helpers" folder included with this lab, select all of the files in that folder, and click <strong>Add</strong> to import the files into the project's "Helpers" folder.</p>
+<p><a href="Images/fe-add-helpers.png" target="_blank"><img src="Images/fe-add-helpers.png" alt="Importing files into the &quot;Helpers&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Importing files into the "Helpers" folder</em></p>
+</li>
+<li>
+<p>Right-click the <strong>Factoid.Services.Background (Universal Windows)</strong> project and select <strong>Manage NuGet Packages...</strong>. Make sure <strong>Browse</strong> is selected in the NuGet Package Manager. Then select the <strong>Newtonsoft.Json</strong> package and click <strong>Install</strong> to install the latest stable version. If prompted to review changes, click <strong>OK</strong>.</p>
+<p><a href="Images/vs-install-json-net.png" target="_blank"><img src="Images/vs-install-json-net.png" alt="Installing JSON.NET" style="max-width:100%;"></a></p>
+<p><em>Installing JSON.NET</em></p>
+</li>
+<li>
+<p>Right-click <strong>References</strong> in the <strong>Factoid (Universal Windows)</strong> project, and select <strong>Add Reference</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Solution</strong> under <strong>Projects</strong> to list the other projects in the solution, and check the box next to <strong>Factoid.Services.Background</strong>. Then click <strong>OK</strong> to add a reference to that project.</p>
+<p><a href="Images/vs-add-reference.png" target="_blank"><img src="Images/vs-add-reference.png" alt="Adding a reference to Factoid.Services.Background" style="max-width:100%;"></a></p>
+<p><em>Adding a reference to Factoid.Services.Background</em></p>
+</li>
+<li>
+<p>Open <strong>Package.appxmanifest</strong> in the <strong>Factoid (Universal Windows)</strong> project and select the <strong>Declarations</strong> tab.</p>
+<p><a href="Images/vs-package-declarations.png" target="_blank"><img src="Images/vs-package-declarations.png" alt="Opening the manifest" style="max-width:100%;"></a></p>
+<p><em>Opening the manifest</em></p>
+</li>
+<li>
+<p>Select <strong>App Service</strong> from the <strong>Available Declarations</strong> list and click <strong>Add</strong>. Type "GeneralCommandService" into the <strong>Name</strong> box and "Factoid.Services.Background.GeneralCommandService" into the <strong>Entry point</strong> box. Then press <strong>Ctrl+S</strong> to save your changes.</p>
+<p><a href="Images/vs-add-app-service.png" target="_blank"><img src="Images/vs-add-app-service.png" alt="Adding an App Service declaration" style="max-width:100%;"></a></p>
+<p><em>Adding an App Service declaration</em></p>
+</li>
+<li>
+<p>Open <strong>FactoidVoiceCommands.xml</strong> and replace the empty <code>Navigate</code> element with the following element:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">VoiceCommandService</span> <span class="pl-e">Target</span>=<span class="pl-s"><span class="pl-pds">"</span>GeneralCommandService<span class="pl-pds">"</span></span>/&gt;</pre></div>
+<p><a href="Images/vs-updated-navigation-element.png" target="_blank"><img src="Images/vs-updated-navigation-element.png" alt="Replacing the Navigate element" style="max-width:100%;"></a></p>
+<p><em>Replacing the Navigate element</em></p>
+<p>The new element instructs Cortana to invoke the voice-command service named "GeneralCommandService" when she recognizes input matching the <code>ListenFor</code> phrase.</p>
+</li>
+<li>
+<p>Use Visual Studio's <strong>Debug</strong> -&gt; <strong>Start Without Debugging</strong>  (or press <strong>Ctrl+F5</strong>) launch Factoid. Once Factoid is up and running, close it.</p>
+</li>
+<li>
+<p>To make sure Cortana doesn't cache old commands, bring up the Windows Task Manager, select <strong>Cortana</strong> in the list of background tasks, and click the <strong>End task</strong> button to end the Cortana process. Then close Task Manager.</p>
+<blockquote>
+<p>Stopping Cortana this way is not always necessary, but it is a good habit to get into while testing abd debugging to make sure Cortana is starting with a "clean slate" of commands.</p>
+</blockquote>
+<p><a href="Images/kill-cortana.png" target="_blank"><img src="Images/kill-cortana.png" alt="Ending the Cortana process" style="max-width:100%;"></a></p>
+<p><em>Ending the Cortana process</em></p>
+</li>
+<li>
+<p>Go to Cortana in your PC's task bar and issue the command "Factoid tell me an interesting fact," either by typing it or voicing it.</p>
+<p><a href="Images/cortana-speak-command.png" target="_blank"><img src="Images/cortana-speak-command.png" alt="Issuing a command to Cortana" style="max-width:100%;"></a></p>
+<p><em>Issuing a command to Cortana</em></p>
+</li>
+<li>
+<p>Confirm that Cortana displays an interesting fact like the one below. Note that the fact came from Factoid, not from Cortana herself.</p>
+<p><a href="Images/cortana-fact-result-01.png" target="_blank"><img src="Images/cortana-fact-result-01.png" alt="Cortana displaying a fact obtained from Factoid" style="max-width:100%;"></a></p>
+<p><em>Cortana displaying a fact obtained from Factoid</em></p>
+</li>
+</ol>
+<p>Now that Factoid is more tightly integrated with Cortana, the final step to incorporate Cortana "Personal Assistant" actions.</p>
+<p><a name="Exercise6"></a></p>
+<h2>Exercise 6: Add Personal Assistant actions</h2>
+<p>One of the lesser-known but more powerful aspects of Cortana is the notion of "Personal Assistant" actions. In general, this means Cortana can be given permission to send information to your app through an app service running in the background, and then activate the app itself after the app service has executed.  In this exercise, you will enhance Factoid so that facts presented in Cortana can be "favorited" by the user, and will then appear as favorites in Factoid itself and even appear on the app's tile.</p>
+<ol>
+<li>
+<p>In Solution Explorer, right-click <strong>Package.appxmanifest</strong> and select <strong>View Code</strong>. If prompted with a dialog stating that <strong>Package.appxmanifest</strong> is already open and asking if you want to close it, click <strong>Yes</strong>.</p>
+</li>
+<li>
+<p>Locate the closing <code>&lt;/Extensions&gt;</code> tag and add the following statement just above it:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">uap</span><span class="pl-ent">:</span><span class="pl-ent">Extension</span> <span class="pl-e">Category</span>=<span class="pl-s"><span class="pl-pds">"</span>windows.personalAssistantLaunch<span class="pl-pds">"</span></span>/&gt;</pre></div>
+<p><a href="Images/vs-add-launch.png" target="_blank"><img src="Images/vs-add-launch.png" alt="Modifying Package.appxmanifest" style="max-width:100%;"></a></p>
+<p><em>Modifying Package.appxmanifest</em></p>
+</li>
+<li>
+<p>Right-click the "Helpers" folder in the <strong>Factoid (Universal Windows)</strong> project and use the <strong>Add</strong> -&gt; <strong>Existing Item...</strong> command to import all of the files in the "Resources\PersonalAssistant\Helpers" folder included with this lab.</p>
+<p><a href="Images/fe-select-all-pa-helpers.png" target="_blank"><img src="Images/fe-select-all-pa-helpers.png" alt="Importing files into the &quot;Helpers&quot; folder" style="max-width:100%;"></a></p>
+<p><em>Importing files into the "Helpers" folder</em></p>
+</li>
+<li>
+<p>Open <strong>MainViewModel.cs</strong> in the "ViewModels" folder and add the following statements to the beginning of the <code>LoadFactsAsync</code> method:</p>
+<blockquote>
+<p>Be careful to add them to <code>LoadFactsAsync</code> (plural), not <code>LoadFactAsync</code>, because the <code>MainViewModel</code> class contains both.</p>
+</blockquote>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">var</span> <span class="pl-en">favorites </span>= <span class="pl-k">await</span> <span class="pl-en">Helpers.StorageHelper.GetFavoritesAsync</span>();
+
+<span class="pl-k">foreach</span> (<span class="pl-en">var</span> favorite in favorites)
+{
+    <span class="pl-c1">this</span>.AllFacts.Add(favorite);
+}</pre></div>
+</li>
+<li>
+<p>Open <strong>FactInformation.cs</strong> in the "Models" folder and add the following statements above the <code>ReadCommand</code> property. These new commands enable facts to be marked as favorites. They also enable facts to be displayed on the app's tile when the tile is pinned to the Windows start screen.</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-en">ICommand</span> ToggleFavoriteCommand
+{
+    <span class="pl-k">get</span>
+    {
+        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">RelayCommand</span>(async () =&gt;
+        {
+            <span class="pl-c1">this</span>.IsFavorite = !<span class="pl-c1">this</span>.IsFavorite;
+
+            <span class="pl-k">if</span> (<span class="pl-c1">this</span>.IsFavorite)
+            {
+                <span class="pl-k">await</span> Helpers.StorageHelper.SaveFavoriteAsync(<span class="pl-c1">this</span>);
+                Helpers.TileHelper.PinFact(App.ViewModel.CurrentFact.Label);
+            }
+            <span class="pl-k">else</span>
+            {
+                <span class="pl-k">await</span> Helpers.StorageHelper.RemoteFavoriteAsync(<span class="pl-c1">this</span>);
+            }                    
+        });
+    }
+}
+
+<span class="pl-k">public</span> <span class="pl-en">ICommand</span> AddToFavoritesCommand
+{
+    <span class="pl-k">get</span>
+    {
+        <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-en">RelayCommand</span>(async () =&gt;
+        {
+            <span class="pl-k">if</span> (App.ViewModel != <span class="pl-c1">null</span>) App.ViewModel.AllFacts.Insert(<span class="pl-c1">0</span>, <span class="pl-c1">this</span>);
+            <span class="pl-k">await</span> Helpers.StorageHelper.SaveFavoriteAsync(<span class="pl-c1">this</span>);
+            App.ViewModel.CurrentFact = <span class="pl-c1">this</span>;
+            Helpers.TileHelper.PinFact(App.ViewModel.CurrentFact.Label);	
+        });
+    }
+}</pre></div>
+</li>
+<li>
+<p>Open <strong>MainPage.xaml</strong> and insert the following statement just before the existing <code>AppBarButton</code> declaration near the top of the file:</p>
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">AppBarButton</span> <span class="pl-e">IsEnabled</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact, Converter={StaticResource HasContextToEnabledConverter}}<span class="pl-pds">"</span></span> <span class="pl-e">Icon</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact.IsFavorite, Converter={StaticResource FavoriteSymbolConverter}}<span class="pl-pds">"</span></span> <span class="pl-e">Label</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact.IsFavorite, Converter={StaticResource FavoriteLabelConverter}}<span class="pl-pds">"</span></span> <span class="pl-e">Command</span>=<span class="pl-s"><span class="pl-pds">"</span>{Binding CurrentFact.ToggleFavoriteCommand}<span class="pl-pds">"</span></span>/&gt;</pre></div>
+</li>
+<li>
+<p>Finally, open <strong>App.xaml.cs</strong> and insert the following methods after the <code>App</code> constructor:</p>
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">protected</span> <span class="pl-k">async</span> <span class="pl-k">override</span> <span class="pl-k">void</span> <span class="pl-en">OnActivated</span>(<span class="pl-en">IActivatedEventArgs</span> <span class="pl-smi">args</span>)
+{
+    <span class="pl-k">var</span> <span class="pl-en">activator </span>= args <span class="pl-k">as</span> <span class="pl-en">Windows</span>.ApplicationModel.Activation.ProtocolActivatedEventArgs;
+	
+    <span class="pl-k">if</span> (activator != <span class="pl-c1">null</span>)
+    {
+        <span class="pl-k">var</span> <span class="pl-en">parameters </span>= (args <span class="pl-k">as</span> <span class="pl-en">Windows</span>.ApplicationModel.Activation.ProtocolActivatedEventArgs).Uri.Query;
+        <span class="pl-k">string</span> <span class="pl-en">content</span> = Uri.UnescapeDataString(parameters).Split(<span class="pl-s"><span class="pl-pds">'</span>=<span class="pl-pds">'</span></span>).Last();
+	
+        Models.<span class="pl-en">FactInformation</span> <span class="pl-en">fact</span> = <span class="pl-k">new</span> <span class="pl-en">Models</span>.FactInformation()
+        {
+            Id = Guid.NewGuid(),
+            IsFavorite = <span class="pl-c1">true</span>,
+            Label = content,
+        };
+	
+        fact.AddToFavoritesCommand.Execute(<span class="pl-c1">null</span>);
+    }
+	
+    <span class="pl-k">await</span> EnsurePageCreatedAndActivateAsync();
+}
+	
+<span class="pl-k">private</span> <span class="pl-k">async</span> <span class="pl-en">System.Threading.Tasks.Task</span> <span class="pl-en">EnsurePageCreatedAndActivateAsync</span>()
+{   
+    <span class="pl-k">await</span> Helpers.SpeechHelper.InitializeVoiceCommandsAsync();
+	
+    <span class="pl-k">if</span> (Window.Current.Content == <span class="pl-c1">null</span>)
+    {
+        Window.Current.Content = <span class="pl-k">new</span> <span class="pl-en">MainPage</span>();
+    }
+	
+    Window.Current.Activate();
+}</pre></div>
+<p>The first of these two methods overrides the <code>OnActivated</code> method so Factoid can respond to commands from Cortana.</p>
+</li>
+<li>
+<p>Use Visual Studio's <strong>Debug</strong> -&gt; <strong>Start Without Debugging</strong> command (or press <strong>CTRL+F5</strong>) to launch Factoid.</p>
+</li>
+<li>
+<p>Go to Cortana in your PC's task bar and issue the command "Factoid tell me an interesting fact," either by typing it or voicing it.</p>
+<p><a href="Images/cortana-speak-command.png" target="_blank"><img src="Images/cortana-speak-command.png" alt="Issuing a command to Cortana" style="max-width:100%;"></a></p>
+<p><em>Issuing a command to Cortana</em></p>
+</li>
+<li>
+<p>Wait until a fact is displayed, and then click (or tap) it.</p>
+<p><a href="Images/cortana-tap-to-add.png" target="_blank"><img src="Images/cortana-tap-to-add.png" alt="Adding a fact to favorites" style="max-width:100%;"></a></p>
+<p><em>Adding a fact to favorites</em></p>
+</li>
+<li>
+<p>Confirm that the fact you favorited appears in Factoid.</p>
+<p><a href="Images/app-after-favorite.png" target="_blank"><img src="Images/app-after-favorite.png" alt="Factoid displaying a fact favorited in Cortana" style="max-width:100%;"></a></p>
+<p><em>Factoid displaying a fact favorited in Cortana</em></p>
+</li>
+<li>
+<p>If you decide that you don't want the fact treated as a favorite any longer, simply tap the <strong>Favorite</strong> button that now appears in the app bar:</p>
+<p><a href="Images/app-un-favorite.png" target="_blank"><img src="Images/app-un-favorite.png" alt="Unfavoriting a fact" style="max-width:100%;"></a></p>
+<p><em>Unfavoriting a fact</em></p>
+</li>
+<li>
+<p>Select a different fact in the app and tap the <strong>Favorite</strong> button to mark it as a favorite.</p>
+</li>
+<li>
+<p>Pin Factoid to the start screen to create a tile for it. Find the tile and confirm that the facts you selected as favorites appear on the tile. (If you favorited more than one fact, the fact displayed on the tile will rotate from time to time.)</p>
+<p><a href="Images/os-fact-tile.png" target="_blank"><img src="Images/os-fact-tile.png" alt="Factoid facts displaying on the Start Screen" style="max-width:100%;"></a></p>
+<p><em>Factoid facts displaying on the Start Screen</em></p>
+</li>
+</ol>
+<p>Each time you start the app, it will display any favorites you have selected and fill in the remaining slots with randomly selected facts. Use the <strong>Favorite</strong> button to favorite and unfavorite facts as desired and control what appears on the app's tile.</p>
+<p><a name="Summary"></a></p>
+<h2>Summary</h2>
+<p>In this hands-on lab you learned how to:</p>
+<ul>
+<li>Create a Universal Windows Platform (UWP) app</li>
+<li>Integrate Cortana voice commands</li>
+<li>Incorporate speech synthesis</li>
+<li>Create a UWP service</li>
+<li>Utilize Cortana's "Personal Assistant" capabilities in an app</li>
+</ul>
+<p>You can build some amazing apps when you combine the rich capabilities of the Universal Windows Platform with the features of Cortana. For additional information and to see more cool things you can do when you combine UWP with Cortana, watch the video at <a href="https://channel9.msdn.com/Shows/Visual-Studio-Toolbox/App-Development-with-Cortana">https://channel9.msdn.com/Shows/Visual-Studio-Toolbox/App-Development-with-Cortana</a>.</p>
+<hr>
+<p>Copyright 2017 Microsoft Corporation. All rights reserved. Except where otherwise noted, these materials are licensed under the terms of the MIT License. You may use them according to the license as is most appropriate for your project. The terms of this license can be found at <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>.</p>
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

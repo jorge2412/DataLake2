@@ -6,13 +6,11 @@
 <a name="Overview"></a>
 ## Overview ##
 
-Working with computers is a craft, and as any craftsman will tell you, "Check twice, cut once." Reading with your eyes is one check; the second is listening. When you read and listen, you check twice and greatly reduce your errors when working.
+In a [famous scene](https://www.youtube.com/watch?v=hShY6xZWVGE) from the movie [Star Trek IV: The Voyage Home](http://www.imdb.com/title/tt0092007/), chief engineer Scotty attempts to talk to a vintage PC. When the computer fails to respond, Scotty is handed a mouse — whereupon he holds the mouse like a microphone and says "Hello, computer."
 
-That is the driving principle behind voice and speech in the Universal Windows Platform (UWP). It provides a robust, extensible framework for incorporating voice and speech in your apps through speech recognition, natural language interpretation, and speech synthesis. Combine these features and you have Cortana: the most powerful "personal assistant" available on any platform. 
+Voice input and output, once considered a novelty in computer applications, are becoming more commonplace every day. That is the driving principle behind voice and speech APIs in the Universal Windows Platform (UWP), which, combined with [Microsoft Cortana](https://www.microsoft.com/en-us/mobile/experiences/cortana/), provides a robust, extensible framework for building apps that react to voice commands and respond in kind with vocalizations of their own. Incorporating voice and speech in your apps is good not only for usability, but for accessibility as well.
 
-Cortana is much more than a simple reminder service or interactive search interface. She offers a robust and comprehensive framework for seamlessly incorporating functionality from your app or service into the Cortana experience via simple mechanisms that can be leveraged to handle even the most complex logic flows.
-
-In this lab, you will use Visual Studio 2017 to create a UWP app named Factoid that integrates with Cortana to provide users with random, interesting facts, and that incorporates voice commands, speech synthesis, and semantic interpretation.
+In this lab, you will use Visual Studio 2017 to create a UWP app named Factoid that integrates with Cortana to present users with random, interesting facts, and that incorporates voice commands and speech synthesis to interact with users as naturally as they interact with each other.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -20,10 +18,9 @@ In this lab, you will use Visual Studio 2017 to create a UWP app named Factoid t
 In this hands-on lab, you will learn how to:
 
 - Create a Universal Windows Platform (UWP) app 
-- Add common logic, models, and UI controls
 - Integrate Cortana voice commands
 - Incorporate speech synthesis
-- Create a Universal Windows App Service
+- Create a UWP service
 - Utilize Cortana's "Personal Assistant" capabilities in an app
 
 <a name="Prerequisites"></a>
@@ -46,17 +43,17 @@ This hands-on lab includes the following exercises:
 
 - [Exercise 1: Create a Universal Windows Platform app](#Exercise1)
 - [Exercise 2: Add common logic, models, and UI controls](#Exercise2)
-- [Exercise 3: Integrate voice commands](#Exercise3)
+- [Exercise 3: Integrate Cortana voice commands](#Exercise3)
 - [Exercise 4: Add speech synthesis](#Exercise4)
 - [Exercise 5: Create a UWP Service](#Exercise5)
-- [Exercise 6: Add a personal assistant](#Exercise6)
+- [Exercise 6: Add Personal Assistant actions](#Exercise6)
 
 Estimated time to complete this lab: **60** minutes.
 
 <a name="Exercise1"></a>
 ## Exercise 1: Create a Universal Windows Platform app ##
 
-Creating a Universal Windows Platform (UWP) app is quick and easy using the built-in templates that ship with Visual Studio 2017. In this exercise, you will use Visual Studio 2017 to create a UWP solution that includes initial scaffolding for an app.
+Creating a Universal Windows Platform (UWP) app is quick and easy using the built-in templates that ship with Visual Studio 2017. In this exercise, you will use Visual Studio 2017 to create a UWP app with custom branding to serve as a platform for subsequent exercises.
 
 1. Start the Visual Studio installer. (An easy way to do that is to press the Windows key, type "installer," and select **Visual Studio Installer** from the menu.) Click the **Modify** button to view a list of installed components. Under "Workloads," make sure **Universal Windows Platform development** and **.NET desktop development** are checked. If they are not, check them and allow the installer to add these workloads.
 
@@ -82,7 +79,7 @@ Creating a Universal Windows Platform (UWP) app is quick and easy using the buil
 
 	_The new UWP solution_
 	
-1. Next, you will add custom images to the project and update **Package.appxmanifest** to apply custom branding. In Solution Explorer, right-click the project's "Assets" folder and select **Add** -> **Existing Item...**.
+1. Next, you will add custom images to the project and update **Package.appxmanifest** to references those images and apply custom branding. In Solution Explorer, right-click the project's "Assets" folder and select **Add** -> **Existing Item...**.
 
     ![Adding items to the "Assets" folder](Images/vs-add-existing-item.png)
 
@@ -139,7 +136,7 @@ Creating a Universal Windows Platform (UWP) app is quick and easy using the buil
 
     _Updating the package logo_
 
-1. Now you will import a NuGet package that simplifies the handling of JSON data. In Solution Explorer, right-click **References** and select **Manage NuGet Packages...** from the context menu.
+1. Next, you will import a NuGet package that simplifies the handling of JSON data. In Solution Explorer, right-click **References** and select **Manage NuGet Packages...** from the context menu.
 
     ![Managing NuGet packages](Images/vs-manage-nuget-02.png)
 
@@ -151,18 +148,18 @@ Creating a Universal Windows Platform (UWP) app is quick and easy using the buil
 
     _Installing JSON.NET_
 
-Key elements of the app are now in place, including images for custom branding and a library to simplify dealing with JSON data. Now let's write some code. 
+Key elements of the app are now in place, including images for custom branding and a library to simplify dealing with JSON data. The next step is to write some code. 
 
 <a name="Exercise2"></a>
 ## Exercise 2: Add common logic, models, and UI controls ##
 
-In most apps, but especially in a UWP app, it's helpful to write code that is centralized and shared by other parts of the app. As a best practice, the Model-View-ViewModel (MVVM) pattern is recommended for UWP apps. Implementing MVVM means creating pages ("views") to provide the visual experience, models to define the structure of data, and one or more view-models to connect views to models and manage the user experience. In this exercise, you will add a model and a view-model to the app. You will also begin crafting a user experience by adding control's to the app's UI.
+In most apps, but especially in a UWP app, it's helpful to write code that is centralized and shared by other parts of the app. As a best practice, the Model-View-ViewModel (MVVM) pattern is recommended for UWP apps. Implementing MVVM means creating pages ("views") to provide the visual experience, models to define the structure of data, and one or more view-models to connect views to models and manage the user experience. In this exercise, you will add a model and a view-model to the app. You will also begin crafting a user experience by adding controls to the app's UI.
 
 1. In Solution Explorer, right-click the **Factoid (Windows Universal)** project and use the **Add** -> **New Folder** command to add a folder named "Common" to the project.
 
 1. Repeat this process to add folders named "Helpers," "Models," and "ViewModels" to the project.
 
-1. Right-click the "Common" folder and select **Add** -> **Existing Item...**. Browse to the "Resources\Common" folder included with this lab, select all the files in that folder, and click **Add** to import the files into the project's "Common" folder. 
+1. Right-click the "Common" folder and select **Add** -> **Existing Item...**. Browse to the "Resources\Common" folder included with this lab, select all of the files in that folder, and click **Add** to import the files into the project's "Common" folder. 
  
     ![Importing files into the "Common" folder](Images/fe-select-all-common.png)
 
@@ -206,7 +203,7 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
 	}
 	```
 
-	The ```GetFactAsync``` method calls an external Azure App Service to retrieve a random fact that will eventually be displayed in the app.
+	The ```GetFactAsync``` method calls an external Azure App Service to retrieve a random fact for the app to display.
 
 1. Right-click the "Models" folder and use the **Add** -> **Class** command to add a class file named **FactInformation.cs**. Then replace the contents of the file with the following code:
 
@@ -301,9 +298,9 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
 
 1. In Solution Explorer, open **App.xaml** and locate the closing ```</Application>``` tag
 
-    ![The closing Application tag](Images/vs-app-xaml-closing-app.png)
+    ![Locating the closing Application tag](Images/vs-app-xaml-closing-app.png)
 
-    _The closing Application tag_
+    _Locating the closing Application tag_
 
 1. Add the following statements directly above the closing tag:
  
@@ -320,7 +317,7 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
     </Application.Resources>
 	```
 
-1. Open **App.xaml.cs**. Add the following line of code to the ```App``` class:
+1. Open **App.xaml.cs** and add the following line of code to the ```App``` class:
 
 	```C#
 	public static ViewModels.MainViewModel ViewModel = new ViewModels.MainViewModel();
@@ -330,7 +327,7 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
 
     _Modifying the App class_
 
-1. The Factoid app now contains a model describing the "data" used by the app — in this case, random, interesting facts — and a view-model to drive the user experience. Now it is time to add controls to the main page of the app in order to display random facts. Begin by opening **MainPage.xaml** and replacing the current contents of the file with the following XAML:
+1. The Factoid app now contains a model describing the "data" used by the app — in this case, random, interesting facts — and a view-model to drive the user experience. Now it is time to add controls to the main page of the app in order to display those facts. Begin by opening **MainPage.xaml** and replacing the current contents of the file with the following XAML:
 
 	```XAML
 	<Page
@@ -404,9 +401,9 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
 	</Page>	
 	```
 
-	The main page uses UWP's GridView control to display random facts. And it uses visual states and adaptive triggers to implement a user experience that adapts to various device orientations and screen solutions. 
+	The main page uses UWP's ```GridView``` control to display random facts. And it uses visual states and adaptive triggers to implement a user experience that adapts to various device orientations and screen solutions. 
 
-1. Open **MainPage.xaml.cs**. Locate the ```MainPage``` class class constructor and replace it with the following code:
+1. Open **MainPage.xaml.cs**. Locate the ```MainPage``` class constructor and replace it with the following code:
 
 	```C#
 	public MainPage()
@@ -421,7 +418,7 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
         this.DataContext = App.ViewModel;
     }
 	```
-	Notice the line of code that sets the page's ```DataContext``` property equal to the static ```App.ViewModel``` property added earlier in this exercise. 
+	Notice the line of code that sets the page's ```DataContext``` property equal to the static ```App.ViewModel``` property added earlier in this exercise. This is what connects the view to the view-model.
 
 1. In order to build and run UWP apps on a Windows 10 PC, you must enable developer mode on the device. To ensure that developer mode is enabled, click the **Windows** button (also known as the Start button) in the lower-left corner of the desktop. Then select **Settings** from the menu and click **Update & security** in the Settings dialog. Now click **For developers** on the left and select **Developer mode** on the right, as shown below.
 
@@ -441,12 +438,12 @@ In most apps, but especially in a UWP app, it's helpful to write code that is ce
 
     _Adaptive layout in action_
 
-It's a good start, but Cortana could make it even better.
+It's a good start, but right now, the app is as deaf and dumb as the computer that Scotty spoke to in "The Voyage Home." Let's fix that by adding a dose of Cortana.
 
 <a name="Exercise3"></a>
-## Exercise 3: Integrate voice commands ##
+## Exercise 3: Integrate Cortana voice commands ##
 
-With Cortana, enhancing a UWP app with support for voice commands is simple. In this exercise, you will modify Factoid to make Cortana aware of it. Afterwards, you will be able to launch Factoid by asking Cortana to tell you an interesting fact. In a later exercise, you will take this a step further and allow Cortana to tell you interesting facts without displaying Factoid.
+In this exercise, you will modify Factoid to make Cortana aware of it. Afterwards, you will be able to launch Factoid by asking Cortana to tell you an interesting fact. Later, you will take this integration a step further and allow Cortana to tell you interesting facts without displaying Factoid.
 
 1. In Solution Explorer, right-click the **Factoid (Universal Windows)** project and use the **Add** -> **New Item...** command to add an XML file named **FactoidVoiceCommands.xml** to the project.
 
@@ -495,7 +492,7 @@ With Cortana, enhancing a UWP app with support for voice commands is simple. In 
 
     _Changing the class scope_
 
-1. Add the following ```using``` statements at the top of the file:
+1. Add the following ```using``` statements to the top of the file:
 
 	```C#
 	using Windows.ApplicationModel.VoiceCommands;
@@ -520,7 +517,7 @@ With Cortana, enhancing a UWP app with support for voice commands is simple. In 
     }	
 	```
 
-1. Open **App.xaml.cs** and add the following statement to the ```OnLaunched``` method, making it first statement in that method.
+1. Open **App.xaml.cs** and add the following statement to the ```OnLaunched``` method, making it first statement in that method:
 
 	```C#
 	await Helpers.SpeechHelper.InitializeVoiceCommandsAsync();
@@ -546,7 +543,7 @@ With Cortana, enhancing a UWP app with support for voice commands is simple. In 
 
     _Factoid activated after a hand-off from Cortana_
 
-1. If there is a microphone attached to your PC, click the microphone icon next to "Ask me anything" in Cortana and **speak** the command "Factoid tell me an interesting fact." Confirm that Cortana once more activates the Factoid app.
+1. If there is a microphone attached to your PC, click the **microphone icon** next to "Ask me anything" in Cortana and **speak** the command "Factoid tell me an interesting fact." Confirm that Cortana once more activates the Factoid app.
 
 1. Close Factoid and return to Visual Studio.
 
@@ -557,7 +554,7 @@ So now Cortana understands the command "Factoid tell me an interesting fact" as 
 
 The Universal Windows Platform makes it easy to add speech synthesis to your apps. It's a great way to make apps more accessible to users with impaired vision, or to simply provide the convenience of having content read aloud. In this exercise, you will enhance Factoid to read facts to you.
 
-1. Open **SpeechHelper.cs** in the project's "Helpers" folder. Add the following ```using``` statements at the top of the file:
+1. Open **SpeechHelper.cs** in the project's "Helpers" folder. Add the following ```using``` statements to the top of the file:
 
 	```C#
 	using Windows.UI.Xaml.Controls;
@@ -619,7 +616,7 @@ There is more than you can do with the ```SpeechSynthesizer``` class, including 
 
 <a name="Exercise5"></a>
 ## Exercise 5: Create a UWP Service ##
-Cortana has powerful speech-recognition capabilities, and your app now incorporates speech synthesis, but how do you tie these together to create a seamless experience, particularly when your app isn’t active? The answer is a UWP app service. An app service is a type of background service that functions in a way similar to an old-fashioned Windows Service, but that is directly connected to your app. In this exercise, you will add an app service to the solution and update the voice command definition to allow Cortana to display facts retrieved from Factoid without launching the app.
+Cortana has powerful speech-recognition capabilities, and your app now incorporates speech synthesis, but how do you tie these together to create a seamless experience, particularly when your app isn’t active? The answer is a UWP app service. An app service is a type of background service that functions somewhat like an old-fashioned Windows service, but that is directly connected to your app. In this exercise, you will add an app service to the solution and update the voice command definition to allow Cortana to display facts retrieved from Factoid without launching the app.
 
 1. In Solution Explorer, right-click the **Factoid** solution (not the project) and use the **Add** -> **New Project...** command to add a **Windows Runtime Component (Windows Universal)** project named "Factoid.Services.Background" to the solution. When prompted to choose target and minimum platform requirements, accept the defaults and click **OK**.
 
@@ -723,7 +720,7 @@ Cortana has powerful speech-recognition capabilities, and your app now incorpora
 
 1. Right-click the **Factoid.Services.Background (Windows Universal)** project and use the **Add** -> **New Folder** command to add a folder named "Helpers" to the project.
 
-1. Right-click the "Helpers" folder and select **Add** -> **Existing Item...**. Browse to the "Resources\Helpers" folder included with this lab, select all the files in that folder, and click **Add** to import the files into the project's "Helpers" folder. 
+1. Right-click the "Helpers" folder and select **Add** -> **Existing Item...**. Browse to the "Resources\Helpers" folder included with this lab, select all of the files in that folder, and click **Add** to import the files into the project's "Helpers" folder. 
 
     ![Importing files into the "Helpers" folder](Images/fe-add-helpers.png)
 
@@ -767,11 +764,11 @@ Cortana has powerful speech-recognition capabilities, and your app now incorpora
 
 	The new element instructs Cortana to invoke the voice-command service named "GeneralCommandService" when she recognizes input matching the ```ListenFor``` phrase.
 
-1. Use Visual Studio's **Debug** -> **Start Debugging**  (or press **F5**) launch Factoid in the debugger. Once Factoid is up and running, close it.
+1. Use Visual Studio's **Debug** -> **Start Without Debugging**  (or press **Ctrl+F5**) launch Factoid. Once Factoid is up and running, close it.
 
 1. To make sure Cortana doesn't cache old commands, bring up the Windows Task Manager, select **Cortana** in the list of background tasks, and click the **End task** button to end the Cortana process. Then close Task Manager.
 
-	> Stopping Cortana this way is not always necessary, but is a good habit to get into while testing abd debugging to make sure Cortana is starting with a "clean slate" of commands.
+	> Stopping Cortana this way is not always necessary, but it is a good habit to get into while testing abd debugging to make sure Cortana is starting with a "clean slate" of commands.
 
     ![Ending the Cortana process](Images/kill-cortana.png)
 
@@ -789,12 +786,12 @@ Cortana has powerful speech-recognition capabilities, and your app now incorpora
 
     _Cortana displaying a fact obtained from Factoid_
 
-Now that Factoid is fully integrated with Cortana, the next and final step to add "Personal Assistant" actions.
+Now that Factoid is more tightly integrated with Cortana, the final step to incorporate Cortana "Personal Assistant" actions.
 
 <a name="Exercise6"></a>
-## Exercise 6: Add a personal assistant ##
+## Exercise 6: Add Personal Assistant actions ##
 
-One of the lesser-known (but more powerful) aspects of Cortana is the notion of "Personal Assistant" actions. In general, this means Cortana can be given permission to send information to your app from an app service running in the background, and then activate the app itself after the app service has executed.  In this exercise, you will enhance Factoid so that facts presented in Cortana can be "favorited" by the user, and will then appear as favorites in Factoid itself and even appear on the app's tile.
+One of the lesser-known but more powerful aspects of Cortana is the notion of "Personal Assistant" actions. In general, this means Cortana can be given permission to send information to your app through an app service running in the background, and then activate the app itself after the app service has executed.  In this exercise, you will enhance Factoid so that facts presented in Cortana can be "favorited" by the user, and will then appear as favorites in Factoid itself and even appear on the app's tile.
 
 1. In Solution Explorer, right-click **Package.appxmanifest** and select **View Code**. If prompted with a dialog stating that **Package.appxmanifest** is already open and asking if you want to close it, click **Yes**.
 
@@ -827,7 +824,7 @@ One of the lesser-known (but more powerful) aspects of Cortana is the notion of 
 	}
 	```
 
-1. Open **FactInformation.cs** in the "Models" folder and add the following statements above the ```ReadCommand``` property. These new commands enables facts to be marked as "Favorites." They also enables facts to be displayed on the app's tile when the tile is pinned to the Windows start screen.
+1. Open **FactInformation.cs** in the "Models" folder and add the following statements above the ```ReadCommand``` property. These new commands enable facts to be marked as favorites. They also enable facts to be displayed on the app's tile when the tile is pinned to the Windows start screen.
 
 	```C#
 	public ICommand ToggleFavoriteCommand
@@ -920,7 +917,7 @@ One of the lesser-known (but more powerful) aspects of Cortana is the notion of 
 
     _Issuing a command to Cortana_
 
-1. Wait until a fact is displayed, and then tap **(tap to add to favorites)**.
+1. Wait until a fact is displayed, and then click (or tap) it.
 
 	![Adding a fact to favorites](Images/cortana-tap-to-add.png)
 
@@ -954,13 +951,12 @@ Each time you start the app, it will display any favorites you have selected and
 In this hands-on lab you learned how to:
 
 - Create a Universal Windows Platform (UWP) app 
-- Add common logic, models, and UI controls
 - Integrate Cortana voice commands
 - Incorporate speech synthesis
-- Create a Universal Windows App Service
+- Create a UWP service
 - Utilize Cortana's "Personal Assistant" capabilities in an app
 
-You can build some amazing apps when you combine the rich capabilities of the Universal Windows Platform with the features of Cortana. For additional information and to see some of the other cool things you can do when you combine UWP with Cortana, watch the video at https://channel9.msdn.com/Shows/Visual-Studio-Toolbox/App-Development-with-Cortana.
+You can build some amazing apps when you combine the rich capabilities of the Universal Windows Platform with the features of Cortana. For additional information and to see more cool things you can do when you combine UWP with Cortana, watch the video at https://channel9.msdn.com/Shows/Visual-Studio-Toolbox/App-Development-with-Cortana.
 
 ---
 
