@@ -60,7 +60,7 @@ Creating a Universal Windows Platform (UWP) app is quick and easy using the buil
 
     _Installing the UWP and .NET development workloads_
 
-1. Close the installer. Then start Visual Studio 2017 use the **File** -> **New** -> **Project** command to create a new Visual C# **Blank App (Universal Windows)** solution named "PdfReviewer" 
+1. Close the installer. Then start Visual Studio 2017 use the **File** -> **New** -> **Project** command to create a new Visual C# **Blank App (Universal Windows)** solution named "PdfReviewer." 
 
     ![Creating a new UWP solution](Images/vs-select-blank-template.png)
 
